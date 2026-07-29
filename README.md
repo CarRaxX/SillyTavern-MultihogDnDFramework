@@ -1,3 +1,5 @@
+> 🇪🇸 **Versión en Español:** Para consultar la guía completa en español, lee [README.es.md](README.es.md).
+
 # Multihog D&D Framework
 
 *A D&D-based RPG platform/simulation engine for SillyTavern.*
