@@ -1058,13 +1058,13 @@ export function showPcImportPanel(el) {
             btns.style.cssText = 'display:flex;flex-direction:column;gap:3px;flex-shrink:0;';
 
             const fitBtn = document.createElement('button');
-            fitBtn.textContent = '🤖 Fit into Story';
-            fitBtn.title = 'Full AI adaptation: character is rewritten to fit the current campaign setting.';
+            fitBtn.textContent = `🤖 ${t('creator.fitIntoStory', 'Fit into Story')}`;
+            fitBtn.title = 'Adaptación completa por IA: el personaje se reescribe para adaptarse al escenario actual.';
             fitBtn.style.cssText = 'font-size:10px;padding:3px 7px;background:rgba(0,180,100,0.2);border:1px solid rgba(0,180,100,0.5);border-radius:4px;color:inherit;cursor:pointer;white-space:nowrap;';
 
             const addAsIsBtn = document.createElement('button');
-            addAsIsBtn.textContent = '📋 Add as is';
-            addAsIsBtn.title = 'Minimal AI review: only fixes logical world/era impossibilities. Original writing preserved.';
+            addAsIsBtn.textContent = `📋 ${t('creator.addAsIs', 'Add as is')}`;
+            addAsIsBtn.title = 'Revisión mínima de IA: solo corrige imposibilidades lógicas de época/mundo. Conserva la redacción original.';
             addAsIsBtn.style.cssText = 'font-size:10px;padding:3px 7px;background:rgba(120,80,220,0.2);border:1px solid rgba(120,80,220,0.5);border-radius:4px;color:inherit;cursor:pointer;white-space:nowrap;';
 
             const handleImport = async (mode) => {
@@ -1076,7 +1076,7 @@ export function showPcImportPanel(el) {
                     toastr['error'](`Import failed: ${String(err.message || err).substring(0, 120)}`, 'PC Import');
                 } finally {
                     addAsIsBtn.disabled = false; fitBtn.disabled = false;
-                    addAsIsBtn.textContent = '📋 Add as is'; fitBtn.textContent = '🤖 Fit into Story';
+                    addAsIsBtn.textContent = `📋 ${t('creator.addAsIs', 'Add as is')}`; fitBtn.textContent = `🤖 ${t('creator.fitIntoStory', 'Fit into Story')}`;
                 }
             };
             fitBtn.addEventListener('click', () => handleImport('full'));

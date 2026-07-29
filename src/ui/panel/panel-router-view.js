@@ -87,7 +87,7 @@ export function createRouterViewRenderer({
                     <span style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap; flex: 1;">${escapeHtml(label)}</span>
                     <span class="rt-router-kill-key" data-key="${k}" style="cursor:pointer; color: #ff5555; font-weight: bold; padding: 0 2px;" title="Deactivate">✕</span>
                 </span>`;
-        }).join('') || '<span style="opacity:0.5; font-size:10px;">None</span>';
+        }).join('') || `<span style="opacity:0.5; font-size:10px;">${t('common.none', 'None')}</span>`;
 
         logContainer.innerHTML = (s.routerLog || []).map(entry => {
             let diffStr = '';
@@ -104,7 +104,7 @@ export function createRouterViewRenderer({
                     </div>
                     <div style="line-height: 1.3;">${escapeHtml(entry.reason)}</div>
                 </div>`;
-        }).join('') || '<span style="opacity:0.5; font-size:10px;">No logs yet.</span>';
+        }).join('') || `<span style="opacity:0.5; font-size:10px;">${t('agent.noLogsYet', 'No logs yet.')}</span>`;
 
         // Attach kill handlers
         keysContainer.querySelectorAll('.rt-router-kill-key').forEach(btn => {
@@ -138,7 +138,7 @@ export function createRouterViewRenderer({
             const wpLastEl = agentPanel.querySelector('#rt-agent-world-last-fired');
             const wpNextEl = agentPanel.querySelector('#rt-agent-world-next-fire');
             const wpBadge = agentPanel.querySelector('#rt-agent-world-enabled-badge');
-            if (wpLastEl) wpLastEl.textContent = wpLabel || 'Never';
+            if (wpLastEl) wpLastEl.textContent = wpLabel || t('agent.never', 'Never');
 
             let wpNextMins = -1;
             if (wpMins >= 0) {

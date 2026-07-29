@@ -132,14 +132,14 @@ export function wireAgentActivity({
     // ── Last Run status display ────────────────────────────────────────────
     const lastRunEl = agentPanel.querySelector('#rt-agent-last-run');
     function formatLastRunRelative(epochMs) {
-        if (!epochMs) return 'never';
+        if (!epochMs) return t('agent.never', 'never');
         const sec = Math.floor((Date.now() - epochMs) / 1000);
-        if (sec < 45) return 'just now';
+        if (sec < 45) return t('agent.justNow', 'just now');
         const min = Math.floor(sec / 60);
-        if (min < 60) return `${min}m ago`;
+        if (min < 60) return `hace ${min}m`;
         const hr = Math.floor(min / 60);
-        if (hr < 24) return `${hr}h ago`;
-        return `${Math.floor(hr / 24)}d ago`;
+        if (hr < 24) return `hace ${hr}h`;
+        return `hace ${Math.floor(hr / 24)}d`;
     }
     function syncLastRunDisplay() {
         if (!lastRunEl) return;
@@ -147,10 +147,10 @@ export function wireAgentActivity({
         const runEvery = s.routerRunEvery || 3;
         const tick = getRouterTick();
         const lastRunAt = s.routerLastRunAt || 0;
-        const parts = [`Last run: ${formatLastRunRelative(lastRunAt)}`];
+        const parts = [`${t('agent.lastRun', 'Last run:')} ${formatLastRunRelative(lastRunAt)}`];
         if (runEvery > 1) {
             const nextIn = Math.max(0, runEvery - tick);
-            parts.push(`Next in: ${nextIn} msg${nextIn !== 1 ? 's' : ''}`);
+            parts.push(`${t('agent.nextIn', 'Next in:')} ${nextIn} msj${nextIn !== 1 ? 's' : ''}`);
         }
         lastRunEl.textContent = parts.join(' · ');
     }
