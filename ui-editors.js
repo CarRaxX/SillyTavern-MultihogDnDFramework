@@ -1476,10 +1476,10 @@ function openSectionEditor(targetType) {
     const presetsKey = isNPC ? 'npcSectionPresets' : 'pcSectionPresets';
     if (!s[presetsKey]) s[presetsKey] = {};
     const defaultSections = isNPC ? DEFAULT_NPC_SECTIONS : DEFAULT_PC_SECTIONS;
-    const titleText = isNPC ? '🧩 Edit NPC Sections' : '👤 Edit PC Sections';
+    const titleText = isNPC ? '🧩 Editar Secciones de PNJ' : '👤 Editar Secciones de PJ';
     const descriptionText = isNPC 
-        ? 'Customize the <b>[CORE]</b> identity sections for all NPCs. You can edit names, colors, emojis, and the prompt instructions that tell the AI what to track. Drag handles to reorder.'
-        : 'Customize the persona sections for Player Characters. These fields will be used when generating new characters or importing existing cards. Drag handles to reorder.';
+        ? 'Personaliza las secciones de identidad <b>[CORE]</b> para todos los PNJs. Puedes editar nombres, colores, emojis y las instrucciones que le indican a la IA qué rastrear. Arrastra los tiradores para reordenar.'
+        : 'Personaliza las secciones de la ficha para Personajes Jugables. Estos campos se utilizarán al generar nuevos personajes o importar fichas existentes. Arrastra los tiradores para reordenar.';
 
     if (!s[settingsKey] || !Array.isArray(s[settingsKey]) || s[settingsKey].length === 0) s[settingsKey] = JSON.parse(JSON.stringify(defaultSections));
     let workingSections = JSON.parse(JSON.stringify(s[settingsKey]));

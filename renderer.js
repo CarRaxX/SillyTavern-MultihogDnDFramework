@@ -2154,14 +2154,14 @@ function formatValueToCurrency(totalCp, detectedCurrency) {
                     </div>
                     <div class="rt-cr-row rt-cr-time-row">
                         <div class="rt-cr-field" style="width:100%;">
-                            <label class="rt-cr-label">Time &amp; Date <span class="rt-cr-help-icon" title="Calendar and clock format for [TIME] tracking in generated memos. Day 1 = narrative day count; DD/MM/YYYY = real calendar dates.">?</span></label>
+                            <label class="rt-cr-label">Fecha y Hora <span class="rt-cr-help-icon" title="Formato de reloj y calendario para el seguimiento de [TIME] en los memos. Día 1 = conteo de días narrativo; DD/MM/YYYY = fechas reales.">?</span></label>
                             <div class="rt-cr-time-controls">
-                                <div class="rt-seg-toggle" id="rt-cr-date-seg" role="group" title="Choose the calendar format used for [TIME] tracking.">
-                                    <button type="button" data-value="day" class="${!useDdMmYy ? 'active' : ''}">Day 1</button>
+                                <div class="rt-seg-toggle" id="rt-cr-date-seg" role="group" title="Elige el formato de calendario para el seguimiento de [TIME].">
+                                    <button type="button" data-value="day" class="${!useDdMmYy ? 'active' : ''}">Día 1</button>
                                     <button type="button" data-value="date" class="${useDdMmYy ? 'active' : ''}">DD/MM/YYYY</button>
                                 </div>
                                 <input type="text" id="rt-cr-start-date" class="text_pole rt-cr-input" value="${startDateInputVal}" placeholder="01/01/2026" style="width: 92px; text-align: center; display: ${useDdMmYy ? 'inline-block' : 'none'};" />
-                                <div class="rt-seg-toggle" id="rt-cr-clock-seg" role="group" title="Choose the clock format used for [TIME] tracking.">
+                                <div class="rt-seg-toggle" id="rt-cr-clock-seg" role="group" title="Elige el formato de reloj para el seguimiento de [TIME].">
                                     <button type="button" data-value="12" class="${!use24h ? 'active' : ''}">12h</button>
                                     <button type="button" data-value="24" class="${use24h ? 'active' : ''}">24h</button>
                                 </div>
@@ -2169,42 +2169,42 @@ function formatValueToCurrency(totalCp, detectedCurrency) {
                         </div>
                     </div>
                     <div class="rt-cr-field" style="width:100%;">
-                        <label class="rt-cr-label">Class</label>
+                        <label class="rt-cr-label">Clase</label>
                         <select id="rt-cr-class" class="text_pole rt-cr-input" style="width:100%;"></select>
-                        <input id="rt-cr-class-other" class="text_pole rt-cr-input" type="text" placeholder="Describe your custom class…" style="display:none; margin-top:3px; width:100%;" />
+                        <input id="rt-cr-class-other" class="text_pole rt-cr-input" type="text" placeholder="Describe tu clase personalizada…" style="display:none; margin-top:3px; width:100%;" />
                     </div>
                     <div class="rt-cr-row">
                         <div class="rt-cr-field">
-                            <label class="rt-cr-label">Traits</label>
-                            <textarea id="rt-cr-traits" class="text_pole rt-cr-input" placeholder="Leave blank — AI invents traits" rows="2" style="resize:vertical;"></textarea>
+                            <label class="rt-cr-label">Rasgos</label>
+                            <textarea id="rt-cr-traits" class="text_pole rt-cr-input" placeholder="Dejar en blanco — la IA inventa los rasgos" rows="2" style="resize:vertical;"></textarea>
                         </div>
                         <div class="rt-cr-field">
-                            <label class="rt-cr-label">Abilities</label>
-                            <textarea id="rt-cr-abilities" class="text_pole rt-cr-input" placeholder="Leave blank — AI generates abilities" rows="2" style="resize:vertical;"></textarea>
+                            <label class="rt-cr-label">Habilidades</label>
+                            <textarea id="rt-cr-abilities" class="text_pole rt-cr-input" placeholder="Dejar en blanco — la IA genera las habilidades" rows="2" style="resize:vertical;"></textarea>
                         </div>
                     </div>
                     <div class="rt-cr-row">
                         <div class="rt-cr-field">
-                            <label class="rt-cr-label">Background <span class="rt-cr-help-icon" title="You don't need to write a full backstory. A brief hint guides the AI (e.g. 'grew up on the streets', 'ex-soldier', 'noble exile'). Leave blank and the AI will invent a fitting background.">?</span></label>
-                            <input id="rt-cr-background" class="text_pole rt-cr-input" type="text" placeholder="e.g. ex-soldier, raised in the slums…" />
+                            <label class="rt-cr-label">Trasfondo <span class="rt-cr-help-icon" title="No necesitas escribir una historia completa. Una breve pista guía a la IA (ej. 'exsoldado', 'criado en los barrios bajos'). Deja en blanco y la IA creará un trasfondo adecuado.">?</span></label>
+                            <input id="rt-cr-background" class="text_pole rt-cr-input" type="text" placeholder="ej. exsoldado, criado en los barrios bajos…" />
                         </div>
                         <div class="rt-cr-field">
-                            <label class="rt-cr-label">Appearance <span class="rt-cr-help-icon" title="Just a hint is enough (e.g. 'tall, red hair, scar on cheek'). Leave blank and the AI will create a full appearance description.">?</span></label>
-                            <input id="rt-cr-appearance" class="text_pole rt-cr-input" type="text" placeholder="e.g. tall, dark hair, green eyes…" />
+                            <label class="rt-cr-label">Apariencia <span class="rt-cr-help-icon" title="Una breve pista es suficiente (ej. 'alto, cabello oscuro, ojos verdes'). Deja en blanco y la IA creará la descripción completa.">?</span></label>
+                            <input id="rt-cr-appearance" class="text_pole rt-cr-input" type="text" placeholder="ej. alto, cabello oscuro, ojos verdes…" />
                         </div>
                     </div>
                     <div class="rt-cr-field" style="width:100%;">
-                        <label class="rt-cr-label">Additional Info</label>
-                        <textarea id="rt-cr-additional" class="text_pole rt-cr-input" placeholder="Extra constraints, setting notes…" rows="2" style="resize:vertical; width:100%;"></textarea>
+                        <label class="rt-cr-label">Información Adicional</label>
+                        <textarea id="rt-cr-additional" class="text_pole rt-cr-input" placeholder="Restricciones extra, notas de ambientación…" rows="2" style="resize:vertical; width:100%;"></textarea>
                     </div>
                     <div style="display:flex; flex-direction:column; gap:5px; flex-shrink:0; padding:4px 0;">
                         <div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap;">
                             <label style="display:flex; align-items:center; gap:5px; cursor:pointer; font-size:0.88em;">
                                 <input type="checkbox" id="rt-cr-player-card-cb" />
-                                <span>Create Player Card in Lorebook Agent (Recommended)</span>
+                                <span>Crear Ficha de Jugador en el Agente de Lorebook (Recomendado)</span>
                             </label>
-                            <span class="rt-cr-help-icon" title="When checked, the AI writes a rich appearance, personality, habits, and backstory for a Lorebook Agent Player Card. A preview appears so you can edit, regenerate, copy, or add it to this chat.">?</span>
-                            <span style="opacity:0.6; font-size:0.8em; margin-left:4px;">Word count:</span>
+                            <span class="rt-cr-help-icon" title="Cuando está marcado, la IA escribe una apariencia detallada, personalidad, hábitos y trasfondo para una Ficha de Jugador en el Agente de Lorebook. Aparecerá una vista previa para que puedas editarla, regenerarla o copiarla.">?</span>
+                            <span style="opacity:0.6; font-size:0.8em; margin-left:4px;">Conteo de palabras:</span>
                             <select id="rt-cr-persona-words" class="text_pole" style="width:65px; font-size:11px; height:22px; padding:2px 4px;">
                                 <option value="100">100</option>
                                 <option value="150" selected>150</option>
@@ -2214,161 +2214,160 @@ function formatValueToCurrency(totalCp, detectedCurrency) {
                                 <option value="500">500</option>
                                 <option value="750">750</option>
                                 <option value="1000">1000</option>
-                                <option value="other">Other...</option>
+                                <option value="other">Otro...</option>
                             </select>
-                            <input id="rt-cr-persona-words-custom" type="number" class="text_pole" style="display:none; width:65px; font-size:11px; height:22px; padding:2px 4px; margin-left:4px;" placeholder="e.g. 800" min="50" max="5000" />
+                            <input id="rt-cr-persona-words-custom" type="number" class="text_pole" style="display:none; width:65px; font-size:11px; height:22px; padding:2px 4px; margin-left:4px;" placeholder="ej. 800" min="50" max="5000" />
                         </div>
                         <div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap;">
                             <label style="display:flex; align-items:center; gap:5px; cursor:pointer; font-size:0.88em;">
                                 <input type="checkbox" id="rt-cr-st-persona-cb" checked />
-                                <span>Create ST Persona (Recommended)</span>
+                                <span>Crear Persona de ST (Recomendado)</span>
                             </label>
-                            <span class="rt-cr-help-icon" title="Creates and selects a SillyTavern persona with the character's name and an empty description. This only makes sent chat messages use the same player name; character details stay in Lorebook Agent so they are not duplicated in prompt context.">?</span>
+                            <span class="rt-cr-help-icon" title="Crea y selecciona una persona de SillyTavern con el nombre del personaje. Esto hace que los mensajes enviados usen ese nombre de jugador; los detalles permanecen en el Agente de Lorebook.">?</span>
                         </div>
                     </div>
-                    <button id="rt-cr-generate-btn" style="width:100%; padding:8px 12px; background:rgba(120,80,220,0.2); border:1px solid rgba(120,80,220,0.6); border-radius:5px; color:var(--rt-text,#eee); font-size:0.92em; font-weight:bold; cursor:pointer; letter-spacing:0.03em;">🎲 Generate Character</button>
+                    <button id="rt-cr-generate-btn" style="width:100%; padding:8px 12px; background:rgba(120,80,220,0.2); border:1px solid rgba(120,80,220,0.6); border-radius:5px; color:var(--rt-text,#eee); font-size:0.92em; font-weight:bold; cursor:pointer; letter-spacing:0.03em;">🎲 Generar Personaje</button>
                 </div>
 
-                <div class="rt-onboarding-divider"><span>How It Works</span></div>
+                <div class="rt-onboarding-divider"><span>Cómo Funciona</span></div>
 
                 <div class="rt-onboarding-chat-tip" role="note">
-                    <div class="rt-onboarding-chat-tip-title">Need help? Open <b>CHAT</b> in the State Tracker header</div>
-                    <div class="rt-onboarding-chat-tip-body">Talk to the <b>Adventure Companion</b> for help with Multihog or to discuss your story. Enable Tutorial Mode in CHAT when you want the full framework guide attached to every request. Or head to the Discord, under the Extensions subforum: <a href="https://discord.gg/sillytavern" target="_blank" rel="noopener noreferrer">https://discord.gg/sillytavern</a>. Hell, head there anyway!</div>
+                    <div class="rt-onboarding-chat-tip-title">¿Necesitas ayuda? Abre <b>CHAT</b> en el encabezado del Rastreador de Estado</div>
+                    <div class="rt-onboarding-chat-tip-body">Habla con el <b>Acompañante de Aventura</b> para recibir ayuda con el Multihog o discutir tu historia. Activa el Modo Tutorial en CHAT cuando quieras incluir la guía completa del framework adjunta a cada solicitud. O entra a nuestro Discord en la sección de extensiones: <a href="https://discord.gg/sillytavern" target="_blank" rel="noopener noreferrer">https://discord.gg/sillytavern</a>. ¡Pásate de todos modos!</div>
                 </div>
 
                 <div style="font-size: 13px; opacity: 0.9; display: flex; flex-direction: column; gap: 8px; flex-shrink: 0; line-height: 1.4;">
-                    <div><b style="color: var(--rt-accent);">Auto-Tracking:</b> As you roleplay, the extension intelligently parses assistant responses using natural language. It detects losses of HP, new loot, or combat triggers, running background passes to update the state.</div>
+                    <div><b style="color: var(--rt-accent);">Seguimiento Automático:</b> Conforme juegas, la extensión analiza inteligentemente las respuestas del asistente utilizando lenguaje natural. Detecta pérdidas de PV, nuevo botín o activaciones de combate, ejecutando pases en segundo plano para actualizar el estado.</div>
 
-                    <div><b style="color: var(--rt-accent);">Prompt Injection:</b> The State Memo and RNG Queue are injected seamlessly into your outgoing prompt. It acts as the "source of truth," assuring the narrator/GM model accurately sees HP, inventory, and mechanical outcomes. Buffs/debuffs tick down automatically based on in-story real-time passed. It JUST WORKS™!</div>
+                    <div><b style="color: var(--rt-accent);">Inyección en el Prompt:</b> El State Memo y la Cola RNG se inyectan sin problemas en tu prompt saliente. Actúa como la "fuente de la verdad", asegurando que el modelo narrador/DM vea con precisión PV, inventario y resultados mecánicos. ¡FUNCIONA PERFECTAMENTE!</div>
 
-                    <div><b style="color: var(--rt-accent);">Lorebook Agent 🤖:</b> Open it from the <b>Lorebook Agent</b> tab at the top of the State Tracker panel and preferably detach it from the State Tracker UI. It autonomously manages your lorebook — creating, updating, activating, deactivating, and deleting entries as your story evolves. Click <b>?</b> inside the agent panel for full documentation.</div>
+                    <div><b style="color: var(--rt-accent);">Agente de Lorebook 🤖:</b> Ábrelo desde la pestaña <b>Agente de Lorebook</b> en la parte superior del panel del Rastreador de Estado y preferiblemente desacóplalo. Gestiona de forma autónoma tu libro de lore (creando, actualizando, activando, desactivando y eliminando entradas). Haz clic en <b>?</b> dentro del panel del agente para ver la documentación completa.</div>
 
-                    <div><b style="color: var(--rt-accent);">World Progression 🌍:</b> Simulates off-screen world activity by generating reports of background events at regular in-world intervals (such as daily). You can seed the simulation with an optional World Skeleton to introduce undiscovered factions, locations, NPCs, and conflicts outside the narrative. It includes Focus Randomization to keep events varied, and Backlog Consolidation to periodically compress older reports and prevent token bloat. Configure these options inside the World Progression section of the Extension Settings menu (accessible via SillyTavern's Extensions panel).</div>
+                    <div><b style="color: var(--rt-accent);">Progresión del Mundo 🌍:</b> Simula la actividad del mundo fuera de escena generando informes de eventos a intervalos regulares dentro del juego (por ejemplo, diarios). Puedes inicializar la simulación con un Esqueleto del Mundo opcional para introducir facciones, ubicaciones, PNJs y conflictos no descubiertos. Configura estas opciones en la sección Progresión del Mundo dentro del menú de Ajustes de la Extensión.</div>
                 </div>
 
-                <div class="rt-onboarding-divider"><span>Setup Guide</span></div>
+                <div class="rt-onboarding-divider"><span>Guía de Configuración</span></div>
 
                 <div style="font-size: 13px; opacity: 0.9; flex-shrink: 0; line-height: 1.4; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 12px;">
-                    <b style="color: var(--rt-accent); font-size: 14px;">Initial Setup:</b><br><br>
-                    1. Set your starting level, genre, and time/date format (Day vs. calendar date, 12h vs. 24h) in the controls above, then use the archetype buttons to roll a new character, or <b>manually describe a character</b> by clicking 💬.<br><br>
-                    2. Create a character card for your "narrator" (e.g. Game Master). <b>Leave the card fields empty</b>, as the framework handles all logic via the system prompt.<br><br>
-                    3. Toggle the options below — the system prompt is <b>applied automatically</b> whenever you change a setting.<br><br>
-                    4. Make sure your Persona in SillyTavern matches the character name in the State Tracker after character creation. You can also describe your character in Persona as normal in SillyTavern.<br><br>
-                    5. In SillyTavern, use the <b>Chat Completion API</b> and enable <b>Enable function calling</b> under <b>AI Response Configuration</b>. Otherwise the <b>RollTheDice</b> tool will not work. Alternatively, choose an RNG mode without tool calls in <b>Narrator Configuration</b> below (e.g. <b>Pre-Seeded Only</b> or <b>No RNG</b>).<br><br>
+                    <b style="color: var(--rt-accent); font-size: 14px;">Configuración Inicial:</b><br><br>
+                    1. Establece tu nivel inicial, género y formato de fecha/hora en los controles superiores, luego usa los botones de arquetipos para crear un personaje o <b>describe manualmente tu personaje</b> haciendo clic en 💬.<br><br>
+                    2. Crea una ficha de personaje para tu "narrador" (ej. Director de Juego). <b>Deja los campos vacíos</b>, ya que el framework gestiona toda la lógica mediante el prompt del sistema.<br><br>
+                    3. Activa o desactiva las opciones a continuación: el prompt del sistema se <b>aplica automáticamente</b> cada vez que cambias un ajuste.<br><br>
+                    4. Asegúrate de que tu Persona en SillyTavern coincida con el nombre del personaje en el Rastreador de Estado tras crear el personaje.<br><br>
+                    5. En SillyTavern, usa la <b>API Chat Completion</b> y habilita <b>Habilitar llamadas a funciones (Enable function calling)</b> en la Configuración de Respuesta de IA. De lo contrario, la herramienta <b>RollTheDice</b> no funcionará. Como alternativa, elige un modo RNG sin llamadas a herramientas en la Configuración del Narrador a continuación.<br><br>
                     <div style="margin-top: 8px;">
-                        🪙 <b>Token Optimization:</b> To reduce token costs, especially when in tool use mode, consider using a summarizer such as the <b>Summaryception</b> extension. Summarization combined with <b>Lorebook Agent</b> will guarantee the AI stays on track and keep token costs low.
+                        🪙 <b>Optimización de Tokens:</b> Para reducir el costo de tokens, especialmente en modo de herramientas, considera usar una extensión de resumen como <b>Summaryception</b>. La resumización combinada con el <b>Agente de Lorebook</b> garantizará que la IA se mantenga enfocada.
                     </div>
                     <div style="margin-top: 12px;">
-                        🤖 <b>What Model to Use?</b><br><br>
-                        <b>MiMo 2.5 Pro</b> or <b>DeepSeek 4 Pro</b>: both are great bang for the buck with high GM output quality. I use MiMo myself through OpenRouter — DeepSeek 4 Pro is another strong pick in the same tier. Try both and see which voice you prefer.<br><br>
-                        For the State Tracker and Lorebook Agent, I use <b>Gemini 3.1 Flash-Lite</b>. It's very inexpensive and handles the job amazingly well. Gemini 3 Flash or 3.5 Flash are of course even better, but I don't think they're needed. Flash-Lite does the job.<br><br>
-                        If your model thinks too long in combat, enable <b>Combat API Override</b> in State Tracker settings — it auto-switches when the <code>[COMBAT]</code> tag is active in the tracker and switches back when combat ends. <b>Gemini 3.5 Flash</b> is a great choice for this; set thinking to <b>Medium</b> so it still thinks a little.<br><br>
-                        These are recommendations, not rules — experiment. Different models shine for different styles of play.
+                        🤖 <b>¿Qué Modelo Utilizar?</b><br><br>
+                        <b>MiMo 2.5 Pro</b> o <b>DeepSeek 4 Pro</b>: ambos ofrecen una excelente relación calidad-precio con alta calidad narrativa para el DM. Prueba ambos y elige el tono que prefieras.<br><br>
+                        Para el Rastreador de Estado y el Agente de Lorebook, recomiendo <b>Gemini 3.1 Flash-Lite</b>. Es muy económico y realiza el trabajo de forma excelente. Gemini 3 Flash o 3.5 Flash son mejores, pero Flash-Lite cumple perfectamente.<br><br>
+                        Si tu modelo piensa demasiado en combate, habilita <b>Sustitución de API en Combate</b> en los ajustes del Rastreador de Estado. <b>Gemini 3.5 Flash</b> es una gran opción para esto; ajusta el pensamiento a <b>Medio</b>.
                     </div>
                 </div>
 
                 <!-- Narrator Configuration (Salad Bar) -->
                 <div class="rt-onboarding-secondary rt-onboarding-drawer rt-onboarding-narrator-drawer">
                     <button type="button" class="rt-onboarding-drawer-toggle" id="rt-onboarding-narrator-drawer-toggle" aria-expanded="false" aria-controls="rt-onboarding-narrator-drawer-body">
-                        <span class="rt-onboarding-drawer-toggle-label"><span class="rt-onboarding-drawer-icon" aria-hidden="true">&#10022;</span><span>Narrator Configuration<small>Set pacing, RNG, quests, and optional systems</small></span></span>
+                        <span class="rt-onboarding-drawer-toggle-label"><span class="rt-onboarding-drawer-icon" aria-hidden="true">&#10022;</span><span>Configuración del Narrador<small>Ajusta ritmo, RNG, misiones y sistemas opcionales</small></span></span>
                         <span class="rt-onboarding-drawer-chevron" aria-hidden="true">&#9656;</span>
                     </button>
                     <div class="rt-onboarding-drawer-body" id="rt-onboarding-narrator-drawer-body">
                     <div class="rt-onboarding-drawer-body-inner">
                     <div class="rt-onboarding-narrator-content" style="width: 100%; box-sizing: border-box;">
-                    <small style="display: block; margin-bottom: 8px; opacity: 0.65; font-style: italic; line-height: 1.3;">Select your preferred modes and components. Changes apply to your system prompt automatically.</small>
+                    <small style="display: block; margin-bottom: 8px; opacity: 0.65; font-style: italic; line-height: 1.3;">Selecciona tus modos y componentes preferidos. Los cambios se aplican automáticamente a tu prompt del sistema.</small>
 
                     <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 4px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 4px;">
-                        <span style="font-size: 0.85em; font-weight: bold; opacity: 0.8;">Pacing/Output Length</span>
-                        <button type="button" class="rt-narrative-pacing-help" style="background: none; border: 1px solid rgba(255,255,255,0.2); border-radius: 4px; color: inherit; font-size: 0.72em; opacity: 0.7; padding: 1px 7px; cursor: pointer;">What are these?</button>
+                        <span style="font-size: 0.85em; font-weight: bold; opacity: 0.8;">Ritmo / Longitud de Respuesta</span>
+                        <button type="button" class="rt-narrative-pacing-help" style="background: none; border: 1px solid rgba(255,255,255,0.2); border-radius: 4px; color: inherit; font-size: 0.72em; opacity: 0.7; padding: 1px 7px; cursor: pointer;">¿Qué es esto?</button>
                     </div>
                     <div style="display: flex; flex-direction: column; gap: 4px; margin-bottom: 12px; padding-left: 5px;">
-                        <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;"><input type="radio" name="rt_onboarding_narrative_pacing" value="normal" id="rt_onboarding_narrative_pacing_normal" /><span>Normal (no length instructions)</span></label>
-                        <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;"><input type="radio" name="rt_onboarding_narrative_pacing" value="shorter_outputs" id="rt_onboarding_narrative_pacing_shorter_outputs" /><span>Shorter Outputs</span></label>
-                        <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;"><input type="radio" name="rt_onboarding_narrative_pacing" value="high_agency" id="rt_onboarding_narrative_pacing_high_agency" /><span>High-Agency Mode</span></label>
-                        <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;"><input type="radio" name="rt_onboarding_narrative_pacing" value="downtime" id="rt_onboarding_narrative_pacing_downtime" /><span>Downtime/Slice of Life Mode</span></label>
+                        <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;"><input type="radio" name="rt_onboarding_narrative_pacing" value="normal" id="rt_onboarding_narrative_pacing_normal" /><span>Normal (sin instrucciones de longitud)</span></label>
+                        <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;"><input type="radio" name="rt_onboarding_narrative_pacing" value="shorter_outputs" id="rt_onboarding_narrative_pacing_shorter_outputs" /><span>Respuestas Más Cortas</span></label>
+                        <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;"><input type="radio" name="rt_onboarding_narrative_pacing" value="high_agency" id="rt_onboarding_narrative_pacing_high_agency" /><span>Modo de Alta Autonomía (High-Agency)</span></label>
+                        <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;"><input type="radio" name="rt_onboarding_narrative_pacing" value="downtime" id="rt_onboarding_narrative_pacing_downtime" /><span>Modo Tiempo Libre / Vida Cotidiana</span></label>
                     </div>
                     
                     <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 4px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 4px;">
-                        <span style="font-size: 0.85em; font-weight: bold; opacity: 0.8;">RNG</span>
-                        <button class="rt-rng-help-icon" style="background: none; border: 1px solid rgba(255,255,255,0.2); border-radius: 4px; color: inherit; font-size: 0.72em; opacity: 0.7; padding: 1px 7px; cursor: pointer;" title="Open RNG systems explanation">What are these?</button>
+                        <span style="font-size: 0.85em; font-weight: bold; opacity: 0.8;">Generación de Números Aleatorios (RNG)</span>
+                        <button class="rt-rng-help-icon" style="background: none; border: 1px solid rgba(255,255,255,0.2); border-radius: 4px; color: inherit; font-size: 0.72em; opacity: 0.7; padding: 1px 7px; cursor: pointer;" title="Abrir explicación de sistemas RNG">¿Qué es esto?</button>
                     </div>
                     <div style="display: flex; flex-direction: column; gap: 4px; margin-bottom: 12px; padding-left: 5px;">
                         <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
                             <input type="radio" name="rt_onboarding_rng_mode" value="hybrid" id="rt_onboarding_rng_hybrid" />
-                            <span>Pre-Seeded + Tool Calls (Recommended without CYOA Mode)</span>
+                            <span>Pre-Generado + Llamadas a Herramientas (Recomendado sin CYOA)</span>
                         </label>
                         <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
                             <input type="radio" name="rt_onboarding_rng_mode" value="legacy" id="rt_onboarding_rng_legacy" />
-                            <span>Pre-Seeded Only (Recommended with CYOA Mode)</span>
+                            <span>Solo Pre-Generado (Recomendado con CYOA)</span>
                         </label>
                         <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
                             <input type="radio" name="rt_onboarding_rng_mode" value="none" id="rt_onboarding_rng_none" />
-                            <span>No RNG (LLM makes up numbers, not recommended)</span>
+                            <span>Sin RNG (el LLM inventa los números, no recomendado)</span>
                         </label>
                     </div>
 
                     <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 4px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 2px;">
-                        <span style="font-size: 0.85em; font-weight: bold; opacity: 0.8;">Quests</span>
-                        <button class="rt-quests-hardcore-help" style="background: none; border: 1px solid rgba(255,255,255,0.2); border-radius: 4px; color: inherit; font-size: 0.72em; opacity: 0.7; padding: 1px 7px; cursor: pointer;" title="Explain hardcore quest mechanics">What are these?</button>
+                        <span style="font-size: 0.85em; font-weight: bold; opacity: 0.8;">Misiones</span>
+                        <button class="rt-quests-hardcore-help" style="background: none; border: 1px solid rgba(255,255,255,0.2); border-radius: 4px; color: inherit; font-size: 0.72em; opacity: 0.7; padding: 1px 7px; cursor: pointer;" title="Explicar mecánicas de misiones hardcore">¿Qué es esto?</button>
                     </div>
                     <div style="display: flex; flex-direction: column; gap: 4px; margin-bottom: 12px; padding-left: 5px;">
                         <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
                             <input type="checkbox" id="rt_onboarding_quests_enabled" />
-                            <span>Enable Quests</span>
+                            <span>Habilitar Misiones</span>
                         </label>
                         <div id="rt_onboarding_quest_options" style="padding-left: 20px; display: none; flex-direction: column; gap: 4px;">
                             <div style="margin-top: 4px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 2px;">
-                                <span style="font-size: 0.75em; opacity: 0.6; text-transform: uppercase; font-weight: bold;">Hardcore / Optional</span>
+                                <span style="font-size: 0.75em; opacity: 0.6; text-transform: uppercase; font-weight: bold;">Hardcore / Opcional</span>
                             </div>
                             <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
                                 <input type="checkbox" id="rt_onboarding_quests_deadlines" />
-                                <span>Deadlines</span>
+                                <span>Plazos Límite (Deadlines)</span>
                             </label>
                             <div id="rt_onboarding_quests_frustration_wrap" style="padding-left: 20px; display: none;">
                                 <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
                                     <input type="checkbox" id="rt_onboarding_quests_frustration" />
-                                    <span style="opacity: 0.9;">↳ Frustration (Experimental)</span>
+                                    <span style="opacity: 0.9;">↳ Frustración (Experimental)</span>
                                 </label>
                             </div>
                             <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
                                 <input type="checkbox" id="rt_onboarding_quests_show_archive" checked />
-                                <span>Show completed/failed quests</span>
+                                <span>Mostrar misiones completadas/falladas</span>
                             </label>
                         </div>
                     </div>
 
-                    <div style="font-size: 0.85em; font-weight: bold; opacity: 0.8; margin-bottom: 4px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 2px;">Optional Components</div>
+                    <div style="font-size: 0.85em; font-weight: bold; opacity: 0.8; margin-bottom: 4px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 2px;">Componentes Opcionales</div>
                     <div style="display: flex; flex-direction: column; gap: 4px; margin-bottom: 12px; padding-left: 5px;">
                         <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
                             <input type="checkbox" id="rt_onboarding_mod_loot" />
-                            <span>🎲 Loot (Roll for Loot Quality)</span>
+                            <span>🎲 Botín (Tiradas para Calidad de Botín)</span>
                         </label>
                         <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
                             <input type="checkbox" id="rt_onboarding_mod_random_events" />
-                            <span>🌍 Random Events (Rolls on time skips and travel)</span>
+                            <span>🌍 Eventos Aleatorios (Tiradas en saltos de tiempo y viajes)</span>
                         </label>
                         <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
                             <input type="checkbox" id="rt_onboarding_mod_resting" />
-                            <span>💤 Time-Limited Resting and interruption rolls based on location danger</span>
+                            <span>💤 Descanso Limitado en Tiempo e interrupciones según peligro</span>
                         </label>
                         <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
                             <input type="checkbox" id="rt_onboarding_mod_party_bench" />
-                            <span>⛺ Benched Party (Tracks temporarily separated companions)</span>
+                            <span>⛺ Grupo en Reserva (Rastrea compañeros ausentes)</span>
                         </label>
                         <div style="display:flex;align-items:center;gap:6px;">
                             <input type="checkbox" id="rt_onboarding_mod_cyoa_mode" />
-                            <span>🧭 CYOA Mode (Numbered action choices at end of outputs)</span>
-                            <button id="rt_onboarding_cyoa_settings_btn" style="background:none;border:1px solid rgba(255,255,255,0.25);border-radius:4px;color:inherit;font-size:0.75em;padding:1px 6px;cursor:pointer;flex-shrink:0;opacity:0.8;" title="CYOA Settings"><i class="fa-solid fa-gear"></i></button>
+                            <span>🧭 Modo CYOA (Opciones numeradas al final de respuestas)</span>
+                            <button id="rt_onboarding_cyoa_settings_btn" style="background:none;border:1px solid rgba(255,255,255,0.25);border-radius:4px;color:inherit;font-size:0.75em;padding:1px 6px;cursor:pointer;flex-shrink:0;opacity:0.8;" title="Ajustes CYOA"><i class="fa-solid fa-gear"></i></button>
                         </div>
                         <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
                             <input type="checkbox" id="rt_onboarding_mod_npc_rel_bars" />
-                            <span>💞 Relationship System (tracks each NPC's friendship and affection toward you)</span>
+                            <span>💞 Sistema de Relaciones (rastrea amistad y afecto de PNJs)</span>
                         </label>
                     </div>
 
-                    <button id="rt_onboarding_btn_update_sysprompt" style="width: 100%; margin-top: 10px; padding: 7px 12px; background: rgba(0, 200, 140, 0.18); border: 1px solid #00c88c; border-radius: 4px; color: var(--rt-text, #eee); font-size: 0.88em; cursor: pointer;" title="Writes the system prompt to your Quick Prompt Main box based on the options selected above.">
-                        ↑ Apply System Prompt
+                    <button id="rt_onboarding_btn_update_sysprompt" style="width: 100%; margin-top: 10px; padding: 7px 12px; background: rgba(0, 200, 140, 0.18); border: 1px solid #00c88c; border-radius: 4px; color: var(--rt-text, #eee); font-size: 0.88em; cursor: pointer;" title="Escribe el prompt del sistema en el cuadro principal según las opciones seleccionadas.">
+                        ↑ Aplicar Prompt del Sistema
                     </button>
                 </div>
                 </div>

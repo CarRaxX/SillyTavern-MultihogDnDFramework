@@ -2650,7 +2650,7 @@ function refreshProfileDropdown() {
 }
 
 /** Shared Popup options for long help/docs dialogs (scrollable on mobile). */
-const RT_HELP_POPUP_OPTS = { okButton: 'Got it', cancelButton: false, allowVerticalScrolling: true };
+const RT_HELP_POPUP_OPTS = { okButton: 'Entendido', cancelButton: false, allowVerticalScrolling: true };
 
 async function showRngExplanation() {
     const { Popup } = SillyTavern.getContext();
@@ -2661,26 +2661,25 @@ async function showRngExplanation() {
             </div>`;
     const popupBody = `
             <div style="font-size: 0.9em; line-height: 1.5; max-width: 480px; text-align: left;">
-                ${card('🎲', 'Pre-Seeded RNG Queue',
-        `Generates a list of pre-rolled dice and injects them directly into the story context. The AI uses the next roll in the queue until it reaches the last one, then wraps about to the start again. Each input injects a fresh set of numbers.<br><br>
-                    This is a highly efficient and robust system that works well for both combat and narrative checks. Because it does not require additional tool-calling roundtrips, it reduces token costs, minimizes latency, and is highly reliable due to its reduced structural complexity.<br><br>
-                    The only potential weakness is that the AI sees the numbers beforehand, theoretically making it possible for it to 'game' the system by fitting the check to the roll rather than the other way around, but in my experience this never happens. Rolls are failed all the time.<br><br>
-                    This potential weakness, however, is completely eliminated in combat because it works on a deterministic, turn-based grid.`
+                ${card('🎲', 'Cola RNG Pre-Generada',
+        `Genera una lista de tiradas de dados pre-calculadas y las inyecta directamente en el contexto de la historia. La IA usa la siguiente tirada en la cola de forma secuencial.<br><br>
+                    Es un sistema altamente eficiente que funciona muy bien tanto para combate como para pruebas narrativas. Al no requerir idas y vueltas de llamadas a herramientas, reduce costos de tokens, minimiza latencia y ofrece alta fiabilidad.<br><br>
+                    Durante el combate funciona de forma determinista turno por turno.`
     )}
-                ${card('🔧', 'Tool Call RNG',
-        `A reactive system where the AI proactively calls a dice tool for a specific narrative action (e.g., picking a lock, persuading a guard). The AI must declare a <b>Difficulty Class (DC)</b> before seeing the result. This ensures it can't "game the system" by lowering the DC to fit a roll or skipping the roll entirely. While Tool Calls guarantee that gaming the roll is technically impossible, they add slightly more latency and structure compared to the queue.`
+                ${card('🔧', 'Tiradas por Llamadas a Herramientas (Tool Calls)',
+        `Un sistema reactivo donde la IA llama proactivamente a una herramienta de dados para una acción específica (ej. forzar una cerradura, persuadir a un guardia). La IA debe declarar una <b>Clase de Dificultad (CD)</b> antes de ver el resultado. Asegura la máxima imparcialidad técnica.`
     )}
                 <div style="background: rgba(255,200,50,0.08); border: 1px solid rgba(255,200,50,0.25); border-radius: 8px; padding: 10px 14px; margin-bottom: 12px; font-size: 0.88em; text-align: left;">
-                    <b style="color: #ffcc33;">⚠ Important:</b> Tool Call RNG requires <b>"Enable function calling"</b> to be enabled in SillyTavern's AI Response Configuration.
+                    <b style="color: #ffcc33;">⚠ Importante:</b> Las tiradas por Herramientas requieren activar <b>"Habilitar llamadas a funciones" (Function Calling)</b> en la configuración de respuesta de IA de SillyTavern.
                 </div>
-                ${card('📋', 'Which system should I use?',
+                ${card('📋', '¿Qué sistema debo utilizar?',
         `<ul style="margin: 4px 0 0 0; padding-left: 20px; text-align: left; list-style-position: outside;">
-                        <li style="margin-bottom: 4px;"><b>Pre-Seeded + Tool Calls (recommended without CYOA):</b> Automatically switches by context: outside combat the model sees only <b>RollTheDice</b>; during an active combat round it sees only the <b>RNG Queue</b>. The prompt and available tool schema switch together, so it never sees both RNG systems at once.</li>
-                        <li><b>Pre-Seeded Only:</b> Queue-only. Use if your model doesn't support function/tool calling or you prefer the simpler setup. It works just as well for the vast majority of cases.</li>
+                        <li style="margin-bottom: 4px;"><b>Pre-Generado + Herramientas (Recomendado sin CYOA):</b> Cambia automáticamente según el contexto: fuera de combate la IA ve <b>RollTheDice</b>; durante el combate activo ve únicamente la <b>Cola RNG</b>.</li>
+                        <li><b>Solo Pre-Generado:</b> Exclusivamente por cola. Ideal si tu modelo no soporta llamadas a funciones o prefieres una configuración más sencilla.</li>
                     </ul>`
     )}
             </div>`;
-    await Popup.show.confirm('🎲 RNG Systems Explained', popupBody, RT_HELP_POPUP_OPTS);
+    await Popup.show.confirm('🎲 Explicación de Sistemas RNG', popupBody, RT_HELP_POPUP_OPTS);
 }
 
 /**
@@ -2695,12 +2694,12 @@ async function showNarrativePacingExplanation() {
             </div>`;
     const popupBody = `
             <div style="font-size: 0.9em; line-height: 1.5; max-width: 480px; text-align: left;">
-                ${card('Normal (no length instructions)', 'Balanced narration. The narrator may lightly paraphrase or expand your dialogue and actions when it fits your character, without imposing an output-length instruction.')}
-                ${card('Shorter Outputs', 'Keeps the output length modest and discourages it from drifting out of control, while preserving the normal narration style.')}
-                ${card('High-Agency Mode', 'Keeps outputs short to moderate in length, leaving more room for you to respond and direct the scene.')}
-                ${card('Downtime/Slice of Life Mode', 'Uses a relaxed pace and avoids forcing action-heavy or “save the world” plots. Best for everyday life, character moments, and low-stakes roleplay.')}
+                ${card('Normal (sin instrucciones de longitud)', 'Narración equilibrada. El narrador puede parafrasear o expandir sutilmente tus diálogos y acciones cuando se ajuste al personaje, sin imponer una restricción de longitud.')}
+                ${card('Respuestas Más Cortas', 'Mantiene la longitud de las respuestas moderada y evita que se extiendan en exceso, conservando el estilo narrativo normal.')}
+                ${card('Modo de Alta Autonomía (High-Agency)', 'Mantiene las respuestas entre cortas y moderadas, dejando más espacio para que intervengas y dirijas la escena.')}
+                ${card('Modo Tiempo Libre / Vida Cotidiana', 'Utiliza un ritmo relajado y evita forzar tramas cargadas de acción o épicas de "salvar el mundo". Ideal para momentos cotidianos y desarrollo de personajes.')}
             </div>`;
-    await Popup.show.confirm('Narrative Pacing Explained', popupBody, RT_HELP_POPUP_OPTS);
+    await Popup.show.confirm('Explicación de Ritmo Narrativo', popupBody, RT_HELP_POPUP_OPTS);
 }
 
 async function showQuestsHardcoreExplanation() {
@@ -2712,12 +2711,12 @@ async function showQuestsHardcoreExplanation() {
             </div>`;
     const popupBody = `
             <div style="font-size: 0.9em; line-height: 1.5; max-width: 480px; text-align: left;">
-                ${card('⏳', 'Deadlines',
-        `Adds time-sensitive constraints to quests. The system prompt instructs NPCs to attach deadlines to tasks they give you. If the deadline passes without turning in the quest, it auto-fails. Forces you to prioritise — you can't just accept every task and grind at your leisure.`
+                ${card('⏳', 'Plazos Límite (Deadlines)',
+        `Añade restricciones de tiempo a las misiones. El prompt del sistema le indica a los PNJs que asignen plazos temporales. Si el plazo vence sin completar la misión, esta se da por fallada automáticamente.`
     )}
-                ${card('🎭', 'Frustration', `Requires Deadlines. A sub-mode where quests <em>don't</em> auto-fail at the deadline. Instead, each quest giver has an NPC happiness level that starts high and quickly drops the longer you leave it past due. The rate of decline depends on the NPC's personality, which the model infers from their archetype and tone. You can still turn the quest in late — but the reception won't be warm.`, true)}
+                ${card('🎭', 'Frustración (Experimental)', `Requiere Plazos Límite. Un submodo donde las misiones <em>no</em> fallan automáticamente al vencer el plazo. En su lugar, el nivel de satisfacción del PNJ disminuye conforme pasa el tiempo. Puedes entregar la misión con retraso, pero la recepción no será cálida.`, true)}
             </div>`;
-    await Popup.show.confirm('📋 Quest Mechanics Explained', popupBody, RT_HELP_POPUP_OPTS);
+    await Popup.show.confirm('📋 Explicación de Mecánicas de Misiones', popupBody, RT_HELP_POPUP_OPTS);
 }
 
 async function showComponentsExplanation() {
@@ -2729,33 +2728,33 @@ async function showComponentsExplanation() {
             </div>`;
     const popupBody = `
             <div style="font-size: 0.9em; line-height: 1.5; max-width: 480px; text-align: left;">
-                ${card('🎲', 'Loot',
-        `When loot is received, dice rolls are made to determine its quality — whether something is a battered common item or a rare find. Adds meaningful variance to rewards.`
+                ${card('🎲', 'Botín',
+        `Al obtener botín, se realizan tiradas de dados para determinar su calidad (común, raro, valioso). Añade variedad y recompensas significativas.`
     )}
-                ${card('🌍', 'Events',
-        `Random events are rolled when time skips or travel occurs. A chance encounter, a weather shift, an ambush — things that happen without the player initiating them. Keeps the world feeling alive.`
+                ${card('🌍', 'Eventos Aleatorios',
+        `Se generan eventos aleatorios durante saltos temporales o viajes. Encuentros casuales, cambios de clima o emboscadas que ocurren de forma orgánica.`
     )}
-                ${card('💤', 'Resting',
-        `Resting is limited to once every 9 hours of in-game time. Prevents exploiting rest as a free heal between every fight, and reflects the reality that you can't just nap on demand.`
+                ${card('💤', 'Descanso',
+        `El descanso está limitado a una vez cada 9 horas de tiempo en el juego. Evita abusar del descanso para curarse tras cada combate.`
     )}
-                ${card('⛺', 'Benched Party',
-        `Tracks party members who are temporarily away from you — hospitalized, scouting ahead, captured, sent on a side task, etc. — in a separate [BENCHED PARTY] roster while reunion remains plausible. The GM is told what this means so it won't narrate them back at your side until the story brings them back on-screen. Benched members become eligible for off-screen simulation updates via World Reports (🌍), allowing the simulator to advance their individual subplots in the background. Turn off if you don't want temporary separations tracked separately from your active party.`
+                ${card('⛺', 'Grupo en Reserva (Benched Party)',
+        `Rastrea a los miembros del grupo que están temporalmente ausentes (hospitalizados, explorando, capturados) en un listado separado [BENCHED PARTY]. El narrador mantendrá su separación hasta que la historia los reúna.`
     )}
-                ${card('🧭', 'CYOA Mode',
-        `Choose-your-own-adventure style: the narrator ends outputs with numbered courses of action and fitting emojis so you can pick what to do next.`
+                ${card('🧭', 'Modo CYOA',
+        `Estilo Elige tu propia aventura: el narrador concluye sus respuestas con opciones numeradas de acción para que selecciones tu siguiente paso.`
     )}
-                ${card('💞', 'Relationship System',
-        `Tracks friendship, affection, or general reputation deltas between the user and NPCs. Automatically calculates shifts from the chat tone/actions, and visualizes them using custom tracking bars.`
+                ${card('💞', 'Sistema de Relaciones',
+        `Rastrea la amistad, afecto o reputación general entre el jugador y los PNJs. Calcula automáticamente los cambios según las acciones y los visualiza con barras personalizadas.`
     )}
             </div>`;
-    await Popup.show.confirm('🧩 Components Explained', popupBody, RT_HELP_POPUP_OPTS);
+    await Popup.show.confirm('🧩 Explicación de Componentes', popupBody, RT_HELP_POPUP_OPTS);
 }
 
 /**
  * Shows a settings help icon's title text in a popup (mobile-friendly tap/click).
  * Desktop hover still uses the native title tooltip.
  */
-async function showSettingsHelpPopup(message, title = 'ℹ️ Help') {
+async function showSettingsHelpPopup(message, title = 'ℹ️ Ayuda') {
     const text = String(message || '').trim();
     if (!text) return;
     const { Popup } = SillyTavern.getContext();
@@ -2773,7 +2772,7 @@ function bindSettingsHelpIcons() {
     container.querySelectorAll(selector).forEach(icon => {
         icon.setAttribute('role', 'button');
         icon.setAttribute('tabindex', '0');
-        icon.setAttribute('aria-label', 'Show help');
+        icon.setAttribute('aria-label', 'Mostrar ayuda');
     });
 
     const openHelp = (icon) => {
@@ -2813,73 +2812,51 @@ async function showLorebookAgentDocumentation() {
     const { Popup } = SillyTavern.getContext();
     const content = `
                         <div style="text-align: left; font-size: 13px; line-height: 1.5; padding-right: 8px;">
-                            <h3 style="margin-top: 0; color: var(--rt-custom-accent, #3498db);">The Lorebook Agent</h3>
-                            <p>An autonomous narrative librarian. It scans your recent chat, decides what has changed, and writes new or updated entries directly into your SillyTavern lorebooks — no manual data entry needed.</p>
+                            <h3 style="margin-top: 0; color: var(--rt-custom-accent, #3498db);">El Agente de Lorebook</h3>
+                            <p>Un bibliotecario narrativo autónomo. Escanea tu chat reciente, detecta cambios y escribe o actualiza entradas directamente en tus libros de lore en SillyTavern, sin necesidad de entrada manual.</p>
 
-                            <h4 style="margin-bottom: 5px;">⏱️ How Often to Run Lorebook Agent?</h4>
-                            <p>By default, the Agent runs every 3 messages, but there are tradeoffs to consider:</p>
+                            <h4 style="margin-bottom: 5px;">⏱️ ¿Con qué frecuencia ejecutar el Agente de Lorebook?</h4>
+                            <p>Por defecto, el agente se ejecuta cada 3 mensajes, pero existen diferencias a considerar:</p>
                             <ul style="padding-left: 20px; margin-top: 0;">
-                                <li><b>Pros of running less often:</b> It can make more coherent entries without excess granularity (though the cleanup tool can retroactively fix this).</li>
-                                <li><b>Cons of running less often:</b> Activations will rely more on keywords and might not be quite as pinpoint.</li>
+                                <li><b>Ventajas de ejecutar con menor frecuencia:</b> Crea entradas más coherentes y consolidadas.</li>
+                                <li><b>Inconvenientes de ejecutar con menor frecuencia:</b> Las activaciones dependerán más de palabras clave.</li>
                             </ul>
-                            <p style="margin-top:4px;">The recommended range is every <b>1-3</b> messages.</p>
+                            <p style="margin-top:4px;">El rango recomendado es cada <b>1-3</b> mensajes.</p>
 
-                            <h4 style="margin-bottom: 5px;">🤖 Operating Modes</h4>
+                            <h4 style="margin-bottom: 5px;">🤖 Modos de Funcionamiento</h4>
                             <ul style="padding-left: 20px; margin-top: 0;">
-                                <li><b>Basic Mode (Tags)</b> — The model outputs structured tags the Agent parses directly:<br>
-                                    <code style="font-size:11px;">[[NPC: Name | Description | keyword1, keyword2]]</code><br>
-                                    Supported types: <code>NPC</code>, <code>LOC</code>, <code>FAC</code>, <code>QUEST</code>, <code>EVENT</code>, plus <code>[[ACTIVATE: name]]</code>, <code>[[DEACTIVATE: name]]</code>, <code>[[DELETE: name]]</code>.<br>
-                                    Ideal for smaller/local models (Mistral Small, Gemma, Qwen, etc.).</li>
-                                <li style="margin-top:8px;"><b>Advanced Mode (Tools)</b> — Multi-turn ReAct loop: the model reasons (<i>Thought</i>), calls a tool (<i>Action</i>), receives a result (<i>Observation</i>), and repeats until it calls <code>finish</code> or hits Max Turns. Tools include <code>record</code>, <code>update</code>, <code>activate</code>, <code>deactivate</code>, <code>delete</code>, and <code>search</code>. Gemini 3.5 Flash-Lite is highly recommended as it is 100% reliable and very low cost. GPT-5x Mini or even Nano can also be good.</li>
+                                <li><b>Modo Básico (Etiquetas)</b> — El modelo genera etiquetas estructuradas que el Agente analiza directamente:<br>
+                                    <code style="font-size:11px;">[[NPC: Nombre | Descripción | palabra1, palabra2]]</code><br>
+                                    Tipos soportados: <code>NPC</code>, <code>LOC</code>, <code>FAC</code>, <code>QUEST</code>, <code>EVENT</code>, además de <code>[[ACTIVATE: nombre]]</code>, <code>[[DEACTIVATE: nombre]]</code>, <code>[[DELETE: nombre]]</code>.<br>
+                                    Ideal para modelos locales o pequeños (Mistral Small, Gemma, Qwen, etc.).</li>
+                                <li style="margin-top:8px;"><b>Modo Avanzado (Herramientas)</b> — Bucle ReAct multiturno: el modelo razona (<i>Pensamiento</i>), ejecuta una herramienta (<i>Acción</i>), recibe el resultado (<i>Observación</i>) y repite hasta finalizar. Herramientas: <code>record</code>, <code>update</code>, <code>activate</code>, <code>deactivate</code>, <code>delete</code> y <code>search</code>. Se recomienda Gemini 3.5 Flash-Lite por su altísima fiabilidad y bajo costo.</li>
                             </ul>
 
-                            <h4 style="margin-bottom: 5px;">🧠 Attention-Based Memory</h4>
-                            <p>The Agent sees two tiers of lorebook content:</p>
+                            <h4 style="margin-bottom: 5px;">🧠 Memoria Basada en Atención</h4>
+                            <p>El Agente ve dos niveles de contenido en el libro de lore:</p>
                             <ul style="padding-left: 20px; margin-top: 0;">
-                                <li><b>Active entries</b> — full content is visible in the Agent's context. Keyword-triggered by SillyTavern and managed via <b>Active Lore Keys</b>.</li>
-                                <li><b>Inactive entries</b> — listed only by name and keywords (no content). The Agent must activate them first to read or update their body.</li>
+                                <li><b>Entradas Activas</b> — contenido completo visible en el contexto del Agente. Activadas por palabras clave o gestionadas vía <b>Claves de Lore Activas</b>.</li>
+                                <li><b>Entradas Inactivas</b> — listadas solo por nombre y palabras clave (sin cuerpo). El Agente debe activarlas primero para leer o modificar su contenido.</li>
                             </ul>
-                            <p style="margin-top:4px;"><b>Max Active</b> caps how many entries can be active simultaneously (FIFO pruning keeps token cost predictable).</p>
+                            <p style="margin-top:4px;"><b>Claves Activas Máximas</b> limita cuántas entradas pueden estar activas al mismo tiempo.</p>
 
-                            <h4 style="margin-bottom: 5px;">📂 Campaign Records</h4>
-                            <p>The Agent writes directly into SillyTavern's native Lorebook system, creating namespaced campaign books for the current story (e.g. <i>Eldoria_NPCs</i>, <i>Eldoria_Locations</i>, <i>Eldoria_Factions</i>). All books for the active campaign are shown here, grouped by type. Click any folder to expand it; click any entry to read its full content. Books are automatically activated and deactivated based on the current chat — no manual action needed. This includes the <b>World Section</b> (<code>{prefix}_World</code>) created by the World Progression engine, which houses off-screen progression reports.</p>
-                            <p style="margin-top:4px;">When <b>Show Location Images</b> is enabled (see below), the panel header switches between <b>Campaign Records</b> and <b>Visualization Mode</b>. With Location Images off, only the standard Campaign Records tree is shown.</p>
+                            <h4 style="margin-bottom: 5px;">📂 Registros de Campaña</h4>
+                            <p>El Agente escribe directamente en el sistema nativo de libros de lore de SillyTavern, creando libros organizados por campaña (ej. <i>Eldoria_NPCs</i>, <i>Eldoria_Locations</i>, <i>Eldoria_Factions</i>). Todos los libros se muestran agrupados por tipo. Haz clic en cualquier carpeta o entrada para ver su contenido. Los libros se activan y desactivan automáticamente según la historia.</p>
 
-                            <h4 style="margin-bottom: 5px;">🗺️ Location Images &amp; Visualization Mode</h4>
-                            <p>Location scene art and Visualization Mode are <b>opt-in</b> and <b>off by default</b>. Enable them from <b>Extension Settings → Portraits → Location Images &amp; Visualization</b>.</p>
-                            <ul style="padding-left: 20px; margin-top: 0;">
-                                <li><b>Show Location Images</b> — Master toggle. When on, the Locations book gains hierarchical scene art: thumbnails on the location tree, wide 16:9 images in detail view, drag-and-drop upload, and the <b>Campaign Records / Visualization Mode</b> switch in this panel. Also turns on automatically if you enable Real-Time Visualization Mode or Auto-Generate Locations.</li>
-                                <li><b>Auto-Generate Locations</b> — Background scene art for new location lorebook entries that do not already have an image. Mutually exclusive with Real-Time Visualization Mode.</li>
-                                <li><b>Include Present NPCs in Location Scene Prompts</b> — Injects NPCs named in the latest narrator output (Present-Now name scanner: first/last name only, not Lorebook Agent keys) plus the linked Player Character into location image prompts. Locked on while Real-Time Visualization Mode is active.</li>
-                                                <li><b>Real-Time Visualization Mode</b> — Generates location images in Visualization Mode from current chat context and characters present. Choose a trigger: <b>On location enter</b> (once per place with no image), <b>On location change</b> (fresh image on each path change including revisits), or <b>Every N outputs</b> (still regenerates on location change, plus every N chat outputs — set N to 1 for every output). Enables Show Location Images and present-NPC prompts as a locked bundle; disables Auto-Generate Locations. Can be turned on without Show Location Images already being enabled first.</li>
-                            </ul>
-                            <p style="margin-top:8px;"><b>Visualization Mode</b> (agent panel) shows a scene layout driven by your current location from the state memo: a wide location hero image, breadcrumb path, and tiles for characters present (active Lorebook NPCs plus the linked Player Character). Click the hero or a tile to open the full location or character card. Scene art is generated according to your Location Images settings — either on lorebook entry creation (Auto-Generate Locations) or on arrival (Real-Time Visualization Mode).</p>
-                            <p style="margin-top:4px;"><i>Tip: With Real-Time Visualization Mode on, use Visualization Mode in the Lorebook Agent to see scene art as you move through the story (trigger depends on your Real-Time settings).</i></p>
+                            <h4 style="margin-bottom: 5px;">🗺️ Imágenes de Ubicación y Modo Visualización</h4>
+                            <p>El arte de escena y el Modo Visualización son opcionales y están desactivados por defecto. Puedes habilitarlos en <b>Ajustes de la Extensión → Retratos → Imágenes de Ubicación y Visualización</b>.</p>
 
-                            <h4 style="margin-bottom: 5px;">🧹 Cleanup & Compression</h4>
-                            <p>To keep context sizes optimized, the framework uses a two-fold cleanup system:</p>
-                            <ul style="padding-left: 20px; margin-top: 0;">
-                                <li><b>Active Key Pruning:</b> When the active entry count exceeds the configured limit, the oldest activated entries are automatically deactivated (pruned) to make room for new ones.</li>
-                                <li><b>Archivist Compression:</b> You can trigger a cleanup pass globally (via the broom button in the agent header) or on a targeted entry. The <b>Lorebook Archivist</b> will compress bloated entries and consolidate duplicates to save tokens while keeping unique facts and timelines intact.</li>
-                            </ul>
-                            <p style="margin-top:4px;"><i>Note: Standard Agent passes and standard cleanup/pruning do not process the World book reports. Those are managed independently via World Progression settings.</i></p>
+                            <h4 style="margin-bottom: 5px;">🧹 Limpieza y Compresión</h4>
+                            <p>Para optimizar el tamaño de contexto, el framework utiliza un sistema de limpieza doble: purga de entradas inactivas y compresión por el Archivista de Lorebook.</p>
 
-                            <h4 style="margin-bottom: 5px;">↩ History Navigation</h4>
-                            <p>The <b>← [ LIVE ] →</b> bar at the bottom lets you step back through lorebook snapshots and redo steps you've undone — just like the State Tracker's memo history. Each agent pass is snapshotted before it runs (up to 5 saved). A new pass clears the redo stack.</p>
+                            <h4 style="margin-bottom: 5px;">↩ Navegación por Historial</h4>
+                            <p>La barra <b>← [ EN VIVO ] →</b> en la parte inferior permite retroceder entre instantáneas del libro de lore y rehacer pasos deshinchados.</p>
 
-                            <h4 style="margin-bottom: 5px;">🛠️ Modular Repertoire</h4>
-                            <p>Toggle which entity types the Agent tracks (NPCs, Locations, Factions, Quests, Events) and add <b>Custom Tags</b> for anything world-specific. Every module's system prompt snippet is editable so you control exactly how the AI records data.</p>
-
-                            <h4 style="margin-bottom: 5px;">🕹️ Controls Reference</h4>
-                            <ul style="padding-left: 20px; margin-top: 0;">
-                                <li><b>Main Lookback</b>: Messages the Agent scans during automatic post-generation runs.</li>
-                                <li><b>Max Turns</b>: Maximum ReAct loop iterations before the Agent is forced to finish (Advanced Mode).</li>
-                                <li><b>Max Active</b>: Maximum simultaneously active lore entries.</li>
-                                <li><b>Direct Command</b>: Runs a one-off agent pass with a custom instruction and its own lookback window — useful for targeted research or corrections.</li>
-                            </ul>
+                            <h4 style="margin-bottom: 5px;">🛠️ Repertorio Modular</h4>
+                            <p>Activa o desactiva qué tipos de entidades rastrea el Agente (PNJs, Ubicaciones, Facciones, Misiones, Eventos) y añade <b>Etiquetas Personalizadas</b>.</p>
                         </div>
                     `;
-    await Popup.show.confirm('📖 Lorebook Agent Documentation', content, RT_HELP_POPUP_OPTS);
+    await Popup.show.confirm('📖 Documentación del Agente de Lorebook', content, RT_HELP_POPUP_OPTS);
 }
 
 function refreshPortraitPromptPresetsList() {
