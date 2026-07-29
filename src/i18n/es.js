@@ -200,4 +200,9 @@ export default {
         fitIntoStory: 'Adaptar a la Historia',
         addAsIs: 'Añadir Tal Cual',
     },
+    companion: {
+        headerTitle: 'Acompañante de Aventura: Asistente y Guía',
+        reattach: 'Reacoplar Acompañante de Aventura',
+        detach: 'Desacoplar Acompañante de Aventura',
+    },
 };

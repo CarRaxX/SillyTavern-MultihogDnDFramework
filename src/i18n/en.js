@@ -200,4 +200,9 @@ export default {
         fitIntoStory: 'Fit into Story',
         addAsIs: 'Add as is',
     },
+    companion: {
+        headerTitle: 'Adventure Companion: Agentic Sidekick and Guide',
+        reattach: 'Re-attach Adventure Companion',
+        detach: 'Detach Adventure Companion',
+    },
 };

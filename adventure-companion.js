@@ -36,7 +36,7 @@ const SHELL_VERSION = '8';
 const DETACHED_CHAT_KEY = 'rpg_tracker_adventure_companion_detached';
 const DETACHED_CHAT_GEO_KEY = 'rpg_tracker_geometry_adventure_companion';
 const CHAT_OPEN_KEY = 'rpg_tracker_adventure_companion_open';
-const COMPANION_HEADER_TITLE = 'Adventure Companion: Agentic Sidekick and Guide';
+const COMPANION_HEADER_TITLE = t('companion.headerTitle', 'Acompañante de Aventura: Asistente y Guía');
 
 export const COMPANION_PERSONA = `You are the Adventure Companion — a witty, imaginative friend sitting beside the player of a Multihog D&D Framework campaign in SillyTavern.
 
@@ -1493,7 +1493,7 @@ function updateChatDetachButton() {
     if (!(button instanceof HTMLElement)) return;
     const detached = !!_detachedChatPanel;
     button.textContent = detached ? '↓' : '⧉';
-    button.title = detached ? 'Re-attach Adventure Companion' : 'Detach Adventure Companion';
+    button.title = detached ? t('companion.reattach', 'Reacoplar Acompañante de Aventura') : t('companion.detach', 'Desacoplar Acompañante de Aventura');
     button.setAttribute('aria-label', button.title);
 }
 
