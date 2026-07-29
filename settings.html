@@ -71,118 +71,118 @@
                         </div>
                         <div class="inline-drawer-content">
                             <div class="flex-container flexFlowColumn gap-1">
-                        <label style="font-size: 0.82em; opacity: 0.75;">Panel Layout</label>
-                        <div class="rt-seg-toggle" id="rpg_tracker_layout_mode_seg" role="group" style="width: 100%;" title="Stacked shows every module at once, vertically. Tab Mode pins Character/Combat at the top and puts the rest behind a compact tab strip — better for small screens or mobile.">
-                            <button type="button" data-value="stack" style="flex: 1;">📚 Stacked</button>
-                            <button type="button" data-value="tabs" style="flex: 1;">🗂️ Tab Mode (Compact)</button>
+                        <label style="font-size: 0.82em; opacity: 0.75;">Diseño del Panel</label>
+                        <div class="rt-seg-toggle" id="rpg_tracker_layout_mode_seg" role="group" style="width: 100%;" title="Apilado muestra todos los módulos verticalmente. El modo pestañas fija Personaje/Combate arriba y coloca los demás tras una barra de pestañas compacta.">
+                            <button type="button" data-value="stack" style="flex: 1;">📚 Apilado</button>
+                            <button type="button" data-value="tabs" style="flex: 1;">🗂️ Modo Pestañas (Compacto)</button>
                         </div>
-                        <label style="font-size: 0.82em; opacity: 0.75; margin-top: 4px;">Visual Theme</label>
+                        <label style="font-size: 0.82em; opacity: 0.75; margin-top: 4px;">Tema Visual</label>
                         <select id="rpg_tracker_theme_select" class="text_pole">
-                            <option value="rt-theme-native">Match ST UI</option>
+                            <option value="rt-theme-native">Adaptarse a ST UI</option>
                             <option value="rt-theme-hacker">Hacker</option>
-                            <option value="rt-theme-fantasy">Fantasy</option>
-                            <option value="rt-theme-hologram">Hologram</option>
-                            <option value="rt-theme-pacific">Pacific Cove</option>
-                            <option value="rt-theme-cherry">Cherry Blossom</option>
-                            <option value="rt-theme-custom">✨ Custom (AI Wizard)</option>
+                            <option value="rt-theme-fantasy">Fantasía</option>
+                            <option value="rt-theme-hologram">Holograma</option>
+                            <option value="rt-theme-pacific">Bahía Pacífica</option>
+                            <option value="rt-theme-cherry">Flor de Cerezo</option>
+                            <option value="rt-theme-custom">✨ Personalizado (Asistente IA)</option>
                         </select>
                         <label class="checkbox_label" style="margin-top: 4px;">
                             <input id="rpg_tracker_daynight_cycle" type="checkbox" />
-                            <span>Day/Night Cycle</span>
-                            <i class="fa-solid fa-circle-question interactable" title="Shifts the tracker panel colors and header sky badge to match the current in-world time from [TIME] (requires an HH:MM clock). Seven phases: late night, dawn, morning, midday, afternoon, sunset, and night. Purely decorative — no effect on prompts or memo."></i>
+                            <span>Ciclo Día/Noche</span>
+                            <i class="fa-solid fa-circle-question interactable" title="Cambia los colores del panel y la insignia según la hora dentro del juego de [TIME]."></i>
                         </label>
                         <div id="rpg_tracker_panel_bg_block" style="margin-top: 6px; border: 1px solid rgba(255,255,255,0.12); border-radius: 8px; padding: 8px; background: rgba(255,255,255,0.03);">
                             <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 6px;">
-                                <b style="font-size: 0.85em;">State Tracker Background</b>
-                                <i class="fa-solid fa-circle-question interactable" title="Optional scenario art behind the State Tracker panel. A tint overlay keeps text readable; with Day/Night Cycle enabled it also shifts with in-world time. Optional night image swaps in during night / late night phases from [TIME], even when Day/Night Cycle is off."></i>
+                                <b style="font-size: 0.85em;">Fondo del Rastreador de Estado</b>
+                                <i class="fa-solid fa-circle-question interactable" title="Imagen de fondo para el panel del Rastreador de Estado. Se adapta opcionalmente al Ciclo Día/Noche."></i>
                             </div>
                             <div style="display: flex; gap: 10px; align-items: flex-start; flex-wrap: wrap;">
-                                <div id="rpg_tracker_panel_bg_preview" title="Day / default background" style="width: 72px; height: 48px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.15); background: rgba(0,0,0,0.35) center/cover no-repeat; flex-shrink: 0;"></div>
+                                <div id="rpg_tracker_panel_bg_preview" title="Fondo de día / predeterminado" style="width: 72px; height: 48px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.15); background: rgba(0,0,0,0.35) center/cover no-repeat; flex-shrink: 0;"></div>
                                 <div style="display: flex; flex-direction: column; gap: 4px; flex: 1; min-width: 140px;">
                                     <div class="flex-container gap-1">
-                                        <button type="button" id="rpg_tracker_panel_bg_upload" class="menu_button interactable" style="font-size: 11px;"><i class="fa-solid fa-upload"></i> Upload</button>
-                                        <button type="button" id="rpg_tracker_panel_bg_clear" class="menu_button interactable" style="font-size: 11px;">Clear</button>
+                                        <button type="button" id="rpg_tracker_panel_bg_upload" class="menu_button interactable" style="font-size: 11px;"><i class="fa-solid fa-upload"></i> Subir</button>
+                                        <button type="button" id="rpg_tracker_panel_bg_clear" class="menu_button interactable" style="font-size: 11px;">Limpiar</button>
                                     </div>
                                     <input id="rpg_tracker_panel_bg_file" type="file" accept="image/*" style="display: none;" />
-                                    <input id="rpg_tracker_panel_bg_url" type="text" class="text_pole" placeholder="Or paste image URL…" style="font-size: 11px; width: 100%; box-sizing: border-box;" />
+                                    <input id="rpg_tracker_panel_bg_url" type="text" class="text_pole" placeholder="O pega la URL de la imagen…" style="font-size: 11px; width: 100%; box-sizing: border-box;" />
                                 </div>
                             </div>
                             <div style="display: flex; gap: 10px; align-items: flex-start; flex-wrap: wrap; margin-top: 8px;">
-                                <div id="rpg_tracker_panel_bg_night_preview" title="Night / late night background (optional)" style="width: 72px; height: 48px; border-radius: 6px; border: 1px dashed rgba(136,153,255,0.35); background: rgba(8,10,28,0.5) center/cover no-repeat; flex-shrink: 0;"></div>
+                                <div id="rpg_tracker_panel_bg_night_preview" title="Fondo nocturno (opcional)" style="width: 72px; height: 48px; border-radius: 6px; border: 1px dashed rgba(136,153,255,0.35); background: rgba(8,10,28,0.5) center/cover no-repeat; flex-shrink: 0;"></div>
                                 <div style="display: flex; flex-direction: column; gap: 4px; flex: 1; min-width: 140px;">
-                                    <span style="font-size: 0.78em; opacity: 0.7;">Night image <span style="opacity: 0.55;">(optional)</span></span>
+                                    <span style="font-size: 0.78em; opacity: 0.7;">Imagen nocturna <span style="opacity: 0.55;">(opcional)</span></span>
                                     <div class="flex-container gap-1">
-                                        <button type="button" id="rpg_tracker_panel_bg_night_upload" class="menu_button interactable" style="font-size: 11px;"><i class="fa-solid fa-moon"></i> Upload</button>
-                                        <button type="button" id="rpg_tracker_panel_bg_night_clear" class="menu_button interactable" style="font-size: 11px;">Clear</button>
+                                        <button type="button" id="rpg_tracker_panel_bg_night_upload" class="menu_button interactable" style="font-size: 11px;"><i class="fa-solid fa-moon"></i> Subir</button>
+                                        <button type="button" id="rpg_tracker_panel_bg_night_clear" class="menu_button interactable" style="font-size: 11px;">Limpiar</button>
                                     </div>
                                     <input id="rpg_tracker_panel_bg_night_file" type="file" accept="image/*" style="display: none;" />
                                 </div>
                             </div>
                             <div class="flex-container alignitemscenter" style="width: 100%; margin-top: 8px;">
-                                <span style="font-size: 0.85em;">Overlay Strength</span>
+                                <span style="font-size: 0.85em;">Intensidad de Transparencia</span>
                                 <span id="rpg_tracker_panel_bg_overlay_val" style="margin-left: auto; font-weight: bold; opacity: 0.8;">55%</span>
                             </div>
-                            <input id="rpg_tracker_panel_bg_overlay" type="range" class="text_pole" style="width: 100%; cursor: pointer;" min="0" max="100" value="55" title="Higher = stronger day/night (or neutral) tint over the image" />
+                            <input id="rpg_tracker_panel_bg_overlay" type="range" class="text_pole" style="width: 100%; cursor: pointer;" min="0" max="100" value="55" title="Un valor más alto intensifica la capa oscura sobre la imagen para facilitar la lectura" />
                         </div>
                         <div id="rpg_agent_panel_bg_block" style="margin-top: 6px; border: 1px solid rgba(255,255,255,0.12); border-radius: 8px; padding: 8px; background: rgba(255,255,255,0.03);">
                             <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 6px;">
-                                <b style="font-size: 0.85em;">Lorebook Agent Background <span style="font-weight: normal; opacity: 0.55;">(detached)</span></b>
-                                <i class="fa-solid fa-circle-question interactable" title="Separate backdrop for the detached Lorebook Agent window. When integrated in the State Tracker panel, only the tracker background above is used. Night image swaps from [TIME] during night / late night, even without Day/Night Cycle."></i>
+                                <b style="font-size: 0.85em;">Fondo del Agente de Lorebook <span style="font-weight: normal; opacity: 0.55;">(desacoplado)</span></b>
+                                <i class="fa-solid fa-circle-question interactable" title="Fondo independiente para la ventana desacoplada del Agente de Lorebook."></i>
                             </div>
                             <div style="display: flex; gap: 10px; align-items: flex-start; flex-wrap: wrap;">
-                                <div id="rpg_agent_panel_bg_preview" title="Day / default background" style="width: 72px; height: 48px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.15); background: rgba(0,0,0,0.35) center/cover no-repeat; flex-shrink: 0;"></div>
+                                <div id="rpg_agent_panel_bg_preview" title="Fondo de día / predeterminado" style="width: 72px; height: 48px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.15); background: rgba(0,0,0,0.35) center/cover no-repeat; flex-shrink: 0;"></div>
                                 <div style="display: flex; flex-direction: column; gap: 4px; flex: 1; min-width: 140px;">
                                     <div class="flex-container gap-1">
-                                        <button type="button" id="rpg_agent_panel_bg_upload" class="menu_button interactable" style="font-size: 11px;"><i class="fa-solid fa-upload"></i> Upload</button>
-                                        <button type="button" id="rpg_agent_panel_bg_clear" class="menu_button interactable" style="font-size: 11px;">Clear</button>
+                                        <button type="button" id="rpg_agent_panel_bg_upload" class="menu_button interactable" style="font-size: 11px;"><i class="fa-solid fa-upload"></i> Subir</button>
+                                        <button type="button" id="rpg_agent_panel_bg_clear" class="menu_button interactable" style="font-size: 11px;">Limpiar</button>
                                     </div>
                                     <input id="rpg_agent_panel_bg_file" type="file" accept="image/*" style="display: none;" />
-                                    <input id="rpg_agent_panel_bg_url" type="text" class="text_pole" placeholder="Or paste image URL…" style="font-size: 11px; width: 100%; box-sizing: border-box;" />
+                                    <input id="rpg_agent_panel_bg_url" type="text" class="text_pole" placeholder="O pega la URL de la imagen…" style="font-size: 11px; width: 100%; box-sizing: border-box;" />
                                 </div>
                             </div>
                             <div style="display: flex; gap: 10px; align-items: flex-start; flex-wrap: wrap; margin-top: 8px;">
-                                <div id="rpg_agent_panel_bg_night_preview" title="Night / late night background (optional)" style="width: 72px; height: 48px; border-radius: 6px; border: 1px dashed rgba(136,153,255,0.35); background: rgba(8,10,28,0.5) center/cover no-repeat; flex-shrink: 0;"></div>
+                                <div id="rpg_agent_panel_bg_night_preview" title="Fondo nocturno (opcional)" style="width: 72px; height: 48px; border-radius: 6px; border: 1px dashed rgba(136,153,255,0.35); background: rgba(8,10,28,0.5) center/cover no-repeat; flex-shrink: 0;"></div>
                                 <div style="display: flex; flex-direction: column; gap: 4px; flex: 1; min-width: 140px;">
-                                    <span style="font-size: 0.78em; opacity: 0.7;">Night image <span style="opacity: 0.55;">(optional)</span></span>
+                                    <span style="font-size: 0.78em; opacity: 0.7;">Imagen nocturna <span style="opacity: 0.55;">(opcional)</span></span>
                                     <div class="flex-container gap-1">
-                                        <button type="button" id="rpg_agent_panel_bg_night_upload" class="menu_button interactable" style="font-size: 11px;"><i class="fa-solid fa-moon"></i> Upload</button>
-                                        <button type="button" id="rpg_agent_panel_bg_night_clear" class="menu_button interactable" style="font-size: 11px;">Clear</button>
+                                        <button type="button" id="rpg_agent_panel_bg_night_upload" class="menu_button interactable" style="font-size: 11px;"><i class="fa-solid fa-moon"></i> Subir</button>
+                                        <button type="button" id="rpg_agent_panel_bg_night_clear" class="menu_button interactable" style="font-size: 11px;">Limpiar</button>
                                     </div>
                                     <input id="rpg_agent_panel_bg_night_file" type="file" accept="image/*" style="display: none;" />
                                 </div>
                             </div>
                             <div class="flex-container alignitemscenter" style="width: 100%; margin-top: 8px;">
-                                <span style="font-size: 0.85em;">Overlay Strength</span>
+                                <span style="font-size: 0.85em;">Intensidad de Transparencia</span>
                                 <span id="rpg_agent_panel_bg_overlay_val" style="margin-left: auto; font-weight: bold; opacity: 0.8;">55%</span>
                             </div>
-                            <input id="rpg_agent_panel_bg_overlay" type="range" class="text_pole" style="width: 100%; cursor: pointer;" min="0" max="100" value="55" title="Higher = stronger day/night (or neutral) tint over the image" />
+                            <input id="rpg_agent_panel_bg_overlay" type="range" class="text_pole" style="width: 100%; cursor: pointer;" min="0" max="100" value="55" title="Un valor más alto intensifica la capa oscura sobre la imagen para facilitar la lectura" />
                         </div>
                         <div class="flex-container flexFlowColumn gap-1" style="margin-top: 4px;">
                             <div class="flex-container alignitemscenter" style="width: 100%;">
-                                <span style="font-size: 0.85em;">Tracker Font Size</span>
+                                <span style="font-size: 0.85em;">Tamaño de Fuente del Rastreador</span>
                                 <span id="rpg_tracker_font_size_val" style="margin-left: auto; font-weight: bold; opacity: 0.8;">13px</span>
                             </div>
                             <input id="rpg_tracker_font_size" type="range" class="text_pole" style="width: 100%; cursor: pointer;" min="8" max="32" />
                             <div class="flex-container alignitemscenter" style="width: 100%; margin-top: 4px;">
-                                <span style="font-size: 0.85em;">Agent Font Size</span>
+                                <span style="font-size: 0.85em;">Tamaño de Fuente del Agente</span>
                                 <span id="rpg_agent_font_size_val" style="margin-left: auto; font-weight: bold; opacity: 0.8;">13px</span>
                             </div>
                             <input id="rpg_agent_font_size" type="range" class="text_pole" style="width: 100%; cursor: pointer;" min="8" max="32" />
                         </div>
                         <div id="rpg_tracker_theme_wizard_block" style="display:none; border: 1px solid rgba(255,255,255,0.15); border-radius: 8px; padding: 10px; background: rgba(255,255,255,0.03); margin-top: 4px;">
-                            <b>🪄 AI Theme Wizard</b>
-                            <textarea id="rpg_tracker_theme_prompt" class="text_pole" rows="3" placeholder="Describe visual style..."></textarea>
+                            <b>🪄 Asistente de Temas IA</b>
+                            <textarea id="rpg_tracker_theme_prompt" class="text_pole" rows="3" placeholder="Describe el estilo visual..."></textarea>
                             <div class="flex-container gap-1" style="margin-top: 6px;">
-                                <button id="rpg_tracker_theme_generate" class="menu_button interactable" style="flex: 1;">New</button>
-                                <button id="rpg_tracker_theme_iterate" class="menu_button interactable" style="flex: 1;">Iterate</button>
+                                <button id="rpg_tracker_theme_generate" class="menu_button interactable" style="flex: 1;">Nuevo</button>
+                                <button id="rpg_tracker_theme_iterate" class="menu_button interactable" style="flex: 1;">Iterar</button>
                             </div>
                             <div class="flex-container gap-1" style="margin-top: 4px;">
-                                <button id="rpg_tracker_theme_save" class="menu_button interactable" style="flex: 2; font-size: 11px;"><i class="fa-solid fa-bookmark"></i> Save to Library</button>
-                                <button id="rpg_tracker_theme_wizard_undo" class="menu_button interactable" style="flex: 1; font-size: 11px;"><i class="fa-solid fa-undo"></i> Undo</button>
+                                <button id="rpg_tracker_theme_save" class="menu_button interactable" style="flex: 2; font-size: 11px;"><i class="fa-solid fa-bookmark"></i> Guardar en Biblioteca</button>
+                                <button id="rpg_tracker_theme_wizard_undo" class="menu_button interactable" style="flex: 1; font-size: 11px;"><i class="fa-solid fa-undo"></i> Deshacer</button>
                             </div>
                             <div id="rpg_tracker_theme_wizard_status" style="font-size: 10px; margin-top: 5px; opacity: 0.8; font-style: italic; min-height: 14px;"></div>
                             <div id="rpg_tracker_saved_themes_container" style="display:none; margin-top: 10px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 8px;">
-                                <b style="font-size: 0.85em; opacity: 0.8;">Library</b>
+                                <b style="font-size: 0.85em; opacity: 0.8;">Biblioteca</b>
                                 <div id="rpg_tracker_saved_themes_list" class="flex-container flexFlowColumn gap-1"></div>
                             </div>
                         </div>
@@ -193,112 +193,112 @@
                     <div class="inline-drawer">
                         <div class="inline-drawer-toggle inline-drawer-header">
                             <i class="fa-solid fa-image" style="margin-right: 6px; opacity: 0.65;"></i>
-                            <b>Portraits</b>
+                            <b>Retratos</b>
                             <div class="inline-drawer-icon fa-solid fa-circle-chevron-down"></div>
                         </div>
                         <div class="inline-drawer-content">
                             <div id="rpg_portrait_config_block" class="flex-container flexFlowColumn gap-1">
                             <label class="checkbox_label">
                                 <input id="rpg_tracker_enable_portraits" type="checkbox" />
-                                <span>Enable Portraits in Tracker</span>
+                                <span>Habilitar Retratos en el Rastreador</span>
                                 <i class="fa-solid fa-circle-question interactable"
-                                    title="Show portrait thumbnails on Character and Party cards. Per-chat: each campaign retains its own portraits. Drag &amp; drop an image onto any portrait box, or click to paste a URL."></i>
+                                    title="Muestra miniaturas de retratos en las fichas del personaje y del grupo. Se guarda por chat. Puedes arrastrar una imagen o pegar su URL."></i>
                             </label>
 
-                            <small style="display: block; padding-left: 4px; font-size: 0.78em; opacity: 0.6; margin-top: 6px;">Lorebook Agent</small>
+                            <small style="display: block; padding-left: 4px; font-size: 0.78em; opacity: 0.6; margin-top: 6px;">Agente de Lorebook</small>
                             <label class="checkbox_label" style="padding-left: 4px;">
                                 <input id="rpg_tracker_npc_portraits" type="checkbox" />
-                                <span>Show NPC Portraits</span>
+                                <span>Mostrar Retratos de PNJs</span>
                                 <i class="fa-solid fa-circle-question interactable"
-                                    title="When disabled, the Lorebook Agent NPCs section uses the compact list view (like Events/Locations) and NPC portrait auto-generation is turned off. The Add NPC to Story button remains available."></i>
+                                    title="Cuando está desactivado, la sección de PNJs utiliza una vista de lista compacta y la autogeneración de retratos se desactiva."></i>
                             </label>
 
                             <div style="display: flex; align-items: center; gap: 8px; padding-left: 4px; margin-top: 4px;">
-                                <label style="font-size: 0.82em; opacity: 0.75; white-space: nowrap;">Generator Source
+                                <label style="font-size: 0.82em; opacity: 0.75; white-space: nowrap;">Fuente del Generador
                                     <i class="fa-solid fa-circle-question interactable"
-                                        title="SillyTavern Image Generation Extension uses whatever backend (local WebUI/ComfyUI, Horde, or cloud API) is configured in SillyTavern's native Image Generation settings panel. Ensure it is enabled and configured there first."></i>
+                                        title="La extensión de Generación de Imágenes de SillyTavern utiliza el motor configurado en sus propios ajustes. Asegúrate de tenerlo habilitado allí."></i>
                                 </label>
                                 <select id="rpg_portrait_generator_source" class="text_pole" style="font-size: 0.82em; padding: 2px 4px; height: 24px; flex: 1;">
-                                    <option value="native">ST Image Generation Extension</option>
+                                    <option value="native">Extensión Nativa de Generación de Imágenes ST</option>
                                     <option value="pollinations">Pollinations.ai</option>
                                 </select>
                             </div>
 
                             <div id="rpg_tracker_pollinations_group" style="display: none; margin-bottom: 6px; padding-left: 4px;">
-                                <label style="font-size: 0.82em; opacity: 0.75; display: block; margin-bottom: 3px;">Pollinations API Key
+                                <label style="font-size: 0.82em; opacity: 0.75; display: block; margin-bottom: 3px;">Clave API de Pollinations
                                     <i class="fa-solid fa-circle-question interactable"
-                                        title="Why Pollinations? Pollinations.ai offers image generation models (like Flux and ZImage) via API keys linked to a GitHub account. It operates on a pay-as-you-go / quest system. It only requires a GitHub account to get a permanent API key."></i>
+                                        title="Pollinations.ai ofrece modelos de generación mediante clave API vinculada a una cuenta de GitHub."></i>
                                 </label>
-                                <input id="rpg_tracker_pollinations_key" type="password" class="text_pole" placeholder="sk_… or pk_…" style="font-size: 0.85em;" />
+                                <input id="rpg_tracker_pollinations_key" type="password" class="text_pole" placeholder="sk_… o pk_…" style="font-size: 0.85em;" />
                                 <div style="font-size: 0.72em; opacity: 0.5; margin-top: 2px;">
-                                    API key from <a href="https://enter.pollinations.ai/#keys" target="_blank" style="color: #7ec8e3;">enter.pollinations.ai</a>. Requires a GitHub account.
+                                    Obtén tu clave en <a href="https://enter.pollinations.ai/#keys" target="_blank" style="color: #7ec8e3;">enter.pollinations.ai</a>. Requiere cuenta de GitHub.
                                 </div>
                             </div>
 
                             <label class="checkbox_label" style="padding-left: 4px;">
                                 <input id="rpg_tracker_portrait_skip_prompt" type="checkbox" />
-                                <span>Skip Prompt Edit Dialog</span>
+                                <span>Omitir Diálogo de Edición de Prompt</span>
                                 <i class="fa-solid fa-circle-question interactable"
-                                    title="When enabled, clicking 'AI Generate' will instantly generate and apply the portrait in the background without opening the confirmation/prompt editor dialog first."></i>
+                                    title="Al hacer clic en 'Generar con IA', se creará y aplicará el retrato automáticamente en segundo plano sin abrir el diálogo de confirmación."></i>
                             </label>
 
                             <label class="checkbox_label" style="padding-left: 4px;">
                                 <input id="rpg_tracker_hide_image_gen_toasts" type="checkbox" />
-                                <span>Hide Image Generation Toasts</span>
+                                <span>Ocultar Notificaciones de Generación de Imágenes</span>
                                 <i class="fa-solid fa-circle-question interactable"
-                                    title="Suppress progress and success notifications from portrait and location AI auto-generation. Errors and warnings still appear."></i>
+                                    title="Oculta notificaciones de progreso y éxito en la generación automática de retratos y escenas. Los errores seguirán mostrándose."></i>
                             </label>
 
-                            <small style="display: block; padding-left: 4px; font-size: 0.78em; opacity: 0.6; margin-top: 2px;">Auto-generate for:</small>
+                            <small style="display: block; padding-left: 4px; font-size: 0.78em; opacity: 0.6; margin-top: 2px;">Generar automáticamente para:</small>
                             <label class="checkbox_label" style="padding-left: 4px;">
                                 <input id="rpg_tracker_portrait_auto_player" type="checkbox" />
-                                <span>Player character</span>
+                                <span>Personaje del jugador</span>
                                 <i class="fa-solid fa-circle-question interactable"
-                                    title="When enabled, a portrait is automatically generated in the background for the linked Player Character in Campaign Records (if they do not already have one). This is separate from party members in the PARTY block."></i>
+                                    title="Genera un retrato automáticamente en segundo plano para el personaje del jugador vinculado en Registros de Campaña si aún no tiene uno."></i>
                             </label>
                             <label class="checkbox_label" style="padding-left: 4px;">
                                 <input id="rpg_tracker_portrait_auto_party" type="checkbox" />
-                                <span>Party members</span>
+                                <span>Miembros del grupo</span>
                                 <i class="fa-solid fa-circle-question interactable"
-                                    title="When enabled, portraits will be automatically generated in the background for new party members added to the PARTY block if they don't already have one. Does not include the linked Player Character."></i>
+                                    title="Genera retratos automáticamente en segundo plano para nuevos miembros agregados al bloque [PARTY]."></i>
                             </label>
                             <label class="checkbox_label" style="padding-left: 4px;">
                                 <input id="rpg_tracker_portrait_auto_enemies" type="checkbox" />
-                                <span>Combat enemies</span>
+                                <span>Enemigos en combate</span>
                                 <i class="fa-solid fa-circle-question interactable"
-                                    title="When enabled, portraits will be automatically generated in the background for new combatants in the COMBAT block if they are not in the party and don't already have one."></i>
+                                    title="Genera retratos automáticamente en segundo plano para combatientes en el bloque [COMBAT] fuera del grupo."></i>
                             </label>
                             <label class="checkbox_label" style="padding-left: 4px;">
                                 <input id="rpg_tracker_portrait_auto_npcs" type="checkbox" />
-                                <span>Lorebook NPCs</span>
+                                <span>PNJs del Libro de Lore</span>
                                 <i class="fa-solid fa-circle-question interactable"
-                                    title="When enabled, portraits will be automatically generated in the background for new NPCs created or updated in the lorebook if they don't already have one."></i>
+                                    title="Genera retratos automáticamente en segundo plano para nuevos PNJs creados o actualizados en el libro de lore."></i>
                             </label>
 
-                            <small style="display: block; padding-left: 4px; font-size: 0.78em; opacity: 0.6; margin-top: 10px;">Location Images &amp; Visualization</small>
+                            <small style="display: block; padding-left: 4px; font-size: 0.78em; opacity: 0.6; margin-top: 10px;">Imágenes de Ubicación y Visualización</small>
                             <div id="rpg_loc_images_settings_block" class="rt-loc-settings-block flex-container flexFlowColumn gap-1" style="padding-left: 4px;">
                                 <div class="rt-loc-settings-intro">
-                                    Scene art in the Lorebook Agent — location tree thumbnails, wide detail images, and Visualization Mode. Off by default.
+                                    Arte de la escena en el Agente de Lorebook: miniaturas del árbol de ubicaciones, imágenes panorámicas y Modo Visualización.
                                 </div>
                                 <div id="rpg_loc_images_standard_group" class="rt-loc-settings-section">
                                     <div id="rpg_loc_images_standard_core">
                                         <label class="checkbox_label">
                                             <input id="rpg_tracker_location_images" type="checkbox" />
-                                            <span>Show Location Images</span>
+                                            <span>Mostrar Imágenes de Ubicación</span>
                                             <i class="fa-solid fa-circle-question interactable"
-                                                title="Master toggle for location scene art in the Lorebook Agent — thumbnails on the Locations tree, detail view with wide scene art, drag &amp; drop upload, and Visualization Mode in the agent panel. Also enabled automatically with Real-Time Visualization Mode or Auto-Generate Locations."></i>
+                                                title="Control principal para el arte de escenas de ubicación en el Agente de Lorebook."></i>
                                         </label>
                                         <label class="checkbox_label">
                                             <input id="rpg_tracker_portrait_auto_locations" type="checkbox" />
-                                            <span>Auto-Generate Locations</span>
+                                            <span>Generar Ubicaciones Automáticamente</span>
                                             <i class="fa-solid fa-circle-question interactable"
-                                                title="When enabled (and Real-Time Visualization Mode is off), scene images are auto-generated in the background for new location entries that do not already have an image. Also turns on Show Location Images. Disabled while Real-Time Visualization Mode is on."></i>
+                                                title="Genera automáticamente imágenes de escena en segundo plano para nuevas ubicaciones que no tengan imagen."></i>
                                         </label>
                                         <label class="checkbox_label">
                                             <input id="rpg_portrait_location_include_present_npcs" type="checkbox" />
-                                            <span>Include Present NPCs in Location Scene Prompts</span>
+                                            <span>Incluir PNJs Presentes en los Prompts de Escena de Ubicación</span>
                                             <i class="fa-solid fa-circle-question interactable"
-                                                title="When enabled, NPCs whose names appear in the most recent narrator output (Present-Now name scanner — first/last name only, not Lorebook Agent keys) are injected into location image prompts. The linked Player Character is always included. The Location Scene Prompt also instructs the model to include minor characters from recent narrator output even when they are not in that block. Locked on while Real-Time Visualization Mode is active."></i>
+                                                title="Incluye los nombres de los PNJs presentes en la respuesta reciente del narrador en el prompt de la escena."></i>
                                         </label>
                                     </div>
                                 </div>
@@ -307,32 +307,32 @@
                                         <div class="rt-loc-realtime-feature-icon" aria-hidden="true">✨</div>
                                         <div class="rt-loc-realtime-feature-titles">
                                             <div class="rt-loc-realtime-feature-title-row">
-                                                <span class="rt-loc-realtime-feature-title">Real-Time Visualization Mode</span>
-                                                <span id="rpg_loc_realtime_badge" class="rt-loc-realtime-badge" style="display: none;">LIVE</span>
+                                                <span class="rt-loc-realtime-feature-title">Modo Visualización en Tiempo Real</span>
+                                                <span id="rpg_loc_realtime_badge" class="rt-loc-realtime-badge" style="display: none;">EN VIVO</span>
                                             </div>
-                                            <div class="rt-loc-realtime-feature-tagline">Dynamic scene art that follows your story as you play</div>
+                                            <div class="rt-loc-realtime-feature-tagline">Arte de escena dinámico que sigue tu historia mientras juegas</div>
                                         </div>
                                     </div>
                                     <div id="rpg_loc_realtime_active_note" class="rt-loc-realtime-active-note" style="display: none;"></div>
                                     <label class="checkbox_label rt-loc-realtime-enable-label">
                                         <input id="rpg_tracker_portrait_auto_scene_view" type="checkbox" />
-                                        <span>Enable Real-Time Visualization Mode</span>
+                                        <span>Habilitar Modo Visualización en Tiempo Real</span>
                                         <i class="fa-solid fa-circle-question interactable"
-                                            title="When on, location scene art is generated from Visualization Mode using current chat context and characters present. Choose a trigger below: on location enter, on location change, or every N outputs (still regenerates on location change). Also turns on Show Location Images (locked on until this is off). Auto-Generate Locations is disabled."></i>
+                                            title="Genera arte de escena dinámico usando el contexto del chat actual y los personajes presentes."></i>
                                     </label>
                                     <div id="rpg_loc_realtime_trigger_group" class="rt-loc-realtime-trigger-group" style="display: none;">
-                                        <label class="rt-loc-realtime-trigger-label">Generate scene art</label>
+                                        <label class="rt-loc-realtime-trigger-label">Generar arte de la escena</label>
                                         <select id="rpg_tracker_portrait_realtime_trigger" class="text_pole rt-loc-realtime-trigger-select">
-                                            <option value="location_enter">On location enter (once per place)</option>
-                                            <option value="location_change">On location change (including revisits)</option>
-                                            <option value="every_n_outputs">Every N outputs (+ on location change)</option>
+                                            <option value="location_enter">Al entrar en la ubicación (una vez por lugar)</option>
+                                            <option value="location_change">Al cambiar de ubicación (incluyendo visitas)</option>
+                                            <option value="every_n_outputs">Cada N respuestas (+ al cambiar de ubicación)</option>
                                         </select>
                                         <div id="rpg_loc_realtime_every_n_wrap" class="rt-loc-realtime-every-n flex-container gap-1" style="display: none;">
-                                            <span>Every</span>
+                                            <span>Cada</span>
                                             <input id="rpg_tracker_portrait_realtime_every_n" type="number" class="text_pole" min="1" step="1" value="1" />
-                                            <span>chat output(s)</span>
+                                            <span>respuesta(s) del chat</span>
                                             <i class="fa-solid fa-circle-question interactable"
-                                                title="While this mode is on, scene art still regenerates whenever the location changes. Separately, a fresh image is also generated every N assistant/chat outputs — set to 1 to regenerate after every output."></i>
+                                                title="Genera una nueva imagen cada N respuestas del asistente además de cuando cambia la ubicación."></i>
                                         </div>
                                     </div>
                                 </div>
@@ -340,15 +340,15 @@
 
                             <div class="inline-drawer" style="margin-top: 6px; margin-bottom: 2px;">
                                 <div class="inline-drawer-toggle inline-drawer-header" style="font-size: 0.82em; padding: 3px 6px;">
-                                    <b>Portraits LLM Connection</b>
+                                    <b>Conexión LLM para Retratos</b>
                                     <div class="inline-drawer-icon fa-solid fa-circle-chevron-down"></div>
                                 </div>
                                 <div class="inline-drawer-content" style="padding: 6px 4px 0 4px;">
                                     <div class="flex-container flexFlowColumn gap-1">
-                                        <label style="font-size: 0.8em;">Connection Source</label>
+                                        <label style="font-size: 0.8em;">Fuente de Conexión</label>
                                         <select id="rpg_portrait_connection_source" class="text_pole" style="font-size: 0.8em;">
-                                            <option value="default">Main API</option>
-                                            <option value="profile">Profile</option>
+                                            <option value="default">API Principal</option>
+                                            <option value="profile">Perfil</option>
                                             <option value="ollama">Ollama</option>
                                             <option value="openai">OpenAI</option>
                                         </select>
@@ -364,14 +364,14 @@
                                         </div>
                                         <div id="rpg_portrait_openai_group" style="display: none;">
                                             <input id="rpg_portrait_openai_url" type="text" class="text_pole" placeholder="URL" style="font-size: 0.8em;" />
-                                            <input id="rpg_portrait_openai_key" type="password" class="text_pole" placeholder="Key" style="font-size: 0.8em;" />
+                                            <input id="rpg_portrait_openai_key" type="password" class="text_pole" placeholder="Clave API" style="font-size: 0.8em;" />
                                             <div class="flex-container gap-1">
                                                 <select id="rpg_portrait_openai_model" class="text_pole" style="flex: 1; font-size: 0.8em;"></select>
                                                 <button id="rpg_portrait_openai_refresh" class="menu_button interactable" style="font-size: 0.8em; padding: 2px 6px;"><i class="fa-solid fa-arrows-rotate"></i></button>
                                             </div>
-                                            <input id="rpg_portrait_openai_model_manual" type="text" class="text_pole" placeholder="Manual Model Name" style="font-size: 0.8em;" />
+                                            <input id="rpg_portrait_openai_model_manual" type="text" class="text_pole" placeholder="Nombre Manual del Modelo" style="font-size: 0.8em;" />
                                         </div>
-                                        <label style="font-size: 0.8em;">Preset</label>
+                                        <label style="font-size: 0.8em;">Preajuste</label>
                                         <select id="rpg_portrait_completion_preset" class="text_pole" style="font-size: 0.8em;"></select>
                                     </div>
                                 </div>
@@ -379,49 +379,49 @@
 
                             <div class="inline-drawer" style="margin-top: 4px; margin-bottom: 2px;">
                                 <div class="inline-drawer-toggle inline-drawer-header" style="font-size: 0.82em; padding: 3px 6px;">
-                                    <b>Portrait Prompt Templates</b>
+                                    <b>Plantillas de Prompt para Retratos</b>
                                     <div class="inline-drawer-icon fa-solid fa-circle-chevron-down"></div>
                                 </div>
                                 <div class="inline-drawer-content" style="padding: 6px 4px 0 4px;">
                                     <div class="flex-container flexFlowColumn gap-1">
                                         <div style="font-size: 0.72em; opacity: 0.55; line-height: 1.35; margin-bottom: 2px;">
-                                            These are the system prompts sent to the LLM to write an image-generation prompt. The NPC/PC prompt receives the full lorebook entry verbatim — including any custom <code>[CORE]</code> field you've added (e.g. an "Image Tags" section via the NPC Section Editor), so you can instruct it to prioritize that field by name. Tokens: <code>{{name}}</code> is replaced with the entity's name, <code>{{wordtarget}}</code> is replaced with the word target set below.
+                                            Prompts del sistema enviados al LLM para escribir los prompts de generación de imágenes. Variables: <code>{{name}}</code> se reemplaza por el nombre de la entidad, <code>{{wordtarget}}</code> se reemplaza por el número de palabras objetivo.
                                         </div>
 
                                         <div style="display:flex; align-items:center; gap:8px; margin-bottom: 4px;">
-                                            <label style="font-size: 0.8em; opacity: 0.85; white-space: nowrap;" title="The maximum word count the LLM is instructed to target for the generated image prompt. Referenced by the {{wordtarget}} token in both prompts below.">Portrait Prompt Word Target</label>
+                                            <label style="font-size: 0.8em; opacity: 0.85; white-space: nowrap;" title="Objetivo máximo de palabras para el prompt de generación de imagen.">Objetivo de Palabras del Prompt de Retrato</label>
                                             <input id="rpg_portrait_prompt_word_target" type="text" inputmode="numeric" pattern="[0-9]*" class="text_pole" value="200" style="max-width: 90px; font-size: 0.8em;" />
                                         </div>
 
                                         <div style="display:flex; align-items:center; gap:6px; margin-bottom: 2px;">
-                                            <label style="font-size: 0.8em; font-weight: bold; flex:1; margin:0;">NPC / PC Portrait Prompt</label>
-                                            <button id="rpg_portrait_npc_btn_reset_prompt" class="menu_button interactable" style="font-size:0.72em; padding:2px 8px;" title="Reset to default prompt">
-                                                <i class="fa-solid fa-arrow-rotate-left"></i> Reset
+                                            <label style="font-size: 0.8em; font-weight: bold; flex:1; margin:0;">Prompt de Retrato de PNJ / PJ</label>
+                                            <button id="rpg_portrait_npc_btn_reset_prompt" class="menu_button interactable" style="font-size:0.72em; padding:2px 8px;" title="Restablecer prompt predeterminado">
+                                                <i class="fa-solid fa-arrow-rotate-left"></i> Restablecer
                                             </button>
                                         </div>
-                                        <textarea id="rpg_portrait_npc_system_prompt" class="text_pole" rows="8" style="width:100%; font-size:0.78em; font-family:monospace; resize:vertical; background:rgba(0,0,0,0.3); color:var(--SmartThemeBodyColor); border:1px solid rgba(255,255,255,0.1); border-radius:4px; padding:6px; box-sizing:border-box;" placeholder="System prompt used for NPC/PC portrait prompt generation…"></textarea>
+                                        <textarea id="rpg_portrait_npc_system_prompt" class="text_pole" rows="8" style="width:100%; font-size:0.78em; font-family:monospace; resize:vertical; background:rgba(0,0,0,0.3); color:var(--SmartThemeBodyColor); border:1px solid rgba(255,255,255,0.1); border-radius:4px; padding:6px; box-sizing:border-box;" placeholder="Prompt del sistema para generación de retratos de PNJ/PJ…"></textarea>
 
                                         <div style="display:flex; align-items:center; gap:6px; margin-bottom: 2px; margin-top: 6px;">
-                                            <label style="font-size: 0.8em; font-weight: bold; flex:1; margin:0;">Character / Party / Combat Portrait Prompt</label>
-                                            <button id="rpg_portrait_character_btn_reset_prompt" class="menu_button interactable" style="font-size:0.72em; padding:2px 8px;" title="Reset to default prompt">
-                                                <i class="fa-solid fa-arrow-rotate-left"></i> Reset
+                                            <label style="font-size: 0.8em; font-weight: bold; flex:1; margin:0;">Prompt de Retrato de Personaje / Grupo / Combate</label>
+                                            <button id="rpg_portrait_character_btn_reset_prompt" class="menu_button interactable" style="font-size:0.72em; padding:2px 8px;" title="Restablecer prompt predeterminado">
+                                                <i class="fa-solid fa-arrow-rotate-left"></i> Restablecer
                                             </button>
                                         </div>
-                                        <textarea id="rpg_portrait_character_system_prompt" class="text_pole" rows="8" style="width:100%; font-size:0.78em; font-family:monospace; resize:vertical; background:rgba(0,0,0,0.3); color:var(--SmartThemeBodyColor); border:1px solid rgba(255,255,255,0.1); border-radius:4px; padding:6px; box-sizing:border-box;" placeholder="System prompt used for Character/Party/Combat portrait prompt generation…"></textarea>
+                                        <textarea id="rpg_portrait_character_system_prompt" class="text_pole" rows="8" style="width:100%; font-size:0.78em; font-family:monospace; resize:vertical; background:rgba(0,0,0,0.3); color:var(--SmartThemeBodyColor); border:1px solid rgba(255,255,255,0.1); border-radius:4px; padding:6px; box-sizing:border-box;" placeholder="Prompt del sistema para generación de retratos de Personaje/Grupo/Combate…"></textarea>
 
                                         <div style="display:flex; align-items:center; gap:6px; margin-bottom: 2px; margin-top: 6px;">
-                                            <label style="font-size: 0.8em; font-weight: bold; flex:1; margin:0;">Location Scene Prompt</label>
-                                            <button id="rpg_portrait_location_btn_reset_prompt" class="menu_button interactable" style="font-size:0.72em; padding:2px 8px;" title="Reset to default prompt">
-                                                <i class="fa-solid fa-arrow-rotate-left"></i> Reset
+                                            <label style="font-size: 0.8em; font-weight: bold; flex:1; margin:0;">Prompt de Escena de Ubicación</label>
+                                            <button id="rpg_portrait_location_btn_reset_prompt" class="menu_button interactable" style="font-size:0.72em; padding:2px 8px;" title="Restablecer prompt predeterminado">
+                                                <i class="fa-solid fa-arrow-rotate-left"></i> Restablecer
                                             </button>
                                         </div>
-                                        <textarea id="rpg_portrait_location_system_prompt" class="text_pole" rows="8" style="width:100%; font-size:0.78em; font-family:monospace; resize:vertical; background:rgba(0,0,0,0.3); color:var(--SmartThemeBodyColor); border:1px solid rgba(255,255,255,0.1); border-radius:4px; padding:6px; box-sizing:border-box;" placeholder="System prompt used for location/scene image prompt generation…"></textarea>
+                                        <textarea id="rpg_portrait_location_system_prompt" class="text_pole" rows="8" style="width:100%; font-size:0.78em; font-family:monospace; resize:vertical; background:rgba(0,0,0,0.3); color:var(--SmartThemeBodyColor); border:1px solid rgba(255,255,255,0.1); border-radius:4px; padding:6px; box-sizing:border-box;" placeholder="Prompt del sistema para generación de imágenes de escenas de ubicación…"></textarea>
 
                                         <div class="flex-container gap-1" style="margin-top: 6px;">
-                                            <button id="rpg_portrait_prompt_preset_save_btn" class="menu_button interactable" style="flex: 1; font-size: 11px;"><i class="fa-solid fa-bookmark"></i> Save Setup to Library</button>
+                                            <button id="rpg_portrait_prompt_preset_save_btn" class="menu_button interactable" style="flex: 1; font-size: 11px;"><i class="fa-solid fa-bookmark"></i> Guardar Configuración en Biblioteca</button>
                                         </div>
                                         <div id="rpg_portrait_prompt_presets_container" style="display:none; margin-top: 8px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 8px;">
-                                            <b style="font-size: 0.85em; opacity: 0.8;">Saved Setups</b>
+                                            <b style="font-size: 0.85em; opacity: 0.8;">Configuraciones Guardadas</b>
                                             <div id="rpg_portrait_prompt_presets_list" class="flex-container flexFlowColumn gap-1"></div>
                                         </div>
                                     </div>
@@ -429,50 +429,50 @@
                             </div>
 
                             <button id="rpg_tracker_purge_all_portraits" class="menu_button interactable" style="margin-top: 8px; width: 100%; background: rgba(200, 60, 60, 0.15); border-color: #c0392b;"
-                                title="Deletes every Multihog portrait file on disk and clears portrait data from the live state and all saved chat links. Use if settings.json became huge or portraits are broken. Does not touch memos or lorebooks.">
-                                <i class="fa-solid fa-trash-can"></i> Emergency: Purge All Portraits
+                                title="Elimina todos los archivos de retrato de Multihog en disco y limpia los datos de retratos del estado en vivo.">
+                                <i class="fa-solid fa-trash-can"></i> Emergencia: Purgar Todos los Retratos
                             </button>
                         </div>
                         </div>
                     </div>
 
                         <!-- DEVELOPER & RESET -->
-                        <small style="display: block; margin-top: 10px; margin-bottom: 2px; font-weight: bold; opacity: 0.65; text-transform: uppercase; font-size: 0.7em; letter-spacing: 0.4px;">Developer &amp; Reset</small>
+                        <small style="display: block; margin-top: 10px; margin-bottom: 2px; font-weight: bold; opacity: 0.65; text-transform: uppercase; font-size: 0.7em; letter-spacing: 0.4px;">Desarrollador y Restablecimiento</small>
                         <div class="inline-drawer" style="margin-top: 2px;">
                             <div class="inline-drawer-toggle inline-drawer-header" style="font-size: 0.88em;">
                                 <i class="fa-solid fa-code" style="margin-right: 6px; opacity: 0.6;"></i>
-                                <b>Debug &amp; Factory Reset</b>
+                                <b>Depuración y Restablecimiento de Fábrica</b>
                                 <div class="inline-drawer-icon fa-solid fa-circle-chevron-down"></div>
                             </div>
                             <div class="inline-drawer-content">
                                 <label class="checkbox_label">
                                     <input id="rpg_tracker_debug" type="checkbox" />
-                                    <span>Debug Mode</span>
+                                    <span>Modo Depuración</span>
                                 </label>
                                 <label class="checkbox_label">
                                     <input id="rpg_tracker_auto_reset_prompts" type="checkbox" />
-                                    <span>Auto-Update Prompts on Upgrade</span>
-                                    <i class="fa-solid fa-circle-question interactable" title="When enabled, bundled default prompts are automatically reset on load whenever the shipped prompt defaults change — not on every version bump. No dialog is shown."></i>
+                                    <span>Actualizar Prompts Automáticamente tras Actualización</span>
+                                    <i class="fa-solid fa-circle-question interactable" title="Actualiza automáticamente las plantillas del sistema por defecto cuando cambian."></i>
                                 </label>
                                 <button id="rpg_tracker_btn_force_checkpoint" class="menu_button interactable"
                                     style="width: 100%; margin-top: 6px; background: rgba(0, 180, 120, 0.18); border-color: #00b478;"
-                                    title="Force-writes SillyTavern settings.json to disk RIGHT NOW (awaits the save while this page stays open). It does not use or restore browser-local recovery data.">
-                                    <i class="fa-solid fa-floppy-disk"></i> Force Disk Checkpoint
+                                    title="Escribe la configuración de SillyTavern directamente a disco AHORA MISMO.">
+                                    <i class="fa-solid fa-floppy-disk"></i> Forzar Punto de Guardado en Disco
                                 </button>
                                 <small style="display: block; margin-top: 4px; opacity: 0.65; font-size: 0.78em; line-height: 1.25;">
-                                    Keeps the tab open until the toast confirms. Browser-local recovery is disabled.
+                                    Mantiene la pestaña abierta hasta la confirmación de la notificación.
                                 </small>
                                 <button id="rpg_tracker_btn_upgrade_changed_prompts" class="menu_button interactable rt-prompt-upgrade-pending"
                                     style="display:none; width: 100%; margin-top: 6px;"
-                                    title="Shipped default prompts changed since you last acknowledged an update. Re-opens the update dialog.">
-                                    <i class="fa-solid fa-arrow-up-from-bracket"></i> Update Changed Prompts
+                                    title="Los prompts por defecto cambiaste desde tu última actualización. Reabre el diálogo de actualización.">
+                                    <i class="fa-solid fa-arrow-up-from-bracket"></i> Actualizar Prompts Modificados
                                 </button>
                                 <button id="rpg_tracker_btn_reset_and_apply_sysprompt" class="menu_button interactable"
                                     style="width: 100%; margin-top: 6px; background: rgba(80, 140, 255, 0.18); border-color: #5588ff;"
-                                    title="Resets ALL prompts (Core, Stock Modules, Block Order) and writes the current system prompt template to Quick Prompt Main box.">
-                                    <i class="fa-solid fa-rotate"></i> Reset All &amp; Apply
+                                    title="Restablece TODOS los prompts y aplica la plantilla del sistema actual al cuadro Main.">
+                                    <i class="fa-solid fa-rotate"></i> Restablecer Todo y Aplicar
                                 </button>
-                                <button id="rpg_tracker_btn_factory_reset" class="menu_button interactable" style="background: rgba(181, 31, 31, 0.4); border-color: #ff5555; width: 100%; margin-top: 6px;"><i class="fa-solid fa-radiation"></i> FACTORY RESET</button>
+                                <button id="rpg_tracker_btn_factory_reset" class="menu_button interactable" style="background: rgba(181, 31, 31, 0.4); border-color: #ff5555; width: 100%; margin-top: 6px;"><i class="fa-solid fa-radiation"></i> RESTABLECIMIENTO DE FÁBRICA</button>
                             </div>
                         </div>
                 </div>
@@ -489,68 +489,68 @@
                     <div class="flex-container flexFlowColumn gap-1">
 
                         <div id="rpg_narrator_config_block" style="border: 1px solid rgba(255,255,255,0.12); border-radius: 6px; padding: 8px 10px; margin-bottom: 6px;">
-                            <small style="display: block; margin-bottom: 6px; font-weight: bold; opacity: 0.9;">Narrator Configuration</small>
+                            <small style="display: block; margin-bottom: 6px; font-weight: bold; opacity: 0.9;">Configuración del Narrador</small>
                             <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 4px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 4px;">
-                                <span style="font-size: 0.85em; font-weight: bold; opacity: 0.8;">Pacing/Output Length</span>
-                                <button class="rt-narrative-pacing-help" style="background: none; border: 1px solid rgba(255,255,255,0.2); border-radius: 4px; color: inherit; font-size: 0.72em; opacity: 0.7; padding: 1px 7px; cursor: pointer;">What are these?</button>
+                                <span style="font-size: 0.85em; font-weight: bold; opacity: 0.8;">Ritmo / Longitud de Respuesta</span>
+                                <button class="rt-narrative-pacing-help" style="background: none; border: 1px solid rgba(255,255,255,0.2); border-radius: 4px; color: inherit; font-size: 0.72em; opacity: 0.7; padding: 1px 7px; cursor: pointer;">¿Qué es esto?</button>
                             </div>
                             <div class="flex-container flexFlowColumn gap-1" style="margin-bottom: 8px; padding-left: 5px;">
-                                <label class="checkbox_label"><input type="radio" name="rpg_narrative_pacing" value="normal" id="rpg_narrative_pacing_normal" /><span>Normal (no length instructions)</span></label>
-                                <label class="checkbox_label"><input type="radio" name="rpg_narrative_pacing" value="shorter_outputs" id="rpg_narrative_pacing_shorter_outputs" /><span>Shorter Outputs</span></label>
-                                <label class="checkbox_label"><input type="radio" name="rpg_narrative_pacing" value="high_agency" id="rpg_narrative_pacing_high_agency" /><span>High-Agency Mode</span></label>
-                                <label class="checkbox_label"><input type="radio" name="rpg_narrative_pacing" value="downtime" id="rpg_narrative_pacing_downtime" /><span>Downtime/Slice of Life Mode</span></label>
+                                <label class="checkbox_label"><input type="radio" name="rpg_narrative_pacing" value="normal" id="rpg_narrative_pacing_normal" /><span>Normal (sin instrucciones de longitud)</span></label>
+                                <label class="checkbox_label"><input type="radio" name="rpg_narrative_pacing" value="shorter_outputs" id="rpg_narrative_pacing_shorter_outputs" /><span>Respuestas Más Cortas</span></label>
+                                <label class="checkbox_label"><input type="radio" name="rpg_narrative_pacing" value="high_agency" id="rpg_narrative_pacing_high_agency" /><span>Modo de Alta Autonomía (High-Agency)</span></label>
+                                <label class="checkbox_label"><input type="radio" name="rpg_narrative_pacing" value="downtime" id="rpg_narrative_pacing_downtime" /><span>Modo Tiempo Libre / Vida Cotidiana</span></label>
                             </div>
                             <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 4px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 4px;">
-                                <span style="font-size: 0.85em; font-weight: bold; opacity: 0.8;">RNG</span>
-                                <button class="rt-rng-help-icon" style="background: none; border: 1px solid rgba(255,255,255,0.2); border-radius: 4px; color: inherit; font-size: 0.72em; opacity: 0.7; padding: 1px 7px; cursor: pointer;">What are these?</button>
+                                <span style="font-size: 0.85em; font-weight: bold; opacity: 0.8;">Generación de Números Aleatorios (RNG)</span>
+                                <button class="rt-rng-help-icon" style="background: none; border: 1px solid rgba(255,255,255,0.2); border-radius: 4px; color: inherit; font-size: 0.72em; opacity: 0.7; padding: 1px 7px; cursor: pointer;">¿Qué es esto?</button>
                             </div>
                             <div class="flex-container flexFlowColumn gap-1" style="margin-bottom: 8px; padding-left: 5px;">
-                                <label class="checkbox_label"><input type="radio" name="rpg_sysprompt_rng_mode" value="hybrid" id="rpg_rng_hybrid" /><span>Pre-Seeded + Tool Calls (Recommended without CYOA Mode)</span></label>
-                                <label class="checkbox_label"><input type="radio" name="rpg_sysprompt_rng_mode" value="legacy" id="rpg_rng_legacy" /><span>Pre-Seeded Only (Recommended with CYOA Mode)</span></label>
-                                <label class="checkbox_label"><input type="radio" name="rpg_sysprompt_rng_mode" value="none" id="rpg_rng_none" /><span>No RNG (LLM makes up numbers, not recommended)</span></label>
+                                <label class="checkbox_label"><input type="radio" name="rpg_sysprompt_rng_mode" value="hybrid" id="rpg_rng_hybrid" /><span>Pre-Generado + Llamadas a Herramientas (Recomendado sin Modo CYOA)</span></label>
+                                <label class="checkbox_label"><input type="radio" name="rpg_sysprompt_rng_mode" value="legacy" id="rpg_rng_legacy" /><span>Solo Pre-Generado (Recomendado con Modo CYOA)</span></label>
+                                <label class="checkbox_label"><input type="radio" name="rpg_sysprompt_rng_mode" value="none" id="rpg_rng_none" /><span>Sin RNG (El LLM inventa los números, no recomendado)</span></label>
                             </div>
 
                             <details style="margin-top: 8px; border-top: 1px dashed rgba(255,255,255,0.1); padding-top: 6px; padding-left: 5px;">
-                                <summary style="font-size: 0.82em; font-weight: bold; opacity: 0.8; cursor: pointer; outline: none; user-select: none; padding-bottom: 2px;">⚙️ Advanced RNG Settings</summary>
+                                <summary style="font-size: 0.82em; font-weight: bold; opacity: 0.8; cursor: pointer; outline: none; user-select: none; padding-bottom: 2px;">⚙️ Ajustes Avanzados de RNG</summary>
                                 <div style="margin-top: 6px; display: flex; flex-direction: column; gap: 6px; cursor: default;">
 
                                     <div style="margin-bottom: 4px; border-bottom: 1px dashed rgba(255,255,255,0.06); padding-bottom: 8px;">
                                         <label class="checkbox_label">
                                             <input id="rpg_tracker_legacy_dice" type="checkbox" />
-                                            <span>Legacy Dice Logic (Vanilla)</span>
-                                            <i class="fa-solid fa-circle-question interactable" title="Uses the vanilla SillyTavern RollTheDice tool with no DC commitment before the roll."></i>
+                                            <span>Lógica de Dados Heredada (Original)</span>
+                                            <i class="fa-solid fa-circle-question interactable" title="Usa la herramienta RollTheDice original de SillyTavern sin compromiso previo de CD."></i>
                                         </label>
                                     </div>
                                     
                                     <div style="margin-bottom: 4px; border-bottom: 1px dashed rgba(255,255,255,0.06); padding-bottom: 8px;">
-                                        <label class="checkbox_label" title="Uses d100 instead of d20 for all rolls. Swaps RollTheDice ➔ RollTheDiceD100 and generates RNG_QUEUE_d100 pre-seeded values in 1-100 range. Ideal for percentage-based systems.">
+                                        <label class="checkbox_label" title="Usa d100 en lugar de d20 para todas las tiradas. Genera valores pre-generados en rango 1-100.">
                                             <input id="rpg_tracker_dice_d100_mode" type="checkbox" />
-                                            <span>🎲 d100 Mode <i class="fa-solid fa-circle-question" style="opacity:0.6;font-size:0.85em;" title="Uses d100 instead of d20 for all rolls. Swaps RollTheDice ➔ RollTheDiceD100 and generates RNG_QUEUE_d100 pre-seeded values in 1-100 range. Ideal for percentage-based systems."></i></span>
+                                            <span>🎲 Modo d100 <i class="fa-solid fa-circle-question" style="opacity:0.6;font-size:0.85em;" title="Usa d100 en lugar de d20 para todas las tiradas."></i></span>
                                         </label>
                                         <small style="display: block; margin-top: 4px; opacity: 0.65; font-style: italic; line-height: 1.2; font-weight: normal;">
-                                            ⚠️ Note: d100 Mode is not officially supported by the stock system prompt beyond basic <tt>&lt;rng_system&gt;</tt> tag adaptations. You may need to manually customize your system prompt content to fully support this mode using the <b>System Prompt Control Room</b> under Game Systems & Customization settings.
+                                            ⚠️ Nota: El modo d100 no está soportado oficialmente por el prompt base más allá de adaptaciones de etiquetas <tt>&lt;rng_system&gt;</tt>.
                                         </small>
                                     </div>
 
                                     <div style="margin-bottom: 4px;">
-                                        <span style="font-size: 0.72em; font-weight: bold; opacity: 0.65; text-transform: uppercase; letter-spacing: 0.5px;">Registered RNG Tools</span>
+                                        <span style="font-size: 0.72em; font-weight: bold; opacity: 0.65; text-transform: uppercase; letter-spacing: 0.5px;">Herramientas RNG Registradas</span>
                                     </div>
                                     <div class="flex-container flexFlowColumn gap-1" style="margin-bottom: 6px; padding-left: 5px;">
-                                        <label class="checkbox_label" title="Registers the RollTheDice (d20 version) function tool with the LLM.">
+                                        <label class="checkbox_label" title="Registra la función RollTheDice (versión d20) en el LLM.">
                                             <input id="rpg_rng_tool_d20" type="checkbox" />
-                                            <span>RollTheDice (d20 Tool)</span>
+                                            <span>RollTheDice (Herramienta d20)</span>
                                         </label>
-                                        <label class="checkbox_label" title="Registers the RollTheDiceD100 (d100 version) function tool with the LLM.">
+                                        <label class="checkbox_label" title="Registra la función RollTheDiceD100 (versión d100) en el LLM.">
                                             <input id="rpg_rng_tool_d100" type="checkbox" />
-                                            <span>RollTheDiceD100 (d100 Tool)</span>
+                                            <span>RollTheDiceD100 (Herramienta d100)</span>
                                         </label>
-                                        <label class="checkbox_label" title="Injects [RNG_QUEUE] pre-seeded rolls (d20 format, length 12) during combat context.">
+                                        <label class="checkbox_label" title="Inyecta tiradas pre-generadas [RNG_QUEUE] durante combate.">
                                             <input id="rpg_rng_queue_d20" type="checkbox" />
-                                            <span>[RNG_QUEUE] (d20 Queue)</span>
+                                            <span>[RNG_QUEUE] (Cola d20)</span>
                                         </label>
-                                        <label class="checkbox_label" title="Injects [RNG_QUEUE_d100] pre-seeded rolls (d100 format, length 30) during combat context.">
+                                        <label class="checkbox_label" title="Inyecta tiradas pre-generadas [RNG_QUEUE_d100] durante combate.">
                                             <input id="rpg_rng_queue_d100" type="checkbox" />
-                                            <span>[RNG_QUEUE_d100] (d100 Queue)</span>
+                                            <span>[RNG_QUEUE_d100] (Cola d100)</span>
                                         </label>
                                     </div>
 
@@ -558,66 +558,66 @@
                             </details>
 
                             <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 4px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 2px;">
-                                <span style="font-size: 0.85em; font-weight: bold; opacity: 0.8;">Quests</span>
-                                <button id="rt_quests_hardcore_help" style="background: none; border: 1px solid rgba(255,255,255,0.2); border-radius: 4px; color: inherit; font-size: 0.72em; opacity: 0.7; padding: 1px 7px; cursor: pointer;">What are these?</button>
+                                <span style="font-size: 0.85em; font-weight: bold; opacity: 0.8;">Misiones</span>
+                                <button id="rt_quests_hardcore_help" style="background: none; border: 1px solid rgba(255,255,255,0.2); border-radius: 4px; color: inherit; font-size: 0.72em; opacity: 0.7; padding: 1px 7px; cursor: pointer;">¿Qué es esto?</button>
                             </div>
                             <div class="flex-container flexFlowColumn gap-1" style="margin-bottom: 12px; padding-left: 5px;">
-                                <label class="checkbox_label"><input type="checkbox" id="rpg_sysprompt_mod_quests" /><span>Enable Quests</span></label>
+                                <label class="checkbox_label"><input type="checkbox" id="rpg_sysprompt_mod_quests" /><span>Habilitar Misiones</span></label>
                                 <div id="rpg_quests_options" class="flex-container flexFlowColumn gap-1" style="padding-left: 20px; display: none;">
-                                    <label class="checkbox_label"><input type="checkbox" id="rpg_quests_deadlines" /><span>Deadlines</span></label>
+                                    <label class="checkbox_label"><input type="checkbox" id="rpg_quests_deadlines" /><span>Plazos Límite</span></label>
                                     <div id="rpg_quests_frustration_wrap" style="padding-left: 20px; display: none;">
-                                        <label class="checkbox_label"><input type="checkbox" id="rpg_quests_frustration" /><span style="opacity: 0.9;">↳ Frustration (Experimental)</span></label>
+                                        <label class="checkbox_label"><input type="checkbox" id="rpg_quests_frustration" /><span style="opacity: 0.9;">↳ Frustración (Experimental)</span></label>
                                     </div>
-                                    <label class="checkbox_label"><input type="checkbox" id="rpg_quests_show_archive" checked /><span>Show completed/failed quests</span></label>
+                                    <label class="checkbox_label"><input type="checkbox" id="rpg_quests_show_archive" checked /><span>Mostrar misiones completadas/fallidas</span></label>
                                 </div>
                             </div>
 
                             <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 4px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 2px;">
-                                <span style="font-size: 0.85em; font-weight: bold; opacity: 0.8;">Components</span>
-                                <button id="rt_components_help" style="background: none; border: 1px solid rgba(255,255,255,0.2); border-radius: 4px; color: inherit; font-size: 0.72em; opacity: 0.7; padding: 1px 7px; cursor: pointer;">What are these?</button>
+                                <span style="font-size: 0.85em; font-weight: bold; opacity: 0.8;">Componentes</span>
+                                <button id="rt_components_help" style="background: none; border: 1px solid rgba(255,255,255,0.2); border-radius: 4px; color: inherit; font-size: 0.72em; opacity: 0.7; padding: 1px 7px; cursor: pointer;">¿Qué es esto?</button>
                             </div>
                             <div class="flex-container flexFlowColumn gap-1" style="margin-bottom: 8px; padding-left: 5px;">
-                                <label class="checkbox_label"><input type="checkbox" id="rpg_sysprompt_mod_loot" /><span>🎲 Loot</span></label>
-                                <label class="checkbox_label"><input type="checkbox" id="rpg_sysprompt_mod_random_events" /><span>🌍 Events</span></label>
-                                <label class="checkbox_label"><input type="checkbox" id="rpg_sysprompt_mod_resting" /><span>💤 Resting</span></label>
-                                <label class="checkbox_label"><input type="checkbox" id="rpg_sysprompt_mod_party_bench" /><span>⛺ Benched Party</span></label>
+                                <label class="checkbox_label"><input type="checkbox" id="rpg_sysprompt_mod_loot" /><span>🎲 Botín</span></label>
+                                <label class="checkbox_label"><input type="checkbox" id="rpg_sysprompt_mod_random_events" /><span>🌍 Eventos</span></label>
+                                <label class="checkbox_label"><input type="checkbox" id="rpg_sysprompt_mod_resting" /><span>💤 Descanso</span></label>
+                                <label class="checkbox_label"><input type="checkbox" id="rpg_sysprompt_mod_party_bench" /><span>⛺ Grupo en Reserva</span></label>
                                 <div style="display:flex;align-items:center;gap:4px;">
-                                <label class="checkbox_label" style="flex:1;"><input type="checkbox" id="rpg_sysprompt_mod_cyoa_mode" /><span>🧭 CYOA Mode</span></label>
-                                <button id="rpg_cyoa_settings_btn" class="menu_button interactable" style="padding:1px 7px;font-size:11px;flex-shrink:0;" title="CYOA Settings"><i class="fa-solid fa-gear"></i></button>
+                                <label class="checkbox_label" style="flex:1;"><input type="checkbox" id="rpg_sysprompt_mod_cyoa_mode" /><span>🧭 Modo CYOA</span></label>
+                                <button id="rpg_cyoa_settings_btn" class="menu_button interactable" style="padding:1px 7px;font-size:11px;flex-shrink:0;" title="Ajustes del Modo CYOA"><i class="fa-solid fa-gear"></i></button>
                                 </div>
                                 <div style="display:flex;align-items:center;gap:4px;">
-                                <label class="checkbox_label" style="flex:1;"><input type="checkbox" id="rpg_sysprompt_mod_npc_rel_bars" /><span>💞 Relationship System</span></label>
-                                <button id="rpg_relationship_settings_btn" class="menu_button interactable" style="padding:1px 7px;font-size:11px;flex-shrink:0;" title="Relationship System Settings"><i class="fa-solid fa-gear"></i></button>
+                                <label class="checkbox_label" style="flex:1;"><input type="checkbox" id="rpg_sysprompt_mod_npc_rel_bars" /><span>💞 Sistema de Relaciones</span></label>
+                                <button id="rpg_relationship_settings_btn" class="menu_button interactable" style="padding:1px 7px;font-size:11px;flex-shrink:0;" title="Ajustes del Sistema de Relaciones"><i class="fa-solid fa-gear"></i></button>
                                 </div>
                             </div>
                             <button id="rpg_tracker_btn_update_sysprompt_general" class="menu_button interactable"
                                 style="width: 100%; margin-top: 6px; background: rgba(0, 200, 140, 0.18); border-color: #00c88c;"
-                                title="Fetches and writes the system prompt to your Quick Prompt Main box according to the current RNG mode settings (Normal vs. Legacy).">
-                                <i class="fa-solid fa-arrow-up-from-bracket"></i> Apply Sysprompt
+                                title="Obtiene y escribe el prompt del sistema en el cuadro Main según el modo de RNG seleccionado.">
+                                <i class="fa-solid fa-arrow-up-from-bracket"></i> Aplicar Prompt del Sistema
                             </button>
                         </div>
 
-                        <div style="font-weight: bold; font-size: 0.85em; opacity: 0.8; margin-bottom: 4px; margin-top: 4px;">Game System Wizard</div>
+                        <div style="font-weight: bold; font-size: 0.85em; opacity: 0.8; margin-bottom: 4px; margin-top: 4px;">Asistente de Sistemas de Juego</div>
                         <div style="font-size: 0.78em; opacity: 0.6; line-height: 1.4; margin-bottom: 6px;">
-                            Describe a mechanic (e.g. "radiation zones", "farming sim", "construction skill", "faction reputation") and the wizard drafts a matching GM sysprompt section and, if needed, a linked tracker module — both editable together as one bundle.
+                            Describe una mecánica (ej. "zonas de radiación", "simulación agrícola", "habilidad de construcción", "reputación de facciones") y el asistente redactará una sección del prompt del sistema para el Dungeon Master.
                         </div>
 
                         <!-- SUB-DRAWER: WIZARD CONNECTION SETTINGS -->
                         <div class="inline-drawer" style="margin-bottom: 8px;">
                             <div class="inline-drawer-toggle inline-drawer-header" style="font-size: 0.82em; padding: 3px 6px;">
                                 <i class="fa-solid fa-network-wired" style="opacity: 0.7; margin-right: 6px;"></i>
-                                <b>Wizard Connection Settings</b>
+                                <b>Configuración de Conexión del Asistente</b>
                                 <div class="inline-drawer-icon fa-solid fa-circle-down down" style="font-size: 0.8em;"></div>
                             </div>
                             <div class="inline-drawer-content" style="padding: 6px 4px 0 4px;">
                                 <div class="flex-container flexFlowColumn gap-1">
                                     <div style="font-size: 0.75em; opacity: 0.55; line-height: 1.35; margin-bottom: 4px;">
-                                        Separate from the main State Tracker connection — used by the Game System Wizard, AI Section Builder, and Unlock Base Sections AI assist.
+                                        Independiente de la conexión principal — utilizada por el Asistente de Sistemas de Juego y el Creador de Secciones por IA.
                                     </div>
-                                    <label style="font-size: 0.8em;">Connection Source</label>
+                                    <label style="font-size: 0.8em;">Fuente de Conexión</label>
                                     <select id="rpg_gs_wizard_connection_source" class="text_pole" style="font-size: 0.8em;">
-                                        <option value="default">Main API</option>
-                                        <option value="profile">Profile</option>
+                                        <option value="default">API Principal</option>
+                                        <option value="profile">Perfil</option>
                                         <option value="ollama">Ollama</option>
                                         <option value="openai">OpenAI</option>
                                     </select>
@@ -633,14 +633,14 @@
                                     </div>
                                     <div id="rpg_gs_wizard_openai_group" style="display: none;">
                                         <input id="rpg_gs_wizard_openai_url" type="text" class="text_pole" placeholder="URL" style="font-size: 0.8em;" />
-                                        <input id="rpg_gs_wizard_openai_key" type="password" class="text_pole" placeholder="Key" style="font-size: 0.8em;" />
+                                        <input id="rpg_gs_wizard_openai_key" type="password" class="text_pole" placeholder="Clave API" style="font-size: 0.8em;" />
                                         <div class="flex-container gap-1">
                                             <select id="rpg_gs_wizard_openai_model" class="text_pole" style="flex: 1; font-size: 0.8em;"></select>
                                             <button id="rpg_gs_wizard_openai_refresh" class="menu_button interactable" style="padding: 2px 6px;"><i class="fa-solid fa-arrows-rotate"></i></button>
                                         </div>
-                                        <input id="rpg_gs_wizard_openai_model_manual" type="text" class="text_pole" placeholder="Manual Model Name" style="font-size: 0.8em;" />
+                                        <input id="rpg_gs_wizard_openai_model_manual" type="text" class="text_pole" placeholder="Nombre Manual del Modelo" style="font-size: 0.8em;" />
                                     </div>
-                                    <label style="font-size: 0.8em; margin-top: 4px;">Preset</label>
+                                    <label style="font-size: 0.8em; margin-top: 4px;">Preajuste</label>
                                     <select id="rpg_gs_wizard_completion_preset" class="text_pole" style="font-size: 0.8em;"></select>
                                 </div>
                             </div>
@@ -648,31 +648,31 @@
 
                         <div style="display: flex; gap: 6px;">
                             <button id="rpg_tracker_btn_game_system_wizard" class="menu_button interactable"
-                                style="flex: 1; background: rgba(180, 100, 255, 0.15); border-color: rgba(180, 100, 255, 0.4);" title="Design a new Game System with AI">
-                                <i class="fa-solid fa-hat-wizard"></i> Game System Wizard
+                                style="flex: 1; background: rgba(180, 100, 255, 0.15); border-color: rgba(180, 100, 255, 0.4);" title="Diseña un nuevo sistema de juego con IA">
+                                <i class="fa-solid fa-hat-wizard"></i> Asistente de Sistemas de Juego
                             </button>
                             <button id="rpg_tracker_btn_manage_game_systems" class="menu_button interactable"
-                                style="flex: 1; background: rgba(50, 150, 255, 0.15); border-color: rgba(50, 150, 255, 0.4);" title="View, toggle, edit, delete, or export/import your Game Systems">
-                                <i class="fa-solid fa-list-check"></i> Manage Game Systems
+                                style="flex: 1; background: rgba(50, 150, 255, 0.15); border-color: rgba(50, 150, 255, 0.4);" title="Ver, activar, editar, eliminar o importar/exportar tus Sistemas de Juego">
+                                <i class="fa-solid fa-list-check"></i> Gestionar Sistemas de Juego
                             </button>
                         </div>
 
-                        <div style="font-weight: bold; font-size: 0.85em; opacity: 0.8; margin-top: 10px; margin-bottom: 4px;">System Prompt Control Room</div>
+                        <div style="font-weight: bold; font-size: 0.85em; opacity: 0.8; margin-top: 10px; margin-bottom: 4px;">Sala de Control del Prompt del Sistema</div>
                         <div style="font-size: 0.78em; opacity: 0.6; line-height: 1.4; margin-bottom: 6px;">
-                            Reorder, enable/disable, unlock, or add any top-level system prompt section — built-in or custom — from one drag-and-drop list.
+                            Reordena, habilita/deshabilita, desbloquea o añade cualquier sección principal del prompt del sistema desde una lista arrastrable.
                         </div>
                         <button id="rpg_tracker_btn_control_room" class="menu_button interactable"
-                            style="width: 100%; background: rgba(255, 180, 60, 0.15); border-color: rgba(255, 180, 60, 0.4);" title="Reorder, toggle, unlock, and add system prompt sections">
-                            <i class="fa-solid fa-sliders"></i> System Prompt Control Room
+                            style="width: 100%; background: rgba(255, 180, 60, 0.15); border-color: rgba(255, 180, 60, 0.4);" title="Reordenar, activar, desbloquear y añadir secciones del prompt del sistema">
+                            <i class="fa-solid fa-sliders"></i> Sala de Control del Prompt del Sistema
                         </button>
 
-                        <div style="font-weight: bold; font-size: 0.85em; opacity: 0.8; margin-top: 10px; margin-bottom: 4px;">Game Cartridges</div>
+                        <div style="font-weight: bold; font-size: 0.85em; opacity: 0.8; margin-top: 10px; margin-bottom: 4px;">Cartuchos de Juego</div>
                         <div style="font-size: 0.78em; opacity: 0.6; line-height: 1.4; margin-bottom: 6px;">
-                            Save, load, export, or import your entire configuration — prompts, ordering, toggles, Game Systems, and tracker modules — as a shareable Game Cartridge.
+                            Guarda, carga, exporta o importa toda tu configuración como un Cartucho de Juego compartible.
                         </div>
                         <button id="rpg_tracker_btn_manage_cartridges" class="menu_button interactable"
-                            style="width: 100%; background: rgba(100, 220, 150, 0.15); border-color: rgba(100, 220, 150, 0.4);" title="Save, load, export, or import your entire framework configuration as a shareable Game Cartridge">
-                            <i class="fa-solid fa-compact-disc"></i> Game Cartridges
+                            style="width: 100%; background: rgba(100, 220, 150, 0.15); border-color: rgba(100, 220, 150, 0.4);" title="Guarda, carga, exporta o importa toda la configuración de la extensión como un Cartucho de Juego compartible">
+                            <i class="fa-solid fa-compact-disc"></i> Cartuchos de Juego
                         </button>
 
                     </div>
