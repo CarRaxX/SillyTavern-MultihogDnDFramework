@@ -8,6 +8,7 @@ import {
 } from './character-creator.js';
 import { saveSettings, autoApplySysprompt } from './src/app/runtime-bridge.js';
 import { pickGenreCharacterName } from './src/state/character-names.js';
+import { t } from './src/i18n/index.js';
 
 /** @type {boolean} */
 let _quickStartRunning = false;

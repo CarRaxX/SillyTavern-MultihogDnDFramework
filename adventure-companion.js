@@ -10,6 +10,7 @@ import { runtimeState } from './src/app/runtime-state.js';
 import { isRouterRunning, runRouterPass, sendDirectPrompt } from './src/app/runtime-bridge.js';
 import { isEffectiveSectionEnabled } from './src/state/section-enabled.js';
 import { clampFloatingPanelToViewport, isMobileLayout, makeDraggable, makeResizableBL, makeResizableBR, resolveViewportClampedGeometry } from './ui-geometry.js';
+import { t } from './src/i18n/index.js';
 
 const FOLDER_NAME = (function () {
     try {

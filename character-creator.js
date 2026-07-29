@@ -7,6 +7,7 @@ import { saveSettings, sendDirectPrompt, refreshAgentManifestNow, refreshRendere
 import { openPcSectionEditor } from './ui-editors.js';
 import { buildNameOnlyPersonaIdentity } from './src/state/player-identity.js';
 import { CHARACTER_CREATOR_NAME_ADDITIONS } from './src/state/character-names.js';
+import { t } from './src/i18n/index.js';
 
 const _CR_CLASS_LISTS = {
     fantasy: [

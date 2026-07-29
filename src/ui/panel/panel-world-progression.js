@@ -1,4 +1,5 @@
 import { runtimeState } from '../../app/runtime-state.js';
+import { t } from '../../i18n/index.js';
 
 /** Wires the Lorebook Agent's World Progression controls and status readout. */
 export function wireAgentWorldProgression({

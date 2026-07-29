@@ -13,6 +13,7 @@
 import { getSettings, getFactoryCartridgePayload, CARTRIDGE_PAYLOAD_GROUPS } from './state-manager.js';
 import { escapeHtml } from './memo-processor.js';
 import { refreshOrderList } from './ui-editors.js';
+import { t } from './src/i18n/index.js';
 import {
     saveSettings,
     refreshRenderedView,

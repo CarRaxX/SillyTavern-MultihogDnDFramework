@@ -17,45 +17,45 @@
                     <div class="inline-drawer">
                         <div class="inline-drawer-toggle inline-drawer-header">
                             <i class="fa-solid fa-sliders" style="margin-right: 6px; opacity: 0.65;"></i>
-                            <b>Core</b>
+                            <b>Núcleo</b>
                             <div class="inline-drawer-icon fa-solid fa-circle-chevron-down"></div>
                         </div>
                         <div class="inline-drawer-content">
                             <div class="flex-container flexFlowColumn gap-1">
-                        <small style="display: block; padding-left: 4px; font-size: 0.78em; opacity: 0.6; margin-bottom: 2px;">Chat Links</small>
+                        <small style="display: block; padding-left: 4px; font-size: 0.78em; opacity: 0.6; margin-bottom: 2px;">Vinculación de Chat</small>
                         <label class="checkbox_label" style="padding-left: 4px;">
                             <input id="rpg_tracker_chat_link_enabled" type="checkbox" />
-                            <span>Chat-Linked Mode</span>
+                            <span>Modo Vinculado al Chat</span>
                             <i class="fa-solid fa-circle-question interactable"
-                                title="When enabled, the tracker state (memo) is automatically saved and restored per chat ID. Switching chats will reload that specific campaign's state."></i>
+                                title="Cuando está activado, el estado de la nota (memo) se guarda y restaura automáticamente por ID de chat. Al cambiar de chat se recargará el estado de esa campaña."></i>
                         </label>
                         <label class="checkbox_label" style="padding-left: 20px;">
                             <input id="rpg_tracker_chat_setup_link_enabled" type="checkbox" />
-                            <span>Lock Control Room &amp; Modules to each chat</span>
+                            <span>Bloquear Sala de Control y Módulos a cada chat</span>
                             <i class="fa-solid fa-circle-question interactable"
-                                title="Save and restore the Control Room and module setup per chat. Standalone modules and snippets can be Global or Chat-bound; Wizard components inherit scope from their Game System. Turning this off temporarily bypasses those scopes and carries the current setup between chats without changing any saved scope choices."></i>
+                                title="Guarda y restaura la configuración de la Sala de Control y los módulos por cada chat. Los módulos independientes pueden ser Globales o del Chat."></i>
                         </label>
-                        <button id="rpg_tracker_clear_chat_states" class="menu_button interactable" style="margin-top: 4px; margin-left: 4px; width: calc(100% - 4px); font-size: 0.9em;"><i class="fa-solid fa-trash-can"></i> Remove all chat links</button>
+                        <button id="rpg_tracker_clear_chat_states" class="menu_button interactable" style="margin-top: 4px; margin-left: 4px; width: calc(100% - 4px); font-size: 0.9em;"><i class="fa-solid fa-trash-can"></i> Eliminar todas las vinculaciones de chat</button>
 
-                        <small style="display: block; margin-top: 10px; margin-bottom: 2px; font-weight: bold; opacity: 0.65; text-transform: uppercase; font-size: 0.7em; letter-spacing: 0.4px;">Help</small>
+                        <small style="display: block; margin-top: 10px; margin-bottom: 2px; font-weight: bold; opacity: 0.65; text-transform: uppercase; font-size: 0.7em; letter-spacing: 0.4px;">Ayuda</small>
                         <button id="rpg_tracker_tutorial_help" class="menu_button interactable" style="margin-top: 2px; margin-left: 4px; width: calc(100% - 4px); font-size: 0.9em;"><i class="fa-solid fa-comments"></i> CHAT</button>
-                        <div style="font-size: 0.75em; opacity: 0.6; line-height: 1.35; padding: 4px 4px 0 4px;">Opens the in-panel Adventure Companion. Optional Tutorial Mode injects the framework guide. Uses your State Tracker LLM connection.</div>
+                        <div style="font-size: 0.75em; opacity: 0.6; line-height: 1.35; padding: 4px 4px 0 4px;">Abre el Acompañante de Aventura en el panel. El modo tutorial opcional inyecta la guía del framework.</div>
 
                         <!-- MAIN PROMPT BACKUP -->
-                        <small style="display: block; margin-top: 10px; margin-bottom: 2px; font-weight: bold; opacity: 0.65; text-transform: uppercase; font-size: 0.7em; letter-spacing: 0.4px;">Main Prompt Backup</small>
+                        <small style="display: block; margin-top: 10px; margin-bottom: 2px; font-weight: bold; opacity: 0.65; text-transform: uppercase; font-size: 0.7em; letter-spacing: 0.4px;">Copia de Seguridad del Prompt Principal</small>
                         <div style="font-size: 0.78em; opacity: 0.65; line-height: 1.4; padding: 0 4px; margin-bottom: 6px;">
-                            When the State Tracker is on (and Custom Sysprompt Mode is off), the framework writes its system prompt to <b>Quick Prompt → Main</b>, replacing whatever was there. This backup saves that previous Main text so you can get it back — automatically before the first overwrite, and again when you disable the tracker with the <b>⏻</b> button on the tracker panel header (or by unchecking <b>Enable State Tracker</b> in settings). To jump back to your normal, non-D&amp;D RP, click <b>⏻</b> on the panel — your original Main prompt is restored right away, no profile switching. Use the buttons below anytime to refresh the saved copy (for example after editing Main yourself).
+                            Cuando el Rastreador de Estado está activo, el framework escribe su prompt del sistema en <b>Quick Prompt → Main</b>. Esta copia de seguridad guarda el texto anterior de Main para que puedas recuperarlo al desactivar el rastreador con el botón <b>⏻</b>.
                         </div>
                         <label class="checkbox_label" style="padding-left: 4px;">
                             <input id="rpg_main_sysprompt_backup_enabled" type="checkbox" />
-                            <span>Enable Main prompt backup &amp; restore</span>
+                            <span>Habilitar copia de seguridad y restauración de Main</span>
                             <i class="fa-solid fa-circle-question interactable"
-                                title="On by default. When enabled, your Quick Prompt Main text is snapshotted before the framework overwrites it and restored when you click the ⏻ button on the tracker panel (or uncheck Enable State Tracker) — so you can return to normal, non-D&amp;D RP that way. You can also save or restore manually with the buttons below."></i>
+                                title="Activado por defecto. Guarda el texto de Main antes de sobreescribirlo y lo restaura al desactivar el rastreador."></i>
                         </label>
                         <div id="rpg_main_sysprompt_backup_controls" class="flex-container flexFlowColumn gap-1" style="padding-left: 4px; margin-top: 4px;">
                             <div class="flex-container gap-1" style="width: 100%;">
-                                <button id="rpg_main_sysprompt_backup_stash" class="menu_button interactable" style="flex: 1; font-size: 0.9em;"><i class="fa-solid fa-floppy-disk"></i> Save current Main to backup</button>
-                                <button id="rpg_main_sysprompt_backup_restore" class="menu_button interactable" style="flex: 1; font-size: 0.9em;"><i class="fa-solid fa-rotate-left"></i> Restore backup to Main</button>
+                                <button id="rpg_main_sysprompt_backup_stash" class="menu_button interactable" style="flex: 1; font-size: 0.9em;"><i class="fa-solid fa-floppy-disk"></i> Guardar Main en copia de seguridad</button>
+                                <button id="rpg_main_sysprompt_backup_restore" class="menu_button interactable" style="flex: 1; font-size: 0.9em;"><i class="fa-solid fa-rotate-left"></i> Restaurar copia de seguridad en Main</button>
                             </div>
                             <div id="rpg_main_sysprompt_backup_status" style="font-size: 0.75em; opacity: 0.7; font-style: italic; min-height: 1.2em;"></div>
                         </div>
@@ -66,7 +66,7 @@
                     <div class="inline-drawer">
                         <div class="inline-drawer-toggle inline-drawer-header">
                             <i class="fa-solid fa-palette" style="margin-right: 6px; opacity: 0.65;"></i>
-                            <b>UI Appearance</b>
+                            <b>Apariencia de la Interfaz</b>
                             <div class="inline-drawer-icon fa-solid fa-circle-chevron-down"></div>
                         </div>
                         <div class="inline-drawer-content">

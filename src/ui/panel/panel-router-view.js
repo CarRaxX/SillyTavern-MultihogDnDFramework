@@ -1,4 +1,5 @@
 import { runtimeState } from '../../app/runtime-state.js';
+import { t } from '../../i18n/index.js';
 
 /**
  * Renders the Lorebook Agent's active-key pills, router log, and World Progression status.
