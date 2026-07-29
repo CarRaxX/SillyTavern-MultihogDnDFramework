@@ -689,31 +689,31 @@
                 <div class="inline-drawer-content">
                     <label class="checkbox_label" style="margin-bottom: 8px;">
                         <input id="rpg_tracker_enabled" type="checkbox" />
-                        <span>Enable State Tracker</span>
+                        <span>Habilitar Rastreador de Estado</span>
                         <i class="fa-solid fa-circle-question interactable"
-                            title="When enabled (and Custom Sysprompt Mode is off), the framework system prompt is written to Quick Prompt Main. Your previous Main prompt is backed up automatically before the first overwrite and restored when you click the ⏻ button on the tracker panel (or uncheck this box) — so you can quickly return to normal, non-D&amp;D RP without changing profiles."></i>
+                            title="Cuando está activado (y el modo de prompt personalizado está desactivado), el prompt del sistema del framework se escribe en Quick Prompt Main. Tu prompt Main anterior se guarda automáticamente antes de la primera sobreescritura y se restaura al hacer clic en el botón ⏻ del panel."></i>
                     </label>
 
                     <div class="inline-drawer" style="margin-bottom: 8px;">
                         <div class="inline-drawer-toggle inline-drawer-header" style="font-size: 0.88em;">
                             <i class="fa-solid fa-sack-dollar" style="margin-right: 6px; opacity: 0.6;"></i>
-                            <b>Inventory</b>
+                            <b>Inventario</b>
                             <div class="inline-drawer-icon fa-solid fa-circle-chevron-down"></div>
                         </div>
                         <div class="inline-drawer-content">
                             <div id="rpg_inventory_config_block" class="flex-container flexFlowColumn gap-1">
                                 <label class="checkbox_label">
                                     <input id="rpg_tracker_show_total_value" type="checkbox" />
-                                    <span>Show Total Inventory Value</span>
-                                    <i class="fa-solid fa-circle-question interactable" title="When enabled, displays the calculated total value of all items in the inventory header bar."></i>
+                                    <span>Mostrar Valor Total del Inventario</span>
+                                    <i class="fa-solid fa-circle-question interactable" title="Cuando está activado, muestra el valor total calculado de todos los objetos en la barra superior del inventario."></i>
                                 </label>
                                 <div style="display: flex; align-items: center; gap: 8px; padding-left: 4px;">
-                                    <label style="font-size: 0.82em; opacity: 0.75; white-space: nowrap;">Item Worth
-                                        <i class="fa-solid fa-circle-question interactable" title="Controls how item worth values (e.g. ~120 GP) are shown in Inventory. Hover: stripped from display, shown as a tooltip on hover. Display: shown as an inline coin badge next to the item. Bare currency items (e.g. '45 GP') always render as a coin badge regardless of this setting."></i>
+                                    <label style="font-size: 0.82em; opacity: 0.75; white-space: nowrap;">Valor del Objeto
+                                        <i class="fa-solid fa-circle-question interactable" title="Controla cómo se muestran los valores de los objetos (ej. ~120 GP) en el inventario. Al pasar el cursor: se oculta y muestra al pasar el ratón. Mostrar: aparece como una insignia de moneda junto al objeto."></i>
                                     </label>
                                     <select id="rpg_tracker_inventory_worth_mode" class="text_pole" style="font-size: 0.82em; padding: 2px 4px; height: 24px; flex: 1;">
-                                        <option value="hover">Hover (tooltip only)</option>
-                                        <option value="display">Display (inline badge)</option>
+                                        <option value="hover">Al pasar el cursor (solo descripción flotante)</option>
+                                        <option value="display">Mostrar (insignia integrada)</option>
                                     </select>
                                 </div>
                             </div>
@@ -722,15 +722,15 @@
 
                     <div class="inline-drawer">
                         <div class="inline-drawer-toggle inline-drawer-header">
-                            <b>Connection Settings</b>
+                            <b>Configuración de Conexión</b>
                             <div class="inline-drawer-icon fa-solid fa-circle-down down"></div>
                         </div>
                         <div class="inline-drawer-content">
                             <div class="flex-container flexFlowColumn gap-1">
-                                <label>Connection Source</label>
+                                <label>Fuente de Conexión</label>
                                 <select id="rpg_tracker_connection_source" class="text_pole">
-                                    <option value="default">Main API</option>
-                                    <option value="profile">Profile</option>
+                                    <option value="default">API Principal</option>
+                                    <option value="profile">Perfil</option>
                                     <option value="ollama">Ollama</option>
                                     <option value="openai">OpenAI</option>
                                 </select>
@@ -746,14 +746,14 @@
                                 </div>
                                 <div id="rpg_tracker_openai_group" style="display: none;">
                                     <input id="rpg_tracker_openai_url" type="text" class="text_pole" placeholder="URL" />
-                                    <input id="rpg_tracker_openai_key" type="password" class="text_pole" placeholder="Key" />
+                                    <input id="rpg_tracker_openai_key" type="password" class="text_pole" placeholder="Clave API" />
                                     <div class="flex-container gap-1">
                                         <select id="rpg_tracker_openai_model" class="text_pole" style="flex: 1;"></select>
                                         <button id="rpg_tracker_openai_refresh" class="menu_button interactable"><i class="fa-solid fa-arrows-rotate"></i></button>
                                     </div>
-                                    <input id="rpg_tracker_openai_model_manual" type="text" class="text_pole" placeholder="Manual Model Name" />
+                                    <input id="rpg_tracker_openai_model_manual" type="text" class="text_pole" placeholder="Nombre Manual del Modelo" />
                                 </div>
-                                <label>Preset</label>
+                                <label>Preajuste</label>
                                 <select id="rpg_tracker_completion_preset" class="text_pole"></select>
 
                             </div>
@@ -762,22 +762,22 @@
 
                     <div class="inline-drawer" style="margin-top: 4px;">
                         <div class="inline-drawer-toggle inline-drawer-header">
-                            <b>Combat API Override</b>
+                            <b>Sustitución de API en Combate</b>
                             <div class="inline-drawer-icon fa-solid fa-circle-chevron-down"></div>
                         </div>
                         <div class="inline-drawer-content">
                             <div id="rpg_combat_profile_config_block" class="flex-container flexFlowColumn gap-1">
-                                <small style="display: block; font-size: 0.72em; opacity: 0.55; line-height: 1.35; margin-bottom: 4px;">Overrides SillyTavern's <b>main</b> chat API during combat — not the State Extractor connection above.</small>
+                                <small style="display: block; font-size: 0.72em; opacity: 0.55; line-height: 1.35; margin-bottom: 4px;">Sustituye la API del chat <b>principal</b> de SillyTavern durante el combate — no la conexión del Extractor de Estado superior.</small>
                                 <label class="checkbox_label">
                                     <input id="rpg_tracker_combat_profile_auto_switch" type="checkbox" />
-                                    <span>Auto-Switch Main Profile During Combat</span>
+                                    <span>Cambiar Perfil Principal Automáticamente en Combate</span>
                                     <i class="fa-solid fa-circle-question interactable"
-                                        title="When [COMBAT] is active in the State Tracker, automatically switch SillyTavern's main Connection Profile to the one selected below. Restores your previous profile when combat ends ([COMBAT]END_COMBAT[/COMBAT] or block removed)."></i>
+                                        title="Cuando [COMBAT] está activo en el Rastreador de Estado, cambia automáticamente el Perfil de Conexión principal de SillyTavern al perfil seleccionado abajo. Restaura el perfil anterior al finalizar el combate."></i>
                                 </label>
                                 <div id="rpg_combat_profile_group" style="padding-left: 4px; display: none;">
-                                    <label style="font-size: 0.82em; opacity: 0.75; display: block; margin-bottom: 3px;">Combat Connection Profile</label>
+                                    <label style="font-size: 0.82em; opacity: 0.75; display: block; margin-bottom: 3px;">Perfil de Conexión para Combate</label>
                                     <select id="rpg_combat_connection_profile" class="text_pole" style="font-size: 0.85em;"></select>
-                                    <label style="font-size: 0.82em; opacity: 0.75; display: block; margin-top: 6px; margin-bottom: 3px;">Combat Chat Completion Preset</label>
+                                    <label style="font-size: 0.82em; opacity: 0.75; display: block; margin-top: 6px; margin-bottom: 3px;">Preajuste de Completado para Combate</label>
                                     <select id="rpg_combat_completion_preset" class="text_pole" style="font-size: 0.85em;"></select>
                                 </div>
                             </div>
@@ -785,93 +785,93 @@
                     </div>
 
                     <hr>
-                    <b>Context & Lorebooks</b>
+                    <b>Contexto y Libros de Lore</b>
                     <label class="checkbox_label">
                         <input id="rpg_tracker_ctx_worldinfo" type="checkbox" />
-                        <span>Inject Lorebooks</span>
+                        <span>Inyectar Libros de Lore</span>
                     </label>
                     <div id="rpg_tracker_lorebook_filter_group" style="display: none; max-height: 120px; overflow-y: auto; border: 1px solid rgba(255,255,255,0.1); padding: 5px;">
                         <div id="rpg_tracker_lorebook_list"></div>
                     </div>
 
                     <hr>
-                    <b>Modules & Order</b>
+                    <b>Módulos y Orden</b>
                     <div id="rpg_tracker_order_list" class="flex-container flexFlowColumn gap-1"></div>
                     <div class="flex-container gap-1" style="margin-top: 5px;">
-                        <button id="rpg_tracker_add_custom_field" class="menu_button interactable" style="flex: 1;"><i class="fa-solid fa-plus"></i> Add Custom (Manual)</button>
-                        <button id="rpg_tracker_add_custom_field_ai" class="menu_button interactable" style="flex: 1; background: rgba(180, 100, 255, 0.15); border-color: rgba(180, 100, 255, 0.4);"><i class="fa-solid fa-wand-magic-sparkles"></i> Add Custom (AI)</button>
+                        <button id="rpg_tracker_add_custom_field" class="menu_button interactable" style="flex: 1;"><i class="fa-solid fa-plus"></i> Añadir Personalizado (Manual)</button>
+                        <button id="rpg_tracker_add_custom_field_ai" class="menu_button interactable" style="flex: 1; background: rgba(180, 100, 255, 0.15); border-color: rgba(180, 100, 255, 0.4);"><i class="fa-solid fa-wand-magic-sparkles"></i> Añadir Personalizado (IA)</button>
                     </div>
                     <div class="flex-container gap-1" style="margin-top: 6px;">
-                        <button id="rt_btn_tag_library" class="menu_button interactable rt-tag-library-button" aria-label="Open Rendering Tags Library">
+                        <button id="rt_btn_tag_library" class="menu_button interactable rt-tag-library-button" aria-label="Abrir Biblioteca de Etiquetas de Renderizado">
                             <span class="rt-tag-library-icon" aria-hidden="true"><i class="fa-solid fa-swatchbook"></i></span>
-                            <span class="rt-tag-library-copy"><span>Rendering Tags Library</span><small>Live previews · color alchemy</small></span>
+                            <span class="rt-tag-library-copy"><span>Biblioteca de Etiquetas de Renderizado</span><small>Vistas previas en vivo · alquimia de color</small></span>
                             <span class="rt-tag-library-sparkle" aria-hidden="true">✦</span>
                         </button>
                     </div>
                     <div class="flex-container gap-1" style="margin-top: 4px;">
-                        <button id="rpg_tracker_export_all_modules" class="menu_button interactable" style="flex: 1; font-size: 11px;">Export</button>
-                        <button id="rpg_tracker_import_modules" class="menu_button interactable" style="flex: 1; font-size: 11px;">Import</button>
-                        <button id="rpg_tracker_delete_all_custom_modules" class="menu_button interactable" style="flex: 1; font-size: 11px; color: #ff5555;">Clear All</button>
+                        <button id="rpg_tracker_export_all_modules" class="menu_button interactable" style="flex: 1; font-size: 11px;">Exportar</button>
+                        <button id="rpg_tracker_import_modules" class="menu_button interactable" style="flex: 1; font-size: 11px;">Importar</button>
+                        <button id="rpg_tracker_delete_all_custom_modules" class="menu_button interactable" style="flex: 1; font-size: 11px; color: #ff5555;">Borrar Todo</button>
                     </div>
-                    <button id="rpg_tracker_btn_reset_all_prompts" class="menu_button interactable" style="width: 100%; margin-top: 4px; font-size: 11px;"><i class="fa-solid fa-arrow-rotate-left"></i> Reset Stock Modules</button>
+                    <button id="rpg_tracker_btn_reset_all_prompts" class="menu_button interactable" style="width: 100%; margin-top: 4px; font-size: 11px;"><i class="fa-solid fa-arrow-rotate-left"></i> Restablecer Módulos Predeterminados</button>
 
                     <hr>
-                    <b>Scenario Profiles</b>
+                    <b>Perfiles de Escenario</b>
                     <select id="rpg_tracker_profile_select" class="text_pole"></select>
                     <div class="flex-container gap-1" style="margin-top: 4px;">
-                        <button id="rpg_tracker_profile_save" class="menu_button interactable" style="flex: 1;">Save</button>
-                        <button id="rpg_tracker_profile_save_as" class="menu_button interactable" style="flex: 1;">Save As</button>
-                        <button id="rpg_tracker_profile_load" class="menu_button interactable" style="flex: 1;">Load</button>
-                        <button id="rpg_tracker_profile_delete" class="menu_button interactable" style="flex: 1; color: #ff5555;" title="Delete selected profile">Delete</button>
+                        <button id="rpg_tracker_profile_save" class="menu_button interactable" style="flex: 1;">Guardar</button>
+                        <button id="rpg_tracker_profile_save_as" class="menu_button interactable" style="flex: 1;">Guardar como</button>
+                        <button id="rpg_tracker_profile_load" class="menu_button interactable" style="flex: 1;">Cargar</button>
+                        <button id="rpg_tracker_profile_delete" class="menu_button interactable" style="flex: 1; color: #ff5555;" title="Eliminar perfil seleccionado">Eliminar</button>
                     </div>
 
                     <hr>
                     <div class="inline-drawer">
                         <div class="inline-drawer-toggle inline-drawer-header">
-                            <b>Core Prompt</b>
+                            <b>Prompt Principal del Sistema</b>
                             <div class="inline-drawer-icon fa-solid fa-circle-down down"></div>
                         </div>
                         <div class="inline-drawer-content">
                             <div class="flex-container flexFlowColumn gap-1">
                                 <textarea id="rpg_tracker_core_prompt" class="text_pole autoSetHeight" rows="4"></textarea>
-                                <b style="margin-top: 8px; display: inline-block; font-size: 0.85em; opacity: 0.85;">User Prompt Suffix</b>
+                                <b style="margin-top: 8px; display: inline-block; font-size: 0.85em; opacity: 0.85;">Sufijo del Prompt del Usuario</b>
                                 <textarea id="rpg_tracker_user_prompt_suffix" class="text_pole autoSetHeight" rows="2"></textarea>
-                                <button id="rpg_tracker_btn_reset_prompt" class="menu_button interactable" style="width: 100%; margin-top: 4px; font-size: 11px;"><i class="fa-solid fa-arrow-rotate-left"></i> Reset Core Prompt</button>
+                                <button id="rpg_tracker_btn_reset_prompt" class="menu_button interactable" style="width: 100%; margin-top: 4px; font-size: 11px;"><i class="fa-solid fa-arrow-rotate-left"></i> Restablecer Prompt Principal</button>
                             </div>
                         </div>
                     </div>
 
                     <hr>
-                    <b>Advanced Options</b>
+                    <b>Opciones Avanzadas</b>
                     <div class="flex-container flexFlowColumn gap-1">
-                        <label>Message Lookback</label>
-                        <label class="checkbox_label" title="When enabled, the State Tracker always reads from the last user message through to the latest AI response — capturing all tool calls and multi-part replies in a single turn. This is the recommended setting.">
+                        <label>Revisión de Mensajes</label>
+                        <label class="checkbox_label" title="Cuando está activo, el Rastreador de Estado lee desde el último mensaje del usuario hasta la respuesta más reciente de la IA — capturando todas las llamadas a herramientas en un solo turno.">
                             <input id="rpg_tracker_lookback_since_last_user" type="checkbox" checked />
-                            Since last user message <span style="opacity:0.55; font-size:0.88em;">(recommended)</span>
+                            Desde el último mensaje del usuario <span style="opacity:0.55; font-size:0.88em;">(recomendado)</span>
                         </label>
                         <div id="rpg_tracker_lookback_numeric_row" style="transition: opacity 0.2s; opacity: 0.35; pointer-events: none;">
-                            <label style="margin-top: 4px;">Fixed turn count</label>
-                            <input id="rpg_tracker_lookback_messages" type="text" inputmode="numeric" pattern="[0-9]*" class="text_pole" value="2" title="Number of recent messages to include when 'Since last user message' is disabled." />
+                            <label style="margin-top: 4px;">Número de turnos fijo</label>
+                            <input id="rpg_tracker_lookback_messages" type="text" inputmode="numeric" pattern="[0-9]*" class="text_pole" value="2" title="Número de mensajes recientes a incluir cuando 'Desde el último mensaje del usuario' está desactivado." />
                         </div>
-                        <label>History Context (States)</label>
+                        <label>Historial de Contexto (Estados)</label>
                         <input id="rpg_tracker_history_count" type="text" inputmode="numeric" pattern="[0-9]*" class="text_pole" value="1" />
-                        <label>Full Audit Max Tokens</label>
-                        <input id="rpg_tracker_full_audit_max_tokens" type="text" inputmode="numeric" pattern="[0-9]*" class="text_pole" value="32000" title="Max context tokens for Full Audit chunking fallback." />
-                        <label>Run Every N Messages
-                            <i class="fa-solid fa-circle-question interactable" style="font-size: 0.85em; opacity: 0.7; margin-left: 4px;" title="How often the State Tracker runs. Set to 1 to run every message, 2 to run every other message, etc. Useful for reducing API costs."></i>
+                        <label>Tokens Máximos para Auditoría Completa</label>
+                        <input id="rpg_tracker_full_audit_max_tokens" type="text" inputmode="numeric" pattern="[0-9]*" class="text_pole" value="32000" title="Tokens de contexto máximos para la fragmentación en Auditoría Completa." />
+                        <label>Ejecutar Cada N Mensajes
+                            <i class="fa-solid fa-circle-question interactable" style="font-size: 0.85em; opacity: 0.7; margin-left: 4px;" title="Frecuencia de ejecución del Rastreador de Estado. Establece en 1 para ejecutar en cada mensaje, 2 para mensajes alternos, etc. Útil para reducir costos de API."></i>
                         </label>
-                        <input id="rpg_tracker_state_run_every" type="text" inputmode="numeric" pattern="[0-9]*" class="text_pole" value="1" title="Run the State Tracker every N messages. 1 = every message." />
+                        <input id="rpg_tracker_state_run_every" type="text" inputmode="numeric" pattern="[0-9]*" class="text_pole" value="1" title="Ejecutar el Rastreador de Estado cada N mensajes. 1 = cada mensaje." />
                         
                         <div style="margin-top: 15px; margin-bottom: 5px;">
-                            <label style="margin-bottom: 4px;">Playable Character Formatting
-                                <i class="fa-solid fa-circle-question interactable" style="font-size: 0.85em; opacity: 0.7; margin-left: 4px;" title="Customize the persona sections for Player Characters (e.g. Appearance, Personality, Strengths). These fields will be used when generating new characters or importing existing cards."></i>
+                            <label style="margin-bottom: 4px;">Formato del Personaje Jugable
+                                <i class="fa-solid fa-circle-question interactable" style="font-size: 0.85em; opacity: 0.7; margin-left: 4px;" title="Personaliza las secciones de la ficha para Personajes Jugables (ej. Apariencia, Personalidad, Fortalezas). Estos campos se usarán al generar nuevos personajes o importar fichas."></i>
                             </label>
-                            <button id="rpg_tracker_btn_edit_pc_sections" class="menu_button interactable" style="width: 100%; background: rgba(180, 100, 255, 0.15); border-color: rgba(180, 100, 255, 0.4);" title="Customize the persona sections for Player Characters (e.g. Appearance, Personality, Strengths). These fields will be used when generating new characters or importing existing cards."><i class="fa-solid fa-user"></i> Edit Playable Character Sections</button>
+                            <button id="rpg_tracker_btn_edit_pc_sections" class="menu_button interactable" style="width: 100%; background: rgba(180, 100, 255, 0.15); border-color: rgba(180, 100, 255, 0.4);" title="Personaliza las secciones de la ficha para Personajes Jugables (ej. Apariencia, Personalidad, Fortalezas). Estos campos se usarán al generar nuevos personajes o importar fichas."><i class="fa-solid fa-user"></i> Editar Secciones del Personaje Jugable</button>
                         </div>
-                        <label class="checkbox_label" title="When enabled, automatically restores the State Tracker memo to the snapshot taken before the previous swipe if the user swipes away to a different generation.">
+                        <label class="checkbox_label" title="Restaura la nota (memo) del Rastreador de Estado a su captura previa al deslizar a una respuesta alternativa de la IA. Previene desvíos de memoria.">
                             <input id="rpg_tracker_state_swipe_rollback" type="checkbox" checked />
-                            Auto Rollback Memo on Swipe
-                            <i class="fa-solid fa-circle-question interactable" style="font-size: 0.85em; opacity: 0.7; margin-left: 4px;" title="Restores the State Tracker memo to its pre-update snapshot when you swipe to a different AI response. Prevents memo drift from discarded generations."></i>
+                            Restauración Automática de Memo al Deslizar (Swipe)
+                            <i class="fa-solid fa-circle-question interactable" style="font-size: 0.85em; opacity: 0.7; margin-left: 4px;" title="Restaura la nota (memo) a su estado previo al deslizar a otra respuesta."></i>
                         </label>
                     </div>
 
@@ -889,34 +889,34 @@
                 <div class="inline-drawer-content">
                     <div class="flex-container flexFlowColumn gap-1">
                         <button type="button" id="rpg_tracker_router_docs_btn" class="menu_button interactable rt-lorebook-agent-docs-btn" style="width: 100%; font-size: 11px; margin-bottom: 2px;">
-                            <i class="fa-solid fa-book"></i> Lorebook Agent Documentation
+                            <i class="fa-solid fa-book"></i> Documentación del Agente de Lorebook
                         </button>
                         <label class="checkbox_label">
                             <input id="rpg_tracker_router_enabled" type="checkbox" />
-                            <span>Enable Lorebook Agent</span>
+                            <span>Habilitar Agente de Lorebook</span>
                         </label>
 
                         <div style="margin-bottom: 8px; font-size: 10px; opacity: 0.65; line-height: 1.4; display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
-                            <span>Effective campaign prefix: <span id="rpg_tracker_router_prefix_display" style="font-family: monospace; opacity: 0.9;">—</span></span>
-                            <button id="rpg_tracker_activate_books_btn" title="Activate campaign lorebooks now" style="padding: 1px 7px; font-size: 10px; background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.18); border-radius: 4px; color: inherit; cursor: pointer; white-space: nowrap;">Activate Books</button>
-                            <button id="rpg_tracker_clone_stack_btn" title="Duplicate all campaign lorebooks under a new prefix for branching" style="padding: 1px 7px; font-size: 10px; background: rgba(100,180,255,0.12); border: 1px solid rgba(100,180,255,0.3); border-radius: 4px; color: inherit; cursor: pointer; white-space: nowrap;">Clone Stack</button>
-                            <button id="rt-agent-router-full-audit" title="Audit the entire chat history and forcefully reconstruct lorebooks" style="padding: 1px 7px; font-size: 10px; background: rgba(255,100,100,0.12); border: 1px solid rgba(255,100,100,0.3); border-radius: 4px; color: inherit; cursor: pointer; white-space: nowrap;">Full Audit</button>
+                            <span>Prefijo de campaña efectivo: <span id="rpg_tracker_router_prefix_display" style="font-family: monospace; opacity: 0.9;">—</span></span>
+                            <button id="rpg_tracker_activate_books_btn" title="Activar libros de lore de la campaña ahora" style="padding: 1px 7px; font-size: 10px; background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.18); border-radius: 4px; color: inherit; cursor: pointer; white-space: nowrap;">Activar Libros</button>
+                            <button id="rpg_tracker_clone_stack_btn" title="Duplicar todos los libros de lore de la campaña con un nuevo prefijo para ramificación" style="padding: 1px 7px; font-size: 10px; background: rgba(100,180,255,0.12); border: 1px solid rgba(100,180,255,0.3); border-radius: 4px; color: inherit; cursor: pointer; white-space: nowrap;">Clonar Pila</button>
+                            <button id="rt-agent-router-full-audit" title="Auditar todo el historial de chat y reconstruir los libros de lore" style="padding: 1px 7px; font-size: 10px; background: rgba(255,100,100,0.12); border: 1px solid rgba(255,100,100,0.3); border-radius: 4px; color: inherit; cursor: pointer; white-space: nowrap;">Auditoría Completa</button>
                         </div>
-                        <label style="font-size: 10px; opacity: 0.7;" title="Leave blank to derive the prefix from the current chat file name (sanitized).">Campaign prefix override (optional)</label>
-                        <input id="rpg_tracker_router_prefix_override" type="text" class="text_pole" placeholder="Blank = use chat file name" autocomplete="off" />
-                        <div style="font-size: 9px; opacity: 0.5; line-height: 1.35; margin-bottom: 6px;">Use the same root as your lorebook names (e.g. type <span style="font-family:monospace">amelia</span> for books like <span style="font-family:monospace">amelia_NPCs</span>). Non-alphanumeric characters become underscores.</div>
+                        <label style="font-size: 10px; opacity: 0.7;" title="Dejar en blanco para obtener el prefijo del nombre del archivo de chat actual.">Sustitución de prefijo de campaña (opcional)</label>
+                        <input id="rpg_tracker_router_prefix_override" type="text" class="text_pole" placeholder="En blanco = usar nombre del archivo" autocomplete="off" />
+                        <div style="font-size: 9px; opacity: 0.5; line-height: 1.35; margin-bottom: 6px;">Usa la misma raíz que tus libros de lore (ej. escribe <span style="font-family:monospace">amelia</span> para libros como <span style="font-family:monospace">amelia_NPCs</span>). Los caracteres especiales se convierten en guiones bajos.</div>
                         
                         <div class="inline-drawer">
                             <div class="inline-drawer-toggle inline-drawer-header">
-                                <b>Connection Settings</b>
+                                <b>Configuración de Conexión</b>
                                 <div class="inline-drawer-icon fa-solid fa-circle-down down"></div>
                             </div>
                             <div class="inline-drawer-content">
                                 <div class="flex-container flexFlowColumn gap-1">
-                                    <label>Connection Source</label>
+                                    <label>Fuente de Conexión</label>
                                     <select id="rpg_tracker_router_source" class="text_pole">
-                                        <option value="default">Main API</option>
-                                        <option value="profile">Profile</option>
+                                        <option value="default">API Principal</option>
+                                        <option value="profile">Perfil</option>
                                         <option value="ollama">Ollama</option>
                                         <option value="openai">OpenAI</option>
                                     </select>
@@ -932,14 +932,14 @@
                                     </div>
                                     <div id="rpg_tracker_router_openai_group" style="display: none;">
                                         <input id="rpg_tracker_router_openai_url" type="text" class="text_pole" placeholder="URL" />
-                                        <input id="rpg_tracker_router_openai_key" type="password" class="text_pole" placeholder="Key" />
+                                        <input id="rpg_tracker_router_openai_key" type="password" class="text_pole" placeholder="Clave API" />
                                         <div class="flex-container gap-1">
                                             <select id="rpg_tracker_router_openai_model" class="text_pole" style="flex: 1;"></select>
                                             <button id="rpg_tracker_router_openai_refresh" class="menu_button interactable"><i class="fa-solid fa-arrows-rotate"></i></button>
                                         </div>
-                                        <input id="rpg_tracker_router_openai_model_manual" type="text" class="text_pole" placeholder="Manual Model Name" />
+                                        <input id="rpg_tracker_router_openai_model_manual" type="text" class="text_pole" placeholder="Nombre Manual del Modelo" />
                                     </div>
-                                    <label>Preset</label>
+                                    <label>Preajuste</label>
                                     <select id="rpg_tracker_router_completion_preset" class="text_pole"></select>
                                 </div>
                             </div>
@@ -948,56 +948,56 @@
                         <!-- Agent Core Settings -->
                         <div class="inline-drawer">
                             <div class="inline-drawer-toggle inline-drawer-header">
-                                <b>Agent Core Settings</b>
+                                <b>Configuración del Núcleo del Agente</b>
                                 <div class="inline-drawer-icon fa-solid fa-circle-down down"></div>
                             </div>
                             <div class="inline-drawer-content">
                                 <div class="flex-container flexFlowColumn gap-1">
                                     <label class="checkbox_label">
                                         <input id="rpg_tracker_router_basic_mode" type="checkbox" />
-                                        <span>Basic Mode (tag-based, no tool calls)</span>
+                                        <span>Modo Básico (basado en etiquetas, sin llamadas a herramientas)</span>
                                     </label>
                                     <label class="checkbox_label">
                                         <input id="rpg_tracker_router_native_keyword_activation" type="checkbox" />
-                                        <span>Native Keyword Activation</span>
+                                        <span>Activación Nativa por Palabras Clave</span>
                                     </label>
                                     <label class="checkbox_label">
                                         <input id="rpg_tracker_router_include_hidden" type="checkbox" />
-                                        <span>Include hidden msgs (summarizer)</span>
+                                        <span>Incluir mensajes ocultos (resumidor)</span>
                                     </label>
-                                    <label class="checkbox_label" title="When enabled, swiping away from a generation that triggered the Lorebook Agent undoes that pass. Swipes never advance the Run Every N counter either way.">
+                                    <label class="checkbox_label" title="Cuando está activo, deslizar a otra respuesta tras una generación que activó el Agente de Lorebook deshace dicho pase.">
                                         <input id="rpg_tracker_router_swipe_rollback" type="checkbox" />
-                                        <span>Auto-rollback lorebook pass on swipe</span>
+                                        <span>Deshacer pase de lorebook automáticamente al deslizar</span>
                                     </label>
                                     
-                                    <label>Context Lookback</label>
-                                    <label class="checkbox_label" title="The agent reads every message since the last time it successfully ran — capturing all turns skipped due to 'Run Every N' throttling. Best when runEvery &gt; 1.">
+                                    <label>Revisión de Contexto</label>
+                                    <label class="checkbox_label" title="El agente lee cada mensaje desde la última vez que se ejecutó con éxito. Recomendado cuando Ejecutar Cada N &gt; 1.">
                                         <input id="rpg_tracker_router_lookback_since_last_run" type="radio" name="router_lookback_mode" value="since_last_run" />
-                                        Since last run <span style="opacity:0.55; font-size:0.88em;">(recommended)</span>
+                                        Desde la última ejecución <span style="opacity:0.55; font-size:0.88em;">(recomendado)</span>
                                     </label>
-                                    <label class="checkbox_label" title="The agent reads from the most recent user message through to the latest AI response — one turn only.">
+                                    <label class="checkbox_label" title="El agente lee desde el mensaje de usuario más reciente hasta la respuesta de la IA.">
                                         <input id="rpg_tracker_router_lookback_since_last_user" type="radio" name="router_lookback_mode" value="since_last_user" />
-                                        Since last user message
+                                        Desde el último mensaje del usuario
                                     </label>
-                                    <label class="checkbox_label" title="Read a fixed number of recent messages.">
+                                    <label class="checkbox_label" title="Lee un número fijo de mensajes recientes.">
                                         <input id="rpg_tracker_router_lookback_fixed" type="radio" name="router_lookback_mode" value="fixed" />
-                                        Fixed turn count
+                                        Número de turnos fijo
                                     </label>
                                     <div id="rpg_tracker_router_lookback_numeric_row" style="transition: opacity 0.2s; opacity: 0.35; pointer-events: none; margin-left: 20px;">
-                                        <input id="rpg_tracker_router_lookback" type="text" inputmode="numeric" pattern="[0-9]*" class="text_pole" min="1" max="100" title="Last N user turns (includes all assistant and tool messages in each turn) when 'Fixed turn count' is selected." />
+                                        <input id="rpg_tracker_router_lookback" type="text" inputmode="numeric" pattern="[0-9]*" class="text_pole" min="1" max="100" title="Últimos N turnos del usuario cuando se selecciona 'Número de turnos fijo'." />
                                     </div>
 
 
-                                    <label title="How often the Lorebook Agent auto-fires. Every turn (1) guarantees entries are always in context but may create excessive granularity. Every 3+ turns lets the agent see more narrative before updating, producing more coherent, consolidated entries. Keyword activation still fires immediately regardless of this setting.">Run Every N Messages <span style="opacity:0.55; font-size:0.9em;">(running every turn produces more granular detail but may be excessively granular and require occasional cleanup tool)</span></label>
+                                    <label title="Frecuencia de activación automática del Agente de Lorebook. Cada turno (1) garantiza que las entradas estén siempre en contexto. Cada 3+ turnos permite ver más narrativa antes de actualizar.">Ejecutar Cada N Mensajes <span style="opacity:0.55; font-size:0.9em;">(ejecutar en cada turno produce más detalle pero puede requerir limpieza ocasional)</span></label>
                                     <input id="rpg_tracker_router_run_every" type="text" inputmode="numeric" pattern="[0-9]*" class="text_pole" min="1" max="50" />
                                     
-                                    <label>Max Agent Turns</label>
+                                    <label>Turnos Máximos del Agente</label>
                                     <input id="rpg_tracker_router_max_turns" type="text" inputmode="numeric" pattern="[0-9]*" class="text_pole" min="1" max="50" />
                                     
-                                    <label>Max Active Keys</label>
+                                    <label>Claves Activas Máximas</label>
                                     <input id="rpg_tracker_router_max_activations" type="text" inputmode="numeric" pattern="[0-9]*" class="text_pole" min="1" max="20" />
                                     
-                                    <label>Keyword Overflow Cap (0 = no cap)</label>
+                                    <label>Límite de Exceso de Palabras Clave (0 = sin límite)</label>
                                     <input id="rpg_tracker_router_max_keyword_overflow" type="text" inputmode="numeric" pattern="[0-9]*" class="text_pole" min="0" max="50" />
                                 </div>
                             </div>
@@ -1006,54 +1006,54 @@
                         <!-- NPC Settings -->
                         <div class="inline-drawer">
                             <div class="inline-drawer-toggle inline-drawer-header">
-                                <b><i class="fa-solid fa-user-gear" style="opacity: 0.7; margin-right: 5px;"></i>NPC Settings</b>
+                                <b><i class="fa-solid fa-user-gear" style="opacity: 0.7; margin-right: 5px;"></i>Configuración de PNJs</b>
                                 <div class="inline-drawer-icon fa-solid fa-circle-down down"></div>
                             </div>
                             <div class="inline-drawer-content">
                                 <div class="flex-container flexFlowColumn gap-1">
-                                    <label style="font-size: 11px; opacity: 0.7;">Major NPC Section Word Target</label>
-                                    <input id="rpg_tracker_npc_major_words" type="text" inputmode="numeric" pattern="[0-9]*" class="text_pole" value="25" title="Recurring, plot-important NPCs. Default: 25 words per section of [CORE]" />
+                                    <label style="font-size: 11px; opacity: 0.7;">Objetivo de Palabras para PNJ Principal</label>
+                                    <input id="rpg_tracker_npc_major_words" type="text" inputmode="numeric" pattern="[0-9]*" class="text_pole" value="25" title="PNJs recurrentes e importantes en la trama. Predeterminado: 25 palabras por sección de [CORE]" />
                                     
-                                    <label style="font-size: 11px; opacity: 0.7;">Minor NPC Section Word Target</label>
-                                    <input id="rpg_tracker_npc_minor_words" type="text" inputmode="numeric" pattern="[0-9]*" class="text_pole" value="15" title="Shopkeepers, guards, one-off encounters. Default: 15 words per section of [CORE]" />
+                                    <label style="font-size: 11px; opacity: 0.7;">Objetivo de Palabras para PNJ Secundario</label>
+                                    <input id="rpg_tracker_npc_minor_words" type="text" inputmode="numeric" pattern="[0-9]*" class="text_pole" value="15" title="Tenderos, guardias, encuentros puntuales. Predeterminado: 15 palabras por sección de [CORE]" />
 
                                     <label class="checkbox_label">
                                         <input id="rpg_tracker_npc_rel_bars" type="checkbox" />
-                                         <span>Relationship System (tracks each NPC's friendship and affection toward you)</span>
-                                        <i class="fa-solid fa-circle-question interactable" style="font-size: 0.85em; opacity: 0.7; margin-left: 4px;" title="Tracks each NPC's friendship and affection toward you, displays the values on NPC cards and popups, and gives the narrator guidance for relationship changes."></i>
+                                         <span>Sistema de Relaciones (rastrea la amistad y afecto de cada PNJ hacia ti)</span>
+                                        <i class="fa-solid fa-circle-question interactable" style="font-size: 0.85em; opacity: 0.7; margin-left: 4px;" title="Rastrea la amistad y afecto de cada PNJ hacia ti, muestra los valores en las fichas y ventanas, y da orientación al narrador."></i>
                                     </label>
 
                                     <label class="checkbox_label">
                                         <input id="rpg_tracker_npc_rel_toast" type="checkbox" />
-                                        <span>Show Relationship Float Feedback</span>
-                                        <i class="fa-solid fa-circle-question interactable" style="font-size: 0.85em; opacity: 0.7; margin-left: 4px;" title="Shows a floating Friendship/Affection graphic that rises and fades when those values change."></i>
+                                        <span>Mostrar Notificación Flotante de Relaciones</span>
+                                        <i class="fa-solid fa-circle-question interactable" style="font-size: 0.85em; opacity: 0.7; margin-left: 4px;" title="Muestra un gráfico flotante de Amistad/Afecto que asciende y se desvanece al cambiar los valores."></i>
                                     </label>
 
-                                    <label style="font-size: 11px; opacity: 0.7;">Default Relationship Max for new chats (± range)</label>
-                                    <input id="rpg_tracker_npc_rel_max_default" type="text" inputmode="numeric" pattern="[0-9]*" class="text_pole" value="150" min="10" max="10000" title="Starting scale for chats without a saved per-chat value. Default: 150. Higher = slower burn." />
-                                    <div style="font-size: 10px; opacity: 0.55; line-height: 1.35; margin-top: -2px;">Per-chat overrides are set from the ⚙️ NPC Settings popup in Campaign Records.</div>
+                                    <label style="font-size: 11px; opacity: 0.7;">Límite Máximo Predeterminado de Relación para Nuevos Chats (rango ±)</label>
+                                    <input id="rpg_tracker_npc_rel_max_default" type="text" inputmode="numeric" pattern="[0-9]*" class="text_pole" value="150" min="10" max="10000" title="Escala inicial para chats sin un valor personalizado. Predeterminado: 150. Valor más alto = progresión más lenta." />
+                                    <div style="font-size: 10px; opacity: 0.55; line-height: 1.35; margin-top: -2px;">Las personalizaciones por chat se ajustan en la ventana de ⚙️ Ajustes de PNJ en Registros de Campaña.</div>
 
                                     <label class="checkbox_label">
                                         <input id="rpg_tracker_ignore_npc_limits" type="checkbox" />
-                                        <span>Ignore Character Limits When Importing Character Cards</span>
-                                        <i class="fa-solid fa-circle-question interactable" style="font-size: 0.85em; opacity: 0.7; margin-left: 4px;" title="Omits the &lt;CORE LENGTH TARGETS&gt; section from the NPC prompt."></i>
+                                        <span>Ignorar Límites de Caracteres al Importar Fichas</span>
+                                        <i class="fa-solid fa-circle-question interactable" style="font-size: 0.85em; opacity: 0.7; margin-left: 4px;" title="Omite la sección de límites de extensión del prompt del PNJ."></i>
                                     </label>
 
                                     <div style="margin-top: 6px;">
-                                        <label style="font-size: 11px; opacity: 0.7; display: block; margin-bottom: 4px;">"Add as is" Import Mode</label>
+                                        <label style="font-size: 11px; opacity: 0.7; display: block; margin-bottom: 4px;">Modo de Importación "Añadir tal cual"</label>
                                         <div class="flex-container flexFlowColumn gap-1" style="padding-left: 5px;">
-                                            <label class="checkbox_label" title="Wraps the card's raw content in [CORE][/CORE] tags exactly as written. No AI involvement.">
+                                            <label class="checkbox_label" title="Envuelve la ficha exactamente en etiquetas [CORE][/CORE]. Sin IA.">
                                                 <input type="radio" name="rpg_npc_add_as_is_mode_main" id="rpg_npc_add_as_is_literal" value="literal" />
-                                                <span style="font-size: 11px;"><b>Literal</b> — wraps the card verbatim in [CORE][/CORE]. No AI.</span>
+                                                <span style="font-size: 11px;"><b>Literal</b> — envuelve la ficha exactamente en [CORE][/CORE]. Sin IA.</span>
                                             </label>
-                                            <label class="checkbox_label" title="Sends the card to AI for a minimal logical review. Only corrects world/era conflicts. Original writing is preserved as completely as possible.">
+                                            <label class="checkbox_label" title="Envía la ficha a la IA para una revisión lógica mínima (solo conflictos de época/mundo).">
                                                 <input type="radio" name="rpg_npc_add_as_is_mode_main" id="rpg_npc_add_as_is_ai_review" value="ai_review" />
-                                                <span style="font-size: 11px;"><b>AI Review</b> — minimal fix pass for era/world conflicts only. Original writing preserved.</span>
+                                                <span style="font-size: 11px;"><b>Revisión IA</b> — corrección mínima solo para conflictos de época/mundo. Redacción original preservada.</span>
                                             </label>
                                         </div>
-                                        <div style="font-size: 10px; opacity: 0.5; margin-top: 3px;">Controls what happens when you click "+ Add as is" on a character card.</div>
+                                        <div style="font-size: 10px; opacity: 0.5; margin-top: 3px;">Controla qué sucede al hacer clic en "+ Añadir tal cual" en una ficha de personaje.</div>
                                     </div>
-                                    <button id="rpg_tracker_btn_edit_npc_sections" class="menu_button interactable" style="margin-top: 8px; width: 100%; background: rgba(180, 100, 255, 0.15); border-color: rgba(180, 100, 255, 0.4);"><i class="fa-solid fa-puzzle-piece"></i> Edit NPC Sections</button>
+                                    <button id="rpg_tracker_btn_edit_npc_sections" class="menu_button interactable" style="margin-top: 8px; width: 100%; background: rgba(180, 100, 255, 0.15); border-color: rgba(180, 100, 255, 0.4);"><i class="fa-solid fa-puzzle-piece"></i> Editar Secciones de PNJ</button>
 
 
                             </div>
@@ -1064,29 +1064,29 @@
                         <!-- Active Lore Injection Settings -->
                         <div class="inline-drawer">
                             <div class="inline-drawer-toggle inline-drawer-header">
-                                <b>Active Lore Injection (Extension)</b>
+                                <b>Inyección de Lore Activo (Extensión)</b>
                                 <div class="inline-drawer-icon fa-solid fa-circle-down down"></div>
                             </div>
                             <div class="inline-drawer-content">
                                 <div class="flex-container flexFlowColumn gap-1">
                                     <div style="font-size: 10px; opacity: 0.7; margin-bottom: 5px;">
-                                        Controls prompt injection position and depth when "Native Keyword Activation" is disabled (the extension's custom active lore injection path).
+                                        Controla la posición y profundidad de inyección en el prompt cuando "Activación Nativa por Palabras Clave" está desactivada.
                                     </div>
-                                    <label>Injection Position</label>
+                                    <label>Posición de Inyección</label>
                                     <select id="rpg_tracker_lore_injection_position" class="text_pole">
-                                        <option value="0" data-role="">Folded into User Message</option>
-                                        <option value="4" data-role="0">@D ⚙️: at Depth (System)</option>
-                                        <option value="4" data-role="1">@D 👤: at Depth (User)</option>
-                                        <option value="4" data-role="2">@D 🤖: at Depth (Assistant)</option>
+                                        <option value="0" data-role="">Integrado en el Mensaje del Usuario</option>
+                                        <option value="4" data-role="0">@D ⚙️: en Profundidad (Sistema)</option>
+                                        <option value="4" data-role="1">@D 👤: en Profundidad (Usuario)</option>
+                                        <option value="4" data-role="2">@D 🤖: en Profundidad (Asistente)</option>
                                     </select>
 
                                     <div id="rpg_tracker_lore_injection_depth_container">
-                                        <label>Injection Depth</label>
+                                        <label>Profundidad de Inyección</label>
                                         <input id="rpg_tracker_lore_injection_depth" type="text" inputmode="numeric" pattern="[0-9]*" class="text_pole" min="0" max="9999" />
                                     </div>
 
                                     <div style="font-size: 9px; opacity: 0.5; line-height: 1.35; margin-top: 5px;">
-                                        💡 <b>Caching tip:</b> Using '@D' (At Depth) at a value of 4 or more allows the chat history prior to that depth to remain completely static and cached. Lower depth values can make active lore more salient to the model but will reduce cache hit rates.
+                                        💡 <b>Consejo de caché:</b> Usar '@D' (En profundidad) con un valor de 4 o más permite que el historial de chat anterior permanezca estático y en caché.
                                     </div>
                                 </div>
                             </div>
@@ -1095,34 +1095,34 @@
                         <!-- Agent Entry Creation defaults -->
                         <div class="inline-drawer">
                             <div class="inline-drawer-toggle inline-drawer-header">
-                                <b>New Entry Defaults (Native Keyword Activation)</b>
+                                <b>Valores Predeterminados para Nuevas Entradas (Activación Nativa)</b>
                                 <div class="inline-drawer-icon fa-solid fa-circle-down down"></div>
                             </div>
                             <div class="inline-drawer-content">
                                 <div class="flex-container flexFlowColumn gap-1">
                                     <div style="font-size: 10px; opacity: 0.7; margin-bottom: 5px;">
-                                        Metadata written into newly created lorebook entries. When "Native Keyword Activation" is enabled in the Agent Panel, SillyTavern uses these defaults to determine injection position, depth, and order.
+                                        Metadatos guardados en las nuevas entradas del libro de lore. Cuando "Activación Nativa por Palabras Clave" está habilitada, SillyTavern usa estos valores para determinar la posición, profundidad y orden.
                                     </div>
-                                    <label>Default Position</label>
+                                    <label>Posición Predeterminada</label>
                                     <select id="rpg_tracker_router_default_position" class="text_pole">
-                                        <option value="0" data-role="">↑Char: Before Character Definitions</option>
-                                        <option value="1" data-role="">↓Char: After Character Definitions</option>
-                                        <option value="5" data-role="">↑EM: Before Example Messages</option>
-                                        <option value="6" data-role="">↓EM: After Example Messages</option>
-                                        <option value="2" data-role="">↑AN: Before Author's Note</option>
-                                        <option value="3" data-role="">↓AN: After Author's Note</option>
-                                        <option value="4" data-role="0">@D ⚙️: at Depth (System)</option>
-                                        <option value="4" data-role="1">@D 👤: at Depth (User)</option>
-                                        <option value="4" data-role="2">@D 🤖: at Depth (Assistant)</option>
-                                        <option value="7" data-role="">➡️ Outlet</option>
+                                        <option value="0" data-role="">↑Char: Antes de Definiciones del Personaje</option>
+                                        <option value="1" data-role="">↓Char: Después de Definiciones del Personaje</option>
+                                        <option value="5" data-role="">↑EM: Antes de Mensajes de Ejemplo</option>
+                                        <option value="6" data-role="">↓EM: Después de Mensajes de Ejemplo</option>
+                                        <option value="2" data-role="">↑AN: Antes de la Nota del Autor</option>
+                                        <option value="3" data-role="">↓AN: Después de la Nota del Autor</option>
+                                        <option value="4" data-role="0">@D ⚙️: en Profundidad (Sistema)</option>
+                                        <option value="4" data-role="1">@D 👤: en Profundidad (Usuario)</option>
+                                        <option value="4" data-role="2">@D 🤖: en Profundidad (Asistente)</option>
+                                        <option value="7" data-role="">➡️ Salida (Outlet)</option>
                                     </select>
 
                                     <div id="rpg_tracker_router_default_depth_container">
-                                        <label>Default Depth</label>
+                                        <label>Profundidad Predeterminada</label>
                                         <input id="rpg_tracker_router_default_depth" type="text" inputmode="numeric" pattern="[0-9]*" class="text_pole" min="0" max="9999" />
                                     </div>
 
-                                    <label>Default Order</label>
+                                    <label>Orden Predeterminado</label>
                                     <input id="rpg_tracker_router_default_order" type="text" inputmode="numeric" pattern="[0-9]*" class="text_pole" min="0" max="9999" />
                                 </div>
                             </div>
@@ -1131,37 +1131,37 @@
                         <hr>
                         <div class="inline-drawer">
                             <div class="inline-drawer-toggle inline-drawer-header">
-                                <b>Agent Prompt</b>
+                                <b>Prompt del Agente</b>
                                 <div class="inline-drawer-icon fa-solid fa-circle-down down"></div>
                             </div>
                             <div class="inline-drawer-content">
                                 <div class="flex-container flexFlowColumn gap-1">
                                     <textarea id="rpg_tracker_router_prompt" class="text_pole autoSetHeight" rows="5"></textarea>
-                                    <button id="rpg_tracker_router_btn_reset_prompt" class="menu_button interactable" style="width: 100%; margin-top: 4px; font-size: 11px;"><i class="fa-solid fa-arrow-rotate-left"></i> Reset Agent Prompt</button>
+                                    <button id="rpg_tracker_router_btn_reset_prompt" class="menu_button interactable" style="width: 100%; margin-top: 4px; font-size: 11px;"><i class="fa-solid fa-arrow-rotate-left"></i> Restablecer Prompt del Agente</button>
                                 </div>
                             </div>
                         </div>
 
                         <div class="inline-drawer" style="margin-top: 6px;">
                             <div class="inline-drawer-toggle inline-drawer-header">
-                                <b>Modular Agent Prompt</b>
+                                <b>Prompt Modular del Agente</b>
                                 <div class="inline-drawer-icon fa-solid fa-circle-down down"></div>
                             </div>
                             <div class="inline-drawer-content">
                                 <div class="flex-container flexFlowColumn gap-1">
-                                    <div style="font-size: 10px; opacity: 0.7; margin-bottom: 4px; line-height: 1.3;">Controls formatting and module-specific rules (LOC, FAC, WORLD, etc). Use <span style="font-family: monospace;">{{formatLines}}</span> to inject the dynamically enabled modules.</div>
+                                    <div style="font-size: 10px; opacity: 0.7; margin-bottom: 4px; line-height: 1.3;">Controla el formato y las reglas específicas de los módulos (LOC, FAC, WORLD, etc). Usa <span style="font-family: monospace;">{{formatLines}}</span> para inyectar los módulos habilitados dinámicamente.</div>
                                     <textarea id="rpg_tracker_router_modular_prompt" class="text_pole autoSetHeight" rows="5"></textarea>
-                                    <button id="rpg_tracker_router_btn_reset_modular_prompt" class="menu_button interactable" style="width: 100%; margin-top: 4px; font-size: 11px;"><i class="fa-solid fa-arrow-rotate-left"></i> Reset Modular Prompt</button>
+                                    <button id="rpg_tracker_router_btn_reset_modular_prompt" class="menu_button interactable" style="width: 100%; margin-top: 4px; font-size: 11px;"><i class="fa-solid fa-arrow-rotate-left"></i> Restablecer Prompt Modular</button>
                                 </div>
                             </div>
                         </div>
 
                         <details id="rpg_tracker_lore_activation_debug_wrap" style="margin-top: 12px; opacity: 0.55;">
-                            <summary style="cursor: pointer; user-select: none; font-size: 10px; color: inherit; list-style: none;" title="Prefix matching, ST APIs, and /world slash diagnostics">Lore activation debug</summary>
+                            <summary style="cursor: pointer; user-select: none; font-size: 10px; color: inherit; list-style: none;" title="Diagnóstico de coincidencias de prefijo, APIs de ST y comandos /world">Depuración de activación de lore</summary>
                             <div style="margin-top: 8px; font-size: 10px; line-height: 1.35;">
                                 <div class="flex-container gap-1" style="flex-wrap: wrap; margin-bottom: 8px;">
-                                    <button type="button" id="rpg_tracker_lore_debug_capture" class="menu_button interactable" style="font-size: 10px; padding: 2px 8px;">Capture now</button>
-                                    <button type="button" id="rpg_tracker_lore_debug_resync" class="menu_button interactable" style="font-size: 10px; padding: 2px 8px;">Re-sync chat to worlds</button>
+                                    <button type="button" id="rpg_tracker_lore_debug_capture" class="menu_button interactable" style="font-size: 10px; padding: 2px 8px;">Capturar ahora</button>
+                                    <button type="button" id="rpg_tracker_lore_debug_resync" class="menu_button interactable" style="font-size: 10px; padding: 2px 8px;">Resincronizar chat con mundos</button>
                                 </div>
                                 <pre id="rpg_tracker_lore_activation_debug_pre" style="margin: 0; max-height: 240px; overflow: auto; white-space: pre-wrap; word-break: break-word; font-size: 10px; line-height: 1.25; padding: 8px; border-radius: 4px; background: rgba(0,0,0,0.2); border: 1px solid rgba(127,127,127,0.25);"></pre>
                             </div>
@@ -1180,34 +1180,33 @@
                 <div class="inline-drawer-content">
                     <div class="flex-container flexFlowColumn gap-1">
                         <div style="font-size: 0.8em; opacity: 0.65; line-height: 1.4; margin-bottom: 8px; border: 1px solid rgba(100,160,255,0.2); border-radius: 6px; padding: 8px 10px; background: rgba(100,160,255,0.04);">
-                            World Progression automatically generates off-screen world simulation reports at a fixed in-world time interval.
-                            Reports are written by a standalone LLM pass and stored in the <code style="font-size:0.9em;">{prefix}_World</code> lorebook.
-                            The trigger is <b>deterministic</b> — JavaScript checks the <code>[TIME]</code> block after every State Tracker update;
-                            the AI only writes the report, never decides whether to generate one.
+                            La Progresión del Mundo genera automáticamente informes de simulación fuera de escena a un intervalo de tiempo fijo en el juego.
+                            Los informes son redactados por el LLM y se guardan en el libro de lore <code style="font-size:0.9em;">{prefix}_World</code>.
+                            La activación es <b>determinista</b>: JavaScript verifica el bloque <code>[TIME]</code> tras cada actualización del Rastreador de Estado.
                         </div>
 
                         <!-- QUICK START GUIDE -->
                         <div class="inline-drawer" style="margin-bottom: 10px;">
                             <div class="inline-drawer-toggle inline-drawer-header" style="font-size: 0.88em; padding: 6px 10px; background: rgba(0, 180, 216, 0.08) !important; border-color: rgba(0, 180, 216, 0.2) !important;">
                                 <i class="fa-solid fa-circle-info" style="color: #00b4d8; margin-right: 8px;"></i>
-                                <b>Quick Start Guide</b>
+                                <b>Guía de Inicio Rápido</b>
                                 <div class="inline-drawer-icon fa-solid fa-circle-chevron-down down"></div>
                             </div>
                             <div class="inline-drawer-content" style="padding: 10px; font-size: 0.82em; line-height: 1.45; background: rgba(0, 0, 0, 0.15);">
-                                <p style="margin: 0 0 10px; opacity: 0.85;">Creating a World Skeleton is optional but recommended — it gives World Progression content to work with (for Focus Randomization and generally), making the world bigger beyond the player. Without it, reports tend to stay limited to entities in the player's immediate bubble.</p>
+                                <p style="margin: 0 0 10px; opacity: 0.85;">Crear un Esqueleto del Mundo es opcional pero recomendable: proporciona contenido inicial para la simulación del mundo más allá del entorno del jugador.</p>
                                 <ol style="margin: 0; padding-left: 20px; display: flex; flex-direction: column; gap: 8px;">
-                                    <li><b>Create the Atmosphere Summary</b>: Either write it manually or click <i>Auto-Generate</i> to grab it from your recent chat story (if one exists already). This establishes the setting's theme.</li>
-                                    <li><b>Generate the Skeleton</b>: Click <i>Generate Skeleton</i>. This creates factions, locations, NPCs, and conflicts to simulate off-screen background activity, creating a Day 0 baseline. Remember that you can also add to the Skeleton Lorebook (after generation) yourself or edit the generated entities from the native SillyTavern Lorebook UI. This way, you can even have a fully granularly customized World Skeleton to base the World Reports on.</li>
-                                    <li><b>Set up Focus Randomization</b> (Optional but Recommended): Enable this to force diversity in report coverage, rather than focusing only on the player's immediate bubble. Without Focus Randomization, the World Report may end up repeatedly covering the same threads because it has nothing forcing it to deviate. Not necessarily bad per se, but Focus Randomization guarantees a variety of entities are simulated in subsequent World Reports. It turns it into a &ldquo;lottery.&rdquo;</li>
-                                    <li><b>Generate the First Report</b>: Trigger a report immediately using the <i>Generate Now</i> button, or let it fire automatically as the campaign progresses. If you run it later, it will incorporate entities that have organically accumulated in your adventure up to that point. Immediate generation is Skeleton-only.</li>
+                                    <li><b>Crear el Resumen de Atmósfera</b>: Escríbelo manualmente o haz clic en <i>Generar Automáticamente</i> para obtenerlo de tu historia de chat reciente. Esto establece la temática del escenario.</li>
+                                    <li><b>Generar el Esqueleto</b>: Haz clic en <i>Generar Esqueleto</i>. Esto crea facciones, ubicaciones, PNJs y conflictos fuera de escena como línea base del Día 0. Se pueden editar en SillyTavern.</li>
+                                    <li><b>Configurar Aleatorización de Enfoque</b> (Opcional pero Recomendado): Habilítalo para forzar diversidad en los informes en lugar de centrarse solo en la zona del jugador.</li>
+                                    <li><b>Generar el Primer Informe</b>: Ejecuta un informe de inmediato usando <i>Generar Ahora</i> o permite que se ejecute automáticamente conforme avanza la campaña.</li>
                                 </ol>
                                 <div style="margin-top: 12px; padding-top: 10px; border-top: 1px dashed rgba(255,255,255,0.1);">
-                                    <div style="font-size: 0.78em; font-weight: bold; opacity: 0.65; text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 6px;">Miscellaneous</div>
+                                    <div style="font-size: 0.78em; font-weight: bold; opacity: 0.65; text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 6px;">Información Adicional</div>
                                     <ul style="margin: 0; padding-left: 18px; display: flex; flex-direction: column; gap: 6px; opacity: 0.9;">
-                                        <li>Remember that benched party members can also become part of World Reports. For example, if you leave a party member in the base as <code>[BENCHED]</code>, World Progression may generate background activity for them.</li>
-                                        <li>24h seems to be a decent interval for World Report auto-generation, but you are encouraged to experiment with shorter intervals (or longer, for that matter).</li>
-                                        <li>You can always also trigger World Progression manually whenever you like.</li>
-                                        <li>Injection Position affects the prominence of World Reports (adjustable from <b>Context Injection Settings</b> below). The lower the report is positioned (closer to the most recent message), the more prominent the report will be to the narrator.</li>
+                                        <li>Los miembros del grupo en reserva <code>[BENCHED]</code> también pueden formar parte de los informes de Progresión del Mundo.</li>
+                                        <li>Un intervalo de 24h suele ser adecuado para la generación automática, pero puedes experimentar con otros valores.</li>
+                                        <li>Siempre puedes ejecutar la Progresión del Mundo manualmente en cualquier momento.</li>
+                                        <li>La posición de inyección afecta la prominencia de los informes ante el narrador.</li>
                                     </ul>
                                 </div>
                             </div>
@@ -1217,15 +1216,15 @@
                         <div class="inline-drawer">
                             <div class="inline-drawer-toggle inline-drawer-header">
                                 <i class="fa-solid fa-network-wired" style="opacity: 0.7; margin-right: 8px;"></i>
-                                <b>Connection Settings</b>
+                                <b>Configuración de Conexión</b>
                                 <div class="inline-drawer-icon fa-solid fa-circle-chevron-down down"></div>
                             </div>
                             <div class="inline-drawer-content">
                                 <div class="flex-container flexFlowColumn gap-1">
-                                    <label style="font-size: 0.85em; font-weight: bold;">Connection Source</label>
+                                    <label style="font-size: 0.85em; font-weight: bold;">Fuente de Conexión</label>
                                     <select id="rpg_world_connection_source" class="text_pole">
-                                        <option value="default">Main API</option>
-                                        <option value="profile">Profile</option>
+                                        <option value="default">API Principal</option>
+                                        <option value="profile">Perfil</option>
                                         <option value="ollama">Ollama</option>
                                         <option value="openai">OpenAI</option>
                                     </select>
@@ -1241,14 +1240,14 @@
                                     </div>
                                     <div id="rpg_world_openai_group" style="display: none;">
                                         <input id="rpg_world_openai_url" type="text" class="text_pole" placeholder="URL" />
-                                        <input id="rpg_world_openai_key" type="password" class="text_pole" placeholder="Key" />
+                                        <input id="rpg_world_openai_key" type="password" class="text_pole" placeholder="Clave API" />
                                         <div class="flex-container gap-1">
                                             <select id="rpg_world_openai_model" class="text_pole" style="flex: 1;"></select>
                                             <button id="rpg_world_openai_refresh" class="menu_button interactable" style="padding: 2px 6px;"><i class="fa-solid fa-arrows-rotate"></i></button>
                                         </div>
-                                        <input id="rpg_world_openai_model_manual" type="text" class="text_pole" placeholder="Manual Model Name" />
+                                        <input id="rpg_world_openai_model_manual" type="text" class="text_pole" placeholder="Nombre Manual del Modelo" />
                                     </div>
-                                    <label style="font-size: 0.85em; font-weight: bold; margin-top: 4px;">Preset</label>
+                                    <label style="font-size: 0.85em; font-weight: bold; margin-top: 4px;">Preajuste</label>
                                     <select id="rpg_world_completion_preset" class="text_pole"></select>
                                 </div>
                             </div>
@@ -1257,42 +1256,42 @@
                         <!-- ENABLE CHECKBOX -->
                         <label class="checkbox_label" style="font-size: 0.92em; font-weight: bold; margin-bottom: 6px;">
                             <input id="rpg_world_progression_enabled" type="checkbox" />
-                            <span>Enable World Progression</span>
-                            <i class="fa-solid fa-circle-question interactable" style="font-size: 0.85em; opacity: 0.7; margin-left: 4px;" title="When enabled, World Progression fires automatically after State Tracker updates whenever the in-world interval has elapsed. Requires the Lorebook Agent to be enabled and a valid campaign prefix set."></i>
+                            <span>Habilitar Progresión del Mundo</span>
+                            <i class="fa-solid fa-circle-question interactable" style="font-size: 0.85em; opacity: 0.7; margin-left: 4px;" title="Cuando está habilitado, la Progresión del Mundo se ejecuta automáticamente tras las actualizaciones del Rastreador de Estado cuando transcurre el intervalo."></i>
                         </label>
 
                         <!-- QUICK CONTROLS & STATUS CARD -->
                         <div class="rpg-wp-status-card" style="background: rgba(0,0,0,0.25); border: 1px solid rgba(255,255,255,0.06); border-radius: 8px; padding: 12px; margin-bottom: 10px;">
                             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; font-size: 0.82em; opacity: 0.85; margin-bottom: 10px;">
                                 <div style="display: flex; flex-direction: column; gap: 2px;">
-                                    <span style="font-size: 0.78em; opacity: 0.55; text-transform: uppercase; letter-spacing: 0.03em;">Last Generated</span>
+                                    <span style="font-size: 0.78em; opacity: 0.55; text-transform: uppercase; letter-spacing: 0.03em;">Última Generación</span>
                                     <span id="rpg_world_progression_last_fired" style="font-family: monospace; font-weight: bold;">—</span>
                                 </div>
                                 <div style="display: flex; flex-direction: column; gap: 2px;">
-                                    <span style="font-size: 0.78em; opacity: 0.55; text-transform: uppercase; letter-spacing: 0.03em;">Last Report In-World</span>
+                                    <span style="font-size: 0.78em; opacity: 0.55; text-transform: uppercase; letter-spacing: 0.03em;">Último Informe (En el Juego)</span>
                                     <span id="rpg_world_progression_last_report_val" style="font-family: monospace; font-weight: bold;">—</span>
                                 </div>
                                 <div style="display: flex; flex-direction: column; gap: 2px; grid-column: span 2; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 6px; margin-top: 4px;">
-                                    <span style="font-size: 0.78em; opacity: 0.55; text-transform: uppercase; letter-spacing: 0.03em;">Next Scheduled Report</span>
+                                    <span style="font-size: 0.78em; opacity: 0.55; text-transform: uppercase; letter-spacing: 0.03em;">Próximo Informe Programado</span>
                                     <div style="display: flex; align-items: center; justify-content: space-between; width: 100%;">
                                         <span id="rpg_world_progression_next_report_val" style="font-family: monospace; font-weight: bold;">—</span>
-                                        <button id="rpg_world_progression_btn_override_next" class="menu_button interactable" style="margin: 0; padding: 2px 8px; font-size: 0.85em; width: auto;" title="Override the in-world time when the next report should trigger">Override</button>
+                                        <button id="rpg_world_progression_btn_override_next" class="menu_button interactable" style="margin: 0; padding: 2px 8px; font-size: 0.85em; width: auto;" title="Modificar el tiempo dentro del juego en que se activará el próximo informe">Modificar</button>
                                     </div>
                                 </div>
                             </div>
                             
                             <div style="display: flex; flex-direction: column; gap: 6px; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 8px;">
                                 <button id="rpg_world_progression_generate_now" class="menu_button interactable" style="margin: 0; background: rgba(100, 200, 100, 0.12); border-color: rgba(100, 200, 100, 0.35); font-size: 0.85em; font-weight: bold; width: 100%;">
-                                    <i class="fa-solid fa-globe" style="margin-right: 5px;"></i> Generate Now (current period)
+                                    <i class="fa-solid fa-globe" style="margin-right: 5px;"></i> Generar Ahora (periodo actual)
                                 </button>
                                 <button id="rpg_world_progression_fire_with_instructions" class="menu_button interactable" style="margin: 0; background: rgba(0, 180, 216, 0.12); border-color: rgba(0, 180, 216, 0.35); font-size: 0.85em; font-weight: bold; width: 100%;">
-                                    <i class="fa-solid fa-wand-magic-sparkles" style="margin-right: 5px;"></i> Fire with Extra Instructions
+                                    <i class="fa-solid fa-wand-magic-sparkles" style="margin-right: 5px;"></i> Ejecutar con Instrucciones Adicionales
                                 </button>
-                                <button id="rpg_world_progression_reset_timeline" class="menu_button interactable" title="Clears the last-fired timestamp so World Progression starts fresh from the current time" style="margin: 0; background: rgba(234, 67, 53, 0.08); border-color: rgba(234, 67, 53, 0.3); color: rgba(234,67,53,0.8); font-size: 0.8em; font-weight: bold; width: 100%;">
-                                    <i class="fa-solid fa-clock-rotate-left" style="margin-right: 5px;"></i> Reset Timeline
+                                <button id="rpg_world_progression_reset_timeline" class="menu_button interactable" title="Limpia el registro de tiempo anterior para que la Progresión del Mundo inicie desde el tiempo actual" style="margin: 0; background: rgba(234, 67, 53, 0.08); border-color: rgba(234, 67, 53, 0.3); color: rgba(234,67,53,0.8); font-size: 0.8em; font-weight: bold; width: 100%;">
+                                    <i class="fa-solid fa-clock-rotate-left" style="margin-right: 5px;"></i> Restablecer Línea Temporal
                                 </button>
-                                <button id="rpg_world_progression_purge_history" class="menu_button interactable" title="Deletes all World Progression reports and skeleton data for this campaign prefix and resets timer state for this chat" style="margin: 0; background: rgba(234, 67, 53, 0.12); border-color: rgba(234, 67, 53, 0.38); color: rgba(234,67,53,0.92); font-size: 0.8em; font-weight: bold; width: 100%;">
-                                    <i class="fa-solid fa-trash-can" style="margin-right: 5px;"></i> Purge World History for this Chat
+                                <button id="rpg_world_progression_purge_history" class="menu_button interactable" title="Elimina todos los informes de Progresión del Mundo y el esqueleto de esta campaña para este chat" style="margin: 0; background: rgba(234, 67, 53, 0.12); border-color: rgba(234, 67, 53, 0.38); color: rgba(234,67,53,0.92); font-size: 0.8em; font-weight: bold; width: 100%;">
+                                    <i class="fa-solid fa-trash-can" style="margin-right: 5px;"></i> Purgar Historial del Mundo para este Chat
                                 </button>
                             </div>
                         </div>
@@ -1301,88 +1300,88 @@
                         <div class="inline-drawer">
                             <div class="inline-drawer-toggle inline-drawer-header">
                                 <i class="fa-solid fa-skull" style="opacity: 0.7; margin-right: 8px;"></i>
-                                <b>World Skeleton & Atmosphere</b>
+                                <b>Esqueleto del Mundo y Atmósfera</b>
                                 <div class="inline-drawer-icon fa-solid fa-circle-chevron-down down"></div>
                             </div>
                             <div class="inline-drawer-content">
                                 <div class="flex-container flexFlowColumn gap-1">
                                     <div style="font-size: 0.78em; opacity: 0.65; line-height: 1.4; margin-bottom: 6px;">
-                                        The World Skeleton is a hidden database of background entities (factions, locations, NPCs, conflicts) that are never directly injected into the player's conversation. The AI simulates activity and developments for these off-screen entities, expanding the world beyond your immediate vicinity.
+                                        El Esqueleto del Mundo es una base de datos oculta de entidades fuera de escena (facciones, ubicaciones, PNJs, conflictos) que no se inyectan directamente en el chat. La IA simula la actividad de estas entidades expandiendo el mundo.
                                     </div>
                                     
                                     <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 4px; margin-bottom: 2px; flex-wrap: wrap; gap: 6px;">
-                                        <label style="font-size: 0.85em; font-weight: bold; opacity: 0.8; margin: 0; display: flex; align-items: center;">Atmosphere Summary
-                                            <i class="fa-solid fa-circle-question interactable" style="font-size: 0.85em; opacity: 0.7; margin-left: 4px;" title="A single paragraph description of the social texture, recurring tensions, and thematic tone of this world — without naming specific characters or events. Serves as the foundation and theme for skeleton generation. Required if not appending with existing entries."></i>
+                                        <label style="font-size: 0.85em; font-weight: bold; opacity: 0.8; margin: 0; display: flex; align-items: center;">Resumen de Atmósfera
+                                            <i class="fa-solid fa-circle-question interactable" style="font-size: 0.85em; opacity: 0.7; margin-left: 4px;" title="Un párrafo corto que describe el ambiente, tensiones y temática del mundo sin nombrar eventos específicos. Sirve como base para generar el esqueleto."></i>
                                         </label>
                                         <div style="display: flex; align-items: center; gap: 4px;">
-                                            <span style="font-size: 0.75em; opacity: 0.7;">Lookback:</span>
+                                            <span style="font-size: 0.75em; opacity: 0.7;">Revisión:</span>
                                             <input id="rpg_world_progression_skeleton_atmosphere_lookback" type="text" inputmode="numeric" pattern="[0-9]*" class="text_pole" value="30" style="width: 35px; text-align: center; font-size: 0.8em; padding: 2px; margin: 0;" />
                                             <span style="font-size: 0.75em; opacity: 0.7; margin-right: 2px;">msgs</span>
-                                            <button id="rpg_world_progression_btn_generate_atmosphere" class="menu_button interactable" style="font-size:0.75em; padding:2px 8px; margin: 0;" title="Auto-generate atmosphere summary based on recent chat history">
-                                                <i class="fa-solid fa-wand-magic-sparkles"></i> Auto-Generate
+                                            <button id="rpg_world_progression_btn_generate_atmosphere" class="menu_button interactable" style="font-size:0.75em; padding:2px 8px; margin: 0;" title="Generar resumen de atmósfera automáticamente basado en el historial del chat">
+                                                <i class="fa-solid fa-wand-magic-sparkles"></i> Generar Automáticamente
                                             </button>
                                         </div>
                                     </div>
-                                    <textarea id="rpg_world_progression_skeleton_atmosphere" class="text_pole" rows="3" style="width:100%; font-size:0.8em; resize:vertical; background:rgba(0,0,0,0.3); color:var(--SmartThemeBodyColor); border:1px solid rgba(255,255,255,0.1); border-radius:4px; padding:6px; box-sizing:border-box; margin-bottom: 6px;" placeholder="e.g. 'Poverty and desperation define daily life. The nobility maintains control through debt bondage. Corruption is endemic — even the church answers to noble patrons.'"></textarea>
+                                    <textarea id="rpg_world_progression_skeleton_atmosphere" class="text_pole" rows="3" style="width:100%; font-size:0.8em; resize:vertical; background:rgba(0,0,0,0.3); color:var(--SmartThemeBodyColor); border:1px solid rgba(255,255,255,0.1); border-radius:4px; padding:6px; box-sizing:border-box; margin-bottom: 6px;" placeholder="ej. 'La pobreza y la desesperación definen la vida cotidiana. La nobleza mantiene el control mediante deudas.'"></textarea>
 
                                     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(80px, 1fr)); gap: 8px; margin-bottom: 6px;">
                                         <div>
-                                            <label style="font-size: 0.75em; font-weight: bold; opacity: 0.8; display: block; margin-bottom: 2px;">Factions
-                                                <i class="fa-solid fa-circle-question interactable" style="font-size: 0.85em; opacity: 0.7;" title="Number of starting factions in the skeleton. Macro: {factionCount}"></i>
+                                            <label style="font-size: 0.75em; font-weight: bold; opacity: 0.8; display: block; margin-bottom: 2px;">Facciones
+                                                <i class="fa-solid fa-circle-question interactable" style="font-size: 0.85em; opacity: 0.7;" title="Número de facciones iniciales en el esqueleto. Macro: {factionCount}"></i>
                                             </label>
                                             <input id="rpg_world_progression_skeleton_factions" type="text" inputmode="numeric" pattern="[0-9]*" class="text_pole" value="4" style="width: 100%; text-align: center;" />
                                         </div>
                                         <div>
-                                            <label style="font-size: 0.75em; font-weight: bold; opacity: 0.8; display: block; margin-bottom: 2px;">Locations
-                                                <i class="fa-solid fa-circle-question interactable" style="font-size: 0.85em; opacity: 0.7;" title="Number of starting locations in the skeleton. Macro: {locationCount}"></i>
+                                            <label style="font-size: 0.75em; font-weight: bold; opacity: 0.8; display: block; margin-bottom: 2px;">Ubicaciones
+                                                <i class="fa-solid fa-circle-question interactable" style="font-size: 0.85em; opacity: 0.7;" title="Número de ubicaciones iniciales en el esqueleto. Macro: {locationCount}"></i>
                                             </label>
                                             <input id="rpg_world_progression_skeleton_locations" type="text" inputmode="numeric" pattern="[0-9]*" class="text_pole" value="4" style="width: 100%; text-align: center;" />
                                         </div>
                                         <div>
-                                            <label style="font-size: 0.75em; font-weight: bold; opacity: 0.8; display: block; margin-bottom: 2px;">NPCs
-                                                <i class="fa-solid fa-circle-question interactable" style="font-size: 0.85em; opacity: 0.7;" title="Number of starting NPCs in the skeleton. Macro: {npcCount}"></i>
+                                            <label style="font-size: 0.75em; font-weight: bold; opacity: 0.8; display: block; margin-bottom: 2px;">PNJs
+                                                <i class="fa-solid fa-circle-question interactable" style="font-size: 0.85em; opacity: 0.7;" title="Número de PNJs iniciales en el esqueleto. Macro: {npcCount}"></i>
                                             </label>
                                             <input id="rpg_world_progression_skeleton_npcs" type="text" inputmode="numeric" pattern="[0-9]*" class="text_pole" value="0" style="width: 100%; text-align: center;" />
                                         </div>
                                         <div>
-                                            <label style="font-size: 0.75em; font-weight: bold; opacity: 0.8; display: block; margin-bottom: 2px;">Conflicts
-                                                <i class="fa-solid fa-circle-question interactable" style="font-size: 0.85em; opacity: 0.7;" title="Number of starting conflicts in the skeleton. Macro: {conflictCount}"></i>
+                                            <label style="font-size: 0.75em; font-weight: bold; opacity: 0.8; display: block; margin-bottom: 2px;">Conflictos
+                                                <i class="fa-solid fa-circle-question interactable" style="font-size: 0.85em; opacity: 0.7;" title="Número de conflictos iniciales en el esqueleto. Macro: {conflictCount}"></i>
                                             </label>
                                             <input id="rpg_world_progression_skeleton_conflicts" type="text" inputmode="numeric" pattern="[0-9]*" class="text_pole" value="3" style="width: 100%; text-align: center;" />
                                         </div>
                                     </div>
 
                                     <div style="display:flex; align-items:center; gap:6px; margin-top: 4px; margin-bottom: 2px;">
-                                        <label style="font-size: 0.85em; font-weight: bold; opacity: 0.8; flex:1; margin:0;">Skeleton System Prompt
-                                            <i class="fa-solid fa-circle-question interactable" style="font-size: 0.85em; opacity: 0.7; margin-left: 4px;" title="The system prompt sent to the LLM for generating the foundational World Skeleton."></i>
+                                        <label style="font-size: 0.85em; font-weight: bold; opacity: 0.8; flex:1; margin:0;">Prompt del Sistema para el Esqueleto
+                                            <i class="fa-solid fa-circle-question interactable" style="font-size: 0.85em; opacity: 0.7; margin-left: 4px;" title="Prompt del sistema enviado al LLM para generar el Esqueleto del Mundo inicial."></i>
                                         </label>
-                                        <button id="rpg_world_progression_btn_reset_skeleton_prompt" class="menu_button interactable" style="font-size:0.75em; padding:2px 8px;" title="Reset to default prompt">
-                                            <i class="fa-solid fa-arrow-rotate-left"></i> Reset
+                                        <button id="rpg_world_progression_btn_reset_skeleton_prompt" class="menu_button interactable" style="font-size:0.75em; padding:2px 8px;" title="Restablecer prompt predeterminado">
+                                            <i class="fa-solid fa-arrow-rotate-left"></i> Restablecer
                                         </button>
                                     </div>
-                                    <div style="font-size: 0.72em; opacity: 0.5; margin-bottom: 3px;">Available tokens: <code>{factionCount}</code>, <code>{locationCount}</code>, <code>{npcCount}</code>, <code>{conflictCount}</code></div>
-                                    <textarea id="rpg_world_progression_skeleton_system_prompt" class="text_pole" rows="10" style="width:100%; font-size:0.78em; font-family:monospace; resize:vertical; background:rgba(0,0,0,0.3); color:var(--SmartThemeBodyColor); border:1px solid rgba(255,255,255,0.1); border-radius:4px; padding:6px; box-sizing:border-box; margin-bottom: 6px;" placeholder="System prompt for generating the World Skeleton…"></textarea>
+                                    <div style="font-size: 0.72em; opacity: 0.5; margin-bottom: 3px;">Variables disponibles: <code>{factionCount}</code>, <code>{locationCount}</code>, <code>{npcCount}</code>, <code>{conflictCount}</code></div>
+                                    <textarea id="rpg_world_progression_skeleton_system_prompt" class="text_pole" rows="10" style="width:100%; font-size:0.78em; font-family:monospace; resize:vertical; background:rgba(0,0,0,0.3); color:var(--SmartThemeBodyColor); border:1px solid rgba(255,255,255,0.1); border-radius:4px; padding:6px; box-sizing:border-box; margin-bottom: 6px;" placeholder="Prompt del sistema para generar el Esqueleto del Mundo…"></textarea>
 
                                     <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap; margin-top: 4px;">
-                                        <button id="rpg_world_progression_btn_generate_skeleton" class="menu_button interactable" style="background: rgba(180, 100, 255, 0.15); border-color: rgba(180, 100, 255, 0.4); margin: 0;" title="Generate a new skeleton (overwrites existing)">
-                                            <i class="fa-solid fa-wand-magic-sparkles"></i> Generate Skeleton
+                                        <button id="rpg_world_progression_btn_generate_skeleton" class="menu_button interactable" style="background: rgba(180, 100, 255, 0.15); border-color: rgba(180, 100, 255, 0.4); margin: 0;" title="Generar un nuevo esqueleto (sobreescribe el existente)">
+                                            <i class="fa-solid fa-wand-magic-sparkles"></i> Generar Esqueleto
                                         </button>
-                                        <button id="rpg_world_progression_btn_add_skeleton" class="menu_button interactable" style="background: rgba(180, 100, 255, 0.15); border-color: rgba(180, 100, 255, 0.4); margin: 0;" title="Generate new entries and append them to the existing skeleton">
-                                            <i class="fa-solid fa-plus"></i> Add to Skeleton
+                                        <button id="rpg_world_progression_btn_add_skeleton" class="menu_button interactable" style="background: rgba(180, 100, 255, 0.15); border-color: rgba(180, 100, 255, 0.4); margin: 0;" title="Generar nuevas entradas y añadirlas al esqueleto existente">
+                                            <i class="fa-solid fa-plus"></i> Añadir al Esqueleto
                                         </button>
-                                        <label style="display: inline-flex; align-items: center; gap: 4px; font-size: 0.76em; opacity: 0.8; cursor: pointer; margin: 0;" title="When appending, feed the full descriptions of the existing skeleton entries to the LLM. If checked, Atmosphere Summary is optional.">
+                                        <label style="display: inline-flex; align-items: center; gap: 4px; font-size: 0.76em; opacity: 0.8; cursor: pointer; margin: 0;" title="Al añadir, incluye las descripciones completas del esqueleto existente.">
                                             <input id="rpg_world_progression_skeleton_use_existing" type="checkbox" style="margin: 0; vertical-align: middle;" />
-                                            <span>With existing entries</span>
+                                            <span>Con entradas existentes</span>
                                         </label>
                                     </div>
                                     
                                     <div style="display: flex; align-items: center; gap: 8px; margin-top: 6px; font-size: 0.78em; opacity: 0.75; font-family: monospace;">
-                                        <span>Status:</span>
-                                        <span id="rpg_world_progression_skeleton_status" style="font-weight: bold;">No skeleton generated.</span>
+                                        <span>Estado:</span>
+                                        <span id="rpg_world_progression_skeleton_status" style="font-weight: bold;">Sin esqueleto generado.</span>
                                     </div>
                                     
                                     <div style="font-size: 0.72em; opacity: 0.55; margin-top: 4px; color: #ffa000; line-height: 1.35;">
-                                        <i class="fa-solid fa-triangle-exclamation" style="margin-right: 4px;"></i> Generating a new skeleton will overwrite the existing <code>_Skeleton</code> lorebook for this campaign. "Add to Skeleton" will append new entries.
+                                        <i class="fa-solid fa-triangle-exclamation" style="margin-right: 4px;"></i> Generar un nuevo esqueleto sobreescribirá el libro de lore <code>_Skeleton</code> existente para esta campaña.
                                     </div>
                                 </div>
                             </div>
@@ -1392,96 +1391,96 @@
                         <div class="inline-drawer">
                             <div class="inline-drawer-toggle inline-drawer-header">
                                 <i class="fa-solid fa-shuffle" style="opacity: 0.7; margin-right: 8px;"></i>
-                                <b>Focus Randomization</b>
+                                <b>Aleatorización de Enfoque</b>
                                 <div class="inline-drawer-icon fa-solid fa-circle-chevron-down down"></div>
                             </div>
                             <div class="inline-drawer-content">
                                 <div class="flex-container flexFlowColumn gap-1">
                                     <div style="font-size: 0.75em; opacity: 0.65; margin-bottom: 6px;">
-                                        Randomly spotlight a subset of lore entities in each report to prevent repetitive coverage and force AI diversity in reports.
+                                        Destaca aleatoriamente un subconjunto de entidades del lore en cada informe para evitar repeticiones y fomentar la diversidad de la IA.
                                     </div>
 
                                     <label class="checkbox_label">
                                         <input id="rpg_world_progression_randomize_npcs" type="checkbox" />
-                                        <span>Randomize NPC pool selection</span>
-                                        <i class="fa-solid fa-circle-question interactable" style="font-size: 0.85em; opacity: 0.7; margin-left: 4px;" title="When enabled, World Progression randomly selects a set of NPCs from the active world lore and skeleton to explicitly focus on in the next report."></i>
+                                        <span>Aleatorizar selección del grupo de PNJs</span>
+                                        <i class="fa-solid fa-circle-question interactable" style="font-size: 0.85em; opacity: 0.7; margin-left: 4px;" title="Selecciona aleatoriamente un grupo de PNJs del lore activo y del esqueleto para enfocar en el próximo informe."></i>
                                     </label>
 
                                     <div id="rpg_world_progression_random_npc_count_container" style="margin-top: 4px; margin-left: 12px; border-left: 2px solid rgba(255,255,255,0.05); padding-left: 8px; margin-bottom: 6px;">
-                                        <div style="font-size: 0.75em; opacity: 0.55; margin-bottom: 4px;">Skeleton pool: <span id="rpg_world_progression_skeleton_npc_pool_count" style="font-weight: bold; opacity: 0.85;">0</span> available</div>
+                                        <div style="font-size: 0.75em; opacity: 0.55; margin-bottom: 4px;">Grupo del esqueleto: <span id="rpg_world_progression_skeleton_npc_pool_count" style="font-weight: bold; opacity: 0.85;">0</span> disponibles</div>
                                         <div style="display: flex; gap: 16px; flex-wrap: wrap;">
                                             <div>
-                                                <label style="font-size: 0.82em; font-weight: bold; opacity: 0.75; display: block; margin-bottom: 2px;">Skeleton NPCs
-                                                    <i class="fa-solid fa-circle-question interactable" style="font-size: 0.85em; opacity: 0.7; margin-left: 4px;" title="Number of skeleton (off-screen) NPCs to spotlight per report. If the skeleton has fewer than this count, new NPCs are auto-generated."></i>
+                                                <label style="font-size: 0.82em; font-weight: bold; opacity: 0.75; display: block; margin-bottom: 2px;">PNJs del Esqueleto
+                                                    <i class="fa-solid fa-circle-question interactable" style="font-size: 0.85em; opacity: 0.7; margin-left: 4px;" title="Número de PNJs fuera de escena para destacar por informe."></i>
                                                 </label>
-                                                <input id="rpg_world_progression_random_skeleton_npc_count" type="text" inputmode="numeric" pattern="[0-9]*" class="text_pole" value="2" style="max-width: 80px;" title="Skeleton NPCs to spotlight per report" />
+                                                <input id="rpg_world_progression_random_skeleton_npc_count" type="text" inputmode="numeric" pattern="[0-9]*" class="text_pole" value="2" style="max-width: 80px;" title="PNJs del esqueleto a destacar por informe" />
                                             </div>
                                             <div>
-                                                <label style="font-size: 0.82em; font-weight: bold; opacity: 0.75; display: block; margin-bottom: 2px;">Narrative NPCs
-                                                    <i class="fa-solid fa-circle-question interactable" style="font-size: 0.85em; opacity: 0.7; margin-left: 4px;" title="Number of active world lore (narrative-born) NPCs to spotlight per report."></i>
+                                                <label style="font-size: 0.82em; font-weight: bold; opacity: 0.75; display: block; margin-bottom: 2px;">PNJs Narrativos
+                                                    <i class="fa-solid fa-circle-question interactable" style="font-size: 0.85em; opacity: 0.7; margin-left: 4px;" title="Número de PNJs del lore activo para destacar por informe."></i>
                                                 </label>
-                                                <input id="rpg_world_progression_random_narrative_npc_count" type="text" inputmode="numeric" pattern="[0-9]*" class="text_pole" value="3" style="max-width: 80px;" title="Narrative NPCs to spotlight per report" />
+                                                <input id="rpg_world_progression_random_narrative_npc_count" type="text" inputmode="numeric" pattern="[0-9]*" class="text_pole" value="3" style="max-width: 80px;" title="PNJs narrativos a destacar por informe" />
                                             </div>
                                         </div>
                                     </div>
 
                                     <label class="checkbox_label">
                                         <input id="rpg_world_progression_randomize_locations" type="checkbox" />
-                                        <span>Randomize Location pool selection</span>
-                                        <i class="fa-solid fa-circle-question interactable" style="font-size: 0.85em; opacity: 0.7; margin-left: 4px;" title="When enabled, World Progression randomly selects locations from the active world lore and skeleton to focus on."></i>
+                                        <span>Aleatorizar selección del grupo de Ubicaciones</span>
+                                        <i class="fa-solid fa-circle-question interactable" style="font-size: 0.85em; opacity: 0.7; margin-left: 4px;" title="Selecciona aleatoriamente ubicaciones del lore activo y del esqueleto para enfocar."></i>
                                     </label>
 
                                     <div id="rpg_world_progression_random_location_count_container" style="margin-top: 4px; margin-left: 12px; border-left: 2px solid rgba(255,255,255,0.05); padding-left: 8px; margin-bottom: 6px;">
-                                        <div style="font-size: 0.75em; opacity: 0.55; margin-bottom: 4px;">Skeleton pool: <span id="rpg_world_progression_skeleton_location_pool_count" style="font-weight: bold; opacity: 0.85;">0</span> available</div>
+                                        <div style="font-size: 0.75em; opacity: 0.55; margin-bottom: 4px;">Grupo del esqueleto: <span id="rpg_world_progression_skeleton_location_pool_count" style="font-weight: bold; opacity: 0.85;">0</span> disponibles</div>
                                         <div style="display: flex; gap: 16px; flex-wrap: wrap;">
                                             <div>
-                                                <label style="font-size: 0.82em; font-weight: bold; opacity: 0.75; display: block; margin-bottom: 2px;">Skeleton Locations
-                                                    <i class="fa-solid fa-circle-question interactable" style="font-size: 0.85em; opacity: 0.7; margin-left: 4px;" title="Number of skeleton (off-screen) locations to spotlight per report."></i>
+                                                <label style="font-size: 0.82em; font-weight: bold; opacity: 0.75; display: block; margin-bottom: 2px;">Ubicaciones del Esqueleto
+                                                    <i class="fa-solid fa-circle-question interactable" style="font-size: 0.85em; opacity: 0.7; margin-left: 4px;" title="Número de ubicaciones fuera de escena a destacar por informe."></i>
                                                 </label>
-                                                <input id="rpg_world_progression_random_skeleton_location_count" type="text" inputmode="numeric" pattern="[0-9]*" class="text_pole" value="2" style="max-width: 80px;" title="Skeleton locations to spotlight per report" />
+                                                <input id="rpg_world_progression_random_skeleton_location_count" type="text" inputmode="numeric" pattern="[0-9]*" class="text_pole" value="2" style="max-width: 80px;" title="Ubicaciones del esqueleto a destacar por informe" />
                                             </div>
                                             <div>
-                                                <label style="font-size: 0.82em; font-weight: bold; opacity: 0.75; display: block; margin-bottom: 2px;">Narrative Locations
-                                                    <i class="fa-solid fa-circle-question interactable" style="font-size: 0.85em; opacity: 0.7; margin-left: 4px;" title="Number of active world lore locations to spotlight per report."></i>
+                                                <label style="font-size: 0.82em; font-weight: bold; opacity: 0.75; display: block; margin-bottom: 2px;">Ubicaciones Narrativas
+                                                    <i class="fa-solid fa-circle-question interactable" style="font-size: 0.85em; opacity: 0.7; margin-left: 4px;" title="Número de ubicaciones activas a destacar por informe."></i>
                                                 </label>
-                                                <input id="rpg_world_progression_random_narrative_location_count" type="text" inputmode="numeric" pattern="[0-9]*" class="text_pole" value="2" style="max-width: 80px;" title="Narrative locations to spotlight per report" />
+                                                <input id="rpg_world_progression_random_narrative_location_count" type="text" inputmode="numeric" pattern="[0-9]*" class="text_pole" value="2" style="max-width: 80px;" title="Ubicaciones narrativas a destacar por informe" />
                                             </div>
                                         </div>
                                     </div>
 
                                     <label class="checkbox_label">
                                         <input id="rpg_world_progression_randomize_factions" type="checkbox" />
-                                        <span>Randomize Faction pool selection</span>
-                                        <i class="fa-solid fa-circle-question interactable" style="font-size: 0.85em; opacity: 0.7; margin-left: 4px;" title="When enabled, World Progression randomly selects factions from the active world lore and skeleton to focus on."></i>
+                                        <span>Aleatorizar selección del grupo de Facciones</span>
+                                        <i class="fa-solid fa-circle-question interactable" style="font-size: 0.85em; opacity: 0.7; margin-left: 4px;" title="Selecciona aleatoriamente facciones del lore activo y del esqueleto para enfocar."></i>
                                     </label>
 
                                     <div id="rpg_world_progression_random_faction_count_container" style="margin-top: 4px; margin-left: 12px; border-left: 2px solid rgba(255,255,255,0.05); padding-left: 8px; margin-bottom: 6px;">
-                                        <div style="font-size: 0.75em; opacity: 0.55; margin-bottom: 4px;">Skeleton pool: <span id="rpg_world_progression_skeleton_faction_pool_count" style="font-weight: bold; opacity: 0.85;">0</span> available</div>
+                                        <div style="font-size: 0.75em; opacity: 0.55; margin-bottom: 4px;">Grupo del esqueleto: <span id="rpg_world_progression_skeleton_faction_pool_count" style="font-weight: bold; opacity: 0.85;">0</span> disponibles</div>
                                         <div style="display: flex; gap: 16px; flex-wrap: wrap;">
                                             <div>
-                                                <label style="font-size: 0.82em; font-weight: bold; opacity: 0.75; display: block; margin-bottom: 2px;">Skeleton Factions
-                                                    <i class="fa-solid fa-circle-question interactable" style="font-size: 0.85em; opacity: 0.7; margin-left: 4px;" title="Number of skeleton (off-screen) factions to spotlight per report."></i>
+                                                <label style="font-size: 0.82em; font-weight: bold; opacity: 0.75; display: block; margin-bottom: 2px;">Facciones del Esqueleto
+                                                    <i class="fa-solid fa-circle-question interactable" style="font-size: 0.85em; opacity: 0.7; margin-left: 4px;" title="Número de facciones fuera de escena a destacar por informe."></i>
                                                 </label>
-                                                <input id="rpg_world_progression_random_skeleton_faction_count" type="text" inputmode="numeric" pattern="[0-9]*" class="text_pole" value="2" style="max-width: 80px;" title="Skeleton factions to spotlight per report" />
+                                                <input id="rpg_world_progression_random_skeleton_faction_count" type="text" inputmode="numeric" pattern="[0-9]*" class="text_pole" value="2" style="max-width: 80px;" title="Facciones del esqueleto a destacar por informe" />
                                             </div>
                                             <div>
-                                                <label style="font-size: 0.82em; font-weight: bold; opacity: 0.75; display: block; margin-bottom: 2px;">Narrative Factions
-                                                    <i class="fa-solid fa-circle-question interactable" style="font-size: 0.85em; opacity: 0.7; margin-left: 4px;" title="Number of active world lore factions to spotlight per report."></i>
+                                                <label style="font-size: 0.82em; font-weight: bold; opacity: 0.75; display: block; margin-bottom: 2px;">Facciones Narrativas
+                                                    <i class="fa-solid fa-circle-question interactable" style="font-size: 0.85em; opacity: 0.7; margin-left: 4px;" title="Número de facciones activas a destacar por informe."></i>
                                                 </label>
-                                                <input id="rpg_world_progression_random_narrative_faction_count" type="text" inputmode="numeric" pattern="[0-9]*" class="text_pole" value="2" style="max-width: 80px;" title="Narrative factions to spotlight per report" />
+                                                <input id="rpg_world_progression_random_narrative_faction_count" type="text" inputmode="numeric" pattern="[0-9]*" class="text_pole" value="2" style="max-width: 80px;" title="Facciones narrativas a destacar por informe" />
                                             </div>
                                         </div>
                                     </div>
 
                                     <div style="margin-top: 6px; font-size: 0.85em; opacity: 0.7;">
-                                        <i class="fa-solid fa-circle-info"></i> Party members currently in [PARTY] (active) are always excluded from World Progression automatically. Members in [BENCHED PARTY] are eligible for focus randomization like any other NPC — no toggle needed.
+                                        <i class="fa-solid fa-circle-info"></i> Los miembros del grupo activos en [PARTY] quedan excluidos automáticamente. Los miembros en [BENCHED PARTY] pueden ser seleccionados.
                                     </div>
 
                                     <div style="margin-top: 6px;">
-                                        <label style="font-size: 0.85em; font-weight: bold; display: block; margin-bottom: 2px;">World Report Exclusion List
-                                            <i class="fa-solid fa-circle-question interactable" style="font-size: 0.85em; opacity: 0.7; margin-left: 4px;" title="Comma-separated list of lore entry titles or keys to exclude from focus randomization (e.g. to exclude your own party members). Excluded entries are still sent as passive context to the LLM, but won't be explicitly selected/spotlighted as designated entities for a period."></i>
+                                        <label style="font-size: 0.85em; font-weight: bold; display: block; margin-bottom: 2px;">Lista de Exclusión de Informes del Mundo
+                                            <i class="fa-solid fa-circle-question interactable" style="font-size: 0.85em; opacity: 0.7; margin-left: 4px;" title="Lista separada por comas de títulos o claves de entradas para excluir del enfoque aleatorio."></i>
                                         </label>
-                                        <input id="rpg_world_progression_exclusion_list" type="text" class="text_pole" placeholder="e.g. gary, player_party, hero" title="Comma-separated list of entry titles/keys to exclude from focus selection" style="width: 100%; box-sizing: border-box;" />
+                                        <input id="rpg_world_progression_exclusion_list" type="text" class="text_pole" placeholder="ej. gary, player_party, hero" title="Lista separada por comas de títulos o claves a excluir" style="width: 100%; box-sizing: border-box;" />
                                     </div>
                                 </div>
                             </div>
@@ -1491,22 +1490,22 @@
                         <div class="inline-drawer">
                             <div class="inline-drawer-toggle inline-drawer-header">
                                 <i class="fa-solid fa-clock" style="opacity: 0.7; margin-right: 8px;"></i>
-                                <b>Timing & Narrative Input</b>
+                                <b>Tiempo e Entrada Narrativa</b>
                                 <div class="inline-drawer-icon fa-solid fa-circle-chevron-down down"></div>
                             </div>
                             <div class="inline-drawer-content">
                                 <div class="flex-container flexFlowColumn gap-1">
-                                    <label style="font-size: 0.85em; font-weight: bold;">Interval (in-world hours)
-                                        <i class="fa-solid fa-circle-question interactable" style="font-size: 0.85em; opacity: 0.7; margin-left: 4px;" title="How many in-world hours must pass before a new report is generated. 24 = once per day, 12 = twice per day, 8 = three times per day. Sub-day intervals produce entries like 'Day 3, 06:00–12:00'."></i>
+                                    <label style="font-size: 0.85em; font-weight: bold;">Intervalo (horas dentro del juego)
+                                        <i class="fa-solid fa-circle-question interactable" style="font-size: 0.85em; opacity: 0.7; margin-left: 4px;" title="Cuántas horas en el juego deben transcurrir antes de generar un nuevo informe (24 = diario, 12 = 2 veces al día)."></i>
                                     </label>
-                                    <input id="rpg_world_progression_interval" type="text" inputmode="numeric" pattern="[0-9]*" class="text_pole" value="24" style="max-width: 100px;" title="In-world hours between World Progression reports (24 = daily)" />
-                                    <div style="font-size: 0.75em; opacity: 0.55; margin-top: -2px; margin-bottom: 6px;">e.g. 24 = daily, 12 = twice/day, 8 = 3×/day</div>
+                                    <input id="rpg_world_progression_interval" type="text" inputmode="numeric" pattern="[0-9]*" class="text_pole" value="24" style="max-width: 100px;" title="Horas en el juego entre informes de Progresión del Mundo" />
+                                    <div style="font-size: 0.75em; opacity: 0.55; margin-top: -2px; margin-bottom: 6px;">ej. 24 = diario, 12 = 2×/día, 8 = 3×/día</div>
 
-                                    <label style="font-size: 0.85em; font-weight: bold;">Recent Narrative Lookback
-                                        <i class="fa-solid fa-circle-question interactable" style="font-size: 0.85em; opacity: 0.7; margin-left: 4px;" title="How many recent chat messages are sent to the World Progression engine. 0 = none. Allows the engine to pick up on recent developments, though player-specific events are ignored."></i>
+                                    <label style="font-size: 0.85em; font-weight: bold;">Revisión Narrativa Reciente
+                                        <i class="fa-solid fa-circle-question interactable" style="font-size: 0.85em; opacity: 0.7; margin-left: 4px;" title="Número de mensajes recientes enviados al motor de Progresión del Mundo (0 = ninguno)."></i>
                                     </label>
-                                    <input id="rpg_world_progression_lookback" type="text" inputmode="numeric" pattern="[0-9]*" class="text_pole" value="20" style="max-width: 100px;" title="Number of recent chat messages to include in World Progression" />
-                                    <div style="font-size: 0.75em; opacity: 0.55; margin-top: -2px;">0 = disabled (defaults to 20)</div>
+                                    <input id="rpg_world_progression_lookback" type="text" inputmode="numeric" pattern="[0-9]*" class="text_pole" value="20" style="max-width: 100px;" title="Número de mensajes recientes a incluir" />
+                                    <div style="font-size: 0.75em; opacity: 0.55; margin-top: -2px;">0 = desactivado (predeterminado: 20)</div>
                                 </div>
                             </div>
                         </div>
@@ -1515,26 +1514,26 @@
                         <div class="inline-drawer">
                             <div class="inline-drawer-toggle inline-drawer-header">
                                 <i class="fa-solid fa-arrow-right-to-bracket" style="opacity: 0.7; margin-right: 8px;"></i>
-                                <b>Context Injection Settings</b>
+                                <b>Configuración de Inyección en el Contexto</b>
                                 <div class="inline-drawer-icon fa-solid fa-circle-chevron-down down"></div>
                             </div>
                             <div class="inline-drawer-content">
                                 <div class="flex-container flexFlowColumn gap-1">
-                                    <label style="font-size: 0.85em; font-weight: bold;">Rolling Window (active reports)
-                                        <i class="fa-solid fa-circle-question interactable" style="font-size: 0.85em; opacity: 0.7; margin-left: 4px;" title="How many of the most recent World Progression reports remain active (injected into context). Older reports are automatically deactivated."></i>
+                                    <label style="font-size: 0.85em; font-weight: bold;">Ventana Desplazable (informes activos)
+                                        <i class="fa-solid fa-circle-question interactable" style="font-size: 0.85em; opacity: 0.7; margin-left: 4px;" title="Cuántos informes recientes permanecen activos e inyectados en el contexto. Los informes más antiguos se desactivan."></i>
                                     </label>
-                                    <input id="rpg_world_progression_keep_active" type="text" inputmode="numeric" pattern="[0-9]*" class="text_pole" value="1" style="max-width: 100px;" title="Number of recent World Progression reports kept active in context" />
+                                    <input id="rpg_world_progression_keep_active" type="text" inputmode="numeric" pattern="[0-9]*" class="text_pole" value="1" style="max-width: 100px;" title="Número de informes recientes mantenidos activos" />
 
-                                    <label style="font-size: 0.85em; font-weight: bold; margin-top: 4px;">Injection Position</label>
+                                    <label style="font-size: 0.85em; font-weight: bold; margin-top: 4px;">Posición de Inyección</label>
                                     <select id="rpg_world_progression_injection_position" class="text_pole">
-                                        <option value="0" data-role="">Folded into User Message</option>
-                                        <option value="4" data-role="0">@D ⚙️: at Depth (System)</option>
-                                        <option value="4" data-role="1">@D 👤: at Depth (User)</option>
-                                        <option value="4" data-role="2">@D 🤖: at Depth (Assistant)</option>
+                                        <option value="0" data-role="">Integrado en el Mensaje del Usuario</option>
+                                        <option value="4" data-role="0">@D ⚙️: en Profundidad (Sistema)</option>
+                                        <option value="4" data-role="1">@D 👤: en Profundidad (Usuario)</option>
+                                        <option value="4" data-role="2">@D 🤖: en Profundidad (Asistente)</option>
                                     </select>
 
                                     <div id="rpg_world_progression_injection_depth_container" style="margin-top: 4px;">
-                                        <label style="font-size: 0.85em; font-weight: bold;">Injection Depth</label>
+                                        <label style="font-size: 0.85em; font-weight: bold;">Profundidad de Inyección</label>
                                         <input id="rpg_world_progression_injection_depth" type="text" inputmode="numeric" pattern="[0-9]*" class="text_pole" min="0" max="9999" />
                                     </div>
                                 </div>
@@ -1545,39 +1544,39 @@
                         <div class="inline-drawer">
                             <div class="inline-drawer-toggle inline-drawer-header">
                                 <i class="fa-solid fa-book-open" style="opacity: 0.7; margin-right: 8px;"></i>
-                                <b>Report History & Consolidation</b>
+                                <b>Historial de Informes y Consolidación</b>
                                 <div class="inline-drawer-icon fa-solid fa-circle-chevron-down down"></div>
                             </div>
                             <div class="inline-drawer-content">
                                 <div class="flex-container flexFlowColumn gap-1">
-                                    <label style="font-size: 0.85em; font-weight: bold;">Historical Reports Lookback
-                                        <i class="fa-solid fa-circle-question interactable" style="font-size: 0.85em; opacity: 0.7; margin-left: 4px;" title="How many of the previous World Progression reports are shown/fed to the LLM when generating a new report. 0 = include all."></i>
+                                    <label style="font-size: 0.85em; font-weight: bold;">Revisión de Informes Históricos
+                                        <i class="fa-solid fa-circle-question interactable" style="font-size: 0.85em; opacity: 0.7; margin-left: 4px;" title="Cuántos informes previos de Progresión del Mundo se envían al LLM al generar uno nuevo (0 = incluir todos)."></i>
                                     </label>
-                                    <input id="rpg_world_progression_history_lookback" type="text" inputmode="numeric" pattern="[0-9]*" class="text_pole" value="0" style="max-width: 100px;" title="Number of historical World Progression reports included in generation context (0 = all)" />
-                                    <div style="font-size: 0.75em; opacity: 0.55; margin-top: -2px; margin-bottom: 6px;">0 = include all previous reports</div>
+                                    <input id="rpg_world_progression_history_lookback" type="text" inputmode="numeric" pattern="[0-9]*" class="text_pole" value="0" style="max-width: 100px;" title="Número de informes históricos incluidos (0 = todos)" />
+                                    <div style="font-size: 0.75em; opacity: 0.55; margin-top: -2px; margin-bottom: 6px;">0 = incluir todos los informes anteriores</div>
 
                                     <label class="checkbox_label">
                                         <input id="rpg_world_progression_consolidate_enabled" type="checkbox" />
-                                        <span>Auto-consolidate backlog</span>
-                                        <i class="fa-solid fa-circle-question interactable" style="font-size: 0.85em; opacity: 0.7; margin-left: 4px;" title="When enabled, the oldest N individual reports are automatically compressed into a single summary by the LLM once the threshold accumulates. Uses its own dedicated prompt — no token cost on normal Lorebook Agent calls."></i>
+                                        <span>Consolidar automáticamente historial</span>
+                                        <i class="fa-solid fa-circle-question interactable" style="font-size: 0.85em; opacity: 0.7; margin-left: 4px;" title="Cuando está activo, los N informes más antiguos se comprimen en un solo resumen automáticamente al alcanzar el umbral."></i>
                                     </label>
 
                                     <div id="rpg_world_progression_consolidate_interval_container" style="margin-top: 4px;">
-                                        <label style="font-size: 0.85em; font-weight: bold;">Consolidation Threshold (reports)
-                                            <i class="fa-solid fa-circle-question interactable" style="font-size: 0.85em; opacity: 0.7; margin-left: 4px;" title="How many individual reports must accumulate before consolidation fires. The oldest N reports are merged into one entry (e.g. 7 daily reports → 'Days 1–7'). With a 12h interval, 7 reports cover ~3.5 in-world days per batch."></i>
+                                        <label style="font-size: 0.85em; font-weight: bold;">Umbral de Consolidación (informes)
+                                            <i class="fa-solid fa-circle-question interactable" style="font-size: 0.85em; opacity: 0.7; margin-left: 4px;" title="Cuántos informes individuales deben acumularse antes de consolidar."></i>
                                         </label>
-                                        <input id="rpg_world_progression_consolidate_interval" type="text" inputmode="numeric" pattern="[0-9]*" class="text_pole" value="7" style="max-width: 100px;" title="Number of raw reports to accumulate before auto-consolidation fires" />
-                                        <div style="font-size: 0.75em; opacity: 0.55; margin-top: -2px;">Batch size is count-based, not time-based — 7 reports at 12h/report ≈ 3.5 in-world days per batch.</div>
+                                        <input id="rpg_world_progression_consolidate_interval" type="text" inputmode="numeric" pattern="[0-9]*" class="text_pole" value="7" style="max-width: 100px;" title="Número de informes sin consolidar para activar la compresión" />
+                                        <div style="font-size: 0.75em; opacity: 0.55; margin-top: -2px;">El tamaño del lote se basa en conteo, no en tiempo.</div>
                                     </div>
 
                                     <div style="margin-top: 10px; border-top: 1px solid rgba(255,255,255,0.08); padding-top: 8px;">
-                                        <label style="font-size: 0.85em; font-weight: bold; display: block; margin-bottom: 4px;">Manual Consolidation
-                                            <i class="fa-solid fa-circle-question interactable" style="font-size: 0.85em; opacity: 0.7; margin-left: 4px;" title="Consolidate a chosen number of older reports into a single entry right now."></i>
+                                        <label style="font-size: 0.85em; font-weight: bold; display: block; margin-bottom: 4px;">Consolidación Manual
+                                            <i class="fa-solid fa-circle-question interactable" style="font-size: 0.85em; opacity: 0.7; margin-left: 4px;" title="Consolidar un número determinado de informes antiguos en una sola entrada ahora mismo."></i>
                                         </label>
                                         <div style="display: flex; gap: 8px; align-items: center;">
-                                            <input id="rpg_world_progression_consolidate_count" type="text" inputmode="numeric" pattern="[0-9]*" class="text_pole" value="7" style="max-width: 80px; text-align: center;" title="Number of raw reports to consolidate" />
+                                            <input id="rpg_world_progression_consolidate_count" type="text" inputmode="numeric" pattern="[0-9]*" class="text_pole" value="7" style="max-width: 80px; text-align: center;" title="Número de informes a consolidar" />
                                             <button id="rpg_world_progression_btn_consolidate_now" class="menu_button interactable" style="margin: 0; padding: 4px 10px; font-size: 0.8em; flex: 1;">
-                                                <i class="fa-solid fa-compress"></i> Consolidate Now
+                                                <i class="fa-solid fa-compress"></i> Consolidar Ahora
                                             </button>
                                         </div>
                                     </div>
@@ -1589,21 +1588,21 @@
                         <div class="inline-drawer">
                             <div class="inline-drawer-toggle inline-drawer-header">
                                 <i class="fa-solid fa-terminal" style="opacity: 0.7; margin-right: 8px;"></i>
-                                <b>Report System Prompt</b>
+                                <b>Prompt del Sistema para Informes</b>
                                 <div class="inline-drawer-icon fa-solid fa-circle-chevron-down down"></div>
                             </div>
                             <div class="inline-drawer-content">
                                 <div class="flex-container flexFlowColumn gap-1">
                                     <div style="display:flex; align-items:center; gap:6px; margin-bottom: 2px;">
-                                        <label style="font-size: 0.85em; font-weight: bold; flex:1; margin:0;">Report Generation Prompt
-                                            <i class="fa-solid fa-circle-question interactable" style="font-size: 0.85em; opacity: 0.7; margin-left: 4px;" title="The system prompt sent to the LLM for every World Progression report. Tokens: {periodLabel} is replaced with the period label (e.g. 'Day 3')."></i>
+                                        <label style="font-size: 0.85em; font-weight: bold; flex:1; margin:0;">Prompt de Generación de Informes
+                                            <i class="fa-solid fa-circle-question interactable" style="font-size: 0.85em; opacity: 0.7; margin-left: 4px;" title="Prompt del sistema enviado al LLM en cada informe de Progresión del Mundo. La variable {periodLabel} se reemplaza con la etiqueta del periodo."></i>
                                         </label>
-                                        <button id="rpg_world_progression_btn_reset_prompt" class="menu_button interactable" style="font-size:0.75em; padding:2px 8px;" title="Reset to default prompt">
-                                            <i class="fa-solid fa-arrow-rotate-left"></i> Reset
+                                        <button id="rpg_world_progression_btn_reset_prompt" class="menu_button interactable" style="font-size:0.75em; padding:2px 8px;" title="Restablecer a prompt predeterminado">
+                                            <i class="fa-solid fa-arrow-rotate-left"></i> Restablecer
                                         </button>
                                     </div>
-                                    <div style="font-size: 0.72em; opacity: 0.5; margin-bottom: 3px;">Available tokens: <code>{periodLabel}</code> (e.g. "Day 3")</div>
-                                    <textarea id="rpg_world_progression_system_prompt" class="text_pole" rows="10" style="width:100%; font-size:0.78em; font-family:monospace; resize:vertical; background:rgba(0,0,0,0.3); color:var(--SmartThemeBodyColor); border:1px solid rgba(255,255,255,0.1); border-radius:4px; padding:6px; box-sizing:border-box;" placeholder="System prompt for the World Progression LLM pass…"></textarea>
+                                    <div style="font-size: 0.72em; opacity: 0.5; margin-bottom: 3px;">Variable disponible: <code>{periodLabel}</code> (ej. "Día 3")</div>
+                                    <textarea id="rpg_world_progression_system_prompt" class="text_pole" rows="10" style="width:100%; font-size:0.78em; font-family:monospace; resize:vertical; background:rgba(0,0,0,0.3); color:var(--SmartThemeBodyColor); border:1px solid rgba(255,255,255,0.1); border-radius:4px; padding:6px; box-sizing:border-box;" placeholder="Prompt del sistema para el pase de Progresión del Mundo…"></textarea>
                                 </div>
                             </div>
                         </div>
