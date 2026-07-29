@@ -1,3 +1,5 @@
+import { t } from '../../i18n/index.js';
+
 /** Produces the static Tracker and Lorebook Agent panel structure. */
 export function buildPanelMarkup({ settings, agentPanelCollapsedClass }) {
     return `
@@ -70,8 +72,8 @@ export function buildPanelMarkup({ settings, agentPanelCollapsedClass }) {
                         <span>Adventure Companion: Agentic Sidekick and Guide</span>
                     </div>
                     <div class="rt-agent-view-mode-switch rt-panel-mode-switch" id="rt-panel-mode-switch" role="tablist" aria-label="Panel content mode">
-                        <button type="button" id="rt-panel-mode-tracker" class="rt-agent-view-mode-btn rt-agent-view-mode-btn-active" role="tab" aria-selected="true">State Tracker</button>
-                        <button type="button" id="rt-panel-mode-agent" class="rt-agent-view-mode-btn" role="tab" aria-selected="false">Lorebook Agent</button>
+                        <button type="button" id="rt-panel-mode-tracker" class="rt-agent-view-mode-btn rt-agent-view-mode-btn-active" role="tab" aria-selected="true">${t('hud.stateTracker', 'State Tracker')}</button>
+                        <button type="button" id="rt-panel-mode-agent" class="rt-agent-view-mode-btn" role="tab" aria-selected="false">${t('hud.lorebookAgent', 'Lorebook Agent')}</button>
                     </div>
                 </div>
                 <div class="rt-panel-mode-pane" id="rt-panel-tracker-pane">

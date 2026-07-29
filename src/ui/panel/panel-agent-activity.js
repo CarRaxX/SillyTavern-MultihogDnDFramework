@@ -1,4 +1,5 @@
 import { runtimeState } from '../../app/runtime-state.js';
+import { t } from '../../i18n/index.js';
 
 /** Wires Lorebook Agent history, active-key refresh, and last-run status controls. */
 export function wireAgentActivity({

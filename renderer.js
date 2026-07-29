@@ -2,6 +2,7 @@ import { getSettings, getBarBackground, getBarShowAsPercentage } from './state-m
 import { lookupCustomPortraitSrc } from './portrait-storage.js';
 import { escapeHtml, decodeHtml, highlightParens, highlightNumbers, parseInWorldTime, isRestTimeUnset, formatTimeDiff, isArchivedQuestStatus, questHasEffectiveDeadline, isEmergentQuest } from './memo-processor.js';
 import { BLOCK_ICONS, BLOCK_ORDER, PAGE_SIZE, NO_PAGINATE, renderStartingGearTierOptions } from './constants.js';
+import { t } from './src/i18n/index.js';
 
 // ── Renderer module: pure HTML string producers, localStorage helpers ──
 // No live DOM mutations. All functions return strings or void (localStorage).
@@ -2803,7 +2804,7 @@ export function renderQuestLog(quests, currentTime, collapsed, detached, filterT
                     <span class="rt-collapse-icon">${isCollapsed ? '&#9656;' : '&#9662;'}</span>
                 </div>
             </div>
-            <div class="rt-section-body"><div class="rt-card-line" style="opacity:0.6;">No active quests.</div></div>
+            <div class="rt-section-body"><div class="rt-card-line" style="opacity:0.6;">${t('hud.noQuests', 'No hay misiones activas en este momento.')}</div></div>
         </div>`;
     }
 
@@ -2847,10 +2848,10 @@ export function renderQuestLog(quests, currentTime, collapsed, detached, filterT
             </div>` : '';
 
         let statusBadgeClass = 'rt-quest-badge-active';
-        let statusLabel = 'Active';
-        if (quest.status === 'completed') { statusBadgeClass = 'rt-quest-badge-completed'; statusLabel = 'Completed'; }
-        if (quest.status === 'past deadline') { statusBadgeClass = 'rt-quest-badge-failed'; statusLabel = 'Past Deadline'; }
-        if (quest.status === 'failed')    { statusBadgeClass = 'rt-quest-badge-failed';    statusLabel = 'Failed'; }
+        let statusLabel = t('quests.statusActive', 'Active');
+        if (quest.status === 'completed') { statusBadgeClass = 'rt-quest-badge-completed'; statusLabel = t('quests.statusCompleted', 'Completed'); }
+        if (quest.status === 'past deadline') { statusBadgeClass = 'rt-quest-badge-failed'; statusLabel = t('quests.statusPastDeadline', 'Past Deadline'); }
+        if (quest.status === 'failed')    { statusBadgeClass = 'rt-quest-badge-failed';    statusLabel = t('quests.statusFailed', 'Failed'); }
 
         const questIsCompleted = quest.status === 'completed';
 
