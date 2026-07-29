@@ -12,11 +12,11 @@ function divDepthAt(marker) {
 describe('General & Visuals settings', () => {
     it('keeps every primary section inside the framework drawer', () => {
         const primaryHeaders = [
-            '<b>General & Visuals</b>',
-            '<b>Game Systems & Customization</b>',
-            '<b>State Tracker & Modules</b>',
-            '<b>Lorebook Agent</b>',
-            '<b>World Progression</b>',
+            '<b>Ajustes General y Visuales</b>',
+            '<b>Sistemas de Juego y Libros de Reglas</b>',
+            '<b>Configuración de Ficha y State Memo</b>',
+            '<b>Agente de Lorebook y Asistente IA</b>',
+            '<b>Progresión del Mundo</b>',
         ];
         const expectedDepth = divDepthAt(primaryHeaders[0]);
 

@@ -4,6 +4,7 @@ import { BLOCK_ICONS, BLOCK_ORDER, DEFAULT_STOCK_PROMPTS, PAGE_SIZE, resolveTime
 import { escapeHtml } from './memo-processor.js';
 import { toggleDebugViewer } from './debug-viewer.js';
 import { makeDraggable } from './ui-geometry.js';
+import { t } from './src/i18n/index.js';
 import { 
     saveSettings, 
     refreshRenderedView, 
@@ -445,7 +446,7 @@ export function openCustomFieldEditor(index) {
                 overflow: hidden;
             ">
                 <div class="popup-header">
-                    <h3 class="margin0" style="font-size:14px; flex:1;">Custom Module Editor</h3>
+                    <h3 class="margin0" style="font-size:14px; flex:1;">${t('editors.customModuleEditor', 'Editor de Módulos Personalizados')}</h3>
                     <div id="rt_cfe_close" class="popup-close interactable" title="Close"><i class="fa-solid fa-times"></i></div>
                 </div>
                 <div class="popup-body flex-container flexFlowColumn gap-1" style="padding:10px 14px; overflow-y:auto; flex:1;">
@@ -459,9 +460,9 @@ export function openCustomFieldEditor(index) {
                     <!-- Layout Options -->
                     <div style="display:flex; align-items:center; gap:10px; margin-top:4px; padding:2px 4px;">
                         <div style="display:flex; align-items:center; gap:6px;">
-                            <span style="font-size:12px; font-weight:bold; opacity:0.8;">Pagination Threshold:</span>
+                            <span style="font-size:12px; font-weight:bold; opacity:0.8;">${t('editors.paginationThreshold', 'Umbral de Paginación:')}</span>
                             <input type="text" inputmode="numeric" pattern="[0-9]*" id="rt_cfe_pagesize" class="text_pole" style="width:50px; height:24px; text-align:center;" min="1" max="99" title="How many items to show before adding page buttons">
-                            <span style="font-size:11px; opacity:0.6;">entries</span>
+                            <span style="font-size:11px; opacity:0.6;">${t('editors.entries', 'entradas')}</span>
                         </div>
                     </div>
 
@@ -469,7 +470,7 @@ export function openCustomFieldEditor(index) {
                     <div style="margin-top:12px; padding:10px; background:rgba(0,0,0,0.2); border-radius:8px; border:1px solid rgba(255,255,255,0.05);">
                         <div style="display:flex; align-items:center; gap:6px; margin-bottom:6px;">
                             <i class="fa-solid fa-robot" style="opacity:0.7;"></i>
-                            <b style="font-size:12px;">AI Instructions</b>
+                            <b style="font-size:12px;">${t('editors.aiInstructions', 'Instrucciones para la IA')}</b>
                         </div>
                         <textarea id="rt_cfe_prompt" class="text_pole" rows="10" style="resize:vertical; width:100%;" placeholder="What should the AI track and in what format? Define the instructions. You can use the box below with the live preview (desktop only for now!) to create and paste a formatting instructions template here.&#10;&#10;Example: Track the Limit Break charge level of the protagonist. Increment Times Used on use; increase level by 1 on each use.&#10;&#10;Format:&#10;[LIMIT BREAK]&#10;((XPBAR)) Limit Break: 10/100 Level 4&#10;Times Used: 3&#10;[/LIMIT BREAK]"></textarea>
                     </div>
@@ -477,18 +478,18 @@ export function openCustomFieldEditor(index) {
                     <!-- Testing Sandbox -->
                     <div style="margin-top:15px;">
                         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
-                             <b style="font-size:13px;">Testing Sandbox (desktop only) <i class="fa-solid fa-circle-question" style="opacity:0.5; cursor:help; font-size:11px;" title="This box is ONLY for testing how the UI renders your formatting. Nothing from this box is sent to the AI. You must manually include any formatting examples in the 'AI Instructions' box above."></i></b>
+                             <b style="font-size:13px;">${t('editors.testingSandbox', 'Entorno de Pruebas (solo escritorio)')} <i class="fa-solid fa-circle-question" style="opacity:0.5; cursor:help; font-size:11px;" title="This box is ONLY for testing how the UI renders your formatting. Nothing from this box is sent to the AI. You must manually include any formatting examples in the 'AI Instructions' box above."></i></b>
                         </div>
                         <textarea id="rt_cfe_template" class="text_pole" rows="8" style="resize:vertical; width:100%; font-family:monospace; font-size:12px;" placeholder="Example:\n((PILLS)) Skills: Stealth, Deception\nHP: 10/100"></textarea>
                     </div>
                 </div>
                 <!-- Footer -->
                 <div class="popup-footer flex-container gap-1" style="display: flex; justify-content: flex-end; padding:8px 14px; border-top:1px solid rgba(255,255,255,0.08); flex-shrink:0;">
-                    <button id="rt_cfe_delete" class="menu_button interactable" style="color:#ff5555;font-size:12px;"><i class="fa-solid fa-trash"></i> Delete</button>
-                    <button id="rt_cfe_export" class="menu_button interactable" style="font-size:12px;margin-right:auto;" title="Export this module as a shareable code"><i class="fa-solid fa-file-export"></i> Export</button>
-                    <button id="rt_cfe_edit_ai" class="menu_button interactable" style="font-size:12px; background:rgba(180,100,255,0.15); border-color:rgba(180,100,255,0.4);" title="Describe changes and let AI revise this module"><i class="fa-solid fa-wand-magic-sparkles"></i> Edit with AI</button>
-                    <button id="rt_cfe_cancel" class="menu_button interactable" style="font-size:12px;">Cancel</button>
-                    <button id="rt_cfe_save" class="menu_button interactable" style="font-size:12px;">Save Changes</button>
+                    <button id="rt_cfe_delete" class="menu_button interactable" style="color:#ff5555;font-size:12px;"><i class="fa-solid fa-trash"></i> ${t('common.delete', 'Eliminar')}</button>
+                    <button id="rt_cfe_export" class="menu_button interactable" style="font-size:12px;margin-right:auto;" title="Export this module as a shareable code"><i class="fa-solid fa-file-export"></i> ${t('common.export', 'Exportar')}</button>
+                    <button id="rt_cfe_edit_ai" class="menu_button interactable" style="font-size:12px; background:rgba(180,100,255,0.15); border-color:rgba(180,100,255,0.4);" title="Describe changes and let AI revise this module"><i class="fa-solid fa-wand-magic-sparkles"></i> ${t('editors.editWithAi', 'Editar con IA')}</button>
+                    <button id="rt_cfe_cancel" class="menu_button interactable" style="font-size:12px;">${t('common.cancel', 'Cancelar')}</button>
+                    <button id="rt_cfe_save" class="menu_button interactable" style="font-size:12px;">${t('common.saveChanges', 'Guardar Cambios')}</button>
                 </div>
             </div>
             <!-- Floating preview -->
@@ -702,24 +703,24 @@ export function openPromptEditor(blockTag, title, currentText, defaultText, onSa
         overlay.innerHTML = `
                 <div class="popup shadowBase" style="min-width: 400px; max-width: 600px;">
                     <div class="popup-header">
-                        <h3 class="margin0" id="rt_pe_title">Edit Prompt</h3>
+                        <h3 class="margin0" id="rt_pe_title">${t('editors.editPrompt', 'Editar Prompt')}</h3>
                         <div id="rt_pe_close" class="popup-close interactable" title="Close"><i class="fa-solid fa-times"></i></div>
                     </div>
                     <div class="popup-body flex-container flexFlowColumn gap-1" style="padding: 10px;">
                         <!-- Layout Options -->
                         <div style="display:flex; align-items:center; gap:10px; margin-bottom:8px; padding:0 4px;">
                             <div style="display:flex; align-items:center; gap:6px;">
-                                <span style="font-size:12px; font-weight:bold; opacity:0.8;">Pagination Threshold:</span>
+                                <span style="font-size:12px; font-weight:bold; opacity:0.8;">${t('editors.paginationThreshold', 'Umbral de Paginación:')}</span>
                                 <input type="text" inputmode="numeric" pattern="[0-9]*" id="rt_pe_pagesize" class="text_pole" style="width:50px; height:24px; text-align:center;" min="1" max="99" title="How many items to show before adding page buttons">
-                                <span style="font-size:11px; opacity:0.6;">entries</span>
+                                <span style="font-size:11px; opacity:0.6;">${t('editors.entries', 'entradas')}</span>
                             </div>
                         </div>
                         <textarea id="rt_pe_text" class="text_pole" rows="10" style="width: 100%; resize: vertical;"></textarea>
                         <div class="flex-container gap-1" style="display: flex; justify-content: flex-end;">
-                            <button id="rt_pe_edit_ai" class="menu_button interactable" style="background:rgba(180,100,255,0.15); border-color:rgba(180,100,255,0.4);"><i class="fa-solid fa-wand-magic-sparkles"></i> Edit with AI</button>
-                            <button id="rt_pe_reset" class="menu_button interactable" style="margin-right: auto;"><i class="fa-solid fa-arrow-rotate-left"></i> Reset</button>
-                            <button id="rt_pe_cancel" class="menu_button interactable">Cancel</button>
-                            <button id="rt_pe_save" class="menu_button interactable">Save Changes</button>
+                            <button id="rt_pe_edit_ai" class="menu_button interactable" style="background:rgba(180,100,255,0.15); border-color:rgba(180,100,255,0.4);"><i class="fa-solid fa-wand-magic-sparkles"></i> ${t('editors.editWithAi', 'Editar con IA')}</button>
+                            <button id="rt_pe_reset" class="menu_button interactable" style="margin-right: auto;"><i class="fa-solid fa-arrow-rotate-left"></i> ${t('common.reset', 'Restablecer')}</button>
+                            <button id="rt_pe_cancel" class="menu_button interactable">${t('common.cancel', 'Cancelar')}</button>
+                            <button id="rt_pe_save" class="menu_button interactable">${t('common.saveChanges', 'Guardar Cambios')}</button>
                         </div>
                     </div>
                 </div>
@@ -1554,15 +1555,15 @@ function openSectionEditor(targetType) {
                     </div>
                     
                     <div style="display:flex; align-items:center; gap:8px; margin-bottom:10px; padding-bottom:10px; border-bottom: 1px solid rgba(255,255,255,0.08);">
-                        <strong style="font-size:0.85em; opacity:0.8;">Preset</strong>
+                        <strong style="font-size:0.85em; opacity:0.8;">${t('editors.preset', 'Preajuste')}</strong>
                         <select id="rt_sec_se_preset_select" class="text_pole" style="flex:1; font-size:12px; height:24px; padding:2px 4px;">
-                            <option value="" disabled${!activePresetName ? ' selected' : ''}>-- Select Preset --</option>
+                            <option value="" disabled${!activePresetName ? ' selected' : ''}>${t('editors.selectPreset', '-- Seleccionar Preajuste --')}</option>
                             ${Object.keys(s[presetsKey]).map(k => `<option value="${escapeHtml(k)}"${k === activePresetName ? ' selected' : ''}>${escapeHtml(k)}</option>`).join('')}
                         </select>
-                        <button id="rt_sec_se_preset_save_overwrite" class="menu_button interactable" style="padding:2px 8px; font-size:11px; background:rgba(100,180,255,0.12);${activePresetName ? '' : ' opacity:0.4; cursor:not-allowed;'}" title="${activePresetName ? `Overwrite preset '${activePresetName}' with current sections` : 'Select a preset first'}">Save</button>
-                        <button id="rt_sec_se_preset_save" class="menu_button interactable" style="padding:2px 8px; font-size:11px; background:rgba(100,180,255,0.15);" title="Save current sections as a new or renamed preset">Save As…</button>
-                        <button id="rt_sec_se_reset" class="menu_button interactable" style="padding:2px 8px; font-size:11px; color:#ffaa00;" title="Reset current editor sections to default">Reset</button>
-                        <button id="rt_sec_se_preset_delete" class="menu_button interactable" style="padding:2px 8px; font-size:11px; color:#ff5555;" title="Delete selected preset">Delete</button>
+                        <button id="rt_sec_se_preset_save_overwrite" class="menu_button interactable" style="padding:2px 8px; font-size:11px; background:rgba(100,180,255,0.12);${activePresetName ? '' : ' opacity:0.4; cursor:not-allowed;'}" title="${activePresetName ? `Overwrite preset '${activePresetName}' with current sections` : 'Select a preset first'}">${t('common.save', 'Guardar')}</button>
+                        <button id="rt_sec_se_preset_save" class="menu_button interactable" style="padding:2px 8px; font-size:11px; background:rgba(100,180,255,0.15);" title="Save current sections as a new or renamed preset">${t('common.saveAs', 'Guardar como…')}</button>
+                        <button id="rt_sec_se_reset" class="menu_button interactable" style="padding:2px 8px; font-size:11px; color:#ffaa00;" title="Reset current editor sections to default">${t('common.reset', 'Restablecer')}</button>
+                        <button id="rt_sec_se_preset_delete" class="menu_button interactable" style="padding:2px 8px; font-size:11px; color:#ff5555;" title="Delete selected preset">${t('common.delete', 'Eliminar')}</button>
                     </div>
                 </div>
                 <div id="rt_sec_se_list" style="overflow-y:auto; max-height:40vh; padding: 0 14px;">
@@ -1570,12 +1571,12 @@ function openSectionEditor(targetType) {
                 </div>
                 <div style="padding: 8px 14px; flex-shrink:0;">
                     <button id="rt_sec_se_add" class="menu_button interactable" style="width:100%; border: 1px dashed rgba(255,255,255,0.2); background:transparent;">
-                        <i class="fa-solid fa-plus"></i> Add Custom Section
+                        <i class="fa-solid fa-plus"></i> ${t('editors.addCustomSection', 'Añadir Sección Personalizada')}
                     </button>
                 </div>
                 <div class="popup-footer flex-container gap-1" style="display: flex; justify-content: flex-end; padding:10px 14px; border-top:1px solid rgba(255,255,255,0.08); flex-shrink:0;">
-                    <button id="rt_sec_se_cancel" class="menu_button interactable" style="font-size:12px;">Cancel</button>
-                    <button id="rt_sec_se_save" class="menu_button interactable" style="font-size:12px; background:rgba(180,100,255,0.15); border-color:rgba(180,100,255,0.4);">Save &amp; Rebuild</button>
+                    <button id="rt_sec_se_cancel" class="menu_button interactable" style="font-size:12px;">${t('common.cancel', 'Cancelar')}</button>
+                    <button id="rt_sec_se_save" class="menu_button interactable" style="font-size:12px; background:rgba(180,100,255,0.15); border-color:rgba(180,100,255,0.4);">${t('editors.saveAndRebuild', 'Guardar y Reconstruir')}</button>
                 </div>
             </div>
         `;

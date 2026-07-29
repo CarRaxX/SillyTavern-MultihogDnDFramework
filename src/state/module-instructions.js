@@ -25,7 +25,7 @@ export function buildNpcInstruction(majorWords = 25, minorWords = 15, ignoreLimi
 Do NOT create an NPC entry for the player character (controlled by the user) under any circumstances.
 In the chat history, the player character is the speaker labeled "Player" (and prompt replacement "{{user}}"). Analyze the dialogue to identify what in-character roleplay name(s) or alias(es) other characters use when addressing or referring to the "Player" (for example, if they call the Player "Dave Davidson" or "Dave", then "Dave Davidson" is the player character).
 Under no circumstances should you create an NPC entry for the player character, regardless of whether they are referred to as "Player", "{{user}}", or by their actual in-character name/alias (like "Dave Davidson").
-Always use the exact macro string \`{{user}}\` when referring to the player character in EVENT, QUEST, or NPC relationship descriptions; do NOT write the plain word "user" or "player" or their actual character name in entry contents.
+Always use the exact macro string `{{user}}` when referring to the player character in EVENT, QUEST, or NPC relationship descriptions; do NOT write the plain word "user" or "player" or their actual character name in entry contents. Write all narrative text, character descriptions, traits, and status notes in SPANISH while keeping structural tags ([CORE], [/CORE], field headers) intact.
 
 <CORE_FORMAT — NPC only>
 IMPORTANT: The Description field inside the [[ ]] tags MUST start directly with the [CORE] tag. Do NOT prepend any timestamps, dates, or other text before the [CORE] tag under any circumstances (e.g. do NOT write "[4:47 PM, ${useDdMmYy ? '01/01/2026' : 'Day 1'}] [CORE]" or "[${useDdMmYy ? 'DD/MM/YYYY' : 'Day X'}, HH:MM] [CORE]"). The very first character of the Description MUST be the "[" of the "[CORE]" tag. Wrap the identity sections (${sectionsList}) inside a single \`[CORE]\` and \`[/CORE]\` tag block.
@@ -98,7 +98,7 @@ export function buildLocInstruction() {
     } catch (_) {}
     const sectionsList = coreSections.map(s => s.name).join(', ');
 
-    return `Named places and sub-locations. The Name MUST be the full hierarchical path using " :: " as the separator (e.g. "Khelt :: Rust-Lantern District :: Marrow-Deep Mines Office"). Include each ancestor name as a keyword (e.g. "Khelt", "Rust-Lantern District", "mines").
+    return `Named places and sub-locations. Write all descriptions, atmosphere notes, and location details in SPANISH. The Name MUST be the full hierarchical path using " :: " as the separator (e.g. "Khelt :: Rust-Lantern District :: Marrow-Deep Mines Office"). Include each ancestor name as a keyword (e.g. "Khelt", "Rust-Lantern District", "mines").
 
 <CORE_FORMAT — LOC only>
 When FIRST recording a location, wrap a short permanent description (1–2 sentences: what the place is, notable features, typical atmosphere) inside a plain \`[CORE]\` … \`[/CORE]\` block. Do NOT use NPC field headers (${sectionsList}) — those structured sections are NPC-only.
@@ -135,7 +135,7 @@ export function buildFacInstruction() {
     } catch (_) {}
     const sectionsList = coreSections.map(s => s.name).join(', ');
 
-    return `Named factions, guilds, organisations. **Status**: short current-state line (standing with the party, active conflicts, what changed recently). **Description**: permanent history, ideology, schemes, and notable members.
+    return `Named factions, guilds, organisations. Write all status updates, descriptions, and ideology notes in SPANISH. **Status**: short current-state line (standing with the party, active conflicts, what changed recently). **Description**: permanent history, ideology, schemes, and notable members.
 
 <CORE_FORMAT — FAC only>
 When FIRST recording a faction, wrap the permanent description (history, ideology, schemes, and notable members) inside a plain \`[CORE]\` … \`[/CORE]\` block. Do NOT use NPC field headers (${sectionsList}) — those structured sections are NPC-only.
