@@ -583,7 +583,7 @@ export function showCharacterRollPanel(el) {
             const preset = (getSettings().characterCreatorPresets || []).find(p => p.id === id);
             if (!preset) return;
             applyCharacterCreatorDraft(panel, preset.data, populateClasses);
-            toastr['success'](`Preset "${preset.name}" loaded.`, 'Character Creator');
+            toastr['success'](`Preset "${preset.name}" cargado.`, 'Creador de Personajes');
         });
     }
 
@@ -598,7 +598,7 @@ export function showCharacterRollPanel(el) {
             st.characterCreatorPresets = st.characterCreatorPresets.filter(p => p.id !== id);
             saveSettings();
             renderPresetPills();
-            toastr['info'](`Preset "${preset.name}" deleted.`, 'Character Creator');
+            toastr['info'](`Preset "${preset.name}" eliminado.`, 'Creador de Personajes');
         });
     }
 
@@ -608,9 +608,9 @@ export function showCharacterRollPanel(el) {
             const { Popup } = SillyTavern.getContext();
             let presetName = null;
             if (Popup?.show?.input) {
-                presetName = await Popup.show.input('Character Creator', 'Name this preset:', 'My Preset');
+                presetName = await Popup.show.input('Creador de Personajes', 'Nombra este preset:', 'Mi Preset');
             } else {
-                presetName = prompt('Name this preset:');
+                presetName = prompt('Nombra este preset:');
             }
             if (!presetName || !presetName.trim()) return;
             const draft = collectCharacterCreatorDraft(panel);
@@ -625,7 +625,7 @@ export function showCharacterRollPanel(el) {
             saveSettings();
             renderPresetPills();
             if (presetSelect) presetSelect.value = newId;
-            toastr['success'](`Preset "${presetName.trim()}" saved!`, 'Character Creator');
+            toastr['success'](`¡Preset "${presetName.trim()}" guardado!`, 'Creador de Personajes');
         });
     }
 }
@@ -750,16 +750,11 @@ Rules:
         chatLog = `## RECENT STORY (Last ${recentChat.length} messages)\n` +
             recentChat.map(m => {
                 const name = m.is_user ? 'Player' : (m.name || 'Narrator');
-                return `${name}: ${m.mes || m.content || ''}`;
-            }).join('\n\n');
-    }
-
-    const userPrompt = `CHARACTER CARD:\n${cleanMemo}\n\n${chatLog}\n\nWrite the persona description for ${charName || 'this character'}.\nIMPORTANT REMINDER: The total word count across all sections MUST be approximately ${wordCount} words!`;
-    try {
+     try {
         const result = await sendStateRequest(s, systemPrompt, userPrompt);
         return (result || '').trim() || null;
     } catch (e) {
-        toastr['warning']('Player Card generation failed.', 'Character Creator');
+        toastr['warning']('Error al generar la Ficha de Jugador.', 'Creador de Personajes');
         return null;
     }
 }
@@ -867,16 +862,16 @@ export function showPersonaConfirmOverlay(bioText, charName, wordCount, extraHin
     box.style.cssText = 'background:var(--black80a,#1a1a2e);border:1px solid rgba(120,80,220,0.5);border-radius:8px;padding:18px;max-width:520px;width:90%;max-height:80vh;display:flex;flex-direction:column;gap:10px;overflow:hidden;';
     box.innerHTML = `
         <div style="display:flex;justify-content:space-between;align-items:center;">
-            <b style="color:var(--rt-accent,#a78bfa);font-size:1em;">👤 Player Card Preview — ${escapeHtml(charName)}</b>
+            <b style="color:var(--rt-accent,#a78bfa);font-size:1em;">👤 Vista Previa de Ficha de Jugador — ${escapeHtml(charName)}</b>
             <button id="rt-pco-close" style="background:none;border:none;color:inherit;font-size:1.1em;cursor:pointer;opacity:0.6;">✕</button>
         </div>
-        <small style="opacity:0.6;line-height:1.3;">Edit the Lorebook Agent Player Card below, then add it to this chat or copy the bio.</small>
+        <small style="opacity:0.6;line-height:1.3;">Edita la Ficha de Jugador del Agente de Lorebook a continuación, luego añádela a este chat o copia la biografía.</small>
         <textarea id="rt-pco-bio" style="flex:1;min-height:180px;max-height:300px;resize:vertical;background:rgba(0,0,0,0.3);border:1px solid rgba(255,255,255,0.15);border-radius:4px;padding:8px;color:inherit;font-size:0.88em;line-height:1.6;">${escapeHtml(bioText)}</textarea>
         <div style="display:flex;flex-direction:column;gap:12px;">
-            <button id="rt-pco-add-pc" title="Adds this character as the Player entry in the Lorebook Agent for this chat. It will automatically load whenever you open this chat." style="width:100%;padding:12px;background:rgba(0,180,255,0.25);border:2px solid #00b4ff;border-radius:6px;color:inherit;cursor:pointer;font-weight:bold;font-size:1.1em;box-shadow:0 4px 12px rgba(0,180,255,0.15);transition:all 0.2s ease;">👤 Add as Player into Lorebook Agent</button>
+            <button id="rt-pco-add-pc" title="Añade este personaje como la entrada de Jugador en el Agente de Lorebook para este chat. Se cargará automáticamente al abrir este chat." style="width:100%;padding:12px;background:rgba(0,180,255,0.25);border:2px solid #00b4ff;border-radius:6px;color:inherit;cursor:pointer;font-weight:bold;font-size:1.1em;box-shadow:0 4px 12px rgba(0,180,255,0.15);transition:all 0.2s ease;">👤 Añadir como Jugador en Agente de Lorebook</button>
             <div style="display:flex;gap:8px;">
-                <button id="rt-pco-regen" style="flex:1;padding:8px;background:rgba(120,80,220,0.18);border:1px solid rgba(120,80,220,0.6);border-radius:4px;color:inherit;cursor:pointer;">🔄 Regenerate</button>
-                <button id="rt-pco-copy" style="flex:1;padding:8px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.2);border-radius:4px;color:inherit;cursor:pointer;">📋 Copy Bio</button>
+                <button id="rt-pco-regen" style="flex:1;padding:8px;background:rgba(120,80,220,0.18);border:1px solid rgba(120,80,220,0.6);border-radius:4px;color:inherit;cursor:pointer;">🔄 Regenerar</button>
+                <button id="rt-pco-copy" style="flex:1;padding:8px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.2);border-radius:4px;color:inherit;cursor:pointer;">📋 Copiar Biografía</button>
             </div>
         </div>`;
 
@@ -892,28 +887,41 @@ export function showPersonaConfirmOverlay(bioText, charName, wordCount, extraHin
         try {
             await navigator.clipboard.writeText(bio);
             const btn = /** @type {HTMLButtonElement} */ (overlay.querySelector('#rt-pco-copy'));
-            btn.textContent = '✅ Copied!';
-            setTimeout(() => { btn.textContent = '📋 Copy Bio'; }, 1800);
+            btn.textContent = '✅ ¡Copiado!';
+            setTimeout(() => { btn.textContent = '📋 Copiar Biografía'; }, 1800);
         } catch (_) {
-            toastr['info']('Could not access clipboard — please select and copy manually.', 'Character Creator');
+            toastr['info']('No se pudo acceder al portapapeles; por favor selecciona y copia manualmente.', 'Creador de Personajes');
         }
     });
 
      // ── Add as Player into Lorebook Agent ────────────────────────────────────
      overlay.querySelector('#rt-pco-add-pc').addEventListener('click', async () => {
          const finalBio = /** @type {HTMLTextAreaElement} */ (overlay.querySelector('#rt-pco-bio')).value.trim();
-         const safeName = charName.replace(/['"\\]/g, '').trim() || 'My Character';
+         const safeName = charName.replace(/['"\\]/g, '').trim() || 'Mi Personaje';
          const ok = await addPlayerCardToLorebookAgent(safeName, finalBio, wordCount || 100);
          if (ok) {
-             toastr['success'](`"${safeName}" added as Player in Lorebook Agent.`, 'Character Creator');
+             toastr['success'](`"${safeName}" añadido como Jugador en el Agente de Lorebook.`, 'Creador de Personajes');
          } else {
-             toastr['error']('No active chat found to link the Player Character.', 'Character Creator');
+             toastr['error']('No se encontró un chat activo para vincular al Personaje Jugador.', 'Creador de Personajes');
          }
          overlay.remove();
      });
- 
+
      // ── Regenerate button ────────────────────────────────────────────────────
      overlay.querySelector('#rt-pco-regen').addEventListener('click', async () => {
+         const regenBtn = /** @type {HTMLButtonElement} */ (overlay.querySelector('#rt-pco-regen'));
+         regenBtn.disabled = true;
+         regenBtn.textContent = '⏳ Regenerando...';
+         const newBio = await generatePersonaBio(charName, wordCount, extraHints, opts);
+         if (newBio) {
+             /** @type {HTMLTextAreaElement} */ (overlay.querySelector('#rt-pco-bio')).value = newBio;
+         } else {
+             toastr['warning']('La regeneración falló. Por favor inténtalo de nuevo.', 'Creador de Personajes');
+         }
+         regenBtn.disabled = false;
+         regenBtn.textContent = '🔄 Regenerar';
+     });
+}istener('click', async () => {
          const regenBtn = /** @type {HTMLButtonElement} */ (overlay.querySelector('#rt-pco-regen'));
          regenBtn.disabled = true;
          regenBtn.textContent = '⏳ Regenerating...';
@@ -1073,7 +1081,7 @@ export function showPcImportPanel(el) {
                 try {
                     await importPcFromCard(char, mode, el);
                 } catch (err) {
-                    toastr['error'](`Import failed: ${String(err.message || err).substring(0, 120)}`, 'PC Import');
+                    toastr['error'](`Importación fallida: ${String(err.message || err).substring(0, 120)}`, 'Importación de PJ');
                 } finally {
                     addAsIsBtn.disabled = false; fitBtn.disabled = false;
                     addAsIsBtn.textContent = `📋 ${t('creator.addAsIs', 'Add as is')}`; fitBtn.textContent = `🤖 ${t('creator.fitIntoStory', 'Fit into Story')}`;
@@ -1092,7 +1100,7 @@ export function showPcImportPanel(el) {
         if (visible.length < filtered.length) {
             const more = document.createElement('div');
             more.style.cssText = 'text-align:center;font-size:10px;color:rgba(255,255,255,0.4);cursor:pointer;padding:4px;';
-            more.textContent = `Show more (${visible.length} of ${filtered.length})`;
+            more.textContent = `Mostrar más (${visible.length} de ${filtered.length})`;
             more.addEventListener('click', () => { displayCount += 10; renderPcList(); });
             listEl.appendChild(more);
         }
@@ -1183,7 +1191,7 @@ ${worldCtx}`;
 
     const memoPrompt = mode === 'minimal' ? memoPromptMinimal : memoPromptFull;
 
-    toastr['info'](`Importing "${name}" as PC… generating state memo.`, 'PC Import');
+    toastr['info'](`Importando "${name}" como PJ... generando resumen de estado.`, 'Importación de PJ');
     el.querySelectorAll('.rt-random-char-btn').forEach(b => { /** @type {HTMLButtonElement} */ (b).disabled = true; });
 
     await sendDirectPrompt(memoPrompt, { systemPromptMode: 'modules_only' });
@@ -1193,7 +1201,7 @@ ${worldCtx}`;
     if (charCard.avatar && charCard.avatar !== 'none') {
         if (!s.customPortraits) s.customPortraits = {};
         const avatarUrl = `/characters/${encodeURIComponent(charCard.avatar)}`;
-        const safeName = name.replace(/['"\\]/g, '').trim() || 'My Character';
+        const safeName = name.replace(/['"\\]/g, '').trim() || 'Mi Personaje';
         s.customPortraits['CHARACTER'] = avatarUrl;
         s.customPortraits['PC'] = avatarUrl;
         s.customPortraits[safeName] = avatarUrl;
@@ -1226,19 +1234,19 @@ ${worldCtx}`;
             await activateSillyTavernPersona(name);
         } catch (error) {
             console.error('[PC Import] Could not create name-only ST persona:', error);
-            toastr['warning'](`PC imported, but the ST persona for "${name}" could not be created.`, 'PC Import');
+            toastr['warning'](`PJ importado, pero no se pudo crear la persona de ST para "${name}".`, 'Importación de PJ');
         }
     }
 
     // --- Step 3: Optional Lorebook Agent Player Card ---
     if (!s.onboardingCreatePersona) return;
-    toastr['info'](`Generating Lorebook Agent Player Card for "${name}"…`, 'PC Import');
+    toastr['info'](`Generando Ficha de Jugador del Agente de Lorebook para "${name}"...`, 'Importación de PJ');
     
     const bio = await generatePcImportBio(charCard, mode, wordCountStr);
     if (bio) {
         showPersonaConfirmOverlay(bio, name, wordCountStr === 'same' ? 150 : parseInt(wordCountStr, 10), '');
     } else {
-        toastr['warning']('State memo sent, but Player Card generation failed. You can add the Player Card manually.', 'PC Import');
+        toastr['warning']('Resumen de estado enviado, pero falló la generación de la Ficha de Jugador. Puedes añadir la Ficha de Jugador manualmente.', 'Importación de PJ');
     }
 }
 

@@ -124,12 +124,12 @@ function bindWizardPromptEditor(settings, textareaId) {
         if (!ta) return;
         try {
             await navigator.clipboard.writeText(ta.value);
-            toastr['success']('Wizard system prompt copied.', 'Game System Wizard');
+            toastr['success']('Prompt del sistema del Asistente copiado.', 'Asistente de Sistemas de Juego');
         } catch {
             ta.focus();
             ta.select();
             document.execCommand('copy');
-            toastr['success']('Wizard system prompt copied.', 'Game System Wizard');
+            toastr['success']('Prompt del sistema del Asistente copiado.', 'Asistente de Sistemas de Juego');
         }
     });
     document.querySelector(`.rt-gs-reset-wizard-prompt[data-target="${textareaId}"]`)?.addEventListener('click', () => {
@@ -137,7 +137,7 @@ function bindWizardPromptEditor(settings, textareaId) {
         if (!ta) return;
         ta.value = buildWizardSystemPrompt();
         persistWizardSystemPrompt(settings, '');
-        toastr['info']('Wizard system prompt reset to default.', 'Game System Wizard');
+        toastr['info']('Prompt del sistema del Asistente restablecido a los valores predeterminados.', 'Asistente de Sistemas de Juego');
     });
     const ta = document.getElementById(textareaId);
     ta?.addEventListener('change', () => persistWizardSystemPrompt(settings, ta.value));
@@ -779,12 +779,12 @@ export async function showSectionEditor({ mode = 'manual', tag = '', description
                                 currentTag = extractedTag;
                             }
                         }
-                        toastr['success']('Section regenerated!', 'AI Section Builder');
+                        toastr['success']('¡Sección regenerada!', 'Creador de Secciones por IA');
                     } catch (err) {
-                        toastr['error'](`Regeneration failed: ${err.message}`, 'AI Section Builder');
+                        toastr['error'](`Falló la regeneración: ${err.message}`, 'Creador de Secciones por IA');
                     } finally {
                         regenBtn.disabled = false;
-                        regenBtn.innerHTML = '<i class="fa-solid fa-rotate"></i> Regenerate with AI';
+                        regenBtn.innerHTML = '<i class="fa-solid fa-rotate"></i> Regenerar con IA';
                     }
                 });
             }
@@ -792,15 +792,15 @@ export async function showSectionEditor({ mode = 'manual', tag = '', description
     }, 100);
 
     const confirmed = await Popup.show.confirm(
-        titleMap[mode] || '📝 Section Editor',
+        titleMap[mode] || '📝 Editor de Secciones',
         editorHtml,
-        { okButton: mode === 'edit' ? 'Save Changes' : 'Save Section', cancelButton: 'Cancel', ...GS_POPUP_LARGE }
+        { okButton: mode === 'edit' ? 'Guardar Cambios' : 'Guardar Sección', cancelButton: 'Cancelar', ...GS_POPUP_LARGE }
     );
     if (!confirmed) return null;
 
     let finalContent = currentContent.trim();
     if (!finalContent) {
-        toastr['warning']('Section content cannot be empty.', 'Section Builder');
+        toastr['warning']('El contenido de la sección no puede estar vacío.', 'Creador de Secciones');
         return null;
     }
     let finalTag = currentTag.trim().replace(/[^\w_-]/g, '');
@@ -835,7 +835,7 @@ export async function showSectionEditor({ mode = 'manual', tag = '', description
  */
 export async function resetSyspromptLibrary(options = {}) {
     const { deferPersistence = false } = options;
-    if (!confirm('This will remove all AI-generated / manually-added custom sections (Game Systems and Unlocked Sections are left untouched) and restore the default section order. Proceed?')) return;
+    if (!confirm('Esto eliminará todas las secciones personalizadas generadas por IA / añadidas manualmente (los Sistemas de Juego y Secciones Base Desbloqueadas no se tocarán) y restaurará el orden por defecto. ¿Continuar?')) return;
     const settings = getSettings();
     const removedIds = (settings.customSyspromptLibrary || [])
         .filter(p => p.origin !== 'unlocked_base' && p.origin !== 'wizard')
@@ -845,7 +845,7 @@ export async function resetSyspromptLibrary(options = {}) {
     settings.syspromptSectionOrder = [];
     await persistSyspromptChanges(deferPersistence);
     if (!deferPersistence) {
-        toastr['success']('Custom sections cleared & section order reset to defaults! 🔄', 'System Prompt Control Room');
+        toastr['success']('¡Secciones personalizadas borradas y orden restablecido a los valores predeterminados! 🔄', 'Sala de Control del Sysprompt');
     }
 }
 
@@ -870,13 +870,13 @@ export async function runAiSectionBuilder(options = {}) {
     const { Popup } = SillyTavern.getContext();
     const inputContent = `
         <div style="display:flex; flex-direction:column; gap:10px; width:100%; box-sizing:border-box;">
-            <div style="font-size:13px; opacity:0.9; font-weight:bold;">✨ AI Section Builder</div>
+            <div style="font-size:13px; opacity:0.9; font-weight:bold;">✨ Creador de Secciones por IA</div>
             <div style="font-size:11px; opacity:0.7; line-height:1.4;">
-                Describe a new system, mechanic, or rule you want added to your D&amp;D system prompt. The AI will generate a properly formatted XML section ready to be appended.
+                Describe un nuevo sistema, mecánica o regla que quieras añadir a tu sysprompt de D&amp;D. La IA generará una sección XML formateada correctamente lista para anexionarse.
             </div>
             <textarea id="rt_ai_section_desc" rows="4" class="text_pole"
                 style="font-size:12px; resize:vertical; width:100%;"
-                placeholder="Example: A reputation system where NPCs in different factions track the player's standing."></textarea>
+                placeholder="Ejemplo: Un sistema de reputación donde los PNJs de diferentes facciones siguen el estatus del jugador."></textarea>
         </div>
     `;
 
@@ -886,16 +886,16 @@ export async function runAiSectionBuilder(options = {}) {
         if (ta) ta.addEventListener('input', () => { description = ta.value.trim(); });
     }, 100);
 
-    const inputResult = await Popup.show.confirm('✨ AI Section Builder', inputContent, { okButton: 'Generate', cancelButton: 'Cancel', wide: true, large: true });
+    const inputResult = await Popup.show.confirm('✨ Creador de Secciones por IA', inputContent, { okButton: 'Generar', cancelButton: 'Cancelar', wide: true, large: true });
     if (!inputResult) return;
 
     if (!description) {
-        toastr['warning']('Please describe the mechanic/system you want.', 'AI Section Builder');
+        toastr['warning']('Por favor describe la mecánica/sistema que deseas.', 'Creador de Secciones por IA');
         return;
     }
 
     // Step 2: generate
-    toastr['info']('Generating section with AI...', 'AI Section Builder', { timeOut: 3000 });
+    toastr['info']('Generando sección con IA...', 'Creador de Secciones por IA', { timeOut: 3000 });
     try {
         const section = await generateSection(description);
         const extractedTag = section.match(/^<(\w+[\w_-]*)/)?.[1] || '';
@@ -909,7 +909,7 @@ export async function runAiSectionBuilder(options = {}) {
             onRegenerate: generateSection,
         });
         if (!result) {
-            toastr['info']('Section builder cancelled.', 'AI Section Builder');
+            toastr['info']('Creador de secciones cancelado.', 'Creador de Secciones por IA');
             return;
         }
 
@@ -929,14 +929,14 @@ export async function runAiSectionBuilder(options = {}) {
 
         if (!deferPersistence) {
             if (result.saveMode === 'apply') {
-                toastr['success']('Saved to Library & Applied to Sysprompt! \u2705', 'AI Section Builder');
+                toastr['success']('¡Guardado en la biblioteca y aplicado al sysprompt! ✅', 'Creador de Secciones por IA');
             } else {
-                toastr['success']('Saved to Library! \u2705', 'AI Section Builder');
+                toastr['success']('¡Guardado en la biblioteca! ✅', 'Creador de Secciones por IA');
             }
         }
     } catch (err) {
         console.error('[RPG Tracker] AI Section Builder error:', err);
-        toastr['error'](`Failed to generate section: ${err.message}`, 'AI Section Builder');
+        toastr['error'](`Error al generar la sección: ${err.message}`, 'Creador de Secciones por IA');
     }
 }
 
@@ -953,7 +953,7 @@ export async function runManualSectionBuilder(options = {}) {
         enabled: result.saveMode === 'apply',
         scope: 'chat',
         icon: 'fa-pen-to-square',
-        description: result.description || 'Custom Section',
+        description: result.description || 'Sección Personalizada',
     };
 
     settings.customSyspromptLibrary = settings.customSyspromptLibrary || [];
@@ -962,9 +962,9 @@ export async function runManualSectionBuilder(options = {}) {
 
     if (!deferPersistence) {
         if (result.saveMode === 'apply') {
-            toastr['success']('Saved to Library & Applied to Sysprompt! \u2705', 'Section Builder');
+            toastr['success']('¡Guardado en la biblioteca y aplicado al sysprompt! ✅', 'Creador de Secciones');
         } else {
-            toastr['success']('Saved to Library! \u2705', 'Section Builder');
+            toastr['success']('¡Guardado en la biblioteca! ✅', 'Creador de Secciones');
         }
     }
 }
@@ -1462,7 +1462,7 @@ async function promptGameSystemIterationFeedback() {
         feedback = ta?.value?.trim() || '';
     }
     if (!feedback) {
-        toastr['warning']('Please describe what you want changed.', 'Game System Wizard');
+        toastr['warning']('Por favor describe qué cambios deseas realizar.', 'Asistente de Sistemas de Juego');
         return null;
     }
     return feedback;
@@ -1499,56 +1499,54 @@ async function showGameSystemPreview(parsed, { description = '', isEdit = false,
     const html = `
         <div id="rt-gs-preview" style="display:flex; flex-direction:column; gap:10px; width:100%; box-sizing:border-box; text-align:left;">
             <div style="display:flex; gap:8px;">
-                <input id="rt-gs-icon" type="text" class="text_pole" value="${escapeHtml(state.icon)}" style="width:44px; text-align:center;" title="Icon (emoji)">
-                <input id="rt-gs-name" type="text" class="text_pole" value="${escapeHtml(state.name)}" style="flex:1;" placeholder="System name">
+                <input id="rt-gs-icon" type="text" class="text_pole" value="${escapeHtml(state.icon)}" style="width:44px; text-align:center;" title="Icono (emoji)">
+                <input id="rt-gs-name" type="text" class="text_pole" value="${escapeHtml(state.name)}" style="flex:1;" placeholder="Nombre del sistema">
             </div>
 
             <label class="checkbox_label" style="font-size:12px;">
                 <input type="checkbox" id="rt-gs-include-tracker" ${state.includeTracker ? 'checked' : ''}>
-                <span>Needs a tracker module (persistent state tracked every turn)</span>
+                <span>Requiere un módulo rastreador (estado persistente rastreado en cada turno)</span>
             </label>
 
             <div id="rt-gs-driver-row" style="display:${state.includeTracker ? 'flex' : 'none'}; flex-direction:column; gap:8px; padding:8px 10px; background:rgba(0,0,0,0.2); border-radius:6px; border:1px solid rgba(255,255,255,0.08);">
-                <div style="font-size:11px; font-weight:bold; opacity:0.8;">How does the value change? (pick one or more)</div>
+                <div style="font-size:11px; font-weight:bold; opacity:0.8;">¿Cómo cambia el valor? (elige uno o más)</div>
                 <label style="display:flex; align-items:flex-start; gap:8px; font-size:12px; cursor:pointer;">
                     <input type="checkbox" id="rt-gs-driver-time" ${state.driverTime ? 'checked' : ''} style="margin-top:2px;">
-                    <span><b>Auto-ticks over time</b> — drifts automatically each turn based on elapsed [TIME] minutes. Use for hunger, thirst, fatigue, torch fuel.</span>
+                    <span><b>Avanza automáticamente con el tiempo</b> — cambia en cada turno según los minutos transcurridos en [TIME]. Úsalo para hambre, sed, fatiga o antorchas.</span>
                 </label>
                 <label style="display:flex; align-items:flex-start; gap:8px; font-size:12px; cursor:pointer;">
                     <input type="checkbox" id="rt-gs-driver-gm" ${state.driverGmAnnotation ? 'checked' : ''} style="margin-top:2px;">
-                    <span><b>GM declares deltas</b> — needs narrative judgment only the full-context Narrator can make. Use for faction reputation, trust, sanity.</span>
+                    <span><b>El Narrador declara los cambios</b> — requiere juicio narrativo del Narrador. Úsalo para reputación con facciones, confianza o cordura.</span>
                 </label>
                 <label style="display:flex; align-items:flex-start; gap:8px; font-size:12px; cursor:pointer;">
                     <input type="checkbox" id="rt-gs-driver-fact" ${state.driverStatedFact ? 'checked' : ''} style="margin-top:2px;">
-                    <span><b>Tracker reads a stated fact</b> — the exact number is already plain in the narration each turn (e.g. a stated damage amount).</span>
+                    <span><b>El rastreador lee un hecho explícito</b> — el número exacto ya está claro en la narración (ej. daño explícito).</span>
                 </label>
-                <div style="font-size:10px; opacity:0.55; line-height:1.3;">Most mechanics need exactly one. Combine only when genuinely mixed (e.g. radiation ticking from exposure time, plus an occasional GM-judged narrative jolt).</div>
             </div>
 
             <div id="rt-gs-effect-owner-row" style="display:${state.includeTracker ? 'flex' : 'none'}; flex-direction:column; gap:8px; padding:8px 10px; background:rgba(0,0,0,0.2); border-radius:6px; border:1px solid rgba(255,255,255,0.08);">
                 <div style="display:flex; align-items:center; gap:14px;">
-                    <span style="font-size:11px; font-weight:bold; opacity:0.8; width:110px;">Effect owner:</span>
+                    <span style="font-size:11px; font-weight:bold; opacity:0.8; width:110px;">Propietario del efecto:</span>
                     <label style="display:flex; align-items:center; gap:5px; font-size:12px; cursor:pointer;">
-                        <input type="radio" name="rt_gs_effect_owner" value="tracker" ${state.effectOwner === 'tracker' ? 'checked' : ''}> Tracker (effects in state memo)
+                        <input type="radio" name="rt_gs_effect_owner" value="tracker" ${state.effectOwner === 'tracker' ? 'checked' : ''}> Rastreador (efectos en el resumen de estado)
                     </label>
                     <label style="display:flex; align-items:center; gap:5px; font-size:12px; cursor:pointer;">
-                        <input type="radio" name="rt_gs_effect_owner" value="gm" ${state.effectOwner === 'gm' ? 'checked' : ''}> GM section (effects in main sysprompt)
+                        <input type="radio" name="rt_gs_effect_owner" value="gm" ${state.effectOwner === 'gm' ? 'checked' : ''}> Sección Narrador (efectos en sysprompt principal)
                     </label>
                 </div>
-                <div style="font-size:10px; opacity:0.55; line-height:1.3;">Changing effect owner rewrites which half owns threshold consequences. Use <b>Regenerate Both</b> after switching — the appended Sustenance example updates to match.</div>
             </div>
 
             <div id="rt-gs-regen-both-row" style="display:${state.includeTracker ? 'flex' : 'none'}; align-items:center; justify-content:space-between; gap:10px; padding:8px 10px; background:rgba(255,180,60,0.08); border:1px solid rgba(255,180,60,0.3); border-radius:6px;">
-                <span style="font-size:11px; opacity:0.8; line-height:1.3;">Changed a driver or the effect owner above? Regenerate both halves together so they don't fall out of sync.</span>
-                <button id="rt-gs-regen-both" class="menu_button interactable" style="font-size:11px; padding:4px 10px; white-space:nowrap; background:rgba(255,180,60,0.18); border-color:rgba(255,180,60,0.5);" title="Regenerate both the GM section and tracker module together, using the current drivers/effect owner">
-                    <i class="fa-solid fa-arrows-rotate"></i> Regenerate Both
+                <span style="font-size:11px; opacity:0.8; line-height:1.3;">¿Cambiaste una regla o propietario? Regenera ambas partes juntas para mantener la sincronía.</span>
+                <button id="rt-gs-regen-both" class="menu_button interactable" style="font-size:11px; padding:4px 10px; white-space:nowrap; background:rgba(255,180,60,0.18); border-color:rgba(255,180,60,0.5);" title="Regenerar tanto la sección del Narrador como el módulo del rastreador">
+                    <i class="fa-solid fa-arrows-rotate"></i> Regenerar Ambos
                 </button>
             </div>
 
             <div id="rt-gs-iterate-row" style="display:flex; align-items:center; justify-content:space-between; gap:10px; padding:8px 10px; background:rgba(180,100,255,0.08); border:1px solid rgba(180,100,255,0.3); border-radius:6px;">
-                <span style="font-size:11px; opacity:0.8; line-height:1.3;">Want specific changes? Tell the AI what to fix — it revises the current draft in place.</span>
-                <button id="rt-gs-iterate" class="menu_button interactable" style="font-size:11px; padding:4px 10px; white-space:nowrap; background:rgba(180,100,255,0.18); border-color:rgba(180,100,255,0.5);" title="Describe changes and let AI revise the current GM section and tracker module">
-                    <i class="fa-solid fa-wand-magic-sparkles"></i> Iterate with AI
+                <span style="font-size:11px; opacity:0.8; line-height:1.3;">¿Quieres cambios específicos? Indícale a la IA qué ajustar para revisar el borrador actual.</span>
+                <button id="rt-gs-iterate" class="menu_button interactable" style="font-size:11px; padding:4px 10px; white-space:nowrap; background:rgba(180,100,255,0.18); border-color:rgba(180,100,255,0.5);" title="Describir cambios y revisar el borrador actual con IA">
+                    <i class="fa-solid fa-wand-magic-sparkles"></i> Modificar con IA
                 </button>
             </div>
 
@@ -1556,35 +1554,35 @@ async function showGameSystemPreview(parsed, { description = '', isEdit = false,
 
             <div style="border:1px solid rgba(255,255,255,0.1); border-radius:6px; padding:10px; background:rgba(0,0,0,0.15);">
                 <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:6px;">
-                    <b style="font-size:12px;">GM Sysprompt Section &lt;<span id="rt-gs-gmtag-label">${escapeHtml(state.gmTag)}</span>&gt;</b>
-                    <button id="rt-gs-regen-gm" class="menu_button interactable" style="font-size:11px; padding:2px 8px; background:rgba(180,100,255,0.15); border-color:rgba(180,100,255,0.4);" title="Regenerate this half with AI"><i class="fa-solid fa-rotate"></i> Regenerate</button>
+                    <b style="font-size:12px;">Sección Sysprompt del Narrador &lt;<span id="rt-gs-gmtag-label">${escapeHtml(state.gmTag)}</span>&gt;</b>
+                    <button id="rt-gs-regen-gm" class="menu_button interactable" style="font-size:11px; padding:2px 8px; background:rgba(180,100,255,0.15); border-color:rgba(180,100,255,0.4);" title="Regenerar esta parte con IA"><i class="fa-solid fa-rotate"></i> Regenerar</button>
                 </div>
-                <input id="rt-gs-gmtag" type="text" class="text_pole" value="${escapeHtml(state.gmTag)}" style="width:100%; font-size:11px; font-family:monospace; margin-bottom:6px;" placeholder="snake_case_tag">
+                <input id="rt-gs-gmtag" type="text" class="text_pole" value="${escapeHtml(state.gmTag)}" style="width:100%; font-size:11px; font-family:monospace; margin-bottom:6px;" placeholder="etiqueta_snake_case">
                 <textarea id="rt-gs-gmcontent" class="text_pole" rows="18" style="${GS_TEXTAREA_TALL_STYLE}">${escapeHtml(state.gmContent)}</textarea>
             </div>
 
             <div id="rt-gs-tracker-block" style="display:${state.includeTracker ? 'block' : 'none'}; border:1px solid rgba(255,255,255,0.1); border-radius:6px; padding:10px; background:rgba(0,0,0,0.15);">
                 <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:6px;">
-                    <b style="font-size:12px;">Tracker Module [<span id="rt-gs-trktag-label">${escapeHtml(state.trackerTag)}</span>]</b>
-                    <button id="rt-gs-regen-tracker" class="menu_button interactable" style="font-size:11px; padding:2px 8px; background:rgba(180,100,255,0.15); border-color:rgba(180,100,255,0.4);" title="Regenerate this half with AI"><i class="fa-solid fa-rotate"></i> Regenerate</button>
+                    <b style="font-size:12px;">Módulo Rastreador [<span id="rt-gs-trktag-label">${escapeHtml(state.trackerTag)}</span>]</b>
+                    <button id="rt-gs-regen-tracker" class="menu_button interactable" style="font-size:11px; padding:2px 8px; background:rgba(180,100,255,0.15); border-color:rgba(180,100,255,0.4);" title="Regenerar esta parte con IA"><i class="fa-solid fa-rotate"></i> Regenerar</button>
                 </div>
                 <div style="display:flex; gap:6px; margin-bottom:6px;">
-                    <input id="rt-gs-trkicon" type="text" class="text_pole" value="${escapeHtml(state.trackerIcon)}" style="width:44px; text-align:center;" title="Icon (emoji)">
-                    <input id="rt-gs-trktag" type="text" class="text_pole" value="${escapeHtml(state.trackerTag)}" style="width:140px; font-family:monospace;" placeholder="TAG">
-                    <input id="rt-gs-trklabel" type="text" class="text_pole" value="${escapeHtml(state.trackerLabel)}" style="flex:1;" placeholder="Display label">
+                    <input id="rt-gs-trkicon" type="text" class="text_pole" value="${escapeHtml(state.trackerIcon)}" style="width:44px; text-align:center;" title="Icono (emoji)">
+                    <input id="rt-gs-trktag" type="text" class="text_pole" value="${escapeHtml(state.trackerTag)}" style="width:140px; font-family:monospace;" placeholder="ETIQUETA">
+                    <input id="rt-gs-trklabel" type="text" class="text_pole" value="${escapeHtml(state.trackerLabel)}" style="flex:1;" placeholder="Etiqueta visible">
                 </div>
                 <textarea id="rt-gs-trkcontent" class="text_pole" rows="18" style="${GS_TEXTAREA_TALL_STYLE}">${escapeHtml(state.trackerContent)}</textarea>
             </div>
 
             <div style="padding:10px; border:1px solid rgba(255,255,255,0.1); border-radius:6px; background:rgba(0,0,0,0.2);">
-                <div style="font-size:11px; font-weight:bold; margin-bottom:6px;">Save Options:</div>
+                <div style="font-size:11px; font-weight:bold; margin-bottom:6px;">Opciones de Guardado:</div>
                 <label style="display:flex; align-items:center; gap:8px; cursor:pointer; margin-bottom:4px;">
                     <input type="radio" name="rt_gs_save_mode" id="rt-gs-mode-apply" value="apply" checked style="margin:0;">
-                    <span style="font-size:12px;">Enable &amp; Apply Now</span>
+                    <span style="font-size:12px;">Habilitar y Aplicar Ahora</span>
                 </label>
                 <label style="display:flex; align-items:center; gap:8px; cursor:pointer;">
                     <input type="radio" name="rt_gs_save_mode" id="rt-gs-mode-disabled" value="disabled" style="margin:0;">
-                    <span style="font-size:12px;">Save Disabled (enable later)</span>
+                    <span style="font-size:12px;">Guardar Deshabilitado (habilitar más tarde)</span>
                 </label>
             </div>
         </div>
@@ -1672,12 +1670,12 @@ async function showGameSystemPreview(parsed, { description = '', isEdit = false,
                     state.gmContent = content;
                     const ta = $id('rt-gs-gmcontent');
                     if (ta) ta.value = content;
-                    toastr['success']('GM section regenerated!', 'Game System Wizard');
+                    toastr['success']('¡Sección del Narrador regenerada!', 'Asistente de Sistemas de Juego');
                 } catch (err) {
-                    toastr['error'](`Regeneration failed: ${err.message}`, 'Game System Wizard');
+                    toastr['error'](`Falló la regeneración: ${err.message}`, 'Asistente de Sistemas de Juego');
                 } finally {
                     regenGmBtn.disabled = false;
-                    regenGmBtn.innerHTML = '<i class="fa-solid fa-rotate"></i> Regenerate';
+                    regenGmBtn.innerHTML = '<i class="fa-solid fa-rotate"></i> Regenerar';
                 }
             });
         }
@@ -1697,12 +1695,12 @@ async function showGameSystemPreview(parsed, { description = '', isEdit = false,
                     if (lblEl && block.attrs.label) lblEl.value = block.attrs.label;
                     const iconEl = $id('rt-gs-trkicon');
                     if (iconEl && block.attrs.icon) iconEl.value = block.attrs.icon;
-                    toastr['success']('Tracker module regenerated!', 'Game System Wizard');
+                    toastr['success']('¡Módulo del rastreador regenerado!', 'Asistente de Sistemas de Juego');
                 } catch (err) {
-                    toastr['error'](`Regeneration failed: ${err.message}`, 'Game System Wizard');
+                    toastr['error'](`Falló la regeneración: ${err.message}`, 'Asistente de Sistemas de Juego');
                 } finally {
                     regenTrkBtn.disabled = false;
-                    regenTrkBtn.innerHTML = '<i class="fa-solid fa-rotate"></i> Regenerate';
+                    regenTrkBtn.innerHTML = '<i class="fa-solid fa-rotate"></i> Regenerar';
                 }
             });
         }

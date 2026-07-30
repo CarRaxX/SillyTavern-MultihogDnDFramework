@@ -172,7 +172,7 @@ export function createCartridgeFromCurrent(name, description, icon) {
     };
     settings.gameCartridges.push(cartridge);
     saveSettings();
-    toastr['success'](`Cartridge "${finalName}" saved! 💾`, 'Game Cartridges');
+    toastr['success'](`¡Cartucho "${finalName}" guardado! 💾`, 'Cartuchos de Juego');
     return cartridge;
 }
 
@@ -181,7 +181,7 @@ export function updateCartridgeFromCurrent(cartridge) {
     cartridge.payload = buildCartridgePayload(settings);
     cartridge.updatedAt = Date.now();
     saveSettings();
-    toastr['success'](`Cartridge "${cartridge.name}" updated! 💾`, 'Game Cartridges');
+    toastr['success'](`¡Cartucho "${cartridge.name}" actualizado! 💾`, 'Cartuchos de Juego');
 }
 
 /**
@@ -204,8 +204,8 @@ export async function loadCartridge(cartridge) {
     // Build the checklist HTML rows.
     const rowsHtml = groupStatus.map(g => {
         const badge = g.isModified
-            ? `<span style="font-size:9px; padding:1px 6px; border-radius:3px; background:rgba(255,180,60,0.25); color:#ffcc66; border:1px solid rgba(255,180,60,0.4); white-space:nowrap;">✏️ modified</span>`
-            : `<span style="font-size:9px; padding:1px 6px; border-radius:3px; background:rgba(120,120,120,0.25); border:1px solid rgba(120,120,120,0.35); opacity:0.85; white-space:nowrap;">~ stock ~</span>`;
+            ? `<span style="font-size:9px; padding:1px 6px; border-radius:3px; background:rgba(255,180,60,0.25); color:#ffcc66; border:1px solid rgba(255,180,60,0.4); white-space:nowrap;">✏️ modificado</span>`
+            : `<span style="font-size:9px; padding:1px 6px; border-radius:3px; background:rgba(120,120,120,0.25); border:1px solid rgba(120,120,120,0.35); opacity:0.85; white-space:nowrap;">~ predeterminado ~</span>`;
         return `
         <label style="display:flex; align-items:center; gap:10px; padding:9px 10px; border:1px solid rgba(255,255,255,0.08); border-radius:6px; background:rgba(0,0,0,0.15); cursor:pointer;">
             <input type="checkbox" class="rt-gc-load-group-cb" data-group-id="${g.id}" checked
@@ -223,16 +223,16 @@ export async function loadCartridge(cartridge) {
     const content = `
         <div style="display:flex; flex-direction:column; gap:8px; width:100%; box-sizing:border-box;">
             <p style="margin:0 0 4px; font-size:12px; opacity:0.75; line-height:1.45;">
-                Choose which sections to import from <b>${escapeHtml(cartridge.name)}</b>.
-                Only checked sections will replace your current configuration.
-                <b style="color:#ffaa55;">✏️ modified</b> means the cartridge differs from factory defaults.
+                Elige qué secciones importar de <b>${escapeHtml(cartridge.name)}</b>.
+                Solo las secciones marcadas reemplazarán tu configuración actual.
+                <b style="color:#ffaa55;">✏️ modificado</b> significa que el cartucho difiere de los valores de fábrica.
             </p>
             <div id="rt-gc-load-group-list" style="display:flex; flex-direction:column; gap:6px;">
                 ${rowsHtml}
             </div>
             <p style="margin:6px 0 0; font-size:10px; opacity:0.45;">
-                ⚠️ Checked sections will fully replace your current settings for those areas.
-                This cannot be undone unless you first saved your current setup as a cartridge.
+                ⚠️ Las secciones marcadas reemplazarán completamente tus ajustes actuales en esas áreas.
+                Esto no se puede deshacer a menos que guardes tu configuración actual como un cartucho primero.
             </p>
         </div>`;
 
@@ -256,9 +256,9 @@ export async function loadCartridge(cartridge) {
         });
     }, 100);
 
-    const result = await Popup.show.confirm(`🎮 Load Cartridge: ${escapeHtml(cartridge.name)}`, content, {
-        okButton: 'Load Selected',
-        cancelButton: 'Cancel',
+    const result = await Popup.show.confirm(`🎮 Cargar Cartucho: ${escapeHtml(cartridge.name)}`, content, {
+        okButton: 'Cargar Seleccionados',
+        cancelButton: 'Cancelar',
         ...GC_POPUP_LARGE,
     });
 
@@ -271,7 +271,7 @@ export async function loadCartridge(cartridge) {
     });
 
     if (keysToApply.length === 0) {
-        toastr['warning']('No sections selected — nothing was changed.', 'Game Cartridges');
+        toastr['warning']('No se seleccionó ninguna sección: no se realizó ningún cambio.', 'Cartuchos de Juego');
         return false;
     }
 
@@ -285,16 +285,16 @@ export async function loadCartridge(cartridge) {
     if (typeof globalThis._rpgSyncSettingsUi === 'function') {
         globalThis._rpgSyncSettingsUi();
     }
-    toastr['success'](`Cartridge "${cartridge.name}" loaded! 🎮`, 'Game Cartridges');
+    toastr['success'](`¡Cartucho "${cartridge.name}" cargado! 🎮`, 'Cartuchos de Juego');
     return true;
 }
 
 export function deleteCartridgeWithConfirm(cartridge) {
-    if (!confirm(`Delete the cartridge "${cartridge.name}"? This cannot be undone.`)) return false;
+    if (!confirm(`¿Eliminar el cartucho "${cartridge.name}"? Esto no se puede deshacer.`)) return false;
     const settings = getSettings();
     settings.gameCartridges = (settings.gameCartridges || []).filter(c => c.id !== cartridge.id);
     saveSettings();
-    toastr['info'](`Cartridge "${cartridge.name}" deleted.`, 'Game Cartridges');
+    toastr['info'](`Cartucho "${cartridge.name}" eliminado.`, 'Cartuchos de Juego');
     return true;
 }
 
@@ -323,23 +323,23 @@ function showCartridgeSharePopup(jsonString, cartridgeName) {
     const content = `
             <div style="display:flex; flex-direction:column; gap:8px; min-width:360px;">
                 <p style="margin:0; font-size:12px; opacity:0.7;">
-                    Copy this code and share it anywhere. Others can load it using the <b>Import</b> button in Game Cartridges.
+                    Copia este código y compártelo donde quieras. Otros pueden cargarlo usando el botón <b>Importar</b> en Cartuchos de Juego.
                 </p>
                 <textarea id="rt_gc_share_blob" readonly rows="14" class="text_pole"
                     style="font-family:monospace; font-size:11px; resize:vertical; width:100%;"
                 >${escaped}</textarea>
                 <div style="display:flex; gap:8px;">
                     <button id="rt_gc_share_copy" class="menu_button interactable" style="flex:1;">
-                        <i class="fa-solid fa-copy"></i> Copy to Clipboard
+                        <i class="fa-solid fa-copy"></i> Copiar al Portapapeles
                     </button>
                     <button id="rt_gc_share_download" class="menu_button interactable" style="flex:1;">
-                        <i class="fa-solid fa-file-download"></i> Export .json
+                        <i class="fa-solid fa-file-download"></i> Exportar .json
                     </button>
                 </div>
             </div>
         `;
-    Popup.show.confirm(`📤 Export Cartridge: ${escapeHtml(cartridgeName)}`, content, {
-        okButton: 'Done',
+    Popup.show.confirm(`📤 Exportar Cartucho: ${escapeHtml(cartridgeName)}`, content, {
+        okButton: 'Listo',
         cancelButton: false,
     });
     setTimeout(() => {
@@ -349,7 +349,7 @@ function showCartridgeSharePopup(jsonString, cartridgeName) {
                 try {
                     if (navigator.clipboard && window.isSecureContext) {
                         await navigator.clipboard.writeText(jsonString);
-                        toastr['success']('Cartridge code copied to clipboard!', 'Game Cartridges');
+                        toastr['success']('¡Código de cartucho copiado al portapapeles!', 'Cartuchos de Juego');
                         return;
                     }
 
@@ -368,13 +368,13 @@ function showCartridgeSharePopup(jsonString, cartridgeName) {
                     document.body.removeChild(ta);
 
                     if (success) {
-                        toastr['success']('Cartridge code copied to clipboard!', 'Game Cartridges');
+                        toastr['success']('¡Código de cartucho copiado al portapapeles!', 'Cartuchos de Juego');
                     } else {
                         throw new Error('execCommand returned false');
                     }
                 } catch (err) {
                     console.error('[RPG Tracker] Cartridge clipboard copy failed:', err);
-                    toastr['error']('Could not copy automatically. Please select the text manually.', 'Game Cartridges');
+                    toastr['error']('No se pudo copiar automáticamente. Por favor selecciona el texto manualmente.', 'Cartuchos de Juego');
                 }
             });
         }
