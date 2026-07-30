@@ -1,7 +1,7 @@
 import { getSettings, getBarBackground, getBarShowAsPercentage } from './state-manager.js';
 import { lookupCustomPortraitSrc } from './portrait-storage.js';
 import { escapeHtml, decodeHtml, highlightParens, highlightNumbers, parseInWorldTime, isRestTimeUnset, formatTimeDiff, isArchivedQuestStatus, questHasEffectiveDeadline, isEmergentQuest } from './memo-processor.js';
-import { BLOCK_ICONS, BLOCK_ORDER, PAGE_SIZE, NO_PAGINATE, renderStartingGearTierOptions } from './constants.js';
+import { BLOCK_ICONS, BLOCK_ORDER, PAGE_SIZE, NO_PAGINATE, TAG_DISPLAY_NAMES, renderStartingGearTierOptions } from './constants.js';
 import { t } from './src/i18n/index.js';
 
 // ── Renderer module: pure HTML string producers, localStorage helpers ──
@@ -2557,24 +2557,6 @@ function formatValueToCurrency(totalCp, detectedCurrency) {
      * @param {string|null} filterTag  when set, hides the detach button and skips the detached-placeholder check
      * @returns {string}
      */
-    export const TAG_DISPLAY_NAMES = {
-        'CHARACTER': 'PERSONAJE',
-        'PARTY': 'GRUPO',
-        'BENCHED PARTY': 'EN CAMPAMENTO',
-        'COMBAT': 'COMBATE',
-        'INVENTORY': 'INVENTARIO',
-        'ABILITIES': 'CAPACIDADES',
-        'SPELLS': 'CONJUROS',
-        'XP': 'EXPERIENCIA',
-        'TIME': 'TIEMPO',
-        'QUESTS': 'MISIONES',
-        'NPC': 'PNJS',
-        'LOC': 'LUGARES',
-        'FAC': 'FACCIÓN',
-        'WORLD': 'PROGRESIÓN DEL MUNDO',
-        'EVENT': 'EVENTOS'
-    };
-
     function renderSectionCard(tag, blocks, collapsed, detached, sectionPages, filterTag) {
         if (tag === 'QUESTS') return ''; // Quest log has dedicated high-fidelity renderer, skip standard card
         const content = blocks[tag];

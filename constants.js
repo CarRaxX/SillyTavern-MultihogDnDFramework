@@ -1337,6 +1337,24 @@ export const BLOCK_ICONS = {
   QUESTS: '📋',
 };
 
+export const TAG_DISPLAY_NAMES = {
+  CHARACTER: 'PERSONAJE',
+  PARTY: 'GRUPO',
+  'BENCHED PARTY': 'EN CAMPAMENTO',
+  COMBAT: 'COMBATE',
+  INVENTORY: 'INVENTARIO',
+  ABILITIES: 'CAPACIDADES',
+  SPELLS: 'CONJUROS',
+  XP: 'EXPERIENCIA',
+  TIME: 'TIEMPO',
+  QUESTS: 'MISIONES',
+  NPC: 'PNJS',
+  LOC: 'LUGARES',
+  FAC: 'FACCIÓN',
+  WORLD: 'PROGRESIÓN DEL MUNDO',
+  EVENT: 'EVENTOS'
+};
+
 // NOTE: 'BENCHED PARTY' has its OWN enable toggle + editable prompt (settings.modules['benched
 // party'] / DEFAULT_STOCK_PROMPTS['benched party']) — see ui-editors.js's refreshOrderList,
 // which renders it as a nested sub-row directly under PARTY rather than a normal flat entry.

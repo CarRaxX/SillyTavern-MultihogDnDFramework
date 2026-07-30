@@ -1,5 +1,4 @@
-import { BLOCK_ICONS } from '../../../constants.js';
-import { TAG_DISPLAY_NAMES } from '../../../renderer.js';
+import { BLOCK_ICONS, TAG_DISPLAY_NAMES } from '../../../constants.js';
 import { canResizePanels, makeDraggable } from '../../../ui-geometry.js';
 import { getRuntimeActions } from '../../app/runtime-bridge.js';
 
