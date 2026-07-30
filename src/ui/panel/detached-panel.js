@@ -1,4 +1,5 @@
 import { BLOCK_ICONS } from '../../../constants.js';
+import { TAG_DISPLAY_NAMES } from '../../../renderer.js';
 import { canResizePanels, makeDraggable } from '../../../ui-geometry.js';
 import { getRuntimeActions } from '../../app/runtime-bridge.js';
 
@@ -9,7 +10,7 @@ export function createDetachedPanel(tag) {
 
     const customField = (getSettings().customFields || []).find(f => f.tag.toUpperCase() === tag);
     const icon = customField?.icon || BLOCK_ICONS[tag] || '📄';
-    const displayName = customField?.label || tag;
+    const displayName = customField?.label || TAG_DISPLAY_NAMES[tag] || tag;
 
     const settings = getSettings();
     const panel = document.createElement('div');

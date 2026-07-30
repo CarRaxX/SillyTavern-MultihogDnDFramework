@@ -610,75 +610,67 @@ export function renderDayNightBadge(str) {
     }
 
     const SPANISH_TO_ENGLISH_SPELLS = {
-        'bola de fuego': 'fireball',
-        'proyectil magico': 'magic-missile',
-        'proyectil mágico': 'magic-missile',
-        'curar heridas': 'cure-wounds',
-        'manos ardientes': 'burning-hands',
-        'escudo': 'shield',
-        'luz': 'light',
-        'mano de mago': 'mage-hand',
-        'armadura de mago': 'mage-armor',
-        'rayo de escarcha': 'ray-of-frost',
-        'rayo de hechiceria': 'witch-bolt',
-        'rayo de hechicería': 'witch-bolt',
-        'rayo abrasador': 'scorching-ray',
-        'paso brumoso': 'misty-step',
-        'invisibilidad': 'invisibility',
-        'volar': 'fly',
-        'sugerencia': 'suggestion',
-        'contrahechizo': 'counterspell',
-        'disipar magia': 'dispel-magic',
-        'relampago': 'lightning-bolt',
-        'relámpago': 'lightning-bolt',
-        'patron hipnotico': 'hypnotic-pattern',
-        'patrón hipnótico': 'hypnotic-pattern',
-        'muro de fuego': 'wall-of-fire',
-        'polimorfia': 'polymorph',
-        'cono de frio': 'cone-of-cold',
-        'cono de frío': 'cone-of-cold',
-        'palabra de curacion': 'healing-word',
-        'palabra de curación': 'healing-word',
-        'truco de la cuerda': 'rope-trick',
-        'descarga de fuego': 'fire-bolt',
-        'agarre electrizante': 'shocking-grasp',
-        'ilusion menor': 'minor-illusion',
-        'ilusión menor': 'minor-illusion',
-        'prestidigitacion': 'prestidigitation',
-        'prestidigitación': 'prestidigitation',
-        'orientacion': 'guidance',
-        'orientación': 'guidance',
-        'llama sagrada': 'sacred-flame',
-        'pista de la bruja': 'hex',
-        'marca del cazador': 'hunters-mark',
-        'identificar': 'identify',
-        'grasa': 'grease',
-        'dormir': 'sleep',
-        'caida de pluma': 'feather-fall',
-        'caída de pluma': 'feather-fall',
-        'detectar magia': 'detect-magic',
-        'orbe cromatico': 'chromatic-orb',
-        'orbe cromático': 'chromatic-orb'
+        'bola de fuego': 'fireball', 'fireball': 'fireball',
+        'proyectil magico': 'magic-missile', 'proyectil mágico': 'magic-missile', 'magic missile': 'magic-missile',
+        'curar heridas': 'cure-wounds', 'cure wounds': 'cure-wounds',
+        'manos ardientes': 'burning-hands', 'burning hands': 'burning-hands',
+        'escudo': 'shield', 'shield': 'shield',
+        'luz': 'light', 'light': 'light',
+        'mano de mago': 'mage-hand', 'mage hand': 'mage-hand',
+        'armadura de mago': 'mage-armor', 'mage armor': 'mage-armor',
+        'rayo de escarcha': 'ray-of-frost', 'ray of frost': 'ray-of-frost',
+        'rayo de hechiceria': 'witch-bolt', 'rayo de hechicería': 'witch-bolt', 'witch bolt': 'witch-bolt',
+        'rayo abrasador': 'scorching-ray', 'scorching ray': 'scorching-ray',
+        'paso brumoso': 'misty-step', 'misty step': 'misty-step',
+        'invisibilidad': 'invisibility', 'invisibility': 'invisibility',
+        'volar': 'fly', 'fly': 'fly',
+        'sugerencia': 'suggestion', 'suggestion': 'suggestion',
+        'contrahechizo': 'counterspell', 'counterspell': 'counterspell',
+        'disipar magia': 'dispel-magic', 'dispel magic': 'dispel-magic',
+        'relampago': 'lightning-bolt', 'relámpago': 'lightning-bolt', 'lightning bolt': 'lightning-bolt',
+        'patron hipnotico': 'hypnotic-pattern', 'patrón hipnótico': 'hypnotic-pattern', 'hypnotic pattern': 'hypnotic-pattern',
+        'muro de fuego': 'wall-of-fire', 'wall of fire': 'wall-of-fire',
+        'polimorfia': 'polymorph', 'polymorph': 'polymorph',
+        'cono de frio': 'cone-of-cold', 'cono de frío': 'cone-of-cold', 'cone of cold': 'cone-of-cold',
+        'palabra de curacion': 'healing-word', 'palabra de curación': 'healing-word', 'healing word': 'healing-word',
+        'truco de la cuerda': 'rope-trick', 'rope trick': 'rope-trick',
+        'descarga de fuego': 'fire-bolt', 'fire bolt': 'fire-bolt',
+        'agarre electrizante': 'shocking-grasp', 'shocking grasp': 'shocking-grasp',
+        'ilusion menor': 'minor-illusion', 'ilusión menor': 'minor-illusion', 'minor illusion': 'minor-illusion',
+        'prestidigitacion': 'prestidigitation', 'prestidigitación': 'prestidigitation', 'prestidigitation': 'prestidigitation',
+        'orientacion': 'guidance', 'orientación': 'guidance', 'guidance': 'guidance',
+        'llama sagrada': 'sacred-flame', 'sacred flame': 'sacred-flame',
+        'pista de la bruja': 'hex', 'hex': 'hex',
+        'marca del cazador': 'hunters-mark', 'hunters mark': 'hunters-mark',
+        'identificar': 'identify', 'identify': 'identify',
+        'grasa': 'grease', 'grease': 'grease',
+        'dormir': 'sleep', 'sleep': 'sleep',
+        'caida de pluma': 'feather-fall', 'caída de pluma': 'feather-fall', 'feather fall': 'feather-fall',
+        'detectar magia': 'detect-magic', 'detect magic': 'detect-magic',
+        'orbe cromatico': 'chromatic-orb', 'orbe cromático': 'chromatic-orb', 'chromatic orb': 'chromatic-orb'
     };
 
-    function resolveSpellSlug(name) {
+    function resolveSpellUrl(name) {
         const normalized = name.toLowerCase().trim();
         if (SPANISH_TO_ENGLISH_SPELLS[normalized]) {
-            return SPANISH_TO_ENGLISH_SPELLS[normalized];
+            return `https://dnd5e.wikidot.com/spell:${SPANISH_TO_ENGLISH_SPELLS[normalized]}`;
         }
         const noAccents = normalized.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
         if (SPANISH_TO_ENGLISH_SPELLS[noAccents]) {
-            return SPANISH_TO_ENGLISH_SPELLS[noAccents];
+            return `https://dnd5e.wikidot.com/spell:${SPANISH_TO_ENGLISH_SPELLS[noAccents]}`;
         }
-        return normalized.replace(/'/g, '').replace(/[^a-z0-9]+/g, '-');
+        // Custom homebrew spell created by AI / user: fallback to Google D&D 5e search to prevent 404
+        return `https://www.google.com/search?q=dnd+5e+spell+${encodeURIComponent(name)}`;
     }
 
     export function renderSpellGroups(val) {
-        const isCompound = /\|/.test(val) && /(?:Level\s*\d+|Cantrips?|Nivel\s*\d+|Trucos?)/i.test(val);
-        const groups = isCompound ? val.split(/\s*\|\s*/) : [val];
+        const cleanVal = val.replace(/^(?:Spells:|Conjuros:|Hechizos:)\s*/i, '');
+        const isCompound = /\|/.test(cleanVal) && /(?:Level\s*\d+|Cantrips?|Nivel\s*\d+|Trucos?)/i.test(cleanVal);
+        const groups = isCompound ? cleanVal.split(/\s*\|\s*/) : [cleanVal];
         let html = '';
         for (const group of groups) {
-            const m = group.trim().match(/^(Level\s*\d+|Cantrips?|Nivel\s*\d+|Trucos?)\s*(?:\((\d+)\/(\d+)[^)]*\))?\s*(?::\s*(.+))?$/i);
+            const groupText = group.trim().replace(/^(?:Spells:|Conjuros:|Hechizos:)\s*/i, '');
+            const m = groupText.match(/^(Level\s*\d+|Cantrips?|Nivel\s*\d+|Trucos?)\s*(?:\((\d+)\/(\d+)[^)]*\))?\s*(?::\s*(.+))?$/i);
             if (!m) continue;
             const [, lbl, availStr, maxStr, spellList] = m;
             const isCantrip = /cantrip|truco/i.test(lbl);
@@ -692,8 +684,8 @@ export function renderDayNightBadge(str) {
             if (spellList) {
                 spellsHtml = spellList.split(',').map(s => {
                     const name = s.trim();
-                    const slug = resolveSpellSlug(name);
-                    return `<a href="https://dnd5e.wikidot.com/spell:${slug}" target="_blank" class="rt-spell-name" title="Ver hechizo en Wikidot">${escapeHtmlWithColor(name)}</a>`;
+                    const url = resolveSpellUrl(name);
+                    return `<a href="${url}" target="_blank" class="rt-spell-name" title="Ver hechizo">${escapeHtmlWithColor(name)}</a>`;
                 }).join('');
             }
             html += `<div class="rt-spell-row"><span class="rt-spell-level">${escapeHtmlWithColor(lbl.trim())}</span><div class="rt-spell-inline-group"><div class="rt-spell-list">${pipsHtml}${spellsHtml}</div></div></div>`;
@@ -1269,7 +1261,6 @@ export function renderDayNightBadge(str) {
             const namePart = displayText.substring(0, colonIdx).trim();
             const descPart = displayText.substring(colonIdx + 1).trim();
 
-            // Extract resource count from the name part (e.g. "Rage (2/2 per day)")
             let iconHtml = '';
             const resourceMatch = namePart.match(/(\d+)\s*\/\s*(\d+)/);
             if (resourceMatch) {
@@ -1285,7 +1276,26 @@ export function renderDayNightBadge(str) {
             }
         }
 
-        // No colon — fall back to a simple no-description pill
+        // Check for parenthesized description: "Nombre (Descripción de la habilidad...)"
+        const parenMatch = displayText.match(/^(.+?)\s*\((.+)\)$/);
+        if (parenMatch) {
+            const namePart = parenMatch[1].trim();
+            const descPart = parenMatch[2].trim();
+
+            let iconHtml = '';
+            const resourceMatch = namePart.match(/(\d+)\s*\/\s*(\d+)/);
+            if (resourceMatch) {
+                iconHtml = `<span class="rt-unit-icon">${escapeHtmlWithColor(resourceMatch[0])}</span>`;
+            }
+
+            return `<div class="rt-entity-sub-line rt-units-container"><span class="${pillClass}">
+                <span class="rt-unit-name">${escapeHtmlWithColor(namePart)}</span>
+                ${iconHtml}
+                <span class="rt-unit-descr">(${escapeHtmlWithColor(descPart)})</span>
+            </span></div>`;
+        }
+
+        // Fall back to simple pill
         return `<div class="rt-entity-sub-line rt-units-container"><span class="${pillClass} no-desc"><span class="rt-unit-name">${escapeHtmlWithColor(displayText)}</span></span></div>`;
     };
 
@@ -2547,6 +2557,24 @@ function formatValueToCurrency(totalCp, detectedCurrency) {
      * @param {string|null} filterTag  when set, hides the detach button and skips the detached-placeholder check
      * @returns {string}
      */
+    export const TAG_DISPLAY_NAMES = {
+        'CHARACTER': 'PERSONAJE',
+        'PARTY': 'GRUPO',
+        'BENCHED PARTY': 'EN CAMPAMENTO',
+        'COMBAT': 'COMBATE',
+        'INVENTORY': 'INVENTARIO',
+        'ABILITIES': 'CAPACIDADES',
+        'SPELLS': 'CONJUROS',
+        'XP': 'EXPERIENCIA',
+        'TIME': 'TIEMPO',
+        'QUESTS': 'MISIONES',
+        'NPC': 'PNJS',
+        'LOC': 'LUGARES',
+        'FAC': 'FACCIÓN',
+        'WORLD': 'PROGRESIÓN DEL MUNDO',
+        'EVENT': 'EVENTOS'
+    };
+
     function renderSectionCard(tag, blocks, collapsed, detached, sectionPages, filterTag) {
         if (tag === 'QUESTS') return ''; // Quest log has dedicated high-fidelity renderer, skip standard card
         const content = blocks[tag];
@@ -2565,7 +2593,7 @@ function formatValueToCurrency(totalCp, detectedCurrency) {
 
         const customField = (getSettings().customFields || []).find(f => f.tag.toUpperCase() === tag);
         const icon = customField?.icon || BLOCK_ICONS[tag] || '📄';
-        const displayName = customField?.label || tag;
+        const displayName = customField?.label || TAG_DISPLAY_NAMES[tag] || tag;
         const items = blockToItems(tag, content);
         const isCollapsed = collapsed.has(tag);
 
@@ -2860,9 +2888,9 @@ export function renderTabModeView(memo, sectionPages, questsCtx = null) {
     if (!tabTags.includes(activeTag)) activeTag = tabTags[0];
 
     const tabMeta = (tag) => {
-        if (tag === 'QUESTS') return { icon: BLOCK_ICONS.QUESTS || '📋', label: 'Quests' };
+        if (tag === 'QUESTS') return { icon: BLOCK_ICONS.QUESTS || '📋', label: TAG_DISPLAY_NAMES.QUESTS || 'Misiones' };
         const customField = (s.customFields || []).find(f => f.tag.toUpperCase() === tag);
-        return { icon: customField?.icon || BLOCK_ICONS[tag] || '📄', label: customField?.label || tag };
+        return { icon: customField?.icon || BLOCK_ICONS[tag] || '📄', label: customField?.label || TAG_DISPLAY_NAMES[tag] || tag };
     };
 
     const tabBadge = (tag) => {
