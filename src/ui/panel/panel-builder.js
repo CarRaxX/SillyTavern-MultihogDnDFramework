@@ -3907,31 +3907,31 @@ Rules:
 
                 const conceptLabel = document.createElement('label');
                 conceptLabel.className = 'rt-npc-form-label';
-                conceptLabel.textContent = 'Extra concept / prompt (optional)';
+                conceptLabel.textContent = 'Concepto / Prompt adicional (opcional)';
                 const conceptInput = document.createElement('textarea');
                 conceptInput.className = 'rt-npc-form-input';
                 conceptInput.rows = 2;
-                conceptInput.placeholder = 'e.g. ex-soldier, uses poison daggers, secretly a doppelganger…';
+                conceptInput.placeholder = 'ej. exsoldado, usa dagas envenenadas, doppelgänger en secreto…';
                 conceptInput.style.marginBottom = '4px';
 
                 const genBtn = document.createElement('button');
                 genBtn.className = 'rt-npc-generate-btn';
-                genBtn.textContent = '🤖 Generate NPC';
+                genBtn.textContent = '🤖 Generar PNJ';
                 genBtn.addEventListener('click', async () => {
                     const role = customInput.value.trim();
-                    if (!role) { toastr['warning']('Please select or enter an archetype/role first.', 'NPC Creator'); return; }
+                    if (!role) { toastr['warning']('Por favor selecciona o escribe un arquetipo/rol primero.', 'Creador de PNJ'); return; }
                     genBtn.disabled = true;
-                    genBtn.textContent = '⏳ Generating...';
+                    genBtn.textContent = '⏳ Generando...';
                     try {
                         const generated = await generateNpcFromArchetype(
                             role, nameInput.value.trim(), conceptInput.value.trim(), existingNpcNames
                         );
                         if (!generated) return;
                         const nameFallback = nameInput.value.trim() || role;
-                        await showNpcPreviewAndAdd(generated, nameFallback, 'NPC Creator');
+                        await showNpcPreviewAndAdd(generated, nameFallback, 'Creador de PNJ');
                     } finally {
                         genBtn.disabled = false;
-                        genBtn.textContent = '🤖 Generate NPC';
+                        genBtn.textContent = '🤖 Generar PNJ';
                     }
                 });
 

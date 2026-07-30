@@ -921,19 +921,6 @@ export function showPersonaConfirmOverlay(bioText, charName, wordCount, extraHin
          regenBtn.disabled = false;
          regenBtn.textContent = '🔄 Regenerar';
      });
-}istener('click', async () => {
-         const regenBtn = /** @type {HTMLButtonElement} */ (overlay.querySelector('#rt-pco-regen'));
-         regenBtn.disabled = true;
-         regenBtn.textContent = '⏳ Regenerating...';
-         const newBio = await generatePersonaBio(charName, wordCount, extraHints, opts);
-         if (newBio) {
-             /** @type {HTMLTextAreaElement} */ (overlay.querySelector('#rt-pco-bio')).value = newBio;
-         } else {
-             toastr['warning']('Regeneration failed. Please try again.', 'Character Creator');
-         }
-         regenBtn.disabled = false;
-         regenBtn.textContent = '🔄 Regenerate';
-     });
 }
 
 export function extractCharNameFromMemo(memo) {
