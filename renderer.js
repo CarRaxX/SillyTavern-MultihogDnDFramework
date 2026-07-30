@@ -1244,7 +1244,7 @@ export function renderDayNightBadge(str) {
      * into multiple pills.
      */
     const renderAbilityLine = (text) => {
-        let pillClass = 'rt-unit-pill';
+        let pillClass = 'rt-ability-card';
         let displayText = text.trim();
 
         // Strip buff/debuff prefix markers
@@ -1257,46 +1257,35 @@ export function renderDayNightBadge(str) {
         }
 
         const colonIdx = displayText.indexOf(':');
-        if (colonIdx !== -1) {
-            const namePart = displayText.substring(0, colonIdx).trim();
-            const descPart = displayText.substring(colonIdx + 1).trim();
-
-            let iconHtml = '';
-            const resourceMatch = namePart.match(/(\d+)\s*\/\s*(\d+)/);
-            if (resourceMatch) {
-                iconHtml = `<span class="rt-unit-icon">${escapeHtmlWithColor(resourceMatch[0])}</span>`;
-            }
-
-            if (descPart) {
-                return `<div class="rt-entity-sub-line rt-units-container"><span class="${pillClass}">
-                    <span class="rt-unit-name">${escapeHtmlWithColor(namePart)}</span>
-                    ${iconHtml}
-                    <span class="rt-unit-descr">${escapeHtmlWithColor(descPart)}</span>
-                </span></div>`;
-            }
-        }
-
-        // Check for parenthesized description: "Nombre (Descripción de la habilidad...)"
         const parenMatch = displayText.match(/^(.+?)\s*\((.+)\)$/);
-        if (parenMatch) {
-            const namePart = parenMatch[1].trim();
-            const descPart = parenMatch[2].trim();
 
+        let namePart = '';
+        let descPart = '';
+
+        if (colonIdx !== -1) {
+            namePart = displayText.substring(0, colonIdx).trim();
+            descPart = displayText.substring(colonIdx + 1).trim();
+        } else if (parenMatch) {
+            namePart = parenMatch[1].trim();
+            descPart = parenMatch[2].trim();
+        }
+
+        if (namePart && descPart) {
             let iconHtml = '';
             const resourceMatch = namePart.match(/(\d+)\s*\/\s*(\d+)/);
             if (resourceMatch) {
                 iconHtml = `<span class="rt-unit-icon">${escapeHtmlWithColor(resourceMatch[0])}</span>`;
             }
-
-            return `<div class="rt-entity-sub-line rt-units-container"><span class="${pillClass}">
-                <span class="rt-unit-name">${escapeHtmlWithColor(namePart)}</span>
-                ${iconHtml}
-                <span class="rt-unit-descr">(${escapeHtmlWithColor(descPart)})</span>
-            </span></div>`;
+            return `<div class="${pillClass}">
+                <div class="rt-ability-name"><span>${escapeHtmlWithColor(namePart)}</span>${iconHtml}</div>
+                <div class="rt-ability-desc">${escapeHtmlWithColor(descPart)}</div>
+            </div>`;
         }
 
-        // Fall back to simple pill
-        return `<div class="rt-entity-sub-line rt-units-container"><span class="${pillClass} no-desc"><span class="rt-unit-name">${escapeHtmlWithColor(displayText)}</span></span></div>`;
+        // Fall back to a simple ability card without description
+        return `<div class="${pillClass}">
+            <div class="rt-ability-name"><span>${escapeHtmlWithColor(displayText)}</span></div>
+        </div>`;
     };
 
 
