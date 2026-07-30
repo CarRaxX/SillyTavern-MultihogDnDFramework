@@ -1919,30 +1919,30 @@ function formatValueToCurrency(totalCp, detectedCurrency) {
                 </div>
 
                 <div class="rt-onboarding-hero">
-                    <button type="button" class="rt-onboarding-hero-btn rt-random-char-btn" data-archetype="char_roll">🎲 Character Creator</button>
-                    <div class="rt-onboarding-hero-sub">Build your character step by step — presets, Lorebook Player Card, and full stat generation.</div>
+                    <button type="button" class="rt-onboarding-hero-btn rt-random-char-btn" data-archetype="char_roll">🎲 Creador de Personajes</button>
+                    <div class="rt-onboarding-hero-sub">Crea tu personaje paso a paso: plantillas, Ficha de Jugador en el Agente de Lorebook y generación completa de estadísticas.</div>
                 </div>
 
                 <div class="rt-quickstart" id="rt-quickstart">
-                    <div class="rt-quickstart-title">⚡ Instant Action</div>
-                    <div class="rt-quickstart-sub">Choose a genre, roll names until you find one you like, then begin. The extension uses your Narrator Configuration, rolls the rest of your character, builds a Lorebook Agent Player Card plus a name-only ST persona, and starts the adventure.</div>
+                    <div class="rt-quickstart-title">⚡ Acción Instantánea</div>
+                    <div class="rt-quickstart-sub">Elige un género, genera nombres hasta encontrar uno que te guste y comienza. La extensión usará tu Configuración del Narrador, generará el resto de tu personaje, creará una Ficha de Jugador en el Agente de Lorebook junto con una persona en SillyTavern y comenzará la aventura.</div>
                     <div class="rt-quickstart-genres" role="group" aria-label="Quick Start genre">
-                        <button type="button" class="rt-quickstart-genre-btn" data-genre="fantasy" aria-pressed="false">⚔️ Fantasy</button>
-                        <button type="button" class="rt-quickstart-genre-btn" data-genre="realistic" aria-pressed="false">🏙️ Modern</button>
-                        <button type="button" class="rt-quickstart-genre-btn" data-genre="scifi" aria-pressed="false">🚀 Sci-Fi</button>
-                        <button type="button" class="rt-quickstart-genre-btn" data-genre="horror" aria-pressed="false">👻 Horror</button>
+                        <button type="button" class="rt-quickstart-genre-btn" data-genre="fantasy" aria-pressed="false">⚔️ Fantasía</button>
+                        <button type="button" class="rt-quickstart-genre-btn" data-genre="realistic" aria-pressed="false">🏙️ Moderno</button>
+                        <button type="button" class="rt-quickstart-genre-btn" data-genre="scifi" aria-pressed="false">🚀 Ciencia Ficción</button>
+                        <button type="button" class="rt-quickstart-genre-btn" data-genre="horror" aria-pressed="false">👻 Terror</button>
                     </div>
                     <div class="rt-quickstart-name-picker">
-                        <input type="text" class="rt-quickstart-name" id="rt-quickstart-name" placeholder="Roll or enter a name" aria-label="Instant Action character name" autocomplete="off" />
-                        <button type="button" class="rt-quickstart-roll-btn" id="rt-quickstart-roll-name" disabled>🎲 Roll Name</button>
+                        <input type="text" class="rt-quickstart-name" id="rt-quickstart-name" placeholder="Genera o escribe un nombre" aria-label="Instant Action character name" autocomplete="off" />
+                        <button type="button" class="rt-quickstart-roll-btn" id="rt-quickstart-roll-name" disabled>🎲 Generar Nombre</button>
                     </div>
-                    <button type="button" class="rt-quickstart-begin-btn" id="rt-quickstart-begin" disabled>⚡ Begin Instant Action</button>
-                    <div class="rt-quickstart-status" id="rt-quickstart-status">Select a genre, then roll a name</div>
+                    <button type="button" class="rt-quickstart-begin-btn" id="rt-quickstart-begin" disabled>⚡ Comenzar Acción Instantánea</button>
+                    <div class="rt-quickstart-status" id="rt-quickstart-status">Selecciona un género literario y genera un nombre</div>
                 </div>
 
                 <div class="rt-onboarding-secondary rt-onboarding-drawer rt-onboarding-other-drawer">
                 <button type="button" class="rt-onboarding-drawer-toggle" id="rt-onboarding-drawer-toggle" aria-expanded="false" aria-controls="rt-onboarding-drawer-body">
-                    <span class="rt-onboarding-drawer-toggle-label"><span class="rt-onboarding-drawer-icon" aria-hidden="true">&#10022;</span><span>Other Ways to Begin<small>Fine-tune your start, create a Player Card, or import a character</small></span></span>
+                    <span class="rt-onboarding-drawer-toggle-label"><span class="rt-onboarding-drawer-icon" aria-hidden="true">&#10022;</span><span>Otras Formas de Iniciar<small>Ajusta el inicio, crea una Ficha de Jugador o importa un personaje</small></span></span>
                     <span class="rt-onboarding-drawer-chevron" aria-hidden="true">&#9656;</span>
                 </button>
                 <div class="rt-onboarding-drawer-body" id="rt-onboarding-drawer-body">
@@ -1951,74 +1951,74 @@ function formatValueToCurrency(totalCp, detectedCurrency) {
                 <div style="display: flex; flex-direction: column; gap: 8px; width: 100%; margin: 4px 0; flex-shrink: 0;">
                     <div class="rt-onboarding-config-row">
                         <div class="rt-onboarding-field">
-                            <span class="rt-onboarding-field-label">Level</span>
+                            <span class="rt-onboarding-field-label">Nivel</span>
                             <select id="rt-starting-level" class="text_pole" style="width: auto; min-width: 60px; padding: 2px 4px; font-size: 11px; height: 22px; border-radius: 4px; background: var(--black70a);">
                                 ${[...Array(20).keys()].map(i => {
                                     const lvl = i + 1;
                                     const isSel = lvl === parseInt(obSettings.onboardingLevel || '1') ? 'selected' : '';
-                                    return `<option value="${lvl}" ${isSel}>Level ${lvl}</option>`;
+                                    return `<option value="${lvl}" ${isSel}>Nivel ${lvl}</option>`;
                                 }).join('')}
                             </select>
                         </div>
                         <div class="rt-onboarding-field">
-                            <span class="rt-onboarding-field-label">Genre</span>
+                            <span class="rt-onboarding-field-label">Género Literario</span>
                             <select id="rt-onboarding-genre" class="text_pole" style="width: auto; min-width: 90px; padding: 2px 4px; font-size: 11px; height: 22px; border-radius: 4px; background: var(--black70a);">
-                                <option value="fantasy" ${onboardingGenre === 'fantasy' ? 'selected' : ''}>⚔️ Fantasy RPG</option>
-                                <option value="realistic" ${onboardingGenre === 'realistic' ? 'selected' : ''}>🏙️ Modern / Realistic</option>
-                                <option value="scifi" ${onboardingGenre === 'scifi' ? 'selected' : ''}>🚀 Sci-Fi</option>
-                                <option value="horror" ${onboardingGenre === 'horror' ? 'selected' : ''}>👻 Horror</option>
+                                <option value="fantasy" ${onboardingGenre === 'fantasy' ? 'selected' : ''}>⚔️ Fantasía RPG</option>
+                                <option value="realistic" ${onboardingGenre === 'realistic' ? 'selected' : ''}>🏙️ Moderno / Realista</option>
+                                <option value="scifi" ${onboardingGenre === 'scifi' ? 'selected' : ''}>🚀 Ciencia Ficción</option>
+                                <option value="horror" ${onboardingGenre === 'horror' ? 'selected' : ''}>👻 Terror</option>
                             </select>
                         </div>
                         <div class="rt-onboarding-field">
-                            <span class="rt-onboarding-field-label">Gear Tier</span>
-                            <select id="rt-onboarding-gear-tier" class="text_pole" title="How well-equipped the generated character should be." style="width: auto; min-width: 110px; padding: 2px 4px; font-size: 11px; height: 22px; border-radius: 4px; background: var(--black70a);">
+                            <span class="rt-onboarding-field-label">Nivel de Equipamiento</span>
+                            <select id="rt-onboarding-gear-tier" class="text_pole" title="Qué tan bien equipado debe estar el personaje generado." style="width: auto; min-width: 110px; padding: 2px 4px; font-size: 11px; height: 22px; border-radius: 4px; background: var(--black70a);">
                                 ${gearTierOptions}
                             </select>
                         </div>
                         <div class="rt-onboarding-field">
-                            <span class="rt-onboarding-field-label">Time &amp; Date</span>
+                            <span class="rt-onboarding-field-label">Fecha y Hora</span>
                             <div style="display: flex; align-items: center; gap: 6px; flex-wrap: wrap;">
-                                <div class="rt-seg-toggle" id="rt-onboarding-date-seg" role="group" title="Choose the calendar format used for [TIME] tracking.">
-                                    <button type="button" data-value="day" class="${!useDdMmYy ? 'active' : ''}">Day 1</button>
+                                <div class="rt-seg-toggle" id="rt-onboarding-date-seg" role="group" title="Elige el formato de calendario para el seguimiento de [TIME].">
+                                    <button type="button" data-value="day" class="${!useDdMmYy ? 'active' : ''}">Día 1</button>
                                     <button type="button" data-value="date" class="${useDdMmYy ? 'active' : ''}">DD/MM/YYYY</button>
                                 </div>
                                 <input type="text" id="rt-onboarding-start-date" class="text_pole" value="${startDateInputVal}" placeholder="01/01/2026" style="width: 80px; text-align: center; height: 22px; font-size: 11px; border-radius: 4px; background: var(--black70a); display: ${useDdMmYy ? 'inline-block' : 'none'};" />
-                                <div class="rt-seg-toggle" id="rt-onboarding-clock-seg" role="group" title="Choose the clock format used for [TIME] tracking.">
+                                <div class="rt-seg-toggle" id="rt-onboarding-clock-seg" role="group" title="Elige el formato de reloj para el seguimiento de [TIME].">
                                     <button type="button" data-value="12" class="${!use24h ? 'active' : ''}">12h</button>
                                     <button type="button" data-value="24" class="${use24h ? 'active' : ''}">24h</button>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <textarea id="rt-onboarding-custom-instructions" class="text_pole" placeholder="Custom setting/character instructions (e.g. Victorian London, space marine, gritty realism, cyberpunk decker...)" style="width: 100%; min-height: 40px; max-height: 120px; font-size: 11px; padding: 4px 6px; border-radius: 4px; background: var(--black70a); resize: vertical; margin-top: 2px;">${escapeHtml(obSettings.onboardingCustomInstructions || '')}</textarea>
+                    <textarea id="rt-onboarding-custom-instructions" class="text_pole" placeholder="Instrucciones personalizadas para personaje/ambientación (ej. Londres victoriano, marine espacial, realismo crudo, hacker cyberpunk...)" style="width: 100%; min-height: 40px; max-height: 120px; font-size: 11px; padding: 4px 6px; border-radius: 4px; background: var(--black70a); resize: vertical; margin-top: 2px;">${escapeHtml(obSettings.onboardingCustomInstructions || '')}</textarea>
                     <div class="rt-quickstart-name-picker rt-onboarding-name-picker">
-                        <input type="text" class="rt-quickstart-name" id="rt-onboarding-rolled-name" placeholder="Roll or enter a name" aria-label="Other Ways character name" autocomplete="off" />
-                        <button type="button" class="rt-quickstart-roll-btn" id="rt-onboarding-roll-name">🎲 Roll Name</button>
+                        <input type="text" class="rt-quickstart-name" id="rt-onboarding-rolled-name" placeholder="Genera o escribe un nombre" aria-label="Other Ways character name" autocomplete="off" />
+                        <button type="button" class="rt-quickstart-roll-btn" id="rt-onboarding-roll-name">🎲 Generar Nombre</button>
                     </div>
-                    <div class="rt-onboarding-name-hint" id="rt-onboarding-name-hint">Roll a genre-matched name before using Custom.</div>
+                    <div class="rt-onboarding-name-hint" id="rt-onboarding-name-hint">Genera un nombre acorde al género antes de usar Personalizado.</div>
                     <div style="display:flex; flex-direction:column; gap:5px; flex-shrink:0; padding:4px 0 2px;">
                         <div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap;">
                             <label style="display:flex; align-items:center; gap:5px; cursor:pointer; font-size:0.88em;">
                                 <input type="checkbox" id="rt-onboarding-player-card-cb"${obSettings.onboardingCreatePersona ? ' checked' : ''} />
-                                <span>Create Player Card in Lorebook Agent (Recommended)</span>
+                                <span>Crear Ficha de Jugador en el Agente de Lorebook (Recomendado)</span>
                             </label>
-                            <span class="rt-cr-help-icon" title="When checked, the AI writes a rich appearance, personality, habits, and backstory for a Lorebook Agent Player Card. A preview appears so you can edit, regenerate, copy, or add it to this chat.">?</span>
-                            <span style="opacity:0.6; font-size:0.8em; margin-left:4px;">Word count:</span>
+                            <span class="rt-cr-help-icon" title="Cuando está marcado, la IA escribe una apariencia detallada, personalidad, hábitos y trasfondo para una Ficha de Jugador en el Agente de Lorebook. Aparecerá una vista previa para que puedas editarla, regenerarla o copiarla.">?</span>
+                            <span style="opacity:0.6; font-size:0.8em; margin-left:4px;">Conteo de palabras:</span>
                             <select id="rt-onboarding-persona-words" class="text_pole" style="width:65px; font-size:11px; height:22px; padding:2px 4px;">
                                 ${[100, 150, 200, 300, 400, 500, 750, 1000].map(n => {
                                     const sel = String(obSettings.onboardingPersonaWords || '150') === String(n) ? ' selected' : '';
                                     return `<option value="${n}"${sel}>${n}</option>`;
                                 }).join('')}
-                                <option value="other"${obSettings.onboardingPersonaWords === 'other' ? ' selected' : ''}>Other...</option>
+                                <option value="other"${obSettings.onboardingPersonaWords === 'other' ? ' selected' : ''}>Otro...</option>
                             </select>
-                            <input id="rt-onboarding-persona-words-custom" type="number" class="text_pole" value="${escapeHtml(String(obSettings.onboardingPersonaWordsCustom || ''))}" style="display:${obSettings.onboardingPersonaWords === 'other' ? 'inline-block' : 'none'}; width:65px; font-size:11px; height:22px; padding:2px 4px; margin-left:4px;" placeholder="e.g. 800" min="50" max="5000" />
+                            <input id="rt-onboarding-persona-words-custom" type="number" class="text_pole" value="${escapeHtml(String(obSettings.onboardingPersonaWordsCustom || ''))}" style="display:${obSettings.onboardingPersonaWords === 'other' ? 'inline-block' : 'none'}; width:65px; font-size:11px; height:22px; padding:2px 4px; margin-left:4px;" placeholder="ej. 800" min="50" max="5000" />
                         </div>
                         <div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap;">
                             <label style="display:flex; align-items:center; gap:5px; cursor:pointer; font-size:0.88em;">
                                 <input type="checkbox" id="rt-onboarding-st-persona-cb"${obSettings.onboardingCreateSillyTavernPersona !== false ? ' checked' : ''} />
-                                <span>Create ST Persona (Recommended)</span>
+                                <span>Crear Persona de ST (Recomendado)</span>
                             </label>
-                            <span class="rt-cr-help-icon" title="Creates and selects a SillyTavern persona with the character's name and an empty description. This only makes sent chat messages use the same player name; character details stay in Lorebook Agent so they are not duplicated in prompt context.">?</span>
+                            <span class="rt-cr-help-icon" title="Crea y selecciona una persona de SillyTavern con el nombre del personaje. Esto hace que los mensajes enviados usen ese nombre de jugador; los detalles permanecen en el Agente de Lorebook.">?</span>
                         </div>
                     </div>
                 </div>
@@ -2026,23 +2026,23 @@ function formatValueToCurrency(totalCp, detectedCurrency) {
                 <!-- Archetype Buttons -->
                 <div class="rt-onboarding-buttons rt-fantasy-buttons" style="width: 100%; display: ${onboardingGenre === 'fantasy' ? 'flex' : 'none'}; justify-content: center; gap: 4px; margin: 4px 0; flex-shrink: 0; flex-wrap: wrap;">
                     <button class="rt-random-char-btn" data-archetype="persona">🎭 Persona</button>
-                    <button class="rt-random-char-btn" data-archetype="custom" data-name-required="true" disabled>⚙️ Custom</button>
-                    <button class="rt-random-char-btn rt-pc-import-trigger" data-archetype="pc_import">📥 Import Card</button>
+                    <button class="rt-random-char-btn" data-archetype="custom" data-name-required="true" disabled>⚙️ Personalizado</button>
+                    <button class="rt-random-char-btn rt-pc-import-trigger" data-archetype="pc_import">📥 Importar Ficha</button>
                 </div>
                 <div class="rt-onboarding-buttons rt-realistic-buttons" style="width: 100%; display: ${onboardingGenre === 'realistic' ? 'flex' : 'none'}; justify-content: center; gap: 4px; margin: 4px 0; flex-shrink: 0; flex-wrap: wrap;">
                     <button class="rt-random-char-btn" data-archetype="persona">🎭 Persona</button>
-                    <button class="rt-random-char-btn" data-archetype="custom" data-name-required="true" disabled>⚙️ Custom</button>
-                    <button class="rt-random-char-btn rt-pc-import-trigger" data-archetype="pc_import">📥 Import Card</button>
+                    <button class="rt-random-char-btn" data-archetype="custom" data-name-required="true" disabled>⚙️ Personalizado</button>
+                    <button class="rt-random-char-btn rt-pc-import-trigger" data-archetype="pc_import">📥 Importar Ficha</button>
                 </div>
                 <div class="rt-onboarding-buttons rt-scifi-buttons" style="width: 100%; display: ${onboardingGenre === 'scifi' ? 'flex' : 'none'}; justify-content: center; gap: 4px; margin: 4px 0; flex-shrink: 0; flex-wrap: wrap;">
                     <button class="rt-random-char-btn" data-archetype="persona">🎭 Persona</button>
-                    <button class="rt-random-char-btn" data-archetype="custom" data-name-required="true" disabled>⚙️ Custom</button>
-                    <button class="rt-random-char-btn rt-pc-import-trigger" data-archetype="pc_import">📥 Import Card</button>
+                    <button class="rt-random-char-btn" data-archetype="custom" data-name-required="true" disabled>⚙️ Personalizado</button>
+                    <button class="rt-random-char-btn rt-pc-import-trigger" data-archetype="pc_import">📥 Importar Ficha</button>
                 </div>
                 <div class="rt-onboarding-buttons rt-horror-buttons" style="width: 100%; display: ${onboardingGenre === 'horror' ? 'flex' : 'none'}; justify-content: center; gap: 4px; margin: 4px 0; flex-shrink: 0; flex-wrap: wrap;">
                     <button class="rt-random-char-btn" data-archetype="persona">🎭 Persona</button>
-                    <button class="rt-random-char-btn" data-archetype="custom" data-name-required="true" disabled>⚙️ Custom</button>
-                    <button class="rt-random-char-btn rt-pc-import-trigger" data-archetype="pc_import">📥 Import Card</button>
+                    <button class="rt-random-char-btn" data-archetype="custom" data-name-required="true" disabled>⚙️ Personalizado</button>
+                    <button class="rt-random-char-btn rt-pc-import-trigger" data-archetype="pc_import">📥 Importar Ficha</button>
                 </div>
                 </div>
                 </div>
@@ -2051,49 +2051,49 @@ function formatValueToCurrency(totalCp, detectedCurrency) {
                 <!-- PC Import Inline Panel (hidden until 📥 is clicked) -->
                 <div id="rt-pc-import-panel" style="display:none; flex-direction:column; gap:7px; width:100%; flex-shrink:0;">
                     <div style="display:flex; align-items:center; gap:8px; flex-shrink:0;">
-                        <button id="rt-pc-import-back" style="background:none; border:1px solid rgba(255,255,255,0.2); border-radius:4px; color:inherit; font-size:0.8em; padding:2px 8px; cursor:pointer; opacity:0.75;">← Back</button>
+                        <button id="rt-pc-import-back" style="background:none; border:1px solid rgba(255,255,255,0.2); border-radius:4px; color:inherit; font-size:0.8em; padding:2px 8px; cursor:pointer; opacity:0.75;">← Volver</button>
                         <span style="flex:1; display:flex; align-items:center; gap:6px;">
-                            <span style="font-weight:bold; color:var(--rt-accent); font-size:0.95em;">📥 Import Character Card as PC</span>
-                            <button class="rt-edit-pc-sections-btn" style="background:none; border:none; color:var(--rt-accent); cursor:pointer; font-size:1.1em; opacity:0.8; padding:0; margin-top:-2px;" title="Edit PC Formatting Sections">⚙️</button>
+                            <span style="font-weight:bold; color:var(--rt-accent); font-size:0.95em;">📥 Importar Ficha como Personaje Jugador</span>
+                            <button class="rt-edit-pc-sections-btn" style="background:none; border:none; color:var(--rt-accent); cursor:pointer; font-size:1.1em; opacity:0.8; padding:0; margin-top:-2px;" title="Editar Secciones de Formato de PJ">⚙️</button>
                         </span>
                     </div>
-                    <div style="font-size:10px; color:rgba(255,255,255,0.45); line-height:1.4;"><b>Add as is</b> = AI preserves original writing, fixes only era/world impossibilities · <b>Fit into Story</b> = full adaptation to campaign setting.</div>
+                    <div style="font-size:10px; color:rgba(255,255,255,0.45); line-height:1.4;"><b>Añadir Tal Cual</b> = La IA preserva el texto original, solo soluciona imposibilidades de época/mundo · <b>Adaptar a la Historia</b> = adaptación completa al contexto de la campaña.</div>
                     <div style="display:flex; align-items:center; gap:8px; flex-shrink:0;">
-                        <label style="font-size:11px; color:rgba(255,255,255,0.6); white-space:nowrap;">Player Card Length</label>
+                        <label style="font-size:11px; color:rgba(255,255,255,0.6); white-space:nowrap;">Longitud de Ficha del Jugador</label>
                         <select id="rt-pc-import-wordselect" style="background:rgba(0,0,0,0.3); color:white; border:1px solid rgba(255,255,255,0.15); border-radius:4px; padding:2px 4px; font-size:11px; box-sizing:border-box;">
-                            <option value="same">Same as Card</option>
-                            <option value="150">Short (~150 words)</option>
-                            <option value="300">Medium (~300 words)</option>
-                            <option value="500">Long (~500 words)</option>
-                            <option value="custom">Custom...</option>
+                            <option value="same">Igual a la Ficha</option>
+                            <option value="150">Corta (~150 palabras)</option>
+                            <option value="300">Mediana (~300 palabras)</option>
+                            <option value="500">Larga (~500 palabras)</option>
+                            <option value="custom">Personalizada...</option>
                         </select>
                         <input id="rt-pc-import-wordcount" type="number" value="150" min="50" max="5000" step="25"
                             style="display:none; width:60px; background:rgba(0,0,0,0.3); color:white; border:1px solid rgba(255,255,255,0.15); border-radius:4px; padding:3px 6px; font-size:12px; box-sizing:border-box;">
-                        <span style="font-size:10px; color:rgba(255,255,255,0.35);">(Fit into Story only)</span>
+                        <span style="font-size:10px; color:rgba(255,255,255,0.35);">(Solo para Adaptar a la Historia)</span>
                     </div>
-                    <input id="rt-pc-import-search" type="text" placeholder="Search characters..." style="width:100%; background:rgba(0,0,0,0.3); color:white; border:1px solid rgba(255,255,255,0.15); border-radius:5px; padding:5px 8px; font-size:12px; box-sizing:border-box;">
+                    <input id="rt-pc-import-search" type="text" placeholder="Buscar personajes..." style="width:100%; background:rgba(0,0,0,0.3); color:white; border:1px solid rgba(255,255,255,0.15); border-radius:5px; padding:5px 8px; font-size:12px; box-sizing:border-box;">
                     <div id="rt-pc-import-list" style="display:flex; flex-direction:column; gap:4px; max-height:200px; overflow-y:auto; padding-right:2px;"></div>
                 </div>
 
                 <!-- Character Roll Inline Panel (hidden until 🎲 is clicked) -->
                 <div id="rt-char-roll-panel" style="display:none; flex-direction:column; gap:7px; width:100%; flex-shrink:0;">
                     <div style="display:flex; align-items:center; gap:8px; flex-shrink:0;">
-                        <button id="rt-char-roll-back" style="background:none; border:1px solid rgba(255,255,255,0.2); border-radius:4px; color:inherit; font-size:0.8em; padding:2px 8px; cursor:pointer; opacity:0.75;">← Back</button>
+                        <button id="rt-char-roll-back" style="background:none; border:1px solid rgba(255,255,255,0.2); border-radius:4px; color:inherit; font-size:0.8em; padding:2px 8px; cursor:pointer; opacity:0.75;">← Volver</button>
                         <span style="flex:1; display:flex; align-items:center; gap:6px;">
-                            <span style="font-weight:bold; color:var(--rt-accent); font-size:0.95em;">🎲 Character Creator</span>
-                            <button class="rt-edit-pc-sections-btn" style="background:none; border:none; color:var(--rt-accent); cursor:pointer; font-size:1.1em; opacity:0.8; padding:0; margin-top:-2px;" title="Edit PC Formatting Sections">⚙️</button>
+                            <span style="font-weight:bold; color:var(--rt-accent); font-size:0.95em;">🎲 Creador de Personajes</span>
+                            <button class="rt-edit-pc-sections-btn" style="background:none; border:none; color:var(--rt-accent); cursor:pointer; font-size:1.1em; opacity:0.8; padding:0; margin-top:-2px;" title="Editar Secciones de Formato de PJ">⚙️</button>
                         </span>
-                        <button id="rt-cr-reset-btn" class="rt-cr-reset-btn" style="background:none; border:1px solid rgba(255,255,255,0.2); border-radius:4px; color:inherit; font-size:0.8em; padding:2px 8px; cursor:pointer; opacity:0.75;" title="Clear all fields">🗑 Reset</button>
+                        <button id="rt-cr-reset-btn" class="rt-cr-reset-btn" style="background:none; border:1px solid rgba(255,255,255,0.2); border-radius:4px; color:inherit; font-size:0.8em; padding:2px 8px; cursor:pointer; opacity:0.75;" title="Limpiar todos los campos">🗑 Reiniciar</button>
                     </div>
                     <!-- Presets Bar -->
                     <div id="rt-cr-presets-bar" style="display:flex; align-items:center; gap:5px; padding:4px 0 3px; border-bottom:1px solid rgba(255,255,255,0.08);">
-                        <span style="font-size:0.78em; opacity:0.55; white-space:nowrap;">📋 Presets:</span>
+                        <span style="font-size:0.78em; opacity:0.55; white-space:nowrap;">📋 Plantillas:</span>
                         <select id="rt-cr-preset-select" class="text_pole" style="flex:1; font-size:11px; height:22px; padding:2px 4px;">
-                            <option value="">— Select preset —</option>
+                            <option value="">— Seleccionar plantilla —</option>
                         </select>
-                        <button id="rt-cr-preset-load-btn" style="background:rgba(120,80,220,0.2); border:1px solid rgba(120,80,220,0.5); border-radius:4px; color:inherit; font-size:0.75em; padding:2px 8px; cursor:pointer; white-space:nowrap; flex-shrink:0;">Load</button>
-                        <button id="rt-cr-preset-delete-btn" style="background:rgba(220,50,50,0.12); border:1px solid rgba(220,50,50,0.4); border-radius:4px; color:rgba(255,100,100,0.9); font-size:0.75em; padding:2px 8px; cursor:pointer; white-space:nowrap; flex-shrink:0;">Delete</button>
-                        <button id="rt-cr-preset-save-btn" title="Save current fields as a new preset" style="background:none; border:1px solid rgba(120,80,220,0.5); border-radius:4px; color:var(--rt-accent); font-size:0.75em; padding:2px 8px; cursor:pointer; white-space:nowrap; flex-shrink:0;">＋ Save</button>
+                        <button id="rt-cr-preset-load-btn" style="background:rgba(120,80,220,0.2); border:1px solid rgba(120,80,220,0.5); border-radius:4px; color:inherit; font-size:0.75em; padding:2px 8px; cursor:pointer; white-space:nowrap; flex-shrink:0;">Cargar</button>
+                        <button id="rt-cr-preset-delete-btn" style="background:rgba(220,50,50,0.12); border:1px solid rgba(220,50,50,0.4); border-radius:4px; color:rgba(255,100,100,0.9); font-size:0.75em; padding:2px 8px; cursor:pointer; white-space:nowrap; flex-shrink:0;">Eliminar</button>
+                        <button id="rt-cr-preset-save-btn" title="Guardar campos actuales como una nueva plantilla" style="background:none; border:1px solid rgba(120,80,220,0.5); border-radius:4px; color:var(--rt-accent); font-size:0.75em; padding:2px 8px; cursor:pointer; white-space:nowrap; flex-shrink:0;">＋ Guardar</button>
                     </div>
                     <div class="rt-cr-row">
                         <div class="rt-cr-field">

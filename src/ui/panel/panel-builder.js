@@ -1337,88 +1337,88 @@ export function createPanel(dependencies) {
                                         const curS = getSettings();
 
                                         const popupHtml = `<div style="padding:16px;width:320px;text-align:left;font-family:var(--rt-font, system-ui, sans-serif);">
-                                    <div style="font-size:16px;font-weight:bold;color:#d4a940;margin-bottom:16px;">⚙️ NPC Settings</div>
+                                    <div style="font-size:16px;font-weight:bold;color:#d4a940;margin-bottom:16px;">⚙️ Ajustes de PNJs</div>
 
                                     <div style="margin-bottom:6px;display:flex;align-items:center;gap:10px;">
-                                        <label style="font-size:12px;color:rgba(255,255,255,0.7);flex:1;">Show NPC Portraits</label>
+                                        <label style="font-size:12px;color:rgba(255,255,255,0.7);flex:1;">Mostrar Retratos de PNJs</label>
                                         <label style="display:flex;align-items:center;gap:6px;cursor:pointer;">
                                             <input type="checkbox" id="rt-npc-portraits" ${curS.npcPortraits !== false ? 'checked' : ''}
                                                 style="width:16px;height:16px;accent-color:#d4a940;cursor:pointer;">
-                                            <span style="font-size:11px;color:rgba(255,255,255,0.5);">${curS.npcPortraits !== false ? 'Enabled' : 'Disabled'}</span>
+                                            <span style="font-size:11px;color:rgba(255,255,255,0.5);">${curS.npcPortraits !== false ? 'Habilitado' : 'Deshabilitado'}</span>
                                         </label>
                                     </div>
-                                    <div style="font-size:10px;color:rgba(255,255,255,0.35);margin-bottom:14px;">When disabled, NPCs use the compact list view (like Events/Locations) and NPC portrait auto-generation is turned off.</div>
+                                    <div style="font-size:10px;color:rgba(255,255,255,0.35);margin-bottom:14px;">Al desactivar, los PNJs usan la vista de lista compacta (como Eventos/Ubicaciones) y la generación automática de retratos se apaga.</div>
 
                                     <div style="margin-bottom:14px;">
-                                        <label style="font-size:12px;color:rgba(255,255,255,0.7);display:block;margin-bottom:4px;">Major NPC Section Word Target</label>
+                                        <label style="font-size:12px;color:rgba(255,255,255,0.7);display:block;margin-bottom:4px;">Objetivo de Palabras para PNJs Principales</label>
                                         <input type="number" id="rt-npc-major-words" value="${curS.npcMajorWords ?? 25}" min="1" max="1000" step="5"
                                             style="width:100%;background:rgba(0,0,0,0.4);color:white;border:1px solid rgba(255,255,255,0.15);border-radius:6px;padding:6px 10px;font-size:13px;box-sizing:border-box;">
-                                        <div style="font-size:10px;color:rgba(255,255,255,0.35);margin-top:2px;">Recurring, plot-important NPCs. Default: 25 words per section</div>
+                                        <div style="font-size:10px;color:rgba(255,255,255,0.35);margin-top:2px;">PNJs recurrentes e importantes para la trama. Predeterminado: 25 palabras por sección</div>
                                     </div>
 
                                     <div style="margin-bottom:14px;">
-                                        <label style="font-size:12px;color:rgba(255,255,255,0.7);display:block;margin-bottom:4px;">Minor NPC Section Word Target</label>
+                                        <label style="font-size:12px;color:rgba(255,255,255,0.7);display:block;margin-bottom:4px;">Objetivo de Palabras para PNJs Secundarios</label>
                                         <input type="number" id="rt-npc-minor-words" value="${curS.npcMinorWords ?? 15}" min="1" max="1000" step="5"
                                             style="width:100%;background:rgba(0,0,0,0.4);color:white;border:1px solid rgba(255,255,255,0.15);border-radius:6px;padding:6px 10px;font-size:13px;box-sizing:border-box;">
-                                        <div style="font-size:10px;color:rgba(255,255,255,0.35);margin-top:2px;">Shopkeepers, guards, one-off encounters. Default: 15 words per section</div>
+                                        <div style="font-size:10px;color:rgba(255,255,255,0.35);margin-top:2px;">Comerciantes, guardias, encuentros ocasionales. Predeterminado: 15 palabras por sección</div>
                                     </div>
 
                                     <div style="margin-bottom:6px;display:flex;align-items:center;gap:10px;">
-                                        <label style="font-size:12px;color:rgba(255,255,255,0.7);flex:1;">Relationship System (BETA)</label>
+                                        <label style="font-size:12px;color:rgba(255,255,255,0.7);flex:1;">Sistema de Relaciones (BETA)</label>
                                         <label style="display:flex;align-items:center;gap:6px;cursor:pointer;">
                                             <input type="checkbox" id="rt-npc-rel-bars" ${curS.npcRelationshipBars ? 'checked' : ''}
                                                 style="width:16px;height:16px;accent-color:#d4a940;cursor:pointer;">
-                                            <span style="font-size:11px;color:rgba(255,255,255,0.5);">${curS.npcRelationshipBars ? 'Enabled' : 'Disabled'}</span>
+                                            <span style="font-size:11px;color:rgba(255,255,255,0.5);">${curS.npcRelationshipBars ? 'Habilitado' : 'Deshabilitado'}</span>
                                         </label>
                                     </div>
-                                    <div style="font-size:10px;color:rgba(255,255,255,0.35);margin-bottom:14px;">Shows Friendship/Affection tracking bars on NPC cards and popups. Also adds relationship fields to the AI instruction.</div>
+                                    <div style="font-size:10px;color:rgba(255,255,255,0.35);margin-bottom:14px;">Muestra barras de seguimiento de Amistad/Afecto en fichas y emergentes de PNJ. También añade campos de relación al prompt.</div>
 
                                     <div style="margin-bottom:6px;display:flex;align-items:center;gap:10px;">
-                                        <label style="font-size:12px;color:rgba(255,255,255,0.7);flex:1;">Show Relationship Float Feedback</label>
+                                        <label style="font-size:12px;color:rgba(255,255,255,0.7);flex:1;">Mostrar Notificación Flotante de Relaciones</label>
                                         <label style="display:flex;align-items:center;gap:6px;cursor:pointer;">
                                             <input type="checkbox" id="rt-npc-rel-toast" ${curS.npcRelationshipToast !== false ? 'checked' : ''}
                                                 style="width:16px;height:16px;accent-color:#d4a940;cursor:pointer;">
-                                            <span style="font-size:11px;color:rgba(255,255,255,0.5);">${curS.npcRelationshipToast !== false ? 'Enabled' : 'Disabled'}</span>
+                                            <span style="font-size:11px;color:rgba(255,255,255,0.5);">${curS.npcRelationshipToast !== false ? 'Habilitado' : 'Deshabilitado'}</span>
                                         </label>
                                     </div>
-                                    <div style="font-size:10px;color:rgba(255,255,255,0.35);margin-bottom:14px;">Shows a floating Friendship/Affection graphic that rises and fades when those values change.</div>
+                                    <div style="font-size:10px;color:rgba(255,255,255,0.35);margin-bottom:14px;">Muestra un gráfico flotante de Amistad/Afecto que se eleva y desvanece cuando estos valores cambian.</div>
 
                                     <div style="margin-bottom:14px;">
-                                        <label style="font-size:12px;color:rgba(255,255,255,0.7);display:block;margin-bottom:4px;">"Add as is" Import Mode</label>
+                                        <label style="font-size:12px;color:rgba(255,255,255,0.7);display:block;margin-bottom:4px;">Modo de Importación "Añadir Tal Cual"</label>
                                         <div style="display:flex;flex-direction:column;gap:5px;">
-                                            <label style="display:flex;align-items:flex-start;gap:8px;cursor:pointer;" title="Wraps the card's raw content in [CORE][/CORE] tags exactly as written. No AI involvement.">
+                                            <label style="display:flex;align-items:flex-start;gap:8px;cursor:pointer;" title="Envuelve el contenido original de la ficha en etiquetas [CORE][/CORE] exactamente como está escrito. Sin intervención de IA.">
                                                 <input type="radio" name="rt-npc-add-as-is-mode" value="literal" ${(curS.npcAddAsIsMode ?? 'ai_review') === 'literal' ? 'checked' : ''}
                                                     style="margin-top:3px;accent-color:#d4a940;cursor:pointer;">
-                                                <span style="font-size:11px;color:rgba(255,255,255,0.75);"><b>Literal</b> — wraps the card verbatim in [CORE][/CORE]. No AI.</span>
+                                                <span style="font-size:11px;color:rgba(255,255,255,0.75);"><b>Literal</b> — envuelve la ficha exactamente en [CORE][/CORE]. Sin IA.</span>
                                             </label>
-                                            <label style="display:flex;align-items:flex-start;gap:8px;cursor:pointer;" title="Sends the card to AI for a minimal logical review. Only corrects world/era conflicts. Original writing is preserved as completely as possible.">
+                                            <label style="display:flex;align-items:flex-start;gap:8px;cursor:pointer;" title="Envía la ficha a la IA para una revisión lógica mínima. Solo corrige conflictos de mundo/época. Redacción original preservada lo máximo posible.">
                                                 <input type="radio" name="rt-npc-add-as-is-mode" value="ai_review" ${(curS.npcAddAsIsMode ?? 'ai_review') === 'ai_review' ? 'checked' : ''}
                                                     style="margin-top:3px;accent-color:#d4a940;cursor:pointer;">
-                                                <span style="font-size:11px;color:rgba(255,255,255,0.75);"><b>AI Review</b> — minimal fix pass for era/world conflicts only. Original writing preserved.</span>
+                                                <span style="font-size:11px;color:rgba(255,255,255,0.75);"><b>Revisión IA</b> — corrección mínima solo para conflictos de época/mundo. Redacción original preservada.</span>
                                             </label>
                                         </div>
-                                        <div style="font-size:10px;color:rgba(255,255,255,0.35);margin-top:4px;">Controls what happens when you click "+ Add as is" on a character card.</div>
+                                        <div style="font-size:10px;color:rgba(255,255,255,0.35);margin-top:4px;">Controla lo que ocurre al hacer clic en "+ Añadir tal cual" en una ficha de personaje.</div>
                                     </div>
 
                                     <div style="margin-bottom:14px;">
-                                        <label style="font-size:12px;color:rgba(255,255,255,0.7);display:block;margin-bottom:4px;">Relationship Max — this chat (± range)</label>
+                                        <label style="font-size:12px;color:rgba(255,255,255,0.7);display:block;margin-bottom:4px;">Límite Máximo de Relaciones — este chat (rango ±)</label>
                                         <input type="number" id="rt-npc-rel-max" value="${getNpcRelationshipMax(curS)}" min="10" max="10000" step="10"
                                             style="width:100%;background:rgba(0,0,0,0.4);color:white;border:1px solid rgba(255,255,255,0.15);border-radius:6px;padding:6px 10px;font-size:13px;box-sizing:border-box;">
-                                        <div style="font-size:10px;color:rgba(255,255,255,0.35);margin-top:2px;">Per-story scale for this chat only. Friendship/Affection range −N to +N. New chats start from the default in Extension Settings (currently ${getNpcRelationshipMaxDefault(curS)}).</div>
+                                        <div style="font-size:10px;color:rgba(255,255,255,0.35);margin-top:2px;">Escala de relación solo para este chat. Rango de Amistad/Afecto de −N a +N. Los nuevos chats inician desde el predeterminado en Ajustes (actualmente ${getNpcRelationshipMaxDefault(curS)}).</div>
                                     </div>
 
                                     <div style="margin-bottom:6px;display:flex;align-items:center;gap:10px;">
-                                        <label style="font-size:12px;color:rgba(255,255,255,0.7);flex:1;">Ignore Character Limits When Importing Character Cards</label>
+                                        <label style="font-size:12px;color:rgba(255,255,255,0.7);flex:1;">Ignorar Límites de Caracteres al Importar Fichas</label>
                                         <label style="display:flex;align-items:center;gap:6px;cursor:pointer;">
                                             <input type="checkbox" id="rt-ignore-npc-limits" ${curS.ignoreNpcImportLimits ? 'checked' : ''}
                                                 style="width:16px;height:16px;accent-color:#d4a940;cursor:pointer;">
-                                            <span style="font-size:11px;color:rgba(255,255,255,0.5);">${curS.ignoreNpcImportLimits ? 'Enabled' : 'Disabled'}</span>
+                                            <span style="font-size:11px;color:rgba(255,255,255,0.5);">${curS.ignoreNpcImportLimits ? 'Habilitado' : 'Deshabilitado'}</span>
                                         </label>
                                     </div>
-                                    <div style="font-size:10px;color:rgba(255,255,255,0.35);margin-bottom:10px;">Omits the &lt;CORE LENGTH TARGETS&gt; section from the NPC prompt.</div>
+                                    <div style="font-size:10px;color:rgba(255,255,255,0.35);margin-bottom:10px;">Omite la sección &lt;CORE LENGTH TARGETS&gt; del prompt del PNJ.</div>
                                     
                                     <button id="rt-btn-edit-npc-sections-inline" style="width:100%;background:rgba(180, 100, 255, 0.15);border:1px solid rgba(180, 100, 255, 0.4);color:white;border-radius:6px;padding:8px 10px;font-size:13px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:10px;transition:background 0.2s;">
-                                        <i class="fa-solid fa-puzzle-piece"></i> Edit NPC Sections
+                                        <i class="fa-solid fa-puzzle-piece"></i> Editar Secciones de PNJ
                                     </button>
                                 </div>`;
 
@@ -2870,7 +2870,7 @@ export function createPanel(dependencies) {
                             if (isNpcBook) {
                                 const addNpcBtn = document.createElement('div');
                                 addNpcBtn.className = 'rt-npc-add-btn';
-                                addNpcBtn.innerHTML = '<i class="fa-solid fa-user-plus"></i> Add NPC to Story';
+                                addNpcBtn.innerHTML = '<i class="fa-solid fa-user-plus"></i> Añadir PNJ a la Historia';
                                 addNpcBtn.addEventListener('click', (e) => {
                                     e.stopPropagation();
                                     openNpcCreatorDialog(bookName, prefix);
@@ -3697,60 +3697,67 @@ Rules:
                             : 'Literal mode: wraps the card content in [CORE][/CORE] exactly as written. No AI involved.';
                         directBtn.addEventListener('click', async () => {
                             const mode = getSettings().npcAddAsIsMode ?? 'ai_review';
-                            directBtn.disabled = true;
-                            directBtn.textContent = mode === 'ai_review' ? '⏳ Reviewing...' : '⏳ Adding...';
+                        nameEl.textContent = card.name;
+
+                        const metaEl = document.createElement('div');
+                        metaEl.className = 'rt-charpicker-meta';
+                        metaEl.textContent = card.creator ? `Por ${card.creator}` : 'Ficha nativa';
+
+                        info.appendChild(nameEl);
+                        info.appendChild(metaEl);
+
+                        const actions = document.createElement('div');
+                        actions.className = 'rt-charpicker-actions';
+
+                        const addAsIsBtn = document.createElement('button');
+                        addAsIsBtn.className = 'rt-charpicker-add-btn secondary';
+                        addAsIsBtn.textContent = '📋 Añadir Tal Cual';
+                        addAsIsBtn.title = 'Añadir ficha preservando su contenido original.';
+                        addAsIsBtn.addEventListener('click', async (e) => {
+                            e.stopPropagation();
+                            addAsIsBtn.disabled = true;
+                            addAsIsBtn.textContent = '⏳ Procesando...';
                             try {
-                                if (mode === 'ai_review') {
-                                    // Minimal AI review pass — fix only world/era impossibilities
-                                    const reviewed = await minimalReviewNpcWithAI(char);
-                                    if (!reviewed) { directBtn.disabled = false; directBtn.textContent = '+ Add as is'; return; }
-                                    await showNpcPreviewAndAdd(reviewed, char.name, 'NPC Creator', char.avatar);
-                                } else {
-                                    // Literal — wrap verbatim, no AI
-                                    const ok = await createNpcFromCharCard(char, bookName);
-                                    if (ok) {
-                                        toastr['success'](`Added "${char.name}" as NPC.`, 'NPC Creator');
-                                        dismissOverlay();
-                                        await refreshManifest();
-                                    }
-                                }
-                            } catch (err) {
-                                toastr['error'](`Failed: ${String(err.message || err).substring(0, 100)}`, 'NPC Creator');
+                                const generatedTag = await generateNpcFromCard(card, existingNpcNames, { mode: 'as_is' });
+                                if (!generatedTag) return;
+                                await showNpcPreviewAndAdd(generatedTag, card.name, 'Añadir PNJ', card.avatarUrl);
                             } finally {
-                                directBtn.disabled = false;
-                                directBtn.textContent = '+ Add as is';
+                                addAsIsBtn.disabled = false;
+                                addAsIsBtn.textContent = '📋 Añadir Tal Cual';
                             }
                         });
 
-                        const aiBtn = document.createElement('button');
-                        aiBtn.className = 'rt-charpicker-add-btn ai-adapt';
-                        aiBtn.textContent = '🤖 Fit into Story';
-                        aiBtn.addEventListener('click', async () => {
-                            aiBtn.disabled = true;
-                            aiBtn.textContent = '⏳ Adapting...';
+                        const adaptBtn = document.createElement('button');
+                        adaptBtn.className = 'rt-charpicker-add-btn';
+                        adaptBtn.textContent = '🤖 Adaptar a la Historia';
+                        adaptBtn.title = 'Adaptar el personaje al contexto de la campaña actual.';
+                        adaptBtn.addEventListener('click', async (e) => {
+                            e.stopPropagation();
+                            adaptBtn.disabled = true;
+                            adaptBtn.textContent = '⏳ Generando...';
                             try {
-                                const adapted = await adaptNpcWithAI(char);
-                                if (!adapted) { aiBtn.disabled = false; aiBtn.textContent = '🤖 Fit into Story'; return; }
-                                await showNpcPreviewAndAdd(adapted, char.name, 'NPC Creator', char.avatar);
-                            } catch (err) {
-                                toastr['error'](`Adaptation failed: ${String(err.message || err).substring(0, 100)}`, 'NPC Creator');
+                                const generatedTag = await generateNpcFromCard(card, existingNpcNames, { mode: 'fit' });
+                                if (!generatedTag) return;
+                                await showNpcPreviewAndAdd(generatedTag, card.name, 'Añadir PNJ', card.avatarUrl);
                             } finally {
-                                aiBtn.disabled = false;
-                                aiBtn.textContent = '🤖 Fit into Story';
+                                adaptBtn.disabled = false;
+                                adaptBtn.textContent = '🤖 Adaptar a la Historia';
                             }
                         });
 
-                        btnsDiv.appendChild(aiBtn);
-                        btnsDiv.appendChild(directBtn);
-                        item.appendChild(avatarDiv);
-                        item.appendChild(infoDiv);
-                        item.appendChild(btnsDiv);
+                        actions.appendChild(addAsIsBtn);
+                        actions.appendChild(adaptBtn);
+
+                        item.appendChild(avatar);
+                        item.appendChild(info);
+                        item.appendChild(actions);
                         listContainer.appendChild(item);
                     }
+
                     if (visible.length < filtered.length) {
                         const loadMore = document.createElement('div');
                         loadMore.className = 'rt-charpicker-load-more';
-                        loadMore.textContent = `Show more (${visible.length} of ${filtered.length})`;
+                        loadMore.textContent = `Mostrar más (${visible.length} de ${filtered.length})`;
                         loadMore.addEventListener('click', () => { displayCount += 10; renderList(); });
                         listContainer.appendChild(loadMore);
                     }
@@ -3769,43 +3776,43 @@ Rules:
 
                 const hintEl = document.createElement('div');
                 hintEl.style.cssText = 'font-size:10px;color:rgba(255,255,255,0.4);margin-bottom:8px;line-height:1.5;';
-                hintEl.textContent = 'Describe the NPC in your own words. The AI will expand it into a full lorebook entry fitting the current campaign.';
+                hintEl.textContent = 'Describe al PNJ con tus propias palabras. La IA lo expandirá en una entrada completa del libro de lore adecuada al contexto de la campaña.';
                 freeformPanel.appendChild(hintEl);
 
                 const nameLabel = document.createElement('label');
                 nameLabel.className = 'rt-npc-form-label';
-                nameLabel.textContent = 'Name (optional)';
+                nameLabel.textContent = 'Nombre (opcional)';
                 const nameInput = document.createElement('input');
                 nameInput.className = 'rt-npc-form-input';
                 nameInput.type = 'text';
-                nameInput.placeholder = 'e.g. Igor, Mira Voss, …';
+                nameInput.placeholder = 'ej. Igor, Mira Voss, …';
                 nameInput.style.marginBottom = '8px';
 
                 const descLabel = document.createElement('label');
                 descLabel.className = 'rt-npc-form-label';
-                descLabel.textContent = 'Description / Concept *';
+                descLabel.textContent = 'Descripción / Concepto *';
                 const descInput = document.createElement('textarea');
                 descInput.className = 'rt-npc-form-input';
                 descInput.rows = 5;
-                descInput.placeholder = 'e.g. A massive bovine warrior, stoic and dry-witted, survivor of the Tether-Break…';
+                descInput.placeholder = 'ej. Un imponente guerrero bovino, estoico y de humor seco, superviviente de la gran batalla…';
                 descInput.style.marginBottom = '4px';
 
                 const genBtn = document.createElement('button');
                 genBtn.className = 'rt-npc-generate-btn';
-                genBtn.textContent = '🤖 Generate NPC';
+                genBtn.textContent = '🤖 Generar PNJ';
                 genBtn.addEventListener('click', async () => {
                     const rawDesc = descInput.value.trim();
-                    if (!rawDesc) { toastr['warning']('Please enter a description.', 'NPC Creator'); return; }
+                    if (!rawDesc) { toastr['warning']('Por favor ingresa una descripción.', 'Creador de PNJ'); return; }
                     genBtn.disabled = true;
-                    genBtn.textContent = '⏳ Generating...';
+                    genBtn.textContent = '⏳ Generando...';
                     try {
                         const generated = await generateNpcFromFreeform(nameInput.value.trim(), rawDesc, existingNpcNames);
                         if (!generated) return;
-                        const nameFallback = nameInput.value.trim() || 'New NPC';
-                        await showNpcPreviewAndAdd(generated, nameFallback, 'NPC Creator');
+                        const nameFallback = nameInput.value.trim() || 'Nuevo PNJ';
+                        await showNpcPreviewAndAdd(generated, nameFallback, 'Creador de PNJ');
                     } finally {
                         genBtn.disabled = false;
-                        genBtn.textContent = '🤖 Generate NPC';
+                        genBtn.textContent = '🤖 Generar PNJ';
                     }
                 });
 
@@ -3822,19 +3829,19 @@ Rules:
 
                 const hintEl = document.createElement('div');
                 hintEl.style.cssText = 'font-size:10px;color:rgba(255,255,255,0.4);margin-bottom:10px;line-height:1.5;';
-                hintEl.textContent = 'Pick a story role below, or type a custom one. The AI will generate a fitting NPC grounded in the current campaign context.';
+                hintEl.textContent = 'Elige un rol en la historia a continuación o escribe uno personalizado. La IA generará un PNJ adecuado al contexto de la campaña.';
                 archetypePanel.appendChild(hintEl);
 
                 const archetypes = [
-                    { id: 'Enemy', icon: '⚔️' },
-                    { id: 'Arch Nemesis', icon: '💀' },
-                    { id: 'Lover', icon: '❤️' },
-                    { id: 'Family Relative', icon: '👨‍👩‍👧' },
-                    { id: 'Companion / Ally', icon: '🛡️' },
-                    { id: 'Merchant', icon: '🪙' },
-                    { id: 'Mysterious Stranger', icon: '🎭' },
+                    { id: 'Enemigo', icon: '⚔️' },
+                    { id: 'Archienemigo', icon: '💀' },
+                    { id: 'Amante', icon: '❤️' },
+                    { id: 'Familiar / Pariente', icon: '👨‍👩‍👧' },
+                    { id: 'Compañero / Aliado', icon: '🛡️' },
+                    { id: 'Mercader', icon: '🪙' },
+                    { id: 'Desconocido Misterioso', icon: '🎭' },
                     { id: 'Rival', icon: '🧙' },
-                    { id: 'Custom', icon: '✍️' },
+                    { id: 'Personalizado', icon: '✍️' },
                 ];
 
                 let selectedArchetype = '';
@@ -3845,13 +3852,13 @@ Rules:
 
                 const customLabel = document.createElement('label');
                 customLabel.className = 'rt-npc-form-label';
-                customLabel.textContent = 'Custom Archetype / Role *';
+                customLabel.textContent = 'Arquetipo / Rol Personalizado *';
                 customLabel.style.display = 'none';
 
                 const customInput = document.createElement('input');
                 customInput.className = 'rt-npc-form-input';
                 customInput.type = 'text';
-                customInput.placeholder = 'e.g. Mentor, Bartender, Guildmaster...';
+                customInput.placeholder = 'ej. Mentor, Tabernero, Maestro de Gremio...';
                 customInput.style.marginBottom = '8px';
                 customInput.style.display = 'none';
 
@@ -3862,7 +3869,7 @@ Rules:
                     chip.addEventListener('click', () => {
                         selectedArchetype = id;
 
-                        if (id === 'Custom') {
+                        if (id === 'Personalizado') {
                             customLabel.style.display = 'block';
                             customInput.style.display = 'block';
                             customInput.value = '';
@@ -3891,11 +3898,11 @@ Rules:
 
                 const nameLabel = document.createElement('label');
                 nameLabel.className = 'rt-npc-form-label';
-                nameLabel.textContent = 'Name (optional)';
+                nameLabel.textContent = 'Nombre (opcional)';
                 const nameInput = document.createElement('input');
                 nameInput.className = 'rt-npc-form-input';
                 nameInput.type = 'text';
-                nameInput.placeholder = 'Leave blank to let the AI choose';
+                nameInput.placeholder = 'Dejar en blanco para que la IA elija';
                 nameInput.style.marginBottom = '8px';
 
                 const conceptLabel = document.createElement('label');

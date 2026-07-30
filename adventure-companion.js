@@ -1257,49 +1257,49 @@ function ensureChatShell(panel) {
     const mp = activeModePrefs();
     host.innerHTML = `
         <div class="rt-tutorial-header">
-            <button type="button" class="rpg-tracker-nav-btn rt-tutorial-back" id="rt-tutorial-back" title="Back to State Tracker">← Back</button>
-            <button type="button" class="rpg-tracker-icon-btn rt-chat-detach-btn" id="rt-chat-detach-btn" title="Detach Adventure Companion" aria-label="Detach Adventure Companion">⧉</button>
+            <button type="button" class="rpg-tracker-nav-btn rt-tutorial-back" id="rt-tutorial-back" title="Volver al Rastreador de Estado">← Volver</button>
+            <button type="button" class="rpg-tracker-icon-btn rt-chat-detach-btn" id="rt-chat-detach-btn" title="Desacoplar Acompañante de Aventura" aria-label="Desacoplar Acompañante de Aventura">⧉</button>
             <div class="rt-chat-tutorial-mode-wrap">
-                <label class="rt-chat-tutorial-mode-toggle" title="Attach the Multihog guide to every Adventure Companion request">
+                <label class="rt-chat-tutorial-mode-toggle" title="Adjuntar la guía de Multihog a cada solicitud del Acompañante de Aventura">
                     <input type="checkbox" id="rt-chat-tutorial-mode" ${_prefs.tutorialMode ? 'checked' : ''}>
-                    <span>TUTORIAL MODE</span>
+                    <span>MODO TUTORIAL</span>
                 </label>
-                <button type="button" class="rt-chat-tutorial-info-btn" id="rt-chat-tutorial-info-btn" aria-label="About Tutorial Mode" aria-haspopup="dialog" aria-expanded="false">?</button>
-                <div class="rt-chat-tutorial-info" id="rt-chat-tutorial-info" role="dialog" aria-label="About Tutorial Mode" style="display:none;">
-                    <strong>TUTORIAL MODE</strong>
-                    <span>Injects the Multihog documentation Markdown file into every Adventure Companion request. It is great while learning the system, but veterans can leave it off to avoid a few thousand extra input tokens. That added cost is usually negligible with a recommended tracker model such as Gemini Flash-Lite or Flash.</span>
+                <button type="button" class="rt-chat-tutorial-info-btn" id="rt-chat-tutorial-info-btn" aria-label="Acerca del Modo Tutorial" aria-haspopup="dialog" aria-expanded="false">?</button>
+                <div class="rt-chat-tutorial-info" id="rt-chat-tutorial-info" role="dialog" aria-label="Acerca del Modo Tutorial" style="display:none;">
+                    <strong>MODO TUTORIAL</strong>
+                    <span>Inyecta la documentación en Markdown de Multihog en cada solicitud del Acompañante de Aventura. Es excelente mientras aprendes el sistema, pero los veteranos pueden desactivarlo para ahorrar algunos miles de tokens. Ese costo adicional suele ser insignificante con un modelo de rastreador recomendado como Gemini Flash-Lite o Flash.</span>
                 </div>
             </div>
             <div class="rt-chat-gear-wrap">
-                <button type="button" class="rpg-tracker-icon-btn rt-chat-gear-btn" id="rt-chat-gear-btn" title="CHAT options" aria-haspopup="true" aria-expanded="false"><i class="fa-solid fa-gear"></i></button>
+                <button type="button" class="rpg-tracker-icon-btn rt-chat-gear-btn" id="rt-chat-gear-btn" title="Opciones de CHAT" aria-haspopup="true" aria-expanded="false"><i class="fa-solid fa-gear"></i></button>
                 <div class="rt-chat-gear-menu" id="rt-chat-gear-menu" style="display:none;" role="menu">
                     <div class="rt-chat-gear-section">
-                        <span class="rt-chat-gear-section-label">Story lookback</span>
-                        <div class="rt-tutorial-lookback" title="Include SillyTavern chat messages as story context.">
+                        <span class="rt-chat-gear-section-label">Revisión de Historia</span>
+                        <div class="rt-tutorial-lookback" title="Incluir mensajes del chat de SillyTavern como contexto de la historia.">
                             <input type="text" inputmode="numeric" pattern="[0-9]*" id="rt-tutorial-lookback" value="${mp.lookback}" min="0" max="100" aria-label="Story lookback message count">
                             <span class="rt-tutorial-lookback-unit">msgs</span>
-                            <label class="rt-tutorial-lookback-all" title="Include the entire chat history">
+                            <label class="rt-tutorial-lookback-all" title="Incluir todo el historial de chat">
                                 <input type="checkbox" id="rt-tutorial-lookback-all" ${mp.lookbackAll ? 'checked' : ''}>
-                                <span>all</span>
+                                <span>todos</span>
                             </label>
                         </div>
                     </div>
                     <label class="rt-chat-gear-item" role="menuitemcheckbox">
                         <input type="checkbox" id="rt-chat-inject-lore" ${_prefs.injectLore ? 'checked' : ''}>
-                        <span>Inject Lorebook Agent lore</span>
+                        <span>Inyectar lore del Agente de Lorebook</span>
                     </label>
                     <label class="rt-chat-gear-item" role="menuitemcheckbox">
                         <input type="checkbox" id="rt-chat-inject-memo" ${_prefs.injectMemo ? 'checked' : ''}>
-                        <span>Inject State Tracker</span>
+                        <span>Inyectar Rastreador de Estado</span>
                     </label>
                 </div>
             </div>
-            <button type="button" class="rpg-tracker-nav-btn rt-tutorial-clear" id="rt-tutorial-clear" title="Clear the Adventure Companion conversation">Clear</button>
+            <button type="button" class="rpg-tracker-nav-btn rt-tutorial-clear" id="rt-tutorial-clear" title="Limpiar la conversación del Acompañante de Aventura">Limpiar</button>
         </div>
         <div class="rt-tutorial-messages" id="rt-tutorial-messages" role="log" aria-live="polite"></div>
         <div class="rt-tutorial-composer">
             <textarea class="rt-tutorial-input" id="rt-tutorial-input" rows="2" placeholder=""></textarea>
-            <button type="button" class="rpg-tracker-prompt-send rt-tutorial-send" id="rt-tutorial-send" title="Send">▶</button>
+            <button type="button" class="rpg-tracker-prompt-send rt-tutorial-send" id="rt-tutorial-send" title="Enviar">▶</button>
         </div>
     `;
     host.dataset.rtTutorialReady = SHELL_VERSION;
@@ -1314,8 +1314,8 @@ function getMessageEl() {
 function welcomeHtml() {
     return `
         <div class="rt-tutorial-msg rt-tutorial-msg-bot rt-tutorial-welcome">
-            <div class="rt-tutorial-msg-label">Adventure Companion</div>
-            <div class="rt-tutorial-msg-body">Ask me about Multihog, brainstorm or discuss your adventure, or ask me to do one of three things: update the State Tracker, update the Lorebook Agent, or take your next turn (chat message / CYOA)—no special command wording required. I can't operate Multihog UI menus myself. Enable Tutorial Mode when you want the framework guide attached to every request.</div>
+            <div class="rt-tutorial-msg-label">Acompañante de Aventura</div>
+            <div class="rt-tutorial-msg-body">Pregúntame sobre Multihog, genera ideas o discute tu aventura, o pídeme cualquiera de estas tres cosas: actualizar el Rastreador de Estado, actualizar el Agente de Lorebook o tomar tu siguiente turno (mensaje de chat / CYOA), sin necesidad de palabras clave especiales. No puedo operar los menús de la interfaz por mí mismo. Activa el Modo Tutorial cuando desees incluir la guía del framework adjunta a cada solicitud.</div>
         </div>`;
 }
 
@@ -1331,7 +1331,7 @@ function renderTranscript() {
     box.innerHTML = history.map((m) => {
         const isUser = m.role === 'user';
         const cls = isUser ? 'rt-tutorial-msg-user' : 'rt-tutorial-msg-bot';
-        const who = isUser ? 'You' : label;
+        const who = isUser ? 'Tú' : label;
         const body = isUser ? escapeHtml(m.content).replace(/\n/g, '<br>') : formatBotHtml(m.content);
         return `<div class="rt-tutorial-msg ${cls}"><div class="rt-tutorial-msg-label">${escapeHtml(who)}</div><div class="rt-tutorial-msg-body">${body}</div></div>`;
     }).join('');

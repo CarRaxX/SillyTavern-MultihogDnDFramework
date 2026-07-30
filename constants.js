@@ -1159,12 +1159,12 @@ export function buildMagicGearLevelHint(level, genre, hasInventory) {
 }
 
 export const STARTING_GEAR_TIER_OPTIONS = [
-    { value: 'auto', label: 'Auto (match level)' },
-    { value: 'mundane', label: 'Mundane only' },
-    { value: 'low', label: 'Low' },
-    { value: 'standard', label: 'Standard' },
-    { value: 'well_equipped', label: 'Well-equipped' },
-    { value: 'heroic', label: 'Heroic' },
+    { value: 'auto', label: 'Automático (según nivel)' },
+    { value: 'mundane', label: 'Solo terrenal / común' },
+    { value: 'low', label: 'Bajo' },
+    { value: 'standard', label: 'Estándar' },
+    { value: 'well_equipped', label: 'Bien equipado' },
+    { value: 'heroic', label: 'Heroico' },
 ];
 
 /** @param {string} [selected='auto'] */
