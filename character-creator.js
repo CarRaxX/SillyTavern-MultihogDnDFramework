@@ -750,7 +750,13 @@ Rules:
         chatLog = `## RECENT STORY (Last ${recentChat.length} messages)\n` +
             recentChat.map(m => {
                 const name = m.is_user ? 'Player' : (m.name || 'Narrator');
-     try {
+                return `${name}: ${m.mes || m.content || ''}`;
+            }).join('\n\n');
+    }
+
+    const userPrompt = `CHARACTER CARD:\n${cleanMemo}\n\n${chatLog}\n\nWrite the persona description for ${charName || 'this character'}.\nIMPORTANT REMINDER: The total word count across all sections MUST be approximately ${wordCount} words!`;
+
+    try {
         const result = await sendStateRequest(s, systemPrompt, userPrompt);
         return (result || '').trim() || null;
     } catch (e) {

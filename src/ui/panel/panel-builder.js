@@ -3658,45 +3658,28 @@ Rules:
                         return;
                     }
                     const visible = filtered.slice(0, displayCount);
-                    for (const char of visible) {
+                    for (const card of visible) {
                         const item = document.createElement('div');
                         item.className = 'rt-charpicker-item';
 
-                        const avatarDiv = document.createElement('div');
-                        avatarDiv.className = 'rt-charpicker-avatar';
-                        if (char.avatar && char.avatar !== 'none') {
+                        const avatar = document.createElement('div');
+                        avatar.className = 'rt-charpicker-avatar';
+                        if (card.avatarUrl || (card.avatar && card.avatar !== 'none')) {
                             const img = document.createElement('img');
-                            img.src = `/characters/${encodeURIComponent(char.avatar)}`;
+                            img.src = card.avatarUrl || `/characters/${encodeURIComponent(card.avatar)}`;
                             img.loading = 'lazy';
-                            img.alt = char.name;
+                            img.alt = card.name;
                             img.onerror = () => { img.replaceWith(Object.assign(document.createElement('div'), { className: 'rt-charpicker-avatar-placeholder', textContent: '👤' })); };
-                            avatarDiv.appendChild(img);
+                            avatar.appendChild(img);
                         } else {
-                            avatarDiv.innerHTML = '<div class="rt-charpicker-avatar-placeholder">👤</div>';
+                            avatar.innerHTML = '<div class="rt-charpicker-avatar-placeholder">👤</div>';
                         }
 
-                        const infoDiv = document.createElement('div');
-                        infoDiv.className = 'rt-charpicker-info';
+                        const info = document.createElement('div');
+                        info.className = 'rt-charpicker-info';
+
                         const nameEl = document.createElement('div');
                         nameEl.className = 'rt-charpicker-name';
-                        nameEl.textContent = char.name || 'Unnamed';
-                        const descEl = document.createElement('div');
-                        descEl.className = 'rt-charpicker-desc';
-                        descEl.textContent = (char.description || char.personality || 'No description').substring(0, 120);
-                        infoDiv.appendChild(nameEl);
-                        infoDiv.appendChild(descEl);
-
-                        const btnsDiv = document.createElement('div');
-                        btnsDiv.className = 'rt-charpicker-btns';
-
-                        const directBtn = document.createElement('button');
-                        directBtn.className = 'rt-charpicker-add-btn direct';
-                        directBtn.textContent = '+ Add as is';
-                        directBtn.title = getSettings().npcAddAsIsMode === 'ai_review'
-                            ? 'AI Review mode: sends card to AI for a minimal logical review before adding (era/world conflicts only).'
-                            : 'Literal mode: wraps the card content in [CORE][/CORE] exactly as written. No AI involved.';
-                        directBtn.addEventListener('click', async () => {
-                            const mode = getSettings().npcAddAsIsMode ?? 'ai_review';
                         nameEl.textContent = card.name;
 
                         const metaEl = document.createElement('div');
