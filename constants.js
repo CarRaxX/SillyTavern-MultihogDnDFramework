@@ -57,6 +57,7 @@ Status: Effect (duration Xh Xm)
 
 AC CALCULATION: Calculate Total AC as Base AC (usually 10 + DEX modifier) plus the sum of AC bonuses from all equipped items (items under [INVENTORY] tagged with '[E]', e.g. Shield (+2 AC) or Plate Armor (+8 AC)).
 ${ATTACK_TOTAL_FORMULA_HINT}
+LANGUAGE RULE: Write all item names, gear, proficiencies, skills, traits, abilities, and status descriptions in SPANISH (e.g. "Sano", "Maza (1d6 C)", "Mente Analítica").
 Upon LEVEL UP, incorporate attribute changes.`,
   party: `Companion/Party members. Use this format for each member:
 Name (Class): current/max HP

@@ -95,35 +95,112 @@ export function renderDayNightBadge(str) {
 
     export const STOCK_FIELD_RULES = {
         'combat': 'numbers',
+        'combate': 'numbers',
         'gear': 'highlight',
+        'equipo': 'highlight',
+        'proficiencies': 'pills',
+        'competencias': 'pills',
         'attr': 'highlight',
         'attributes': 'highlight',
+        'atributos': 'highlight',
+        'atrib': 'highlight',
         'skills': 'pills',
+        'habilidades': 'pills',
         'key skills': 'pills',
         'saves': 'numbers',
+        'salvaciones': 'numbers',
         'status': 'pills',
+        'estado': 'pills',
         'traits': 'pills',
+        'rasgos': 'pills',
         'abilities': 'pills',
+        'capacidades': 'pills',
+        'capacidad': 'pills',
         'other': 'pills',
+        'otros': 'pills',
+        'otro': 'pills',
         'resistances': 'pills',
+        'resistencias': 'pills',
         'res': 'pills',
         'hd': 'hd_pips',
+        'dg': 'hd_pips',
         'weapon': 'highlight',
+        'arma': 'highlight',
         'att/def': 'numbers',
+        'atq/def': 'numbers',
         'primary weapon': 'highlight',
         'spells': 'spell_group',
-        'ac': 'text'
+        'conjuros': 'spell_group',
+        'hechizos': 'spell_group',
+        'ac': 'text',
+        'ca': 'text'
     };
+
+    const SUB_LABEL_TRANSLATIONS = {
+        'combat:': 'Combate:',
+        'combate:': 'Combate:',
+        'gear:': 'Equipo:',
+        'equipo:': 'Equipo:',
+        'proficiencies:': 'Competencias:',
+        'competencias:': 'Competencias:',
+        'attr:': 'Atributos:',
+        'attributes:': 'Atributos:',
+        'atributos:': 'Atributos:',
+        'atrib:': 'Atributos:',
+        'saves:': 'Salvaciones:',
+        'salvaciones:': 'Salvaciones:',
+        'skills:': 'Habilidades:',
+        'habilidades:': 'Habilidades:',
+        'key skills:': 'Habilidades Clave:',
+        'traits:': 'Rasgos:',
+        'rasgos:': 'Rasgos:',
+        'abilities:': 'Capacidades:',
+        'capacidades:': 'Capacidades:',
+        'status:': 'Estado:',
+        'estado:': 'Estado:',
+        'hd:': 'DG:',
+        'dg:': 'DG:',
+        'other:': 'Otros:',
+        'otros:': 'Otros:',
+        'otro:': 'Otros:',
+        'info:': 'Información:',
+        'spells:': 'Conjuros:',
+        'conjuros:': 'Conjuros:',
+        'hechizos:': 'Conjuros:',
+        'ac:': 'CA:',
+        'ca:': 'CA:',
+        'res:': 'Res:',
+        'resistances:': 'Resistencias:',
+        'weapon:': 'Arma:',
+        'arma:': 'Arma:',
+        'att/def:': 'Atq/Def:',
+        'atq/def:': 'Atq/Def:'
+    };
+
+    function translateSubFieldValue(val) {
+        if (!val) return val;
+        return val
+            .replace(/\bHealthy\b/gi, 'Sano')
+            .replace(/\b(\d+)\s+attacks?\b/gi, (m, n) => `${n} ${parseInt(n, 10) === 1 ? 'ataque' : 'ataques'}`)
+            .replace(/\bRanged\b/gi, 'A distancia')
+            .replace(/\bMelee\b/gi, 'Cuerpo a cuerpo')
+            .replace(/\bBase AC\b/gi, 'CA Base')
+            .replace(/\bTotal AC\b/gi, 'CA Total');
+    }
 
     export function renderSubFieldByRule(rule, line, barId = null) {
         const colonIdx = line.indexOf(':');
         // If there's no colon, the whole line is the value (no label)
         const hasLabel = colonIdx !== -1;
-        const labelText = hasLabel ? line.substring(0, colonIdx + 1).trim() : '';
-        const value     = hasLabel ? line.substring(colonIdx + 1).trim() : line.trim();
+        const rawLabelText = hasLabel ? line.substring(0, colonIdx + 1).trim() : '';
+        const rawValue     = hasLabel ? line.substring(colonIdx + 1).trim() : line.trim();
+
+        const displayLabelText = SUB_LABEL_TRANSLATIONS[rawLabelText.toLowerCase()] || rawLabelText;
+        const value = translateSubFieldValue(rawValue);
+
         const labelStyle = rule.color ? ` style="color:${rule.color}"` : '';
-        const labelHtml  = labelText
-            ? `<span class="rt-entity-sub-label"${labelStyle}>${escapeHtmlWithColor(labelText)}</span>`
+        const labelHtml  = displayLabelText
+            ? `<span class="rt-entity-sub-label"${labelStyle}>${escapeHtmlWithColor(displayLabelText)}</span>`
             : '';
 
         switch (rule.renderType) {
