@@ -5208,9 +5208,9 @@ Rules:
     updateMenu.className = 'rt-update-menu';
     updateMenu.style.display = 'none';
     updateMenu.innerHTML = `
-            <div class="rt-menu-item" id="rt-update-regular"><b>Regular Update</b><small>Since last user message</small></div>
-            <div class="rt-menu-item" id="rt-update-custom"><b>Lookback Update</b><small>Last N messages</small></div>
-            <div class="rt-menu-item" id="rt-update-full"><b>Full Context Audit</b><small>Re-examine whole history</small></div>
+            <div class="rt-menu-item" id="rt-update-regular"><b>Actualización Regular</b><small>Desde el último mensaje del usuario</small></div>
+            <div class="rt-menu-item" id="rt-update-custom"><b>Actualización con Historial</b><small>Últimos N mensajes</small></div>
+            <div class="rt-menu-item" id="rt-update-full"><b>Auditoría de Contexto Completo</b><small>Reexaminar todo el historial</small></div>
         `;
     panel.appendChild(updateMenu);
 
@@ -5252,14 +5252,14 @@ Rules:
     overflowMenu.className = 'rt-overflow-menu';
     overflowMenu.style.display = 'none';
     overflowMenu.innerHTML = `
-        <div class="rt-overflow-section-header">Actions</div>
-        <div class="rt-overflow-item" id="rt-ov-enable"><span class="rt-ov-icon">⏻</span><span id="rt-ov-enable-label">Enable / Disable</span></div>
-        <div class="rt-overflow-item" id="rt-ov-pause"><span class="rt-ov-icon">⏸</span><span id="rt-ov-pause-label">Pause Tracker</span></div>
-        <div class="rt-overflow-item" id="rt-ov-portraits"><span class="rt-ov-icon">🖼️</span><span>Portrait Actions</span></div>
-        <div class="rt-overflow-section-header">Update State</div>
-        <div class="rt-overflow-item" id="rt-ov-upd-regular"><span class="rt-ov-icon">🔄</span><span>Regular Update</span><small>Since last user message</small></div>
-        <div class="rt-overflow-item" id="rt-ov-upd-custom"><span class="rt-ov-icon">🔄</span><span>Lookback Update</span><small>Last N messages</small></div>
-        <div class="rt-overflow-item" id="rt-ov-upd-full"><span class="rt-ov-icon">🔄</span><span>Full Context Audit</span><small>Re-examine whole history</small></div>
+        <div class="rt-overflow-section-header">Acciones</div>
+        <div class="rt-overflow-item" id="rt-ov-enable"><span class="rt-ov-icon">⏻</span><span id="rt-ov-enable-label">Activar / Desactivar</span></div>
+        <div class="rt-overflow-item" id="rt-ov-pause"><span class="rt-ov-icon">⏸</span><span id="rt-ov-pause-label">Pausar Rastreador</span></div>
+        <div class="rt-overflow-item" id="rt-ov-portraits"><span class="rt-ov-icon">🖼️</span><span>Acciones de Retrato</span></div>
+        <div class="rt-overflow-section-header">Actualizar Estado</div>
+        <div class="rt-overflow-item" id="rt-ov-upd-regular"><span class="rt-ov-icon">🔄</span><span>Actualización Regular</span><small>Desde el último mensaje del usuario</small></div>
+        <div class="rt-overflow-item" id="rt-ov-upd-custom"><span class="rt-ov-icon">🔄</span><span>Actualización con Historial</span><small>Últimos N mensajes</small></div>
+        <div class="rt-overflow-item" id="rt-ov-upd-full"><span class="rt-ov-icon">🔄</span><span>Auditoría de Contexto Completo</span><small>Reexaminar todo el historial</small></div>
     `;
     panel.appendChild(overflowMenu);
 
@@ -5276,9 +5276,9 @@ Rules:
             // Refresh dynamic labels
             const s = getSettings();
             const enableLabel = overflowMenu.querySelector('#rt-ov-enable-label');
-            if (enableLabel) enableLabel.textContent = s.enabled ? 'Disable Tracker' : 'Enable Tracker';
+            if (enableLabel) enableLabel.textContent = s.enabled ? 'Desactivar Rastreador' : 'Activar Rastreador';
             const pauseLabel = overflowMenu.querySelector('#rt-ov-pause-label');
-            if (pauseLabel) pauseLabel.textContent = s.trackerPaused ? 'Resume Tracker' : 'Pause Tracker';
+            if (pauseLabel) pauseLabel.textContent = s.trackerPaused ? 'Reanudar Rastreador' : 'Pausar Rastreador';
             overflowMenu.style.display = 'flex';
             const closeOv = () => { overflowMenu.style.display = 'none'; document.removeEventListener('click', closeOv); };
             setTimeout(() => document.addEventListener('click', closeOv), 10);

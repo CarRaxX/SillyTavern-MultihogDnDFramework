@@ -1257,7 +1257,8 @@ export function renderDayNightBadge(str) {
         }
 
         const colonIdx = displayText.indexOf(':');
-        const parenMatch = displayText.match(/^(.+?)\s*\((.+)\)$/);
+        const cleanTextForParen = displayText.replace(/\.$/, '').trim();
+        const parenMatch = cleanTextForParen.match(/^(.+?)\s*\((.+)\)$/);
 
         let namePart = '';
         let descPart = '';
@@ -1268,6 +1269,7 @@ export function renderDayNightBadge(str) {
         } else if (parenMatch) {
             namePart = parenMatch[1].trim();
             descPart = parenMatch[2].trim();
+            if (!descPart.endsWith('.')) descPart += '.';
         }
 
         if (namePart && descPart) {
@@ -2647,7 +2649,7 @@ function formatValueToCurrency(totalCp, detectedCurrency) {
                     <button class="rt-category-settings-btn" data-tag="${tag}" title="Category Rendering Options">
                         <i class="fa-solid fa-cog"></i>
                     </button>
-                    <span class="rt-item-count">${items.length} ${items.length === 1 ? 'entry' : 'entries'}</span>
+                    <span class="rt-item-count">${items.length} ${items.length === 1 ? 'entrada' : 'entradas'}</span>
                     <span class="rt-collapse-icon">${isCollapsed ? '&#9656;' : '&#9662;'}</span>
                 </div>
             </div>
@@ -2938,7 +2940,7 @@ export function renderQuestLog(quests, currentTime, collapsed, detached, filterT
                 <span>📋 QUESTS</span>
                 <div class="rt-section-header-right">
                     ${detachBtn}
-                    <span class="rt-item-count">0 entries</span>
+                    <span class="rt-item-count">0 entradas</span>
                     <span class="rt-collapse-icon">${isCollapsed ? '&#9656;' : '&#9662;'}</span>
                 </div>
             </div>
@@ -3090,9 +3092,9 @@ export function renderQuestLog(quests, currentTime, collapsed, detached, filterT
         bodyHtml += `
         <div class="rt-section-card rt-sub-section${isCompletedCollapsed ? ' rt-collapsed' : ''}" data-tag="${TAG}_COMPLETED" style="margin-top: 10px; background: rgba(0,0,0,0.2); border-color: rgba(255,255,255,0.05); border-radius: 6px;">
             <div class="rt-section-header" data-tag="${TAG}_COMPLETED" style="padding: 6px 10px; font-size: 0.9em; background: rgba(0,0,0,0.2); border-top-left-radius: 6px; border-top-right-radius: 6px;">
-                <span style="opacity:0.8;">✅ COMPLETED</span>
+                <span style="opacity:0.8;">✅ COMPLETADAS</span>
                 <div class="rt-section-header-right">
-                    <span class="rt-item-count" style="opacity:0.6;">${completedQuests.length} ${completedQuests.length === 1 ? 'entry' : 'entries'}</span>
+                    <span class="rt-item-count" style="opacity:0.6;">${completedQuests.length} ${completedQuests.length === 1 ? 'entrada' : 'entradas'}</span>
                     <span class="rt-collapse-icon" style="opacity:0.6;">${isCompletedCollapsed ? '&#9656;' : '&#9662;'}</span>
                 </div>
             </div>
@@ -3105,9 +3107,9 @@ export function renderQuestLog(quests, currentTime, collapsed, detached, filterT
         bodyHtml += `
         <div class="rt-section-card rt-sub-section${isFailedCollapsed ? ' rt-collapsed' : ''}" data-tag="${TAG}_FAILED" style="margin-top: 10px; background: rgba(0,0,0,0.2); border-color: rgba(255,80,80,0.12); border-radius: 6px;">
             <div class="rt-section-header" data-tag="${TAG}_FAILED" style="padding: 6px 10px; font-size: 0.9em; background: rgba(80,0,0,0.15); border-top-left-radius: 6px; border-top-right-radius: 6px;">
-                <span style="opacity:0.8;">❌ FAILED</span>
+                <span style="opacity:0.8;">❌ FALLIDAS</span>
                 <div class="rt-section-header-right">
-                    <span class="rt-item-count" style="opacity:0.6;">${failedQuests.length} ${failedQuests.length === 1 ? 'entry' : 'entries'}</span>
+                    <span class="rt-item-count" style="opacity:0.6;">${failedQuests.length} ${failedQuests.length === 1 ? 'entrada' : 'entradas'}</span>
                     <span class="rt-collapse-icon" style="opacity:0.6;">${isFailedCollapsed ? '&#9656;' : '&#9662;'}</span>
                 </div>
             </div>

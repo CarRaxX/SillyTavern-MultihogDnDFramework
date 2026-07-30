@@ -3,7 +3,7 @@ import { t } from '../../i18n/index.js';
 /** Produces the static Tracker and Lorebook Agent panel structure. */
 export function buildPanelMarkup({ settings, agentPanelCollapsedClass }) {
     return `
-            <div class="rt-resizer-tr" id="rt-resizer-tr" title="Resize from top-right"></div>
+            <div class="rt-resizer-tr" id="rt-resizer-tr" title="Redimensionar desde arriba a la derecha"></div>
             <div class="rpg-tracker-header" id="rpg-tracker-header">
                 <div class="rt-header-starfield" aria-hidden="true"></div>
                 <div class="rt-header-face rt-header-face-active" id="rt-header-face-tracker">
@@ -12,56 +12,56 @@ export function buildPanelMarkup({ settings, agentPanelCollapsedClass }) {
                     <span class="rt-header-title-desktop">Multihog D&D Framework</span>
                     <span class="rt-header-title-mobile" style="display: none;">Multihog D&D</span>
                     <div id="rt-daynight-badge-slot"></div>
-                    <button class="rpg-tracker-stop-btn" id="rpg-tracker-stop-btn" title="Stop Generation" style="display:none;">■</button>
+                    <button class="rpg-tracker-stop-btn" id="rpg-tracker-stop-btn" title="Detener Generación" style="display:none;">■</button>
                 </div>
                 <div class="rpg-tracker-header-center" id="rpg-tracker-pause-banner"></div>
                 <div class="rpg-tracker-header-right">
                     <button class="rpg-tracker-icon-btn rt-tutorial-help-btn" id="rpg-tracker-help-btn" title="CHAT">CHAT</button>
-                    <button class="rpg-tracker-icon-btn" id="rpg-tracker-view-btn" title="Toggle rendered view">⊞</button>
-                    <button class="rpg-tracker-icon-btn" id="rpg-tracker-enable-btn" title="${settings.enabled ? 'Disable State Tracker' : 'Enable State Tracker'}" style="${settings.enabled ? '' : 'opacity:0.4;'}" >⏻</button>
-                    <button class="rpg-tracker-icon-btn" id="rpg-tracker-update-btn" title="Update State Now">🔄</button>
-                    <button class="rpg-tracker-icon-btn" id="rpg-tracker-pause-btn" title="Pause Tracker">⏸</button>
-                    <button class="rpg-tracker-icon-btn" id="rpg-tracker-portraits-menu-btn" title="AI Portrait Actions">🖼️</button>
-                    <button class="rpg-tracker-icon-btn" id="rpg-tracker-debug-btn" title="Context Debugger" style="display:none;">🛠️</button>
-                    <button class="rpg-tracker-icon-btn rt-overflow-trigger" id="rt-overflow-btn" title="More actions">⋯</button>
-                    <button class="rpg-tracker-icon-btn" id="rpg-tracker-collapse-btn" title="Collapse Panel"><i class="fa-solid ${settings.trackerCollapsed ? 'fa-chevron-down' : 'fa-chevron-up'}"></i></button>
-                    <button class="rpg-tracker-icon-btn" id="rpg-tracker-close-btn" title="Hide panel">✕</button>
+                    <button class="rpg-tracker-icon-btn" id="rpg-tracker-view-btn" title="Alternar vista renderizada">⊞</button>
+                    <button class="rpg-tracker-icon-btn" id="rpg-tracker-enable-btn" title="${settings.enabled ? 'Desactivar Rastreador de Estado' : 'Activar Rastreador de Estado'}" style="${settings.enabled ? '' : 'opacity:0.4;'}" >⏻</button>
+                    <button class="rpg-tracker-icon-btn" id="rpg-tracker-update-btn" title="Actualizar Estado Ahora">🔄</button>
+                    <button class="rpg-tracker-icon-btn" id="rpg-tracker-pause-btn" title="Pausar Rastreador">⏸</button>
+                    <button class="rpg-tracker-icon-btn" id="rpg-tracker-portraits-menu-btn" title="Acciones de Retrato IA">🖼️</button>
+                    <button class="rpg-tracker-icon-btn" id="rpg-tracker-debug-btn" title="Depurador de Contexto" style="display:none;">🛠️</button>
+                    <button class="rpg-tracker-icon-btn rt-overflow-trigger" id="rt-overflow-btn" title="Más acciones">⋯</button>
+                    <button class="rpg-tracker-icon-btn" id="rpg-tracker-collapse-btn" title="Plegar Panel"><i class="fa-solid ${settings.trackerCollapsed ? 'fa-chevron-down' : 'fa-chevron-up'}"></i></button>
+                    <button class="rpg-tracker-icon-btn" id="rpg-tracker-close-btn" title="Ocultar panel">✕</button>
                 </div>
                 </div>
                 <div class="rt-header-face rt-header-face-inactive" id="rt-header-face-agent">
                     <div class="rpg-tracker-header-left">
-                        <i class="fa-solid fa-robot"></i> <span>${t('agent.headerTitle', 'Lorebook Agent: Autonomous Librarian')}</span>
+                        <i class="fa-solid fa-robot"></i> <span>${t('agent.headerTitle', 'Agente de Lorebook: Bibliotecario Autónomo')}</span>
                     </div>
-                    <div class="rpg-tracker-header-center" id="rt-agent-pause-banner" style="color:#ffa500; font-size:0.7em; font-weight:bold; letter-spacing:0.04em;">${settings.routerPaused ? 'AGENT PAUSED' : ''}</div>
+                    <div class="rpg-tracker-header-center" id="rt-agent-pause-banner" style="color:#ffa500; font-size:0.7em; font-weight:bold; letter-spacing:0.04em;">${settings.routerPaused ? 'AGENTE EN PAUSA' : ''}</div>
                     <div class="rpg-tracker-header-right">
-                        <button class="rpg-tracker-icon-btn" id="rt-agent-router-manual-run" title="Run Research Now" style="color: var(--rt-accent);"><i class="fa-solid fa-play"></i></button>
-                        <button class="rpg-tracker-stop-btn" id="rt-agent-stop-btn" title="Stop Agent" style="display:none;">■</button>
-                        <button class="rpg-tracker-icon-btn" id="rt-agent-router-full-audit-panel" title="Run Full Audit (Chunked)" style="color: #ff5555;"><i class="fa-solid fa-book-journal-whills"></i></button>
+                        <button class="rpg-tracker-icon-btn" id="rt-agent-router-manual-run" title="Ejecutar Investigación Ahora" style="color: var(--rt-accent);"><i class="fa-solid fa-play"></i></button>
+                        <button class="rpg-tracker-stop-btn" id="rt-agent-stop-btn" title="Detener Agente" style="display:none;">■</button>
+                        <button class="rpg-tracker-icon-btn" id="rt-agent-router-full-audit-panel" title="Ejecutar Auditoría Completa" style="color: #ff5555;"><i class="fa-solid fa-book-journal-whills"></i></button>
                          <div id="rt-cleanup-menu-wrap" style="position:relative; display:inline-flex;">
-                             <button class="rpg-tracker-icon-btn" id="rt-agent-router-cleanup" title="Cleanup Menu" style="color: #e67e22;"><i class="fa-solid fa-broom"></i></button>
+                             <button class="rpg-tracker-icon-btn" id="rt-agent-router-cleanup" title="Menú de Limpieza" style="color: #e67e22;"><i class="fa-solid fa-broom"></i></button>
                              <div id="rt-cleanup-dropdown" class="rt-cleanup-dropdown" style="display:none;">
-                                 <button id="rt-cleanup-run-btn" style="display:block; width:100%; text-align:left; padding:7px 14px; background:none; border:none; color:var(--rt-text,#e0e0e0); font-size:12px; cursor:pointer; white-space:nowrap;">🧹 Run Cleanup</button>
+                                 <button id="rt-cleanup-run-btn" style="display:block; width:100%; text-align:left; padding:7px 14px; background:none; border:none; color:var(--rt-text,#e0e0e0); font-size:12px; cursor:pointer; white-space:nowrap;">🧹 Ejecutar Limpieza</button>
                                  <div style="height:1px; background:rgba(255,255,255,0.06); margin:2px 0;"></div>
-                                 <button id="rt-cleanup-settings-toggle" style="display:block; width:100%; text-align:left; padding:7px 14px; background:none; border:none; color:var(--rt-text,#e0e0e0); font-size:12px; cursor:pointer; white-space:nowrap;">⚙ Cleanup Settings</button>
+                                 <button id="rt-cleanup-settings-toggle" style="display:block; width:100%; text-align:left; padding:7px 14px; background:none; border:none; color:var(--rt-text,#e0e0e0); font-size:12px; cursor:pointer; white-space:nowrap;">⚙ Ajustes de Limpieza</button>
                                  <div id="rt-cleanup-settings-panel" style="display:none; padding:8px 12px; border-top:1px solid rgba(255,255,255,0.07); margin-top:2px;">
                                      <label style="display:flex; align-items:center; gap:6px; font-size:10px; opacity:0.75; margin-bottom:8px; cursor:pointer; user-select:none;">
                                          <input id="rt-cleanup-use-threshold-chk" type="checkbox" ${settings.routerCleanupUseThreshold !== false ? 'checked' : ''} style="margin:0; cursor:pointer; accent-color:#e67e22;">
-                                         Use Token Threshold
+                                         Usar Umbral de Tokens
                                      </label>
                                      <div id="rt-cleanup-threshold-row" style="transition:opacity 0.15s; opacity:${settings.routerCleanupUseThreshold !== false ? '1' : '0.35'}; pointer-events:${settings.routerCleanupUseThreshold !== false ? 'auto' : 'none'};">
-                                         <label style="font-size:10px; opacity:0.6; display:block; margin-bottom:2px;">Token Threshold</label>
+                                         <label style="font-size:10px; opacity:0.6; display:block; margin-bottom:2px;">Umbral de Tokens</label>
                                          <input id="rt-cleanup-threshold-inp" type="text" inputmode="numeric" pattern="[0-9]*" min="50" max="5000" step="50" value="${settings.routerCleanupTokenThreshold || 300}" style="width:100%; background:rgba(0,0,0,0.35); color:var(--rt-text,#e0e0e0); border:1px solid rgba(255,255,255,0.15); border-radius:4px; padding:3px 6px; font-size:11px; box-sizing:border-box; margin-bottom:8px;">
                                      </div>
-                                     <label style="font-size:10px; opacity:0.6; display:block; margin-bottom:2px;">Auto-Cleanup Every N Turns <span style="opacity:0.45;">(0 = off)</span></label>
+                                     <label style="font-size:10px; opacity:0.6; display:block; margin-bottom:2px;">Limpieza Automática Cada N Turnos <span style="opacity:0.45;">(0 = desactivado)</span></label>
                                      <input id="rt-cleanup-every-inp" type="text" inputmode="numeric" pattern="[0-9]*" min="0" max="100" step="1" value="${settings.routerCleanupEvery || 0}" style="width:100%; background:rgba(0,0,0,0.35); color:var(--rt-text,#e0e0e0); border:1px solid rgba(255,255,255,0.15); border-radius:4px; padding:3px 6px; font-size:11px; box-sizing:border-box;">
                                  </div>
                              </div>
                          </div>
-                        <button class="rpg-tracker-icon-btn" id="rt-agent-router-enable-btn" title="${settings.routerEnabled ? 'Disable Lorebook Agent' : 'Enable Lorebook Agent'}" style="${settings.routerEnabled ? '' : 'opacity:0.35;'}">⏻</button>
-                        <button class="rpg-tracker-icon-btn" id="rt-agent-router-pause-btn" title="${settings.routerPaused ? 'Resume Agent (auto-runs paused)' : 'Pause Agent (skip auto-runs)'}" style="${settings.routerPaused ? 'color:#ffa500;' : ''}">${settings.routerPaused ? '▶' : '⏸'}</button>
-                        <button class="rpg-tracker-icon-btn" id="rt-agent-router-detach" title="Detach Lorebook Agent">⧉</button>
-                        <button class="rpg-tracker-icon-btn" id="rt-agent-router-collapse-btn" title="Collapse Panel"><i class="fa-solid ${settings.agentCollapsed ? 'fa-chevron-down' : 'fa-chevron-up'}"></i></button>
-                        <button class="rpg-tracker-icon-btn" id="rpg-tracker-agent-close" title="Close">✕</button>
+                        <button class="rpg-tracker-icon-btn" id="rt-agent-router-enable-btn" title="${settings.routerEnabled ? 'Desactivar Agente de Lorebook' : 'Activar Agente de Lorebook'}" style="${settings.routerEnabled ? '' : 'opacity:0.35;'}">⏻</button>
+                        <button class="rpg-tracker-icon-btn" id="rt-agent-router-pause-btn" title="${settings.routerPaused ? 'Reanudar Agente (ejecuciones automáticas pausadas)' : 'Pausar Agente (omitir ejecuciones automáticas)'}" style="${settings.routerPaused ? 'color:#ffa500;' : ''}">${settings.routerPaused ? '▶' : '⏸'}</button>
+                        <button class="rpg-tracker-icon-btn" id="rt-agent-router-detach" title="Desacoplar Agente de Lorebook">⧉</button>
+                        <button class="rpg-tracker-icon-btn" id="rt-agent-router-collapse-btn" title="Plegar Panel"><i class="fa-solid ${settings.agentCollapsed ? 'fa-chevron-down' : 'fa-chevron-up'}"></i></button>
+                        <button class="rpg-tracker-icon-btn" id="rpg-tracker-agent-close" title="Ocultar">✕</button>
                     </div>
                 </div>
             </div>
@@ -252,108 +252,108 @@ export function buildPanelMarkup({ settings, agentPanelCollapsedClass }) {
                     <div id="rt-agent-keys-toggle" style="display: flex; align-items: center; gap: 6px; margin-bottom: 5px; flex-shrink: 0; cursor: pointer; user-select: none;">
                         <div style="font-weight: bold; opacity: 0.8; font-size: 0.846em; display: flex; align-items: center; gap: 4px;">
                             <span id="rt-agent-keys-chevron" style="display: inline-block; width: 10px; transition: transform 0.2s; font-size: 0.9em; opacity: 0.7;"><i class="fa-solid fa-chevron-down"></i></span>
-                            ${t('agent.activeLoreKeys', 'Active Lore Keys:')}
+                            ${t('agent.activeLoreKeys', 'Claves de Lore Activas:')}
                             <span id="rt-agent-active-tokens" style="font-weight: normal; opacity: 0.55; color: var(--rt-text-muted); font-size: 0.95em;">(0t)</span>
                         </div>
-                        <button id="rt-agent-keys-refresh" title="Refresh active keys from disk" style="background: none; border: none; color: var(--rt-accent); font-size: 0.769em; cursor: pointer; opacity: 0.6; padding: 0;" ><i class="fa-solid fa-arrows-rotate"></i></button>
+                        <button id="rt-agent-keys-refresh" title="Actualizar claves activas desde disco" style="background: none; border: none; color: var(--rt-accent); font-size: 0.769em; cursor: pointer; opacity: 0.6; padding: 0;" ><i class="fa-solid fa-arrows-rotate"></i></button>
                     </div>
                     <div id="rt-agent-router-active-keys" style="margin-bottom: 10px; display: flex; flex-wrap: wrap; gap: 4px; min-height: 24px; flex-shrink: 0;">
                     </div>
 
                     <div id="rt-agent-campaign-section" style="margin-top: 10px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 15px; display: flex; flex-direction: column; flex-shrink: 0;">
                         <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; flex-shrink: 0; gap: 8px;">
-                            <div id="rt-agent-campaign-header-title" style="font-weight: bold; opacity: 0.8; font-size: 0.846em; flex: 1; min-width: 0;${settings.locationImages ? ' display: none;' : ''}">${t('agent.campaignRecords', 'CAMPAIGN RECORDS')}</div>
+                            <div id="rt-agent-campaign-header-title" style="font-weight: bold; opacity: 0.8; font-size: 0.846em; flex: 1; min-width: 0;${settings.locationImages ? ' display: none;' : ''}">${t('agent.campaignRecords', 'REGISTROS DE CAMPAÑA')}</div>
                             <div class="rt-agent-view-mode-switch" id="rt-agent-view-mode-switch" role="tablist" aria-label="Lorebook view mode"${settings.locationImages ? '' : ' style="display: none;"'}>
-                                <button type="button" class="rt-agent-view-mode-btn${settings.agentImmersionMode ? '' : ' rt-agent-view-mode-btn-active'}" id="rt-agent-view-mode-records" role="tab" aria-selected="${settings.agentImmersionMode ? 'false' : 'true'}">${t('agent.campaignRecordsTab', 'Campaign Records')}</button>
+                                <button type="button" class="rt-agent-view-mode-btn${settings.agentImmersionMode ? '' : ' rt-agent-view-mode-btn-active'}" id="rt-agent-view-mode-records" role="tab" aria-selected="${settings.agentImmersionMode ? 'false' : 'true'}">${t('agent.campaignRecordsTab', 'Registros de Campaña')}</button>
                                 <button type="button" class="rt-agent-view-mode-btn rt-agent-view-mode-btn-visualization${settings.agentImmersionMode ? ' rt-agent-view-mode-btn-active' : ''}" id="rt-agent-view-mode-visualization" role="tab" aria-selected="${settings.agentImmersionMode ? 'true' : 'false'}">
                                     <span class="rt-agent-view-mode-glow" aria-hidden="true"></span>
-                                    <span class="rt-agent-view-mode-label">${t('agent.visualizationMode', 'Visualization Mode')}</span>
+                                    <span class="rt-agent-view-mode-label">${t('agent.visualizationMode', 'Modo Visualización')}</span>
                                 </button>
                             </div>
                             <div style="display: flex; align-items: center; gap: 6px; flex-shrink: 0;">
-                                <button class="rpg-tracker-icon-btn" id="rt-agent-activate-books" title="Activate campaign lorebooks now" style="font-size: 0.769em; opacity: 0.5;"><i class="fa-solid fa-book-open"></i></button>
-                                <button class="rpg-tracker-icon-btn" id="rt-agent-manifest-refresh" title="Refresh Manifest" style="font-size: 0.769em; opacity: 0.5;"><i class="fa-solid fa-arrows-rotate"></i></button>
+                                <button class="rpg-tracker-icon-btn" id="rt-agent-activate-books" title="Activar libros de lore de campaña ahora" style="font-size: 0.769em; opacity: 0.5;"><i class="fa-solid fa-book-open"></i></button>
+                                <button class="rpg-tracker-icon-btn" id="rt-agent-manifest-refresh" title="Actualizar Manifiesto" style="font-size: 0.769em; opacity: 0.5;"><i class="fa-solid fa-arrows-rotate"></i></button>
                             </div>
                         </div>
                         <div id="rt-agent-immersion-view" style="display: ${settings.agentImmersionMode ? 'flex' : 'none'}; flex-direction: column; flex-shrink: 0;"></div>
                         <div id="rt-agent-manifest-list" style="display: ${settings.agentImmersionMode ? 'none' : 'flex'}; flex-direction: column; gap: 6px; flex-shrink: 0;">
-                            <div style="text-align: center; opacity: 0.5; font-size: 0.769em; padding: 10px;">${t('agent.clickRefreshToLoad', 'Click refresh to load lore...')}</div>
+                            <div style="text-align: center; opacity: 0.5; font-size: 0.769em; padding: 10px;">${t('agent.clickRefreshToLoad', 'Haz clic en actualizar para cargar el lore...')}</div>
                         </div>
                     </div>
                 </div>
                 <div class="rpg-tracker-prompt-bar" id="rt-agent-prompt-bar" style="display:none; border-top: var(--rt-border); box-sizing: border-box;">
-                    <textarea class="rpg-tracker-prompt-input" id="rt-agent-prompt-input" rows="2" placeholder="Instruct the agent model… (Enter to send, Shift+Enter for newline)">${settings.routerDirectPrompt || ''}</textarea>
+                    <textarea class="rpg-tracker-prompt-input" id="rt-agent-prompt-input" rows="2" placeholder="Instruir al modelo del agente… (Entrar para enviar, Mayús+Entrar para nueva línea)">${settings.routerDirectPrompt || ''}</textarea>
                     <div style="display: flex; flex-direction: column; gap: 4px; align-items: center; justify-content: flex-end;">
-                        <div class="rt-prompt-ctx-control" style="font-size: 0.692em; display: flex; flex-direction: column; align-items: center; gap: 0;" title="Direct lookback: last N chat messages (user and assistant) for this manual run.">
+                        <div class="rt-prompt-ctx-control" style="font-size: 0.692em; display: flex; flex-direction: column; align-items: center; gap: 0;" title="Revisión directa: últimos N mensajes de chat (usuario y asistente) para esta ejecución manual.">
                             <input type="text" inputmode="numeric" pattern="[0-9]*" id="rt-agent-prompt-context-val" value="${settings.routerDirectLookback || 10}" min="1" max="100" style="width: 28px; height: 16px; font-size: 0.692em; background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.1); color: white; border-radius: 3px; text-align: center; padding: 0;">
-                            <span style="opacity: 0.5; font-size: 8px; line-height: 1;">msg</span>
+                            <span style="opacity: 0.5; font-size: 8px; line-height: 1;">msj</span>
                         </div>
-                        <button class="rpg-tracker-prompt-send" id="rt-agent-prompt-send" title="Run command">▶</button>
+                        <button class="rpg-tracker-prompt-send" id="rt-agent-prompt-send" title="Ejecutar comando">▶</button>
                     </div>
                 </div>
                 <div class="rpg-tracker-footer" id="rt-agent-footer">
                     <div class="rt-footer-starfield" aria-hidden="true"></div>
                     <div class="rt-agent-footer-left">
                         <div class="rpg-tracker-nav">
-                            <button class="rpg-tracker-nav-btn" id="rt-agent-nav-back" title="Undo last lorebook pass">←</button>
-                            <span class="rpg-tracker-nav-label" id="rt-agent-nav-label">[ LIVE ]</span>
-                            <button class="rpg-tracker-nav-btn" id="rt-agent-nav-fwd" title="Redo lorebook pass">→</button>
+                            <button class="rpg-tracker-nav-btn" id="rt-agent-nav-back" title="Deshacer última pasada de lorebook">←</button>
+                            <span class="rpg-tracker-nav-label" id="rt-agent-nav-label">[ EN VIVO ]</span>
+                            <button class="rpg-tracker-nav-btn" id="rt-agent-nav-fwd" title="Rehacer pasada de lorebook">→</button>
                         </div>
                     </div>
                     <div class="rt-agent-footer-center">
-                        <div id="rt-agent-footer-location" class="rt-footer-location-text" title="Current Location (Main, Sub)"></div>
+                        <div id="rt-agent-footer-location" class="rt-footer-location-text" title="Ubicación Actual (Principal, Sub)"></div>
                     </div>
                     <div class="rt-agent-footer-right">
                         <div id="rt-agent-last-run"></div>
-                        <button class="rpg-tracker-icon-btn rt-footer-prompt-btn" id="rt-agent-prompt-btn" title="Toggle direct prompt">💬</button>
+                        <button class="rpg-tracker-icon-btn rt-footer-prompt-btn" id="rt-agent-prompt-btn" title="Alternar prompt directo">💬</button>
                     </div>
                 </div>
-                <div class="rt-resizer-br" id="rt-agent-resizer-br" title="Resize from bottom-right"></div>
-                <div class="rt-resizer-bl" id="rt-agent-resizer-bl" title="Resize from bottom-left"></div>
+                <div class="rt-resizer-br" id="rt-agent-resizer-br" title="Redimensionar desde abajo a la derecha"></div>
+                <div class="rt-resizer-bl" id="rt-agent-resizer-bl" title="Redimensionar desde abajo a la izquierda"></div>
             </div>
                 </div>
             </div>
             <div class="rpg-tracker-delta-resize-handle" id="rpg-tracker-delta-handle" style="display:none;"></div>
             <div class="rpg-tracker-delta-panel" id="rpg-tracker-delta" style="display:none;">
                 <div class="rpg-tracker-delta-toolbar">
-                    <span class="rpg-tracker-delta-title">Change Log</span>
-                    <button class="rpg-tracker-icon-btn" id="rpg-tracker-delta-clear" title="Clear log">✕</button>
+                    <span class="rpg-tracker-delta-title">Registro de Cambios</span>
+                    <button class="rpg-tracker-icon-btn" id="rpg-tracker-delta-clear" title="Limpiar registro">✕</button>
                 </div>
-                <div id="rpg-tracker-delta-content">${settings.lastDelta || '<span class="delta-empty">No changes yet.</span>'}</div>
+                <div id="rpg-tracker-delta-content">${settings.lastDelta || '<span class="delta-empty">Sin cambios todavía.</span>'}</div>
             </div>
             <div class="rpg-tracker-prompt-bar" id="rpg-tracker-prompt-bar" style="display:none;">
-                <textarea class="rpg-tracker-prompt-input" id="rpg-tracker-prompt-input" rows="2" placeholder="Instruct the tracker model… (Enter to send, Shift+Enter for newline)"></textarea>
+                <textarea class="rpg-tracker-prompt-input" id="rpg-tracker-prompt-input" rows="2" placeholder="Instruir al modelo del rastreador… (Entrar para enviar, Mayús+Entrar para nueva línea)"></textarea>
                 <div style="display: flex; flex-direction: column; gap: 4px; align-items: center; justify-content: flex-end;">
-                    <div class="rt-prompt-ctx-control" style="font-size: 0.692em; display: flex; flex-direction: column; align-items: center; gap: 0;" title="Context: number of recent messages to include">
+                    <div class="rt-prompt-ctx-control" style="font-size: 0.692em; display: flex; flex-direction: column; align-items: center; gap: 0;" title="Contexto: número de mensajes recientes a incluir">
                         <input type="text" inputmode="numeric" pattern="[0-9]*" id="rt-prompt-context-val" value="${settings.directPromptContext || 5}" min="0" max="50" style="width: 28px; height: 16px; font-size: 0.692em; background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.1); color: white; border-radius: 3px; text-align: center; padding: 0;">
-                        <span style="opacity: 0.5; font-size: 8px; line-height: 1;">msg</span>
+                        <span style="opacity: 0.5; font-size: 8px; line-height: 1;">msj</span>
                     </div>
-                    <button class="rpg-tracker-prompt-send" id="rpg-tracker-prompt-send" title="Send instruction">▶</button>
+                    <button class="rpg-tracker-prompt-send" id="rpg-tracker-prompt-send" title="Enviar instrucción">▶</button>
                 </div>
             </div>
             <div class="rpg-tracker-footer" id="rt-main-footer">
                 <div class="rt-footer-starfield" aria-hidden="true"></div>
                 <div class="rt-mobile-top-row">
-                    <button class="rt-footer-toggle-btn" id="rt-footer-expand-btn" title="Toggle Settings Drawer"><i class="fa-solid fa-chevron-up"></i></button>
+                    <button class="rt-footer-toggle-btn" id="rt-footer-expand-btn" title="Alternar Cajón de Ajustes"><i class="fa-solid fa-chevron-up"></i></button>
                     <div class="rpg-tracker-nav">
-                        <button class="rpg-tracker-nav-btn" id="rpg-tracker-nav-back" title="View previous snapshot">←</button>
-                        <span class="rpg-tracker-nav-label" id="rpg-tracker-nav-label">Live</span>
-                        <button class="rpg-tracker-nav-btn" id="rpg-tracker-nav-fwd" title="View next snapshot">→</button>
+                        <button class="rpg-tracker-nav-btn" id="rpg-tracker-nav-back" title="Ver captura anterior">←</button>
+                        <span class="rpg-tracker-nav-label" id="rpg-tracker-nav-label">[ EN VIVO ]</span>
+                        <button class="rpg-tracker-nav-btn" id="rpg-tracker-nav-fwd" title="Ver captura siguiente">→</button>
                     </div>
                 </div>
                 <div class="flex-container gap-1 alignitemscenter rt-rng-footer-group" style="display:none;">
                     <!-- Removed inline RNG toggles, now located in extension settings -->
                 </div>
                 <div class="rt-footer-center-group" id="rt-footer-center-group" style="display: flex; align-items: center; gap: 8px; flex: 1; min-width: 0;">
-                    <div id="rt-footer-time" style="display: none; font-size: 0.769em; color: var(--rt-accent); white-space: nowrap; flex-shrink: 0; opacity: 0.9; cursor: help;" title="Current in-world time"></div>
-                    <div id="rt-footer-location" class="rt-footer-location-text" title="Current Location (Main, Sub)"></div>
+                    <div id="rt-footer-time" style="display: none; font-size: 0.769em; color: var(--rt-accent); white-space: nowrap; flex-shrink: 0; opacity: 0.9; cursor: help;" title="Hora actual en el juego"></div>
+                    <div id="rt-footer-location" class="rt-footer-location-text" title="Ubicación Actual (Principal, Sub)"></div>
                 </div>
                 <div class="flex-container gap-1 alignitemscenter rt-utility-footer-group">
                     <span id="rpg-tracker-count">~${Math.round(settings.currentMemo.length / 2.62)} tokens</span>
-                    <button class="rpg-tracker-nav-btn" id="rpg-tracker-delta-btn" title="Toggle change log" style="padding: 1px 5px; font-size: 0.692em; opacity: 0.8; margin-left: 5px;">δ</button>
-                    <button class="rpg-tracker-nav-btn" id="rpg-tracker-memo-clear" style="padding: 1px 5px; font-size: 0.692em; opacity: 0.8; margin-left: 5px;" title="Clear memo and history">CLEAR</button>
+                    <button class="rpg-tracker-nav-btn" id="rpg-tracker-delta-btn" title="Alternar registro de cambios" style="padding: 1px 5px; font-size: 0.692em; opacity: 0.8; margin-left: 5px;">δ</button>
+                    <button class="rpg-tracker-nav-btn" id="rpg-tracker-memo-clear" style="padding: 1px 5px; font-size: 0.692em; opacity: 0.8; margin-left: 5px;" title="Limpiar memo e historial">LIMPIAR</button>
                 </div>
-                <button class="rpg-tracker-icon-btn rt-footer-prompt-btn" id="rpg-tracker-prompt-btn" title="Toggle direct prompt">💬</button>
+                <button class="rpg-tracker-icon-btn rt-footer-prompt-btn" id="rpg-tracker-prompt-btn" title="Alternar prompt directo">💬</button>
             </div>
         `;
 }
