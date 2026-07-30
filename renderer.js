@@ -1831,9 +1831,8 @@ function formatValueToCurrency(totalCp, detectedCurrency) {
                     }
                     const spells = spellList.split(',').map(s => {
                         const name = s.trim();
-                        const slug = resolveSpellSlug(name);
-                        const url = `https://dnd5e.wikidot.com/spell:${slug}`;
-                        return `<a href="${url}" target="_blank" class="rt-spell-name" title="Ver hechizo en Wikidot">${escapeHtmlWithColor(name)}</a>`;
+                        const url = resolveSpellUrl(name);
+                        return `<a href="${url}" target="_blank" class="rt-spell-name" title="Ver hechizo">${escapeHtmlWithColor(name)}</a>`;
                     }).join('');
                     return `<div class="rt-spell-row">
                         <span class="rt-spell-level">${escapeHtmlWithColor(label.trim())}</span>
