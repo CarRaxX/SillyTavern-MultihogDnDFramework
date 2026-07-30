@@ -609,15 +609,79 @@ export function renderDayNightBadge(str) {
         return `<div class="rt-entity-sub-line"><span class="rt-entity-sub-label">HD:</span> <span>${pipsHtml}</span></div>`;
     }
 
+    const SPANISH_TO_ENGLISH_SPELLS = {
+        'bola de fuego': 'fireball',
+        'proyectil magico': 'magic-missile',
+        'proyectil mágico': 'magic-missile',
+        'curar heridas': 'cure-wounds',
+        'manos ardientes': 'burning-hands',
+        'escudo': 'shield',
+        'luz': 'light',
+        'mano de mago': 'mage-hand',
+        'armadura de mago': 'mage-armor',
+        'rayo de escarcha': 'ray-of-frost',
+        'rayo de hechiceria': 'witch-bolt',
+        'rayo de hechicería': 'witch-bolt',
+        'rayo abrasador': 'scorching-ray',
+        'paso brumoso': 'misty-step',
+        'invisibilidad': 'invisibility',
+        'volar': 'fly',
+        'sugerencia': 'suggestion',
+        'contrahechizo': 'counterspell',
+        'disipar magia': 'dispel-magic',
+        'relampago': 'lightning-bolt',
+        'relámpago': 'lightning-bolt',
+        'patron hipnotico': 'hypnotic-pattern',
+        'patrón hipnótico': 'hypnotic-pattern',
+        'muro de fuego': 'wall-of-fire',
+        'polimorfia': 'polymorph',
+        'cono de frio': 'cone-of-cold',
+        'cono de frío': 'cone-of-cold',
+        'palabra de curacion': 'healing-word',
+        'palabra de curación': 'healing-word',
+        'truco de la cuerda': 'rope-trick',
+        'descarga de fuego': 'fire-bolt',
+        'agarre electrizante': 'shocking-grasp',
+        'ilusion menor': 'minor-illusion',
+        'ilusión menor': 'minor-illusion',
+        'prestidigitacion': 'prestidigitation',
+        'prestidigitación': 'prestidigitation',
+        'orientacion': 'guidance',
+        'orientación': 'guidance',
+        'llama sagrada': 'sacred-flame',
+        'pista de la bruja': 'hex',
+        'marca del cazador': 'hunters-mark',
+        'identificar': 'identify',
+        'grasa': 'grease',
+        'dormir': 'sleep',
+        'caida de pluma': 'feather-fall',
+        'caída de pluma': 'feather-fall',
+        'detectar magia': 'detect-magic',
+        'orbe cromatico': 'chromatic-orb',
+        'orbe cromático': 'chromatic-orb'
+    };
+
+    function resolveSpellSlug(name) {
+        const normalized = name.toLowerCase().trim();
+        if (SPANISH_TO_ENGLISH_SPELLS[normalized]) {
+            return SPANISH_TO_ENGLISH_SPELLS[normalized];
+        }
+        const noAccents = normalized.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+        if (SPANISH_TO_ENGLISH_SPELLS[noAccents]) {
+            return SPANISH_TO_ENGLISH_SPELLS[noAccents];
+        }
+        return normalized.replace(/'/g, '').replace(/[^a-z0-9]+/g, '-');
+    }
+
     export function renderSpellGroups(val) {
-        const isCompound = /\|/.test(val) && /(?:Level\s*\d+|Cantrips?)/i.test(val);
+        const isCompound = /\|/.test(val) && /(?:Level\s*\d+|Cantrips?|Nivel\s*\d+|Trucos?)/i.test(val);
         const groups = isCompound ? val.split(/\s*\|\s*/) : [val];
         let html = '';
         for (const group of groups) {
-            const m = group.trim().match(/^(Level\s*\d+|Cantrips?)\s*(?:\((\d+)\/(\d+)[^)]*\))?\s*(?::\s*(.+))?$/i);
+            const m = group.trim().match(/^(Level\s*\d+|Cantrips?|Nivel\s*\d+|Trucos?)\s*(?:\((\d+)\/(\d+)[^)]*\))?\s*(?::\s*(.+))?$/i);
             if (!m) continue;
             const [, lbl, availStr, maxStr, spellList] = m;
-            const isCantrip = /cantrip/i.test(lbl);
+            const isCantrip = /cantrip|truco/i.test(lbl);
             let pipsHtml = '';
             if (!isCantrip && availStr !== undefined && maxStr !== undefined) {
                 const avail = parseInt(availStr, 10), maxSlots = parseInt(maxStr, 10);
@@ -628,8 +692,8 @@ export function renderDayNightBadge(str) {
             if (spellList) {
                 spellsHtml = spellList.split(',').map(s => {
                     const name = s.trim();
-                    const slug = name.toLowerCase().replace(/'/g, '').replace(/[^a-z0-9]+/g, '-');
-                    return `<a href="https://dnd5e.wikidot.com/spell:${slug}" target="_blank" class="rt-spell-name" title="View spell on Wikidot">${escapeHtmlWithColor(name)}</a>`;
+                    const slug = resolveSpellSlug(name);
+                    return `<a href="https://dnd5e.wikidot.com/spell:${slug}" target="_blank" class="rt-spell-name" title="Ver hechizo en Wikidot">${escapeHtmlWithColor(name)}</a>`;
                 }).join('');
             }
             html += `<div class="rt-spell-row"><span class="rt-spell-level">${escapeHtmlWithColor(lbl.trim())}</span><div class="rt-spell-inline-group"><div class="rt-spell-list">${pipsHtml}${spellsHtml}</div></div></div>`;
@@ -1743,10 +1807,10 @@ function formatValueToCurrency(totalCp, detectedCurrency) {
                     const asMarker = tryRenderMarker(line, tag, '', idx);
                     if (asMarker !== null) return asMarker;
 
-                    const m = line.match(/^(Level\s*\d+|Cantrips?)\s*(?:\((\d+)\/(\d+)[^)]*\))?\s*:\s*(.+)$/i);
+                    const m = line.match(/^(Level\s*\d+|Cantrips?|Nivel\s*\d+|Trucos?)\s*(?:\((\d+)\/(\d+)[^)]*\))?\s*:\s*(.+)$/i);
                     if (!m) return `<div class="rt-card-item">${escapeHtmlWithColor(line)}</div>`;
                     const [, label, availStr, maxStr, spellList] = m;
-                    const isCantrip = /cantrip/i.test(label);
+                    const isCantrip = /cantrip|truco/i.test(label);
                     let pipsHtml = '';
                     if (!isCantrip && availStr !== undefined && maxStr !== undefined) {
                         const avail = parseInt(availStr, 10), max = parseInt(maxStr, 10);
@@ -1757,11 +1821,9 @@ function formatValueToCurrency(totalCp, detectedCurrency) {
                     }
                     const spells = spellList.split(',').map(s => {
                         const name = s.trim();
-                        const slug = name.toLowerCase()
-                            .replace(/'/g, '')
-                            .replace(/[^a-z0-9]+/g, '-');
+                        const slug = resolveSpellSlug(name);
                         const url = `https://dnd5e.wikidot.com/spell:${slug}`;
-                        return `<a href="${url}" target="_blank" class="rt-spell-name" title="View spell on Wikidot">${escapeHtmlWithColor(name)}</a>`;
+                        return `<a href="${url}" target="_blank" class="rt-spell-name" title="Ver hechizo en Wikidot">${escapeHtmlWithColor(name)}</a>`;
                     }).join('');
                     return `<div class="rt-spell-row">
                         <span class="rt-spell-level">${escapeHtmlWithColor(label.trim())}</span>
