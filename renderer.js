@@ -606,7 +606,7 @@ export function renderDayNightBadge(str) {
             const max = parseInt(hm[3].replace(/,/g, ''), 10);
             pipsHtml = `<span class="rt-hd-label">[ ${escapeHtmlWithColor(hm[1].trim())} ]</span> <span class="rt-hd-pips">${Array.from({ length: max }, (_, i) => `<span class="rt-hd-pip${i < cur ? ' rt-hd-available' : ''}"></span>`).join('')}</span>`;
         }
-        return `<div class="rt-entity-sub-line"><span class="rt-entity-sub-label">HD:</span> <span>${pipsHtml}</span></div>`;
+        return `<div class="rt-entity-sub-line"><span class="rt-entity-sub-label" title="Dados de Golpe / Hit Dice (usados para recuperar vida durante Descansos Cortos)">HD:</span> <span>${pipsHtml}</span></div>`;
     }
 
     const SPANISH_TO_ENGLISH_SPELLS = {
@@ -1244,7 +1244,7 @@ export function renderDayNightBadge(str) {
      * into multiple pills.
      */
     const renderAbilityLine = (text) => {
-        let pillClass = 'rt-ability-card';
+        let pillClass = 'rt-unit-pill';
         let displayText = text.trim();
 
         // Strip buff/debuff prefix markers
@@ -1276,16 +1276,15 @@ export function renderDayNightBadge(str) {
             if (resourceMatch) {
                 iconHtml = `<span class="rt-unit-icon">${escapeHtmlWithColor(resourceMatch[0])}</span>`;
             }
-            return `<div class="${pillClass}">
-                <div class="rt-ability-name"><span>${escapeHtmlWithColor(namePart)}</span>${iconHtml}</div>
-                <div class="rt-ability-desc">${escapeHtmlWithColor(descPart)}</div>
-            </div>`;
+            return `<div class="rt-entity-sub-line rt-units-container"><span class="${pillClass}">
+                <span class="rt-unit-name">${escapeHtmlWithColor(namePart)}</span>
+                ${iconHtml}
+                <span class="rt-unit-descr">(${escapeHtmlWithColor(descPart)})</span>
+            </span></div>`;
         }
 
-        // Fall back to a simple ability card without description
-        return `<div class="${pillClass}">
-            <div class="rt-ability-name"><span>${escapeHtmlWithColor(displayText)}</span></div>
-        </div>`;
+        // Fall back to a simple no-description pill
+        return `<div class="rt-entity-sub-line rt-units-container"><span class="${pillClass} no-desc"><span class="rt-unit-name">${escapeHtmlWithColor(displayText)}</span></span></div>`;
     };
 
 
@@ -1736,15 +1735,16 @@ function formatValueToCurrency(totalCp, detectedCurrency) {
                                 }
                             }
                         }
-                        return `<div class="rt-card-line"><b>Last Rest:</b>&nbsp;${escapeHtmlWithColor(restVal)}${append}</div>`;
+                        return `<div class="rt-card-line"><b>Último Descanso:</b>&nbsp;${escapeHtmlWithColor(restVal)}${append}</div>`;
                     }
                     const asMarker = tryRenderMarker(line, tag, '', idx);
                     if (asMarker !== null) return asMarker;
                     const { emoji: lineEmoji, color } = getTimeOfDayInfo(line);
                     const linePrefix = lineEmoji ? `<span class="rt-tod-emoji" style="margin-right:4px;">${lineEmoji}</span>` : '';
+                    const timeText = line.replace(/^Current Time:\s*/i, 'Hora Actual: ');
                     const content = (color !== 'inherit') 
-                        ? `<span style="color: ${color};">${escapeHtmlWithColor(line)}</span>`
-                        : escapeHtmlWithColor(line);
+                        ? `<span style="color: ${color};">${escapeHtmlWithColor(timeText)}</span>`
+                        : escapeHtmlWithColor(timeText);
                     return `<div class="rt-card-line">${linePrefix}${content}</div>`;
                 });
             }
@@ -1892,8 +1892,8 @@ function formatValueToCurrency(totalCp, detectedCurrency) {
 
                             // Build tooltip combining effect (if any) and worth
                             const tooltipParts = [];
-                            if (effectVal) tooltipParts.push(`Effect: ${effectVal}`);
-                            tooltipParts.push(`Worth: ${worthVal}`);
+                            if (effectVal) tooltipParts.push(`Efecto: ${effectVal}`);
+                            tooltipParts.push(`Valor: ${worthVal}`);
                             titleAttr = ` title="${escapeHtml(tooltipParts.join('\n'))}"`;
 
                             if (worthMode === 'display') {
@@ -1945,7 +1945,9 @@ function formatValueToCurrency(totalCp, detectedCurrency) {
                     // Section subheader (e.g. "Gear:", "Other Items:") — plain text header line
                     if (/^[A-Za-z][A-Za-z\s]*:\s*$/.test(line.trim())) {
                         flushBullets();
-                        const headerText = line.trim().replace(/:$/, '').trim();
+                        const rawHeader = line.trim().replace(/:$/, '').trim();
+                        const headerMap = { 'gear': 'Equipo', 'other items': 'Otros Objetos' };
+                        const headerText = headerMap[rawHeader.toLowerCase()] || rawHeader;
                         inventoryResults.push(`<div class="rt-inventory-subheader">${escapeHtml(headerText)}</div>`);
                         continue;
                     }
