@@ -2,6 +2,53 @@
 
 All notable changes to the **Multihog D&D Framework** will be documented in this file.
 
+## [6.5.75] - 2026-07-31
+
+### Added
+- **Universal custom-bar trickle animations**: opted-in `((BAR))` and `((BARREL))` changes now transfer progressively, with timing scaled to the percentage of the bar changed. Equivalent proportional changes take the same amount of time regardless of the bar's numeric scale.
+- **Enabled by default**: universal custom-bar animations are now on by default, while remaining user-toggleable.
+
+## [6.5.35] - 2026-07-30
+
+### Fixed
+- **Paused relationship regex updates**: chat-regex Friendship/Affection awards continue to process while the State Tracker or Lorebook Agent is paused, while tracker/LLM relationship commands remain pause-gated.
+- **Regression coverage**: automated tests now protect the pause-boundary behavior.
+
+## [6.5.30] - 2026-07-30
+
+### Changed
+- **CYOA settings scope**: choice composition and behavior remain per-chat, while visual theme settings are shared globally.
+
+### Fixed
+- **CYOA migration**: legacy per-chat snapshots retain their choice setup while no longer overriding the global visual theme.
+
+## [6.5.10] - 2026-07-30
+
+### Added
+- **Temporary combat allies**: `[COMBAT]` now supports optional `ENEMIES:` and `ALLIES:` sections with red and blue UI headers.
+- **RNG multi-die guidance**: queue prompts now specify how additional matching damage dice consume successive queue lines, including a `2d8` example.
+
+### Fixed
+- **Combat section parsing**: `ALLIES:` boundaries no longer get absorbed into the preceding enemy entry, while headerless combat remains backward-compatible.
+
+## [6.5.0] - 2026-07-30
+
+### Added
+- **Adventure Companion connections and settings**: Adventure Companion now has its own connection configuration and a mirrored settings drawer, including Tutorial Mode.
+- **XP gain animation**: gained XP now visibly trickles from a glowing blue award into the XP bar.
+- **Combat defeat presentation**: explicitly defeated combatants remain visually marked until combat ends, with negative HP values supported by combat and party renderers.
+- **Onboarding releases link**: the startup screen now links to the GitHub Releases page as the project development blog.
+- **SPELLS example**: the stock SPELLS module prompt now demonstrates multi-level spell-slot formatting.
+
+### Changed
+- **Adventure Companion mobile behavior**: its header now keeps the standard collapse control available on mobile for quick minimize/maximize access.
+- **Relationship award feedback**: Friendship and Affection floaters are larger, last four seconds, and may extend beyond the tracker edge so long NPC names remain visible.
+- **Narrator and combat prompts**: refined realistic time-passage, XP, spell, and defeated-combatant instructions.
+
+### Fixed
+- **Adventure Companion collapse**: collapsing the Companion no longer flips the tracker view while leaving the Companion header behind.
+- **Combat parsing**: negative current HP such as `-4/15 HP` now renders as a structured combatant instead of unformatted text.
+
 ## [6.4.3] - 2026-07-29
 
 ### Fixed

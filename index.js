@@ -1,5 +1,5 @@
 import { EXAMPLES, COLOR_EXAMPLES, DEFAULT_STOCK_PROMPTS, RT_PROMPTS, BLOCK_ICONS, BLOCK_ORDER, PAGE_SIZE, NO_PAGINATE, buildOnboardingXpHint, buildOnboardingTimeHint, buildStartingGearHint, buildOnboardingActiveBlocks, buildCombatAndSkillScalingHint, resolveTimePromptKey, resolveTimePromptDisplayTag, buildCyoaPrompt, DEFAULT_CYOA_SLOTS, refreshCyoaConfigToShipped } from './constants.js';
-import { MODULE_NAME, DEFAULT_MODULES, getSettings, getBarBackground, migrateCustomFields, saveChatState, writeModuleSchemaBackup, getPendingModuleSchemaBackup, applyModuleSchemaBackup, applyDeletedCustomTagTombstones, recordDeletedCustomTags, clearDeletedCustomTagTombstones, saveProfile, deleteProfile, getEffectiveRouterCampaignPrefix, sanitizeCampaignPrefixString, buildNpcInstruction, loadStockPromptsFromProfile, getNpcRelationshipMax, getNpcRelationshipMaxDefault, clampRelationshipValue, relationshipBarPct, getFriendshipTier, getAffectionTier, getRelTierBadgeStyle, getRelTierDetailedStyle, getRelTierDetailedLabelStyle, applyRelTierBadgeElement, sanitizeRouterState, rebuildAllModuleInstructions, adjustAllStoredTemplatesForTimeFormat, DEFAULT_NPC_SECTIONS, DEFAULT_PC_SECTIONS, computeBundledPromptsFingerprint, computeBundledPromptsFingerprintForSnapshot, normalizeBundledPromptsSnapshot, buildBundledPromptsSnapshot, getSnapshotCategoryBlocks, getPromptCategoryImpactBadge, PROMPT_DEFAULTS_CATEGORIES, PROMPT_DEFAULTS_CATEGORY_LABELS, getDefaultPortraitLocationSystemPrompt, isShippedPortraitLocationSystemPrompt, applyFactoryReset, clearExtensionLocalStorageUiState, stripChatStateGlobalUiPrefs, buildStateTrackerRelationshipCommandInstruction, extractStateTrackerRelationshipCommands, getRelationshipUpdateMode, RELATIONSHIP_UPDATE_MODES } from './state-manager.js';
+import { MODULE_NAME, DEFAULT_MODULES, getSettings, getBarBackground, migrateCustomFields, saveChatState, getActiveChatId, writeModuleSchemaBackup, getPendingModuleSchemaBackup, applyModuleSchemaBackup, applyDeletedCustomTagTombstones, recordDeletedCustomTags, clearDeletedCustomTagTombstones, saveProfile, deleteProfile, getEffectiveRouterCampaignPrefix, sanitizeCampaignPrefixString, buildNpcInstruction, loadStockPromptsFromProfile, getNpcRelationshipMax, getNpcRelationshipMaxDefault, clampRelationshipValue, relationshipBarPct, getFriendshipTier, getAffectionTier, getRelTierBadgeStyle, getRelTierDetailedStyle, getRelTierDetailedLabelStyle, applyRelTierBadgeElement, sanitizeRouterState, rebuildAllModuleInstructions, adjustAllStoredTemplatesForTimeFormat, DEFAULT_NPC_SECTIONS, DEFAULT_PC_SECTIONS, computeBundledPromptsFingerprint, computeBundledPromptsFingerprintForSnapshot, normalizeBundledPromptsSnapshot, buildBundledPromptsSnapshot, getSnapshotCategoryBlocks, getPromptCategoryImpactBadge, PROMPT_DEFAULTS_CATEGORIES, PROMPT_DEFAULTS_CATEGORY_LABELS, getDefaultPortraitLocationSystemPrompt, isShippedPortraitLocationSystemPrompt, applyFactoryReset, clearExtensionLocalStorageUiState, stripChatStateGlobalUiPrefs, buildStateTrackerRelationshipCommandInstruction, extractStateTrackerRelationshipCommands, getRelationshipUpdateMode, RELATIONSHIP_UPDATE_MODES } from './state-manager.js';
 import { resetChatSetupToStock, snapshotChatSetup, chatSetupsMatch, syncChatSetupCatalogs, removeChatSetupCatalogEntries } from './src/state/chat-setup.js';
 import { buildDirectPromptSystemPrompt, DIRECT_PROMPT_SYSTEM_MODES } from './src/state/direct-prompt-system.js';
 import { diffTextLines, diffHasChanges } from './prompt-diff.js';
@@ -12,14 +12,14 @@ import { initializeDebugViewer, toggleDebugViewer } from './debug-viewer.js';
 import { installSwipeSchedulerDebug } from './swipe-scheduler-debug.js';
 import { runRouterPass, rollbackRouterPass, reapplyRouterPass, getLorebookManifest, deleteLorebookEntry, updateLorebookEntry, disableManagedEntries, isRouterRunning, stopRouterPass, purgeWorldHistoryForChat } from './router.js';
 import { getRequestHeaders } from '../../../../script.js';
-import { fileToDataUrl, scaleImageTo512Square, scaleImageToLandscape, applyPortraitData, applyLocationImageData, renamePortraitEntity, reconcileMemoPortraitRenames, generatePortraitPrompt, generateNpcPortraitPrompt, generateLocationImagePrompt, showPortraitPromptPopup, generatePortraitDirect, autoGeneratePartyPortraits, removeAllPortraits, checkAndTriggerAutoGenerations, autoGenerateEnemyPortraits, forceCheckAutoGenerations, resetAutoGenerationTracking, resetRealtimeLocationGenerationFailure, stopRealtimeLocationGeneration, resolveLocationImageWithMeta, normalizeLocationPath, buildLocationPath, getLinkedPlayerCharacter, resolvePortraitSrcForPlayerCharacter, imageGenToast } from './portraits.js';
+import { fileToDataUrl, scaleImageTo512Square, scaleImageToLandscape, applyPortraitData, applyLocationImageData, renamePortraitEntity, reconcileMemoPortraitRenames, generatePortraitPrompt, generateNpcPortraitPrompt, generateLocationImagePrompt, showPortraitPromptPopup, generatePortraitDirect, autoGeneratePartyPortraits, removeAllPortraits, checkAndTriggerAutoGenerations, autoGenerateEnemyPortraits, forceCheckAutoGenerations, resetAutoGenerationTracking, resetRealtimeLocationGenerationFailure, stopRealtimeLocationGeneration, resolveLocationImageWithMeta, normalizeLocationPath, buildLocationPath, getLinkedPlayerCharacter, resolvePortraitSrcForPlayerCharacter, imageGenToast, triggerBackgroundPortraitGeneration } from './portraits.js';
 import { buildImmersionSceneState, renderImmersionViewHtml, getCurrentLocationText, loadLocationEntryByPath, loadNpcEntryByKey, maybeAutoGenerateImmersionSceneArt, runRealtimeSceneArtCheck, resetImmersionSceneArtTracking, hydrateImmersionSceneArtPath } from './immersion.js';
 import { migrateAllEmbeddedPortraits, countEmbeddedPortraitDataUrls, purgeAllPortraitData, resolvePortraitDisplaySrc, lookupCustomPortraitSrc, collectAllPortraitRefs, isManagedPortraitPath, isPortraitMigrationLocked, setPortraitMigrationLocked, PORTRAIT_STORAGE_FOLDER } from './portrait-storage.js';
 import { loadPanelGeometry, loadDeltaHeight, makeDraggable, makeResizableTR, makeResizableBR, makeResizableBL, setupResizeObserver, setupDeltaResize, canResizePanels, jqueryToggleSlide, resolveViewportClampedGeometry, clampFloatingPanelToViewport } from './ui-geometry.js';
 import { applyCustomTheme, openThemeWizard, refreshSavedThemesList, handleRecolor, undoThemeChange } from './theme-manager.js';
 import { showCharacterRollPanel, showPcImportPanel, handleCharacterCreatorGenerate, generatePersonaBio, showPersonaConfirmOverlay, extractCharNameFromMemo, activateSillyTavernPersona } from './character-creator.js';
 import { bindQuickStartEvents } from './quickstart.js';
-import { bindAdventureCompanion, openAdventureCompanion, closeAdventureCompanion } from './adventure-companion.js';
+import { bindAdventureCompanion, bindAdventureCompanionSettingsDrawer, openAdventureCompanion, closeAdventureCompanion } from './adventure-companion.js';
 import { handleCategorySettings, openCustomFieldEditor, openPromptEditor, refreshOrderList, exportModules, importModulesFromJson, openNpcSectionEditor, openPcSectionEditor } from './ui-editors.js';
 import { openGameSystemWizard, openManageGameSystems, openSystemPromptControlRoom, syncAllNarratorTogglesForUnlockState, extractTopLevelSections, normalizeSectionOrder, getSectionRowDescriptor, transformBaseSectionContent, isBlankSectionContent, isSectionUnlocked, isEffectiveSectionEnabled } from './game-systems.js';
 import { openManageGameCartridges, promptAndSaveCurrentAsCartridge } from './game-cartridges.js';
@@ -32,7 +32,12 @@ import { runtimeState } from './src/app/runtime-state.js';
 import { createPanel as buildPanel } from './src/ui/panel/panel-builder.js';
 import { createChatStateLoader } from './src/features/chat/chat-state-loader.js';
 import { restoreEscapedCyoaChoiceMarkup } from './src/ui/panel/cyoa-markup.js';
+import { captureXpGainAnimationState, playXpGainAnimation } from './src/ui/panel/xp-gain-animation.js';
+import { captureBarChangeAnimationState, playBarChangeAnimations } from './src/ui/panel/bar-change-animation.js';
+import { buildCombatDisplayMemo } from './src/state/combat-persistence.js';
 import { isRealtimeVisualizationDisabled } from './src/state/realtime-visualization-guard.js';
+import { normalizeActivePersonaIdentity } from './src/state/player-identity.js';
+import { replacePromptArray, stripSupersededChoicesFromChatPrompt, stripSupersededChoicesFromTextPromptMessages } from './src/features/cyoa-prompt-history.js';
 
 export { RENDERING_TAGS_LIBRARY };
 export { bindRenderedCardEvents };
@@ -1430,6 +1435,7 @@ const loadChatState = createChatStateLoader({
 function resetUnseenChatState(s) {
     if (s.chatSetupLinkEnabled) resetChatSetupToStock(s);
     s.currentMemo = '';
+    s.combatDefeatedUi = [];
     s.prevMemo1 = '';
     s.prevMemo2 = '';
     s.memoHistory = [];
@@ -2300,13 +2306,14 @@ async function resolveActivePersonaDescription() {
         const descriptor = power_user.persona_descriptions?.[user_avatar];
         const description = (descriptor?.description ?? power_user.persona_description ?? '').trim();
         const name = (power_user.personas?.[user_avatar] ?? '').trim();
-        if (!description) return null;
+        const identity = normalizeActivePersonaIdentity(name, description);
+        if (!identity) return null;
 
         if (descriptor && power_user.persona_description !== descriptor.description) {
             power_user.persona_description = descriptor.description ?? '';
         }
 
-        return { name, description };
+        return identity;
     } catch (e) {
         console.warn('[RPG Tracker] Could not resolve active persona:', e);
         return null;
@@ -3539,17 +3546,23 @@ function syncOnboardingPersonaPrefsFromDom(el) {
 /**
  * After a quick onboarding generate, optionally create a Lorebook Player Card
  * and/or a name-only SillyTavern persona.
+ * Persona-derived onboarding preserves the active source Persona description.
  * Uses settings (not DOM) because sendDirectPrompt → refreshRenderedView removes the onboarding UI.
+ * @param {string} [extraHints]
+ * @param {{ preserveActivePersona?: boolean, preferredName?: string }} [options]
  */
-async function maybeCreateOnboardingPersona(extraHints = '') {
+async function maybeCreateOnboardingPersona(extraHints = '', options = {}) {
     const s = getSettings();
     const createPlayerCard = !!s.onboardingCreatePersona;
     const createStPersona = s.onboardingCreateSillyTavernPersona !== false;
     if (!createPlayerCard && !createStPersona) return;
-    const charName = extractCharNameFromMemo(s.currentMemo) || 'My Character';
+    const preferredName = String(options.preferredName || '').trim();
+    const charName = preferredName || extractCharNameFromMemo(s.currentMemo) || 'My Character';
     if (createStPersona) {
         try {
-            await activateSillyTavernPersona(charName);
+            await activateSillyTavernPersona(charName, {
+                preserveExistingDescription: !!options.preserveActivePersona,
+            });
         } catch (error) {
             console.error('[RPG Tracker] Could not create name-only ST persona:', error);
             toastr['warning'](`Character created, but the ST persona for "${charName}" could not be created.`, 'RPG Tracker');
@@ -3620,6 +3633,10 @@ export function refreshRenderedView() {
     const memo = runtimeState.historyViewIndex === -1
         ? s.currentMemo
         : (s.memoHistory[runtimeState.historyViewIndex] ?? '');
+    const displayMemo = runtimeState.historyViewIndex === -1
+        ? buildCombatDisplayMemo(memo, s.combatDefeatedUi)
+        : memo;
+    const xpAnimationContext = `${getActiveChatId() || 'global'}::${runtimeState.historyViewIndex === -1 ? 'live' : `history-${runtimeState.historyViewIndex}`}`;
 
     const collapsed = loadCollapsed();
     const detached = loadDetached();
@@ -3630,14 +3647,16 @@ export function refreshRenderedView() {
 
     const el = document.getElementById('rpg-tracker-render');
     if (el) {
+        const capturedXp = captureXpGainAnimationState(el, xpAnimationContext);
+        const capturedBars = captureBarChangeAnimationState(el, xpAnimationContext);
         const questsEnabled = s.syspromptModules?.quests !== false && !!(memo && memo.trim());
         let html;
 
         if (s.panelLayoutMode === 'tabs') {
             const questsCtx = questsEnabled ? { quests: getDisplayQuests(memo), currentTime } : null;
-            html = renderTabModeView(memo, _sectionPages, questsCtx);
+            html = renderTabModeView(displayMemo, _sectionPages, questsCtx);
         } else {
-            html = renderMemoAsCards(memo, null, _sectionPages);
+            html = renderMemoAsCards(displayMemo, null, _sectionPages);
             // Append quest log section if module is enabled and we are not on the onboarding screen
             if (questsEnabled) {
                 html += renderQuestLog(getDisplayQuests(memo), currentTime, collapsed, detached);
@@ -3645,6 +3664,8 @@ export function refreshRenderedView() {
         }
 
         el.innerHTML = html;
+        playXpGainAnimation(el, capturedXp, xpAnimationContext);
+        playBarChangeAnimations(el, capturedBars, xpAnimationContext);
         bindRenderedCardEvents(el, memo, false);
 
         // Restore Character Creator panel if it was open before the DOM swap (onboarding screen only)
@@ -3687,11 +3708,15 @@ export function refreshRenderedView() {
         if (panel) {
             const body = panel.querySelector('.rpg-tracker-detached-body');
             if (body) {
+                const capturedXp = captureXpGainAnimationState(body, xpAnimationContext);
+                const capturedBars = captureBarChangeAnimationState(body, xpAnimationContext);
                 if (tag === 'QUESTS') {
                     body.innerHTML = renderQuestLog(getDisplayQuests(memo), currentTime, collapsed, detached, 'QUESTS');
                 } else {
-                    body.innerHTML = renderMemoAsCards(memo, tag, _sectionPages);
+                    body.innerHTML = renderMemoAsCards(displayMemo, tag, _sectionPages);
                 }
+                playXpGainAnimation(body, capturedXp, xpAnimationContext);
+                playBarChangeAnimations(body, capturedBars, xpAnimationContext);
                 bindRenderedCardEvents(body, memo, true);
             }
         } else {
@@ -3807,6 +3832,7 @@ function createPanel() {
         syncMemoView,
         syncRouterPrefixDisplays,
         toggleDebugViewer,
+        triggerBackgroundPortraitGeneration,
         updateAgentStatusIndicator,
         updateChatLinkUI,
         updateLorebookEntry,
@@ -4294,6 +4320,153 @@ function tryBindConnectionProfileDropdown(selector, initialProfileId, onProfileI
     }
 }
 
+/**
+ * Bind one feature-specific connection drawer to the standard request settings
+ * shape without coupling that feature to the State Tracker connection.
+ *
+ * @param {{uiPrefix:string, keyPrefix:string, settings:Record<string, any>, presetManager:any}} options
+ */
+async function bindFeatureConnectionSettings(options) {
+    const { uiPrefix, keyPrefix, settings, presetManager } = options;
+    const source = $(`#${uiPrefix}_connection_source`);
+    if (!source.length) return;
+
+    const key = (suffix) => `${keyPrefix}${suffix}`;
+    const profileGroup = $(`#${uiPrefix}_profile_group`);
+    const profileSelect = $(`#${uiPrefix}_connection_profile`);
+    const ollamaGroup = $(`#${uiPrefix}_ollama_group`);
+    const ollamaUrl = $(`#${uiPrefix}_ollama_url`);
+    const ollamaModel = $(`#${uiPrefix}_ollama_model`);
+    const openaiGroup = $(`#${uiPrefix}_openai_group`);
+    const openaiUrl = $(`#${uiPrefix}_openai_url`);
+    const openaiKey = $(`#${uiPrefix}_openai_key`);
+    const openaiModel = $(`#${uiPrefix}_openai_model`);
+    const openaiManual = $(`#${uiPrefix}_openai_model_manual`);
+    const presetSelect = $(`#${uiPrefix}_completion_preset`);
+
+    const updatePanels = () => {
+        const value = source.val();
+        profileGroup.toggle(value === 'profile');
+        ollamaGroup.toggle(value === 'ollama');
+        openaiGroup.toggle(value === 'openai');
+    };
+
+    source.val(settings[key('ConnectionSource')] || 'default').on('change', function () {
+        settings[key('ConnectionSource')] = String($(this).val() || 'default');
+        updatePanels();
+        saveSettings();
+    });
+    updatePanels();
+
+    ollamaUrl.val(settings[key('OllamaUrl')] || 'http://localhost:11434').on('input', function () {
+        settings[key('OllamaUrl')] = String($(this).val() || '');
+        saveSettings();
+    });
+    const savedOllamaModel = String(settings[key('OllamaModel')] || '');
+    ollamaModel.empty().append('<option value="">-- Select Model --</option>');
+    if (savedOllamaModel) {
+        ollamaModel.append($('<option></option>').val(savedOllamaModel).text(savedOllamaModel));
+    }
+    ollamaModel.val(savedOllamaModel).on('change', function () {
+        settings[key('OllamaModel')] = String($(this).val() || '');
+        saveSettings();
+    });
+    $(`#${uiPrefix}_ollama_refresh`).on('click', async function () {
+        const url = String(ollamaUrl.val() || '');
+        if (!url) return toastr['info']('Please enter an Ollama URL first.');
+        try {
+            toastr['info']('Fetching Ollama models...');
+            const models = await fetchOllamaModels(url);
+            ollamaModel.empty().append('<option value="">-- Select Model --</option>');
+            models.forEach((model) => {
+                ollamaModel.append($('<option></option>').val(model.name).text(model.name));
+            });
+            ollamaModel.val(settings[key('OllamaModel')] || '');
+            toastr['success']('Ollama models updated.');
+        } catch (error) {
+            console.error(`[RPG Tracker] ${keyPrefix} Ollama fetch failed:`, error);
+            toastr['error']('Failed to fetch Ollama models. Check console.');
+        }
+    });
+
+    openaiUrl.val(settings[key('OpenaiUrl')] || '').on('input', function () {
+        settings[key('OpenaiUrl')] = String($(this).val() || '');
+        saveSettings();
+    });
+    openaiKey.val(settings[key('OpenaiKey')] || '').on('input', function () {
+        settings[key('OpenaiKey')] = String($(this).val() || '');
+        saveSettings();
+    });
+    openaiManual.val(settings[key('OpenaiModel')] || '');
+    openaiModel.on('change', function () {
+        const value = String($(this).val() || '');
+        if (value) openaiManual.val('');
+        settings[key('OpenaiModel')] = value || String(openaiManual.val() || '').trim();
+        saveSettings();
+    });
+    openaiManual.on('input', function () {
+        const value = String($(this).val() || '').trim();
+        if (value) openaiModel.val('');
+        settings[key('OpenaiModel')] = value || String(openaiModel.val() || '');
+        saveSettings();
+    });
+    $(`#${uiPrefix}_openai_refresh`).on('click', async function () {
+        const url = String(openaiUrl.val() || '');
+        const apiKey = String(openaiKey.val() || '');
+        if (!url) return toastr['info']('Please enter an Endpoint URL first.');
+        try {
+            toastr['info']('Fetching models from endpoint...');
+            const models = await fetchOpenAIModels(url, apiKey);
+            openaiModel.empty().append('<option value="">-- Select Model --</option>');
+            models.forEach((model) => {
+                const id = typeof model === 'string' ? model : (model.id || model.name);
+                if (id) openaiModel.append($('<option></option>').val(id).text(id));
+            });
+            openaiModel.val(settings[key('OpenaiModel')] || '');
+            toastr['success']('Models updated.');
+        } catch (_) {
+            toastr['warning']('Cannot auto-detect models. Type the model name manually.');
+        }
+    });
+
+    const profileSelector = `#${uiPrefix}_connection_profile`;
+    const profileKey = key('ConnectionProfileId');
+    if (!tryBindConnectionProfileDropdown(profileSelector, settings[profileKey] || '', (id) => {
+        settings[profileKey] = id;
+        saveSettings();
+    })) {
+        let profiles = [];
+        try {
+            profiles = await getConnectionProfiles();
+        } catch (error) {
+            console.warn(`[RPG Tracker] Could not load ${keyPrefix} connection profiles:`, error);
+        }
+        profileSelect.empty().append('<option value="">-- No Profile Selected --</option>');
+        profiles.forEach((profile) => profileSelect.append($('<option></option>').val(profile).text(profile)));
+        profileSelect.val(settings[profileKey] || '').on('change', function () {
+            settings[profileKey] = String($(this).val() || '');
+            saveSettings();
+        });
+    }
+
+    presetSelect.empty().append('<option value="">-- Use Current Settings --</option>');
+    if (presetManager && typeof presetManager.getAllPresets === 'function') {
+        presetManager.getAllPresets().forEach((preset) => {
+            presetSelect.append($('<option></option>').val(preset).text(preset));
+        });
+    }
+    const presetKey = key('CompletionPresetId');
+    const savedPreset = String(settings[presetKey] || '');
+    const hasSavedPreset = presetSelect.find('option').toArray().some((option) => option.value === savedPreset);
+    if (savedPreset && !hasSavedPreset) {
+        presetSelect.append($('<option></option>').val(savedPreset).text(savedPreset));
+    }
+    presetSelect.val(savedPreset).on('change', function () {
+        settings[presetKey] = String($(this).val() || '');
+        saveSettings();
+    });
+}
+
 let _portraitMigrationDone = false;
 
 /** One-time migration of legacy base64 portraits to disk. Runs after chat bootstrap. */
@@ -4466,6 +4639,13 @@ async function runPortraitMigrationIfNeeded() {
         });
 
         const settings = getSettings();
+        bindAdventureCompanionSettingsDrawer();
+        await bindFeatureConnectionSettings({
+            uiPrefix: 'rpg_adventure_companion',
+            keyPrefix: 'adventureCompanion',
+            settings,
+            presetManager: pm,
+        });
 
 
         /**
@@ -4713,6 +4893,7 @@ async function runPortraitMigrationIfNeeded() {
                         $('#rpg_tracker_npc_portraits').prop('checked', sTempTracker.npcPortraits !== false);
                         syncNpcPortraitDependentUi(sTempTracker);
                         $('#rpg_tracker_npc_rel_bars').prop('checked', !!sTempTracker.npcRelationshipBars);
+                        $('#rpg_tracker_animate_all_custom_bars').prop('checked', !!sTempTracker.animateAllCustomBarChanges);
                         $('#rpg_sysprompt_mod_npc_rel_bars').prop('checked', !!sTempTracker.npcRelationshipBars);
                         $('#rpg_tracker_npc_card_import').prop('checked', !!sTempTracker.experimentalNpcImport);
                         $('#rpg_tracker_ignore_npc_limits').prop('checked', !!sTempTracker.ignoreNpcImportLimits);
@@ -4985,6 +5166,7 @@ async function runPortraitMigrationIfNeeded() {
                                     $('#rpg_tracker_npc_portraits').prop('checked', sTempTracker.npcPortraits !== false);
                                     syncNpcPortraitDependentUi(sTempTracker);
                                     $('#rpg_tracker_npc_rel_bars').prop('checked', !!sTempTracker.npcRelationshipBars);
+                                    $('#rpg_tracker_animate_all_custom_bars').prop('checked', !!sTempTracker.animateAllCustomBarChanges);
                                     $('#rpg_sysprompt_mod_npc_rel_bars').prop('checked', !!sTempTracker.npcRelationshipBars);
                                     $('#rpg_tracker_npc_card_import').prop('checked', !!sTempTracker.experimentalNpcImport);
                                     $('#rpg_tracker_ignore_npc_limits').prop('checked', !!sTempTracker.ignoreNpcImportLimits);
@@ -5629,6 +5811,23 @@ async function runPortraitMigrationIfNeeded() {
         });
 
         // ─── Event Hooks ───
+        const shouldStripOldCyoaChoices = () => {
+            const fresh = getSettings();
+            return isEffectiveSectionEnabled('CYOA_mode', fresh)
+                && fresh.cyoaConfig?.stripOldChoicesFromPrompt !== false;
+        };
+        if (event_types.CHAT_COMPLETION_PROMPT_READY) {
+            eventSource.on(event_types.CHAT_COMPLETION_PROMPT_READY, (eventData) => {
+                if (!shouldStripOldCyoaChoices() || !Array.isArray(eventData?.chat)) return;
+                replacePromptArray(eventData.chat, stripSupersededChoicesFromChatPrompt(eventData.chat));
+            });
+        }
+        if (event_types.GENERATE_BEFORE_COMBINE_PROMPTS) {
+            eventSource.on(event_types.GENERATE_BEFORE_COMBINE_PROMPTS, (eventData) => {
+                if (!shouldStripOldCyoaChoices() || !Array.isArray(eventData?.finalMesSend)) return;
+                replacePromptArray(eventData.finalMesSend, stripSupersededChoicesFromTextPromptMessages(eventData.finalMesSend));
+            });
+        }
         eventSource.on(event_types.GENERATION_STARTED, onGenerationStarted);
         eventSource.on(event_types.GENERATION_ENDED, onGenerationEnded);
         eventSource.on(event_types.GENERATION_STOPPED, onGenerationEnded);
@@ -7023,6 +7222,14 @@ RULES:
             }
         });
 
+        $('#rpg_tracker_animate_all_custom_bars')
+            .prop('checked', !!settings.animateAllCustomBarChanges)
+            .on('change', function () {
+                settings.animateAllCustomBarChanges = !!$(this).prop('checked');
+                saveSettings();
+                refreshRenderedView();
+            });
+
         $('#rt_btn_tag_library').on('click', async function () {
             const { Popup } = SillyTavern.getContext();
             const { tryRenderMarker } = await import('./renderer.js');
@@ -8115,6 +8322,9 @@ RULES:
                     <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:12px;">
                         <input type="checkbox" id="cyoa-use-buttons" ${checked(cfg.useButtonTags)} /> <span>Clickable Choices <span title="Click choices to automatically send them using &lt;button&gt; functions" class="fa-solid fa-circle-question" style="opacity:0.5;cursor:help;margin-left:4px;"></span></span>
                     </label>
+                    <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:12px;">
+                        <input type="checkbox" id="cyoa-strip-old-prompt" ${checked(cfg.stripOldChoicesFromPrompt)} /> <span>Keep only T-1 choices in AI context <span title="Keeps the newest completed &lt;choices&gt; block as a fresh example for the AI, and removes only T-2 and older choice blocks from the outgoing prompt. Every choice remains visible and clickable in chat." class="fa-solid fa-circle-question" style="opacity:0.5;cursor:help;margin-left:4px;"></span></span>
+                    </label>
                 </div>
 
                 <div style="margin-top:14px;font-size:11px;font-weight:bold;opacity:0.6;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:6px;">Button Appearance</div>
@@ -8361,6 +8571,7 @@ RULES:
                 freshS.cyoaConfig.useEmojis      = !!dlg.querySelector('#cyoa-use-emojis')?.checked;
                 freshS.cyoaConfig.useXmlTag      = !!dlg.querySelector('#cyoa-use-xml')?.checked;
                 freshS.cyoaConfig.useButtonTags  = !!dlg.querySelector('#cyoa-use-buttons')?.checked;
+                freshS.cyoaConfig.stripOldChoicesFromPrompt = !!dlg.querySelector('#cyoa-strip-old-prompt')?.checked;
                 const styleCfg = readCyoaStyleFromDialog(dlg);
                 Object.assign(freshS.cyoaConfig, styleCfg);
                 const promptTa = dlg.querySelector('#cyoa-prompt-textarea')?.value?.trim() || '';
@@ -10092,6 +10303,7 @@ RULES:
             // NPC Relationship & Time Settings
             $('#rpg_tracker_npc_portraits').prop('checked', s.npcPortraits !== false);
             $('#rpg_tracker_npc_rel_bars').prop('checked', !!s.npcRelationshipBars);
+            $('#rpg_tracker_animate_all_custom_bars').prop('checked', !!s.animateAllCustomBarChanges);
             $('#rpg_sysprompt_mod_npc_rel_bars').prop('checked', !!s.npcRelationshipBars);
             $('#rpg_tracker_npc_card_import').prop('checked', !!s.experimentalNpcImport);
             $('#rpg_tracker_ignore_npc_limits').prop('checked', !!s.ignoreNpcImportLimits);

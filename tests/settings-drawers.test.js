@@ -17,6 +17,7 @@ describe('General & Visuals settings', () => {
             '<b>Configuración de Ficha y State Memo</b>',
             '<b>Agente de Lorebook y Asistente IA</b>',
             '<b>Progresión del Mundo</b>',
+            '<b>Acompañante de Aventura</b>',
         ];
         const expectedDepth = divDepthAt(primaryHeaders[0]);
 
@@ -39,5 +40,47 @@ describe('General & Visuals settings', () => {
         expect(portraitsMarkup).toContain('<b>Portraits LLM Connection</b>');
         expect(portraitsMarkup).toContain('<b>Portrait Prompt Templates</b>');
         expect(portraitsMarkup).toContain('id="rpg_tracker_purge_all_portraits"');
+    });
+
+    it('mirrors every Adventure Companion option and gives it a dedicated connection', () => {
+        const companionStart = settingsMarkup.indexOf('<b>Adventure Companion</b>');
+        const companionMarkup = settingsMarkup.slice(companionStart);
+
+        [
+            'rpg_adventure_companion_tutorial_mode',
+            'rpg_adventure_companion_lookback',
+            'rpg_adventure_companion_lookback_all',
+            'rpg_adventure_companion_inject_lore',
+            'rpg_adventure_companion_inject_memo',
+            'rpg_adventure_companion_connection_source',
+            'rpg_adventure_companion_connection_profile',
+            'rpg_adventure_companion_ollama_url',
+            'rpg_adventure_companion_ollama_model',
+            'rpg_adventure_companion_openai_url',
+            'rpg_adventure_companion_openai_key',
+            'rpg_adventure_companion_openai_model',
+            'rpg_adventure_companion_openai_model_manual',
+            'rpg_adventure_companion_completion_preset',
+        ].forEach((id) => expect(companionMarkup).toContain(`id="${id}"`));
+    });
+
+    it('places Adventure Companion directly below World Progression', () => {
+        const worldStart = settingsMarkup.indexOf('<b>World Progression</b>');
+        const companionStart = settingsMarkup.indexOf('<b>Adventure Companion</b>');
+
+        expect(worldStart).toBeGreaterThanOrEqual(0);
+        expect(companionStart).toBeGreaterThan(worldStart);
+        expect(settingsMarkup.indexOf('<b>Lorebook Agent</b>')).toBeLessThan(worldStart);
+    });
+
+    it('places the global custom-bar animation toggle beside the Rendering Tags Library', () => {
+        const library = settingsMarkup.indexOf('id="rt_btn_tag_library"');
+        const animation = settingsMarkup.indexOf('id="rpg_tracker_animate_all_custom_bars"');
+        const moduleExport = settingsMarkup.indexOf('id="rpg_tracker_export_all_modules"');
+
+        expect(library).toBeGreaterThanOrEqual(0);
+        expect(animation).toBeGreaterThan(library);
+        expect(animation).toBeLessThan(moduleExport);
+        expect(settingsMarkup).not.toContain('âˆ’value');
     });
 });

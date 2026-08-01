@@ -4,9 +4,11 @@
 
 *A D&D-based RPG platform/simulation engine for SillyTavern.*
 
-This framework essentially turns SillyTavern into something like AI Dungeon, but with actual mechanics/consequences! Started off as a humble "RPG State Tracker" but has since expanded into a more ambitious game engine, simulation system, and modular RPG framework where you can basically make your own game. Mechanical integrity and simulation depth is key here. This isn't a narrative-first philosophy; it aims for relentless "simulation autism." The backbone of the system is time simulation.
+This framework, with its stock settings, essentially turns SillyTavern into something like AI Dungeon, but with actual mechanics/consequences! And I mean that. It's not anti-player, but it can be said to be "player-neutral." The narrative and internal consistency of the world determines how hard or easy something is. There is explicitly zero scaling anywhere to ensure choices matter and consequence is real. Going into the dragon's lair at level 2 should not turn the dragon into anything less than a dragon, and the dragon shouldn't show mercy just because you happen to be level 2.
 
-In addition to fantasy, the system works just as well for casual "slice of life" scenarios, modern settings, or anything else imaginable, so you're by no means limited to wizards and goblins. Everything is FULLY customizable and homebrew-friendly, complete with AI wizards, so next to no technical knowledge is required.
+The core aim and philosophy is to deliver an immersive experience through robust simulation logic, using realistic time passage as the backbone that ties into numerous other systems, and this aforementioned "player-agnosticism/neutrality." Fundamentally it acts as a cohesive RPG framework as well as an anti-sycophancy system.
+
+I know it says "D&D Framework," but in addition to fantasy, the system works just as well for casual "slice of life" scenarios, modern settings, or anything else imaginable, so you're by no means limited to wizards and goblins. Everything is FULLY customizable and homebrew-friendly, complete with AI wizards, so next to no technical knowledge is required.
 
 ---
 
@@ -98,11 +100,11 @@ You can scrap the entire system prompt and all the default fields and track your
 ## What Model to Use?
 Your primary narrator model must support **Tool Calling** for the Hybrid RNG system to work properly, though this is only relevant if you're using tool calls. The extension also works without them (selectable in the settings.)
 
-**MiMo 2.5 Pro** or **DeepSeek 4 Pro**: both are great bang for the buck with high GM output quality. I use MiMo myself through OpenRouter — DeepSeek 4 Pro is another strong pick in the same tier. Try both and see which voice you prefer.
+**MiMo 2.5 Pro** or **DeepSeek 4 Pro**: both are great bang for the buck with high GM output quality. I use both myself through OpenRouter. Can't go wrong with either.
 
-For the State Tracker and Lorebook Agent, I use **Gemini 3.1 Flash-Lite**. It's very inexpensive and handles the job amazingly well. Gemini 3 Flash or 3.5 Flash are of course even better, but I don't think they're needed. Flash-Lite does the job.
+For the State Tracker and Lorebook Agent, I use **Gemini 3.5 Flash-Lite**. It's very inexpensive and handles the job amazingly well. Gemini 3 Flash or 3.5 Flash are of course even better, but I don't think they're needed. Flash-Lite does the job.
 
-If your model thinks too long in combat, enable **Combat API Override** in State Tracker settings — it auto-switches when the `[COMBAT]` tag is active in the tracker and switches back when combat ends. **Gemini 3.5 Flash** is a great choice for this; set thinking to **Medium** so it still thinks a little.
+If your model thinks too long in combat, enable **Combat API Override** in State Tracker settings — it auto-switches when the `[COMBAT]` tag is active in the tracker and switches back when combat ends. **Gemini 3.6 Flash** is a great choice for this; set thinking to **Medium** so it still thinks a little.
 
 These are recommendations, not rules — experiment. Different models shine for different styles of play.
 
@@ -130,6 +132,14 @@ These are recommendations, not rules — experiment. Different models shine for 
     <img width="1918" height="982" alt="Screenshot 2026-06-18 195917" src="https://github.com/user-attachments/assets/7eb15c2b-bfd8-4193-8553-4053bac14c34" />
   </figure>
 </div>
+
+---
+
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/6309d516-7a0e-4387-8df8-b82566555ade" width="70%" alt="Combat in progress" />
+  <br>
+  <em>Visualization Mode</em>
+</p>
 
 ---
 
