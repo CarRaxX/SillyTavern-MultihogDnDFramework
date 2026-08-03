@@ -4168,6 +4168,14 @@ ${historicalDump}`;
  * @returns {Array<{label: string, content: string, category: string}>}
  */
 function parseSkeletonOutput(rawText) {
+    if (!rawText) return [];
+
+    // Strip reasoning / channel tags emitted by models like Gemma 4 / DeepSeek (<|channel>...<channel|>)
+    const cleanedText = rawText
+        .replace(/<\|channel\|?>[\s\S]*?<channel\|?>/gi, '')
+        .replace(/<thought[\s\S]*?<\/thought>/gi, '')
+        .trim();
+
     const categoryMap = {
         'FACTIONS': 'FAC',
         'FACTION': 'FAC',
@@ -4194,18 +4202,20 @@ function parseSkeletonOutput(rawText) {
     };
 
     const records = [];
-    const lines = rawText.split('\n');
+    const lines = cleanedText.split('\n');
     
     let currentCategory = 'NPC';
     let currentItem = null;
 
-    const sectionRegex = /^##\s+([A-Z]+)/i;
+    const sectionRegex = /^##\s+([A-Z\/]+)/i;
     const subHeaderRegex = /^###\s+(.+)/;
     const listRegexBold = /^\s*(?:[\*\-\d\.\s]*)\s*\*\*(.+?)\*\*\s*[:\-]?\s*(.*)/;
     const listRegexPlain = /^\s*(?:[\*\-\d\.\s]*)\s*([^:\-\n]+)\s*[:\-]\s*(.*)/;
 
     for (let i = 0; i < lines.length; i++) {
-        const line = lines[i];
+        let line = lines[i];
+        // Strip any residual inline channel/formatting prefixes before matching
+        line = line.replace(/^<.*?>\s*/, '');
         const trimmedLine = line.trim();
 
         // 1. Check for ## Section Header
