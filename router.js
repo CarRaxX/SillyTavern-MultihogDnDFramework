@@ -4177,15 +4177,18 @@ function parseSkeletonOutput(rawText) {
         'LOCATION': 'LOC',
         'UBICACIONES': 'LOC',
         'UBICACION': 'LOC',
+        'LUGARES': 'LOC',
+        'LUGAR': 'LOC',
         'NPCS': 'NPC',
         'NPC': 'NPC',
         'PERSONAJES': 'NPC',
         'PERSONAJE': 'NPC',
+        'NPCS/PERSONAJES': 'NPC',
         'CONFLICTS': 'EVENT',
         'CONFLICT': 'EVENT',
+        'EVENTS': 'EVENT',
         'CONFLICTOS': 'EVENT',
         'CONFLICTO': 'EVENT',
-        'EVENTS': 'EVENT',
         'EVENTOS': 'EVENT',
         'EVENTO': 'EVENT',
     };
@@ -4196,6 +4199,7 @@ function parseSkeletonOutput(rawText) {
     let currentCategory = 'NPC';
     let currentItem = null;
 
+    const sectionRegex = /^##\s+([A-Z]+)/i;
     const subHeaderRegex = /^###\s+(.+)/;
     const listRegexBold = /^\s*(?:[\*\-\d\.\s]*)\s*\*\*(.+?)\*\*\s*[:\-]?\s*(.*)/;
     const listRegexPlain = /^\s*(?:[\*\-\d\.\s]*)\s*([^:\-\n]+)\s*[:\-]\s*(.*)/;
@@ -4204,24 +4208,16 @@ function parseSkeletonOutput(rawText) {
         const line = lines[i];
         const trimmedLine = line.trim();
 
-        // 1. Check for ## Section Header (ignore lines starting with ###)
-        if (trimmedLine.startsWith('##') && !trimmedLine.startsWith('###')) {
-            const headerText = trimmedLine.replace(/^##\s*/, '').replace(/[\*\d\.]/g, '').trim().toUpperCase();
-            let matchedCat = null;
-            for (const [key, catVal] of Object.entries(categoryMap)) {
-                if (headerText.includes(key)) {
-                    matchedCat = catVal;
-                    break;
-                }
+        // 1. Check for ## Section Header
+        const secMatch = line.match(sectionRegex);
+        if (secMatch) {
+            if (currentItem) {
+                records.push(currentItem);
+                currentItem = null;
             }
-            if (matchedCat) {
-                if (currentItem) {
-                    records.push(currentItem);
-                    currentItem = null;
-                }
-                currentCategory = matchedCat;
-                continue;
-            }
+            const key = secMatch[1].toUpperCase();
+            currentCategory = categoryMap[key] || 'NPC';
+            continue;
         }
 
         // 2. Check for ### Sub-header
