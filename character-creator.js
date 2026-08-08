@@ -460,6 +460,8 @@ export function showCharacterRollPanel(el) {
 
     getSettings().characterCreatorPanelOpen = true;
 
+    const pcImportPanel = /** @type {HTMLElement|null} */ (el.querySelector('#rt-pc-import-panel'));
+    if (pcImportPanel) pcImportPanel.style.display = 'none';
     if (heroEl) heroEl.style.display = 'none';
     if (quickStartEl) quickStartEl.style.display = 'none';
     if (secondaryEl) secondaryEl.style.display = 'none';
@@ -1035,14 +1037,11 @@ export function showPcImportPanel(el) {
     const quickStartEl = /** @type {HTMLElement|null} */ (el.querySelector('#rt-quickstart'));
     const allBtnGroups = /** @type {NodeListOf<HTMLElement>} */ (el.querySelectorAll('.rt-onboarding-buttons'));
 
-    const savedDisplays = Array.from(allBtnGroups).map(g => g.style.display);
-    const savedHeroDisplay = heroEl ? heroEl.style.display : '';
-    const savedSecondaryDisplay = secondaryEl ? secondaryEl.style.display : '';
-    const savedQuickStartDisplay = quickStartEl ? quickStartEl.style.display : '';
-
     if (heroEl) heroEl.style.display = 'none';
     if (quickStartEl) quickStartEl.style.display = 'none';
     if (secondaryEl) secondaryEl.style.display = 'none';
+    const charRollPanel = /** @type {HTMLElement|null} */ (el.querySelector('#rt-char-roll-panel'));
+    if (charRollPanel) charRollPanel.style.display = 'none';
     panel.style.display = 'flex';
 
     const editBtn = panel.querySelector('.rt-edit-pc-sections-btn');
@@ -1051,16 +1050,20 @@ export function showPcImportPanel(el) {
         editBtn.addEventListener('click', () => openPcSectionEditor());
     }
 
-    // Back button — restore exactly what was hidden, not a blank reset
+    // Back button — restore main onboarding display
     const backBtn = panel.querySelector('#rt-pc-import-back');
-    if (backBtn) {
+    if (backBtn && !backBtn._bound) {
+        backBtn._bound = true;
         backBtn.addEventListener('click', () => {
             panel.style.display = 'none';
-            if (heroEl) heroEl.style.display = savedHeroDisplay;
-            if (quickStartEl) quickStartEl.style.display = savedQuickStartDisplay;
-            if (secondaryEl) secondaryEl.style.display = savedSecondaryDisplay;
-            allBtnGroups.forEach((g, i) => { g.style.display = savedDisplays[i]; });
-        }, { once: true });
+            if (heroEl) heroEl.style.display = '';
+            if (quickStartEl) quickStartEl.style.display = '';
+            if (secondaryEl) secondaryEl.style.display = '';
+            const genre = getSettings().onboardingGenre || 'fantasy';
+            allBtnGroups.forEach(g => {
+                g.style.display = g.classList.contains(`rt-${genre}-buttons`) ? 'flex' : 'none';
+            });
+        });
     }
 
     const listEl = /** @type {HTMLElement|null} */ (panel.querySelector('#rt-pc-import-list'));
