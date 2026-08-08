@@ -2246,6 +2246,9 @@ function formatValueToCurrency(totalCp, detectedCurrency) {
                     <button class="rt-random-char-btn" data-archetype="custom" data-name-required="true" disabled>⚙️ Personalizado</button>
                     <button class="rt-random-char-btn rt-pc-import-trigger" data-archetype="pc_import">📥 Importar Ficha</button>
                 </div>
+                </div>
+                </div>
+                </div>
 
                 <!-- PC Import Inline Panel (hidden until 📥 is clicked) -->
                 <div id="rt-pc-import-panel" style="display:none; flex-direction:column; gap:7px; width:100%; flex-shrink:0;">
