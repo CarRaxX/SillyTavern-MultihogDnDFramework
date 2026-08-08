@@ -56,6 +56,21 @@ describe('onboarding Player Card and ST persona options', () => {
         expect(html).toContain('Or head to the Discord, under the Extensions subforum:');
         expect(html).toContain('href="https://discord.gg/sillytavern"');
         expect(html).toContain('Hell, head there anyway!');
+        expect(html).toContain('Here\'s a video on how to get started for good measure:');
+        expect(html).toContain('href="https://www.youtube.com/watch?v=dKKFQqrH7qQ"');
+    });
+
+    it('places the Main prompt restoration note directly under How It Works', () => {
+        const html = renderMemoAsCards('', null, {});
+        const headingIndex = html.indexOf('<span>How It Works</span>');
+        const noteIndex = html.indexOf('class="rt-onboarding-prompt-backup-note"');
+        const helpIndex = html.indexOf('class="rt-onboarding-chat-tip"');
+
+        expect(headingIndex).toBeGreaterThanOrEqual(0);
+        expect(noteIndex).toBeGreaterThan(headingIndex);
+        expect(helpIndex).toBeGreaterThan(noteIndex);
+        expect(html).toContain('Multihog D&amp;D Framework auto-applies its own system prompt.');
+        expect(html).toContain('General &amp; Visuals -> Core -> Restore backup to Main.');
     });
 
     it('links the startup welcome note to the GitHub releases page', () => {

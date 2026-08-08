@@ -1,6 +1,6 @@
-import { EXAMPLES, COLOR_EXAMPLES, DEFAULT_STOCK_PROMPTS, RT_PROMPTS, BLOCK_ICONS, BLOCK_ORDER, PAGE_SIZE, NO_PAGINATE, buildOnboardingXpHint, buildOnboardingTimeHint, buildStartingGearHint, buildOnboardingActiveBlocks, buildCombatAndSkillScalingHint, resolveTimePromptKey, resolveTimePromptDisplayTag, buildCyoaPrompt, DEFAULT_CYOA_SLOTS, refreshCyoaConfigToShipped } from './constants.js';
-import { MODULE_NAME, DEFAULT_MODULES, getSettings, getBarBackground, migrateCustomFields, saveChatState, getActiveChatId, writeModuleSchemaBackup, getPendingModuleSchemaBackup, applyModuleSchemaBackup, applyDeletedCustomTagTombstones, recordDeletedCustomTags, clearDeletedCustomTagTombstones, saveProfile, deleteProfile, getEffectiveRouterCampaignPrefix, sanitizeCampaignPrefixString, buildNpcInstruction, loadStockPromptsFromProfile, getNpcRelationshipMax, getNpcRelationshipMaxDefault, clampRelationshipValue, relationshipBarPct, getFriendshipTier, getAffectionTier, getRelTierBadgeStyle, getRelTierDetailedStyle, getRelTierDetailedLabelStyle, applyRelTierBadgeElement, sanitizeRouterState, rebuildAllModuleInstructions, adjustAllStoredTemplatesForTimeFormat, DEFAULT_NPC_SECTIONS, DEFAULT_PC_SECTIONS, computeBundledPromptsFingerprint, computeBundledPromptsFingerprintForSnapshot, normalizeBundledPromptsSnapshot, buildBundledPromptsSnapshot, getSnapshotCategoryBlocks, getPromptCategoryImpactBadge, PROMPT_DEFAULTS_CATEGORIES, PROMPT_DEFAULTS_CATEGORY_LABELS, getDefaultPortraitLocationSystemPrompt, isShippedPortraitLocationSystemPrompt, applyFactoryReset, clearExtensionLocalStorageUiState, stripChatStateGlobalUiPrefs, buildStateTrackerRelationshipCommandInstruction, extractStateTrackerRelationshipCommands, getRelationshipUpdateMode, RELATIONSHIP_UPDATE_MODES } from './state-manager.js';
-import { resetChatSetupToStock, snapshotChatSetup, chatSetupsMatch, syncChatSetupCatalogs, removeChatSetupCatalogEntries } from './src/state/chat-setup.js';
+import { EXAMPLES, COLOR_EXAMPLES, DEFAULT_STOCK_PROMPTS, RT_PROMPTS, BLOCK_ICONS, BLOCK_ORDER, PAGE_SIZE, NO_PAGINATE, buildOnboardingXpHint, buildOnboardingTimeHint, buildStartingGearHint, buildOnboardingActiveBlocks, buildCombatAndSkillScalingHint, resolveTimePromptKey, resolveTimePromptDisplayTag, buildCyoaPrompt, DEFAULT_CYOA_SLOTS, refreshCyoaConfigToShipped, formatTimeOfDay } from './constants.js';
+import { MODULE_NAME, DEFAULT_MODULES, MODULE_BOOK_CATEGORY, FULL_REVIEW_STATE_SYSTEM_PROMPT, FULL_REVIEW_USER_PROMPT_SUFFIX, getSettings, getBarBackground, migrateCustomFields, saveChatState, getActiveChatId, writeModuleSchemaBackup, getPendingModuleSchemaBackup, applyModuleSchemaBackup, applyDeletedCustomTagTombstones, recordDeletedCustomTags, clearDeletedCustomTagTombstones, saveProfile, deleteProfile, getEffectiveRouterCampaignPrefix, sanitizeCampaignPrefixString, buildNpcInstruction, loadStockPromptsFromProfile, getNpcRelationshipMax, getNpcRelationshipMaxDefault, clampRelationshipValue, relationshipBarPct, getFriendshipTier, getAffectionTier, getRelTierBadgeStyle, getRelTierDetailedStyle, getRelTierDetailedLabelStyle, applyRelTierBadgeElement, sanitizeRouterState, rebuildAllModuleInstructions, adjustAllStoredTemplatesForTimeFormat, DEFAULT_NPC_SECTIONS, DEFAULT_PC_SECTIONS, computeBundledPromptsFingerprint, computeBundledPromptsFingerprintForSnapshot, normalizeBundledPromptsSnapshot, buildBundledPromptsSnapshot, getSnapshotCategoryBlocks, getPromptCategoryImpactBadge, PROMPT_DEFAULTS_CATEGORIES, PROMPT_DEFAULTS_CATEGORY_LABELS, getDefaultPortraitLocationSystemPrompt, isShippedPortraitLocationSystemPrompt, applyFactoryReset, clearExtensionLocalStorageUiState, stripChatStateGlobalUiPrefs, buildStateTrackerRelationshipCommandInstruction, extractStateTrackerRelationshipCommands, getRelationshipUpdateMode, RELATIONSHIP_UPDATE_MODES } from './state-manager.js';
+import { snapshotChatSetup, chatSetupsMatch, syncChatSetupCatalogs, removeChatSetupCatalogEntries } from './src/state/chat-setup.js';
 import { buildDirectPromptSystemPrompt, DIRECT_PROMPT_SYSTEM_MODES } from './src/state/direct-prompt-system.js';
 import { diffTextLines, diffHasChanges } from './prompt-diff.js';
 import { sendStateRequest, fetchOllamaModels, fetchOpenAIModels, testOpenAIConnection, getConnectionProfiles, getCurrentCompletionPreset, setCompletionPreset, syncCombatProfile, resetCombatProfileOverride, isCombatActive } from './llm-client.js';
@@ -10,16 +10,18 @@ import { renderSubFieldByRule, tryRenderMarker, renderCustomBlockLine, stripMemo
 import { unregisterLogQuestTool, checkQuestDeadlines, renderQuestsAsPlainText } from './quests.js';
 import { initializeDebugViewer, toggleDebugViewer } from './debug-viewer.js';
 import { installSwipeSchedulerDebug } from './swipe-scheduler-debug.js';
-import { runRouterPass, rollbackRouterPass, reapplyRouterPass, getLorebookManifest, deleteLorebookEntry, updateLorebookEntry, disableManagedEntries, isRouterRunning, stopRouterPass, purgeWorldHistoryForChat } from './router.js';
+import { runRouterPass, rollbackRouterPass, reapplyRouterPass, getLorebookManifest, deleteLorebookEntry, updateLorebookEntry, disableManagedEntries, isRouterRunning, stopRouterPass, purgeWorldHistoryForChat, setLorebookEntryPinned } from './router.js';
 import { getRequestHeaders } from '../../../../script.js';
 import { fileToDataUrl, scaleImageTo512Square, scaleImageToLandscape, applyPortraitData, applyLocationImageData, renamePortraitEntity, reconcileMemoPortraitRenames, generatePortraitPrompt, generateNpcPortraitPrompt, generateLocationImagePrompt, showPortraitPromptPopup, generatePortraitDirect, autoGeneratePartyPortraits, removeAllPortraits, checkAndTriggerAutoGenerations, autoGenerateEnemyPortraits, forceCheckAutoGenerations, resetAutoGenerationTracking, resetRealtimeLocationGenerationFailure, stopRealtimeLocationGeneration, resolveLocationImageWithMeta, normalizeLocationPath, buildLocationPath, getLinkedPlayerCharacter, resolvePortraitSrcForPlayerCharacter, imageGenToast, triggerBackgroundPortraitGeneration } from './portraits.js';
 import { buildImmersionSceneState, renderImmersionViewHtml, getCurrentLocationText, loadLocationEntryByPath, loadNpcEntryByKey, maybeAutoGenerateImmersionSceneArt, runRealtimeSceneArtCheck, resetImmersionSceneArtTracking, hydrateImmersionSceneArtPath } from './immersion.js';
-import { migrateAllEmbeddedPortraits, countEmbeddedPortraitDataUrls, purgeAllPortraitData, resolvePortraitDisplaySrc, lookupCustomPortraitSrc, collectAllPortraitRefs, isManagedPortraitPath, isPortraitMigrationLocked, setPortraitMigrationLocked, PORTRAIT_STORAGE_FOLDER } from './portrait-storage.js';
+import { migrateAllEmbeddedPortraits, countEmbeddedPortraitDataUrls, purgeAllPortraitData, resolvePortraitDisplaySrc, lookupCustomPortraitSrc, collectAllPortraitRefs, isManagedPortraitPath, isPortraitMigrationLocked, setPortraitMigrationLocked, PORTRAIT_STORAGE_FOLDER, snapshotPortraitMapsForChat, loadPortraitMapsForChat, migrateLegacyPortraitMapsToChat } from './portrait-storage.js';
 import { loadPanelGeometry, loadDeltaHeight, makeDraggable, makeResizableTR, makeResizableBR, makeResizableBL, setupResizeObserver, setupDeltaResize, canResizePanels, jqueryToggleSlide, resolveViewportClampedGeometry, clampFloatingPanelToViewport } from './ui-geometry.js';
 import { applyCustomTheme, openThemeWizard, refreshSavedThemesList, handleRecolor, undoThemeChange } from './theme-manager.js';
 import { showCharacterRollPanel, showPcImportPanel, handleCharacterCreatorGenerate, generatePersonaBio, showPersonaConfirmOverlay, extractCharNameFromMemo, activateSillyTavernPersona } from './character-creator.js';
+import { bindCharacterCreationConnectionSettings, getCharacterCreationConnectionSettings } from './character-creation-connection.js';
 import { bindQuickStartEvents } from './quickstart.js';
 import { bindAdventureCompanion, bindAdventureCompanionSettingsDrawer, openAdventureCompanion, closeAdventureCompanion } from './adventure-companion.js';
+import { openDisplayGroupsManager } from './display-groups.js';
 import { handleCategorySettings, openCustomFieldEditor, openPromptEditor, refreshOrderList, exportModules, importModulesFromJson, openNpcSectionEditor, openPcSectionEditor } from './ui-editors.js';
 import { openGameSystemWizard, openManageGameSystems, openSystemPromptControlRoom, syncAllNarratorTogglesForUnlockState, extractTopLevelSections, normalizeSectionOrder, getSectionRowDescriptor, transformBaseSectionContent, isBlankSectionContent, isSectionUnlocked, isEffectiveSectionEnabled } from './game-systems.js';
 import { openManageGameCartridges, promptAndSaveCurrentAsCartridge } from './game-cartridges.js';
@@ -97,6 +99,22 @@ const refreshAll = () => {
 };
 
 /** Compact colored tier badge (e.g. "FRIENDLY") — hint shown as a tooltip. Used in NPC grid cards. */
+/**
+ * Resolve ST macros (e.g. {{user}}, {{char}}) for READ-ONLY display purposes only.
+ * Storage (currentMemo, lorebook entry content) must keep macros verbatim so that
+ * renaming a persona or character does not silently desync from history text —
+ * only the rendered view is substituted.
+ */
+export function substituteDisplayMacros(text) {
+    if (!text) return text;
+    try {
+        const substituteParams = SillyTavern.getContext()?.substituteParams;
+        return typeof substituteParams === 'function' ? substituteParams(text) : text;
+    } catch (_) {
+        return text;
+    }
+}
+
 function renderRelTierBadge(type, value, max) {
     const tier = type === 'friendship' ? getFriendshipTier(value, max) : getAffectionTier(value, max);
     return `<span class="rt-npc-tier-badge ${type}" style="${getRelTierBadgeStyle(type, value, max)}" title="${escapeHtml(tier.hint)}">${escapeHtml(tier.label)}</span>`;
@@ -160,7 +178,7 @@ async function confirmAndPurgeWorldHistory() {
                 <li>All reports in <code>${escapeHtml(worldBook)}</code></li>
                 <li>All skeleton entities in <code>${escapeHtml(skeletonBook)}</code> (removes stale DESIGNATED ENTITIES from prior stories)</li>
                 <li>Per-chat timer state and active world report keys for this chat</li>
-                <li>Saved atmosphere summary for this chat</li>
+                <li>Saved Skeleton Source for this chat</li>
             </ul>
             <p style="opacity:0.85;"><b>Note:</b> Lorebooks are stored per campaign prefix, not per chat file. If another chat shares this prefix, it will also lose this World/Skeleton data.</p>
         </div>`;
@@ -537,6 +555,7 @@ async function forceDiskCheckpoint() {
     const s = getSettings();
     markMemoPersistedByCurrentBrowser(s);
     const chatId = runtimeState.currentChatId || SillyTavern.getContext()?.chatId || null;
+    snapshotPortraitMapsForChat(s, chatId);
     if (s.chatLinkEnabled && chatId) {
         saveChatState(chatId, { skipDiskWrite: true });
     }
@@ -565,6 +584,7 @@ export function saveSettings(force = false, delay = 0) {
         const s0 = getSettings();
         syncChatSetupCatalogs(s0);
         const chatId0 = runtimeState.currentChatId || SillyTavern.getContext()?.chatId || null;
+        snapshotPortraitMapsForChat(s0, chatId0);
         writeModuleSchemaBackup(chatId0);
         if (s0.chatLinkEnabled && chatId0 && !isPortraitMigrationLocked()) {
             // Keep legacy per-chat module presentation aligned without nesting saveSettings.
@@ -596,6 +616,7 @@ export function saveSettings(force = false, delay = 0) {
                 markMemoPersistedByCurrentBrowser(s);
                 const ctx = SillyTavern.getContext();
                 const activeChatId = runtimeState.currentChatId || ctx.chatId;
+                snapshotPortraitMapsForChat(s, activeChatId);
                 // Snapshot chat-linked state into extension settings before persisting to disk.
                 if (s.chatLinkEnabled && activeChatId && !isPortraitMigrationLocked()) {
                     saveChatState(activeChatId, { skipDiskWrite: true });
@@ -675,7 +696,8 @@ function applyLocationImageAutoMode(settings, { realTimeMode, lorebookLocations 
     if (realTimeMode !== undefined) {
         if (realTimeMode) {
             applyRealTimeModeBundle(settings);
-            syncPortraitLocationPromptForNpcToggle(settings, true, { force: true });
+            // Only auto-swap when still on a shipped default; keep custom Location Scene Prompts.
+            syncPortraitLocationPromptForNpcToggle(settings, true);
         } else {
             settings.portraitAutoGenerateSceneView = false;
             settings.portraitRegenerateVisitedLocations = false;
@@ -813,9 +835,10 @@ function setPortraitLocationPromptTextarea(text) {
 /**
  * When the present-NPC toggle changes, swap Location Scene Prompt to the matching factory default
  * if settings or the open textarea still match a shipped/legacy default.
+ * Custom Location Scene Prompts are never overwritten unless opts.force is set.
  * @param {object} settings
  * @param {boolean} includePresentNpcs
- * @param {{ force?: boolean }} [opts] force=true always overwrites (used by the toggle itself).
+ * @param {{ force?: boolean }} [opts] force=true always overwrites (avoid for normal UI toggles).
  */
 function syncPortraitLocationPromptForNpcToggle(settings, includePresentNpcs, opts = {}) {
     const fromSettings = settings.portraitLocationSystemPrompt || '';
@@ -914,6 +937,7 @@ function applyChatTimeFormatSettings(saved) {
     s.use24hTime = saved?.use24hTime ?? false;
     s.useDdMmYyFormat = saved?.useDdMmYyFormat ?? false;
     s.initialDate = saved?.initialDate ?? 'Day 1';
+    s.initialTime = saved?.initialTime ?? '08:00 AM';
     if (s.routerModules?.npc) {
         s.routerModules.npc.instruction = buildNpcInstruction(s.npcMajorWords, s.npcMinorWords, false);
     }
@@ -958,6 +982,10 @@ export function setUseDdMmYyFormat(isDate) {
 export function setUse24hTime(is24h) {
     const s = getSettings();
     s.use24hTime = !!is24h;
+    // Reformat the stored initial-time anchor to match the new clock style so the
+    // Character Creator / onboarding inputs and the [TIME] hint stay consistent.
+    const parsedMins = parseInWorldTime(s.initialTime || '08:00 AM');
+    if (parsedMins != null) s.initialTime = formatTimeOfDay(parsedMins, s.use24hTime);
     rebuildAllModuleInstructions(s);
     adjustAllStoredTemplatesForTimeFormat(s);
     $('#rpg_tracker_router_prompt').val(s.routerSystemPromptTemplate);
@@ -984,6 +1012,21 @@ function setInitialDateValue(val, sourceInput = null) {
     saveSettings();
     persistChatTimeFormatIfLinked();
     document.querySelectorAll('#rt-cr-start-date, #rt-onboarding-start-date').forEach(input => {
+        if (input !== sourceInput) /** @type {HTMLInputElement} */ (input).value = val;
+    });
+}
+
+/**
+ * Single source-of-truth setter for the initial time-of-day anchor text.
+ * See {@link setInitialDateValue} for why every input MUST funnel through here.
+ * @param {string} val
+ * @param {HTMLInputElement|null} [sourceInput] - the input the user is typing into; left untouched.
+ */
+function setInitialTimeValue(val, sourceInput = null) {
+    getSettings().initialTime = val;
+    saveSettings();
+    persistChatTimeFormatIfLinked();
+    document.querySelectorAll('#rt-cr-start-time, #rt-onboarding-start-time').forEach(input => {
         if (input !== sourceInput) /** @type {HTMLInputElement} */ (input).value = val;
     });
 }
@@ -1062,10 +1105,28 @@ function syncOnboardingUI() {
         drawerStartDate.value = startDateVal;
         drawerStartDate.style.display = s.useDdMmYyFormat ? 'inline-block' : 'none';
     }
+    const startTimeVal = s.initialTime || '08:00 AM';
+    onboarding.querySelectorAll('#rt-cr-start-time, #rt-onboarding-start-time').forEach(input => {
+        if (input instanceof HTMLInputElement && input.value !== startTimeVal) input.value = startTimeVal;
+    });
     const gearTier = s.onboardingGearTier || 'auto';
     onboarding.querySelectorAll('#rt-onboarding-gear-tier, #rt-cr-gear-tier').forEach(sel => {
         if (sel instanceof HTMLSelectElement && sel.value !== gearTier) sel.value = gearTier;
     });
+    const levelPref = s.onboardingLevel === 'none' ? 'none' : String(s.onboardingLevel || 1);
+    onboarding.querySelectorAll('#rt-starting-level, #rt-cr-level').forEach(sel => {
+        if (sel instanceof HTMLSelectElement && sel.value !== levelPref) sel.value = levelPref;
+    });
+    const useCombatGuide = s.onboardingUseCombatScalingGuide !== false;
+    onboarding.querySelectorAll('#rt-onboarding-combat-guide-cb, #rt-cr-combat-guide-cb').forEach(cb => {
+        if (cb instanceof HTMLInputElement) cb.checked = useCombatGuide;
+    });
+
+    // Hide the Abilities preference field entirely when the [ABILITIES] module is
+    // disabled — the prompt no longer references it either, so leaving it visible
+    // would just collect input that's silently discarded.
+    const abilitiesField = /** @type {HTMLElement|null} */ (onboarding.querySelector('#rt-cr-abilities'))?.closest('.rt-cr-field');
+    if (abilitiesField) abilitiesField.style.display = s.modules?.abilities ? '' : 'none';
 
     const playerCardCbSync = /** @type {HTMLInputElement|null} */ (onboarding.querySelector('#rt-onboarding-player-card-cb'));
     if (playerCardCbSync) playerCardCbSync.checked = !!s.onboardingCreatePersona;
@@ -1431,9 +1492,13 @@ const loadChatState = createChatStateLoader({
     syncNpcPortraitDependentUi,
 });
 
-/** Reset live per-chat state when Chat Link reaches a chat with no saved snapshot. */
+/**
+ * Reset live story state when Chat Link reaches a chat with no saved snapshot.
+ * Narrator Configuration intentionally remains untouched: the departing chat was
+ * already snapshotted before this runs, so a new chat inherits that configuration
+ * and receives its own independent snapshot on the next save.
+ */
 function resetUnseenChatState(s) {
-    if (s.chatSetupLinkEnabled) resetChatSetupToStock(s);
     s.currentMemo = '';
     s.combatDefeatedUi = [];
     s.prevMemo1 = '';
@@ -1446,6 +1511,7 @@ function resetUnseenChatState(s) {
     s.activeWorldKeys = [];
     s.keywordActivatedKeys = [];
     s.routerLog = [];
+    s.pcCharacterBlockSeeded = false;
     s.customPortraits = {};
     s.customLocationImages = {};
     s.worldProgressionLastFiredAtMinutes = -1;
@@ -1621,10 +1687,12 @@ function onChatChanged(newChatId) {
     }
 
     const oldChatId = runtimeState.currentChatId;
+    const migratedPortraitScope = migrateLegacyPortraitMapsToChat(s, oldChatId || resolvedId);
 
     // Same-chat refresh (bare emit, F5, Copilot apply, etc.): keep live tracker state.
     if (!emitHadId || oldChatId === resolvedId) {
         runtimeState.currentChatId = resolvedId;
+        if (migratedPortraitScope) void saveSettings(true);
         void ensureLocalMemoRecovery(resolvedId);
         updateChatLinkUI();
         return;
@@ -1635,6 +1703,9 @@ function onChatChanged(newChatId) {
     if (typeof globalThis._rpgFlushAdventureCompanionForChat === 'function' && oldChatId) {
         globalThis._rpgFlushAdventureCompanionForChat(oldChatId);
     }
+
+    // Portraits and location images are always chat-owned, even when broader Chat Link is off.
+    snapshotPortraitMapsForChat(s, oldChatId);
 
     runtimeState.currentChatId = resolvedId;
 
@@ -1759,6 +1830,8 @@ function onChatChanged(newChatId) {
     }
 
     if (!s.chatLinkEnabled) {
+        loadPortraitMapsForChat(s, resolvedId);
+        if (migratedPortraitScope) void saveSettings(true);
         // World Progression "last fired" is operational per-chat state and must never bleed
         // between scenarios regardless of chatLinkEnabled. Reset it unconditionally on actual switch.
         s.worldProgressionLastFiredAtMinutes = -1;
@@ -1784,6 +1857,7 @@ function onChatChanged(newChatId) {
         globalThis._rpgLoadAdventureCompanionForChat(resolvedId);
     }
     if (s.chatSetupLinkEnabled) syncAllNarratorTogglesForUnlockState();
+    if (migratedPortraitScope) void saveSettings(true);
 
     scheduleAgentManifestRefresh();
     updateChatLinkUI();
@@ -1984,7 +2058,8 @@ async function runStateModelPass(narrativeOutput, isFullContext = false, overrid
         const signal = runtimeState.stateController.signal;
 
         const modulesText = buildModulesInstructionText(settings);
-        let systemPrompt = settings.systemPromptTemplate.replace('{{modulesText}}', modulesText);
+        const coreTemplate = settings.fullReviewStateMode ? FULL_REVIEW_STATE_SYSTEM_PROMPT : settings.systemPromptTemplate;
+        let systemPrompt = coreTemplate.replace('{{modulesText}}', modulesText);
         if (settings.npcRelationshipBars && getRelationshipUpdateMode(settings) === RELATIONSHIP_UPDATE_MODES.STATE_TRACKER) {
             systemPrompt += `\n\n${buildStateTrackerRelationshipCommandInstruction(
                 getNpcRelationshipMax(settings),
@@ -2045,9 +2120,17 @@ async function runStateModelPass(narrativeOutput, isFullContext = false, overrid
                 chunks.push(currentChunk);
             }
         } else {
-            const sinceLastUser = settings.lookbackSinceLastUser !== false; // default true
+            // Explicit Lookback Update / slash lookback=N must win over the default
+            // "since last user message" mode (same priority pattern as Lorebook Agent).
+            const useFixedLookback = overrideLookback !== null
+                || settings.lookbackSinceLastUser === false;
             let startIdx;
-            if (sinceLastUser) {
+            if (useFixedLookback) {
+                const N = overrideLookback !== null
+                    ? overrideLookback
+                    : (settings.lookbackMessages !== undefined ? settings.lookbackMessages : 2);
+                startIdx = Math.max(0, chat.length - N);
+            } else {
                 // Walk backward to find the most recent user message, then include it
                 // and everything after it — this captures full turns even when tool calls
                 // produce multiple intermediate messages between user and final response.
@@ -2059,9 +2142,6 @@ async function runStateModelPass(narrativeOutput, isFullContext = false, overrid
                 if (startIdx === 0 && !chat[0]?.is_user) {
                     startIdx = Math.max(0, chat.length - 2);
                 }
-            } else {
-                const N = overrideLookback !== null ? overrideLookback : (settings.lookbackMessages !== undefined ? settings.lookbackMessages : 2);
-                startIdx = Math.max(0, chat.length - N);
             }
             const recentChat = chat.slice(startIdx);
             const chatLogLines = recentChat.map(m => {
@@ -2152,11 +2232,14 @@ async function runStateModelPass(narrativeOutput, isFullContext = false, overrid
                     `## TASK\nAnalyze the narrative chunk provided above. Rebuild the State Memo to ensure every detail is perfectly accurate to this point in the story. Correct any errors or omissions found in the Prior Memo.\n\n` +
                     `## OUTPUT THE COMPLETE VERIFIED STATE MEMO:`;
             } else {
+                const suffix = settings.fullReviewStateMode
+                    ? FULL_REVIEW_USER_PROMPT_SUFFIX
+                    : (settings.userPromptSuffix || `## OUTPUT ONLY CHANGED SECTIONS:`);
                 userPrompt =
                     worldLoreSection +
                     priorMemoText +
                     `## NARRATIVE HISTORY (Last ${chunks[i].length} messages)\n${chatLog}\n\n` +
-                    (settings.userPromptSuffix || `## OUTPUT ONLY CHANGED SECTIONS:`);
+                    suffix;
             }
 
             const result = await sendStateRequest(settings, systemPrompt, userPrompt);
@@ -2329,7 +2412,7 @@ async function syncActivePersonaDescriptionFromAvatar() {
  * Send a direct instruction to the State Model bypassing the narrative pipeline.
  * Used for initial character setup and manual corrections.
  * @param {string} message
- * @param {{ systemPromptMode?: 'state_extractor'|'modules_only' }} [options]
+ * @param {{ systemPromptMode?: 'state_extractor'|'modules_only', connectionSettings?: object }} [options]
  */
 export async function sendDirectPrompt(message, options = {}) {
     if (runtimeState.stateModelRunning) {
@@ -2403,7 +2486,7 @@ export async function sendDirectPrompt(message, options = {}) {
             `## USER INSTRUCTION\n${message}\n\n` +
             `## OUTPUT ONLY CHANGED OR NEW SECTIONS:`;
 
-        const result = await sendStateRequest(settings, systemPrompt, userPrompt);
+        const result = await sendStateRequest(options.connectionSettings || settings, systemPrompt, userPrompt);
 
         if (result && typeof result === 'string') {
             let cleanedOutput = result;
@@ -2507,6 +2590,9 @@ function loadProfile(name) {
     s.worldProgressionSkeletonLocations = p.worldProgressionSkeletonLocations ?? 4;
     s.worldProgressionSkeletonNPCs = p.worldProgressionSkeletonNPCs ?? 0;
     s.worldProgressionSkeletonConflicts = p.worldProgressionSkeletonConflicts ?? 3;
+    s.worldProgressionSkeletonUseLorebooks = p.worldProgressionSkeletonUseLorebooks ?? false;
+    s.worldProgressionSkeletonLorebookFilter = JSON.parse(JSON.stringify(p.worldProgressionSkeletonLorebookFilter || []));
+    s.worldProgressionSkeletonLorebookOnly = p.worldProgressionSkeletonLorebookOnly ?? false;
     s.worldProgressionLastFiredAtMinutes = p.worldProgressionLastFiredAtMinutes ?? -1;
     s.worldProgressionLastFiredPeriodLabel = p.worldProgressionLastFiredPeriodLabel || '';
     s.worldProgressionExclusionList = p.worldProgressionExclusionList ?? '';
@@ -2554,6 +2640,15 @@ function loadProfile(name) {
     s.gameSystemWizardOpenaiModel = p.gameSystemWizardOpenaiModel || "";
     s.gameSystemWizardSystemPrompt = p.gameSystemWizardSystemPrompt || "";
 
+    s.characterCreationConnectionSource = p.characterCreationConnectionSource ?? "default";
+    s.characterCreationConnectionProfileId = p.characterCreationConnectionProfileId || "";
+    s.characterCreationCompletionPresetId = p.characterCreationCompletionPresetId || "";
+    s.characterCreationOllamaUrl = p.characterCreationOllamaUrl || "http://localhost:11434";
+    s.characterCreationOllamaModel = p.characterCreationOllamaModel || "";
+    s.characterCreationOpenaiUrl = p.characterCreationOpenaiUrl || "";
+    s.characterCreationOpenaiKey = p.characterCreationOpenaiKey || "";
+    s.characterCreationOpenaiModel = p.characterCreationOpenaiModel || "";
+
     // Update settings UI inputs if rendered
     $('#rpg_world_progression_randomize_npcs').prop('checked', !!s.worldProgressionRandomizeNPCs);
     $('#rpg_world_progression_random_skeleton_npc_count').val(s.worldProgressionRandomSkeletonNPCCount ?? 2);
@@ -2569,6 +2664,22 @@ function loadProfile(name) {
     $('#rpg_world_progression_skeleton_locations').val(s.worldProgressionSkeletonLocations ?? 4);
     $('#rpg_world_progression_skeleton_npcs').val(s.worldProgressionSkeletonNPCs ?? 0);
     $('#rpg_world_progression_skeleton_conflicts').val(s.worldProgressionSkeletonConflicts ?? 3);
+    $('#rpg_world_progression_skeleton_use_lorebooks').prop('checked', !!s.worldProgressionSkeletonUseLorebooks);
+    $('#rpg_world_progression_skeleton_lorebook_filter_group').toggle(!!s.worldProgressionSkeletonUseLorebooks);
+    $('#rpg_world_progression_skeleton_lorebook_only').prop('checked', !!s.worldProgressionSkeletonLorebookOnly);
+    $('#rpg_world_progression_skeleton_lorebook_only').prop('disabled', !s.worldProgressionSkeletonUseLorebooks);
+    $('#rpg_world_progression_skeleton_lorebook_only_row').css({
+        opacity: s.worldProgressionSkeletonUseLorebooks ? '1' : '0.45',
+        pointerEvents: s.worldProgressionSkeletonUseLorebooks ? 'auto' : 'none',
+    });
+    const profileLorebookOnlyActive = !!s.worldProgressionSkeletonUseLorebooks && !!s.worldProgressionSkeletonLorebookOnly;
+    $('#rpg_world_progression_skeleton_counts').css({
+        opacity: profileLorebookOnlyActive ? '0.4' : '1',
+        pointerEvents: profileLorebookOnlyActive ? 'none' : 'auto',
+    }).find('input').prop('disabled', profileLorebookOnlyActive);
+    if (s.worldProgressionSkeletonUseLorebooks && typeof globalThis._rpgRefreshSkeletonLorebookList === 'function') {
+        void globalThis._rpgRefreshSkeletonLorebookList();
+    }
     $('#rpg_world_progression_exclusion_list').val(s.worldProgressionExclusionList);
 
     // Sync portrait connection settings UI
@@ -2666,23 +2777,43 @@ async function showRngExplanation() {
                 <div style="font-size: 1em; font-weight: bold; margin-bottom: 6px;">${icon} ${title}</div>
                 <div style="font-size: 0.9em; line-height: 1.5; opacity: 0.88;">${body}</div>
             </div>`;
+    const ol = (items) => `<ol style="margin: 6px 0 0 0; padding-left: 20px; text-align: left; list-style-position: outside;">${items.map(t => `<li style="margin-bottom: 4px;">${t}</li>`).join('')}</ol>`;
     const popupBody = `
-            <div style="font-size: 0.9em; line-height: 1.5; max-width: 480px; text-align: left;">
-                ${card('🎲', 'Cola RNG Pre-Generada',
-        `Genera una lista de tiradas de dados pre-calculadas y las inyecta directamente en el contexto de la historia. La IA usa la siguiente tirada en la cola de forma secuencial.<br><br>
-                    Es un sistema altamente eficiente que funciona muy bien tanto para combate como para pruebas narrativas. Al no requerir idas y vueltas de llamadas a herramientas, reduce costos de tokens, minimiza latencia y ofrece alta fiabilidad.<br><br>
-                    Durante el combate funciona de forma determinista turno por turno.`
+            <div style="font-size: 0.9em; line-height: 1.5; max-width: 520px; text-align: left;">
+                ${card('🔧', 'RollTheDice (Llamadas a Herramientas)',
+        `<p style="margin: 0 0 8px 0;"><b>RollTheDice</b> se invoca bajo demanda durante la acción. Cuando la IA decide realizar una prueba:</p>
+                    ${ol([
+                        'La IA empieza a generar su mensaje narrativo.',
+                        'Se da cuenta de que necesita una tirada.',
+                        'Invoca la herramienta y <b>pausa</b> la generación.',
+                        'RollTheDice ejecuta el dado y devuelve el resultado exacto.',
+                        'La IA lee el resultado de la tirada (éxito o fallo) con la Clase de Dificultad (CD) ya fijada.',
+                        'La IA continúa narrando la escena con el resultado de la tirada en su contexto.',
+                    ])}
+                    <p style="margin: 10px 0 0 0;"><b>Ventajas:</b> La IA no conoce el resultado del dado de antemano. Es 100% imparcial y libre de adulación.</p>
+                    <p style="margin: 6px 0 0 0;"><b>Inconvenientes:</b> Interrumpe la respuesta en partes, consume más tokens de entrada al pausar y reanudar, y puede generar pequeña latencia.</p>`
     )}
-                ${card('🔧', 'Tiradas por Llamadas a Herramientas (Tool Calls)',
-        `Un sistema reactivo donde la IA llama proactivamente a una herramienta de dados para una acción específica (ej. forzar una cerradura, persuadir a un guardia). La IA debe declarar una <b>Clase de Dificultad (CD)</b> antes de ver el resultado. Asegura la máxima imparcialidad técnica.`
+                ${card('🎲', 'Cola RNG Pre-Generada',
+        `<p style="margin: 0 0 8px 0;">Cómo funciona:</p>
+                    ${ol([
+                        'Los números de los dados son calculados previamente con JavaScript e inyectados antes del mensaje del usuario.',
+                        'La IA solo debe tomar los números de la cola en orden estricto e integrarlos en la historia.',
+                    ])}
+                    <p style="margin: 10px 0 0 0;"><b>Ventajas:</b> Permite múltiples tiradas en una sola respuesta sin pausas; menor costo de tokens y latencia nula.</p>
+                    <p style="margin: 6px 0 0 0;"><b>Inconvenientes:</b> La IA puede "ver" el número que viene en la cola, aunque en combate y con CYOA este riesgo queda neutralizado.</p>`
+    )}
+                ${card('🧭', 'Modo CYOA + Combate (Neutralizan la vista previa)',
+        `<p style="margin: 0 0 8px 0;"><b>El Modo CYOA</b> soluciona el problema de previsión de la cola. Fuerza a la IA a comprometerse con la Clase de Dificultad (CD) en la opción del turno <b>anterior</b> (ej. <code>Ganzúa CD 18</code>). Esa CD queda bloqueada. Al tirar en el turno siguiente, la CD ya estaba decidida.</p>
+                    <p style="margin: 0 0 8px 0;">Lo mismo aplica al <b>combate</b>, que funciona en una grilla determinista de iniciativa y turnos.</p>`
     )}
                 <div style="background: rgba(255,200,50,0.08); border: 1px solid rgba(255,200,50,0.25); border-radius: 8px; padding: 10px 14px; margin-bottom: 12px; font-size: 0.88em; text-align: left;">
-                    <b style="color: #ffcc33;">⚠ Importante:</b> Las tiradas por Herramientas requieren activar <b>"Habilitar llamadas a funciones" (Function Calling)</b> en la configuración de respuesta de IA de SillyTavern.
+                    <b style="color: #ffcc33;">⚠ Importante:</b> RollTheDice requiere activar <b>"Habilitar llamadas a funciones"</b> en la configuración de respuesta de IA de SillyTavern.
                 </div>
                 ${card('📋', '¿Qué sistema debo utilizar?',
         `<ul style="margin: 4px 0 0 0; padding-left: 20px; text-align: left; list-style-position: outside;">
-                        <li style="margin-bottom: 4px;"><b>Pre-Generado + Herramientas (Recomendado sin CYOA):</b> Cambia automáticamente según el contexto: fuera de combate la IA ve <b>RollTheDice</b>; durante el combate activo ve únicamente la <b>Cola RNG</b>.</li>
-                        <li><b>Solo Pre-Generado:</b> Exclusivamente por cola. Ideal si tu modelo no soporta llamadas a funciones o prefieres una configuración más sencilla.</li>
+                        <li style="margin-bottom: 4px;"><b>Pre-Generado + Herramientas (Recomendado sin CYOA):</b> Fuera de combate la IA usa <b>RollTheDice</b>; durante el combate activo usa exclusivamente la <b>Cola RNG</b>.</li>
+                        <li style="margin-bottom: 4px;"><b>Con Modo CYOA:</b> Prefiere la <b>Cola RNG</b> — las CDs ya están comprometidas en las opciones anteriores.</li>
+                        <li><b>Solo Pre-Generado:</b> Exclusivamente por cola. Ideal si tu modelo no soporta llamadas a funciones. Perfecto para combate y CYOA.</li>
                     </ul>`
     )}
             </div>`;
@@ -2835,8 +2966,8 @@ async function showLorebookAgentDocumentation() {
                                 <li><b>Modo Básico (Etiquetas)</b> — El modelo genera etiquetas estructuradas que el Agente analiza directamente:<br>
                                     <code style="font-size:11px;">[[NPC: Nombre | Descripción | palabra1, palabra2]]</code><br>
                                     Tipos soportados: <code>NPC</code>, <code>LOC</code>, <code>FAC</code>, <code>QUEST</code>, <code>EVENT</code>, además de <code>[[ACTIVATE: nombre]]</code>, <code>[[DEACTIVATE: nombre]]</code>, <code>[[DELETE: nombre]]</code>.<br>
-                                    Ideal para modelos locales o pequeños (Mistral Small, Gemma, Qwen, etc.).</li>
-                                <li style="margin-top:8px;"><b>Modo Avanzado (Herramientas)</b> — Bucle ReAct multiturno: el modelo razona (<i>Pensamiento</i>), ejecuta una herramienta (<i>Acción</i>), recibe el resultado (<i>Observación</i>) y repite hasta finalizar. Herramientas: <code>record</code>, <code>update</code>, <code>activate</code>, <code>deactivate</code>, <code>delete</code> y <code>search</code>. Se recomienda Gemini 3.5 Flash-Lite por su altísima fiabilidad y bajo costo.</li>
+                                    Ideal para modelos locales o pequeños (Gemma 4, Mistral Small, Qwen, Llama.cpp, etc.).</li>
+                                <li style="margin-top:8px;"><b>Modo Avanzado (Herramientas)</b> — Bucle ReAct multiturno: el modelo razona (<i>Pensamiento</i>), ejecuta una herramienta (<i>Acción</i>), recibe el resultado (<i>Observación</i>) y repite hasta finalizar. Herramientas: <code>record</code>, <code>update</code>, <code>activate</code>, <code>deactivate</code>, <code>delete</code> y <code>search</code>. Se recomiendan modelos con llamadas a funciones fiables como Gemini Flash-Lite, Flash, Deepseek o modelos locales avanzados.</li>
                             </ul>
 
                             <h4 style="margin-bottom: 5px;">🧠 Memoria Basada en Atención</h4>
@@ -2898,6 +3029,12 @@ function refreshPortraitPromptPresetsList() {
         nameSpan.addEventListener('click', () => {
             settings.portraitNpcSystemPrompt = preset.npcSystemPrompt || '';
             settings.portraitCharacterSystemPrompt = preset.characterSystemPrompt || '';
+            if (preset.locationSystemPrompt !== undefined) {
+                settings.portraitLocationSystemPrompt = preset.locationSystemPrompt || '';
+            }
+            if (preset.includePresentNpcs !== undefined) {
+                settings.portraitLocationIncludePresentNpcs = !!preset.includePresentNpcs;
+            }
             if (preset.wordTarget !== undefined) {
                 settings.portraitPromptWordTarget = preset.wordTarget;
             }
@@ -2905,9 +3042,16 @@ function refreshPortraitPromptPresetsList() {
 
             $('#rpg_portrait_npc_system_prompt').val(settings.portraitNpcSystemPrompt);
             $('#rpg_portrait_character_system_prompt').val(settings.portraitCharacterSystemPrompt);
+            if (preset.locationSystemPrompt !== undefined) {
+                setPortraitLocationPromptTextarea(settings.portraitLocationSystemPrompt);
+            }
+            if (preset.includePresentNpcs !== undefined) {
+                $('#rpg_portrait_location_include_present_npcs').prop('checked', !!settings.portraitLocationIncludePresentNpcs);
+            }
             if (preset.wordTarget !== undefined) {
                 $('#rpg_portrait_prompt_word_target').val(settings.portraitPromptWordTarget);
             }
+            syncLocationImageDependentUi(settings);
 
             toastr['success'](`Loaded portrait prompt setup: ${name}`, 'Portrait Prompt Library');
         });
@@ -3633,9 +3777,9 @@ export function refreshRenderedView() {
     const memo = runtimeState.historyViewIndex === -1
         ? s.currentMemo
         : (s.memoHistory[runtimeState.historyViewIndex] ?? '');
-    const displayMemo = runtimeState.historyViewIndex === -1
+    const displayMemo = substituteDisplayMacros(runtimeState.historyViewIndex === -1
         ? buildCombatDisplayMemo(memo, s.combatDefeatedUi)
-        : memo;
+        : memo);
     const xpAnimationContext = `${getActiveChatId() || 'global'}::${runtimeState.historyViewIndex === -1 ? 'live' : `history-${runtimeState.historyViewIndex}`}`;
 
     const collapsed = loadCollapsed();
@@ -3653,13 +3797,13 @@ export function refreshRenderedView() {
         let html;
 
         if (s.panelLayoutMode === 'tabs') {
-            const questsCtx = questsEnabled ? { quests: getDisplayQuests(memo), currentTime } : null;
+            const questsCtx = questsEnabled ? { quests: getDisplayQuests(displayMemo), currentTime } : null;
             html = renderTabModeView(displayMemo, _sectionPages, questsCtx);
         } else {
             html = renderMemoAsCards(displayMemo, null, _sectionPages);
             // Append quest log section if module is enabled and we are not on the onboarding screen
             if (questsEnabled) {
-                html += renderQuestLog(getDisplayQuests(memo), currentTime, collapsed, detached);
+                html += renderQuestLog(getDisplayQuests(displayMemo), currentTime, collapsed, detached);
             }
         }
 
@@ -3711,7 +3855,7 @@ export function refreshRenderedView() {
                 const capturedXp = captureXpGainAnimationState(body, xpAnimationContext);
                 const capturedBars = captureBarChangeAnimationState(body, xpAnimationContext);
                 if (tag === 'QUESTS') {
-                    body.innerHTML = renderQuestLog(getDisplayQuests(memo), currentTime, collapsed, detached, 'QUESTS');
+                    body.innerHTML = renderQuestLog(getDisplayQuests(displayMemo), currentTime, collapsed, detached, 'QUESTS');
                 } else {
                     body.innerHTML = renderMemoAsCards(displayMemo, tag, _sectionPages);
                 }
@@ -3744,6 +3888,7 @@ export function refreshRenderedView() {
 function createPanel() {
     return buildPanel({
         DEFAULT_MODULES,
+        MODULE_BOOK_CATEGORY,
         DEFAULT_NPC_SECTIONS,
         DEFAULT_PC_SECTIONS,
         activateCampaignBooks,
@@ -3821,6 +3966,7 @@ function createPanel() {
         scaleImageToLandscape,
         sendDirectPrompt,
         sendStateRequest,
+        setLorebookEntryPinned,
         setNpcRelationshipMaxForCurrentChat,
         setupDeltaResize,
         setupResizeObserver,
@@ -4035,7 +4181,7 @@ const RENDER_HINTS = {
     COMBAT: {
         label: 'Entity Rows — HP Bars (Enemies)',
         description: 'Entity rows with COMBAT ROUND header. Martial: weapon Att/def. Caster: Spell Atk + Spell DC + backup weapon, then Cantrips/Level N Spells lines (same rendering as PARTY).',
-        example: 'COMBAT ROUND 1\nCultist Acolyte: 15/15 HP\nAtt/def: Spell Atk +4 | Spell DC 14 | Dagger (1 attack, +1 / 1d4-1 P) | Robes (AC: 11)\nSaves: Fort +1, Ref +2, Will +3\nAbilities: Spellcasting\nSpells: Cantrips: Fire Bolt, Prestidigitation\nSpells: Level 1 (2/2): Magic Missile, Shield\nOther: Soldier Tier Spellcaster\nStatus: Healthy\n\nElite Enforcer: 42/42 HP\nAtt/def: Warhammer (2 attacks, +9/+4 / 1d10+4 B) | Plate Armor (AC: 17)\nSaves: Fort +5, Ref +3, Will +4\nAbilities: Brutal Strike\nOther: Elite Tier\nStatus: Healthy'
+        example: 'COMBAT ROUND 1\nCultist Acolyte: 15/15 HP\nAtt/def: Spell Atk +4 | Spell DC 14 | Dagger (1 attack, +1 / 1d4-1 P) | Robes (AC: 11)\nSaves: Fort +1, Ref +2, Will +3\nAbilities: Spellcasting\nSpells: Cantrips: Fire Bolt, Prestidigitation\nSpells: Level 1 (2/2): Magic Missile, Shield\nOther: Soldier Tier Spellcaster\nStatus: Healthy\n\nElite Enforcer: 42/42 HP\nAtt/def: Warhammer (2 attacks, +9/+4 / 1d10+4 B) | Plate Armor (AC: 17)\nSaves: Fort +5, Ref +3, Will +4\nAbilities: Brutal Strike (On a Warhammer hit, deal +1d10 Bludgeoning damage and force a Fort DC 16 save or knock the target prone; 2/2)\nOther: Elite Tier\nStatus: Healthy'
     },
     SPELLS: {
         label: 'Spell Pips — Slot Tracker',
@@ -4266,6 +4412,8 @@ export function buildSysprompt(rawText) {
     const pieces = order.map(key => {
         const row = getSectionRowDescriptor(key, s, baseSectionMap);
         if (!row || !row.enabled) return '';
+        // CYOA is injected above the RNG queue by the generate interceptor — never into Main.
+        if (row.tag === 'CYOA_mode') return '';
         if (row.kind === 'base') {
             return transformBaseSectionContent(row.tag, row.content, s);
         }
@@ -4521,6 +4669,102 @@ async function runPortraitMigrationIfNeeded() {
     }
 }
 
+const CONNECTION_SETTINGS_UI = [
+    { key: 'state_tracker', control: '#rpg_tracker_connection_source', slot: '#rpg_connection_slot_state_tracker', label: 'State Tracker', recommendation: 'I recommend a cheap mid-tier model such as GPT-5.6 Luna, Gemini Flash/Flash-Lite series, or Deepseek V4 Flash latest.' },
+    { key: 'combat_override', control: '#rpg_combat_api_override', slot: '#rpg_connection_slot_combat_override', label: 'Combat API Override' },
+    { key: 'lorebook_agent', control: '#rpg_tracker_router_source', slot: '#rpg_connection_slot_lorebook_agent', label: 'Lorebook Agent', recommendation: 'Same models work fine here as with the State Tracker.' },
+    { key: 'adventure_companion', control: '#rpg_adventure_companion_connection_source', slot: '#rpg_connection_slot_adventure_companion', label: 'Adventure Companion' },
+    { key: 'game_system_wizard', control: '#rpg_gs_wizard_connection_source', slot: '#rpg_connection_slot_game_system_wizard', label: 'Game System Wizard', recommendation: 'I recommend using a somewhat better model here such as Sonnet 5 or above for more robust and complex systems. Your mileage varies a lot here. Experiment.' },
+    { key: 'world_progression', control: '#rpg_world_connection_source', slot: '#rpg_connection_slot_world_progression', label: 'World Progression' },
+    { key: 'portraits', control: '#rpg_portrait_connection_source', slot: '#rpg_connection_slot_portraits', label: 'Portrait Generation', recommendation: 'A lightweight model should do fine.' },
+];
+
+function normalizeCentralConnectionDrawer(drawer, key, label, recommendation = '') {
+    if (!(drawer instanceof HTMLElement)) return;
+    const drawerHeader = drawer.querySelector(':scope > .inline-drawer-toggle');
+    drawerHeader?.classList.add('rt-centered-drawer-header', 'rt-central-connection-header');
+    drawerHeader?.querySelectorAll(':scope > i:not(.inline-drawer-icon)').forEach(icon => icon.remove());
+    const title = drawerHeader?.querySelector('b');
+    if (title && label) title.textContent = label;
+
+    const chevron = drawerHeader?.querySelector('.inline-drawer-icon');
+    if (chevron) {
+        chevron.className = 'inline-drawer-icon fa-solid fa-circle-chevron-down rt-central-connection-chevron';
+        chevron.removeAttribute('style');
+    }
+
+    drawer.classList.add('rt-central-connection-drawer');
+    drawer.classList.remove('open');
+    drawer.dataset.connectionKey = key;
+    const content = drawer.querySelector(':scope > .inline-drawer-content');
+    if (content instanceof HTMLElement) {
+        content.style.display = 'none';
+        if (recommendation && !content.querySelector(':scope > .rt-connection-recommendation')) {
+            const note = document.createElement('div');
+            note.className = 'rt-connection-recommendation';
+            note.textContent = recommendation;
+            content.prepend(note);
+        }
+    }
+}
+
+function setSettingsDrawerOpen(drawer) {
+    if (!(drawer instanceof HTMLElement)) return;
+    drawer.classList.add('open');
+    const content = drawer.querySelector(':scope > .inline-drawer-content');
+    if (content instanceof HTMLElement) content.style.display = 'block';
+    drawer.querySelector(':scope > .inline-drawer-toggle .inline-drawer-icon')?.classList.add('down');
+}
+
+function openConnectionsModelsSettings(targetKey = '') {
+    const extensionsContent = document.getElementById('rm_extensions_block');
+    if (extensionsContent?.classList.contains('closedDrawer')) {
+        document.querySelector('#extensions-settings-button > .drawer-toggle')?.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+    }
+
+    const settingsRoot = document.querySelector('.rpg-tracker-settings');
+    const frameworkDrawer = settingsRoot?.querySelector(':scope > .inline-drawer');
+    const connectionsDrawer = document.getElementById('rpg_connections_models_drawer');
+    setSettingsDrawerOpen(frameworkDrawer);
+    setSettingsDrawerOpen(connectionsDrawer);
+
+    const targetDrawer = targetKey === 'character_creation'
+        ? document.getElementById('rpg_character_creation_connection_drawer')
+        : document.querySelector(`.rt-central-connection-drawer[data-connection-key="${targetKey}"]`);
+    setSettingsDrawerOpen(targetDrawer);
+    setTimeout(() => (targetDrawer || connectionsDrawer)?.scrollIntoView?.({ behavior: 'smooth', block: 'center' }), 80);
+}
+
+function organizeConnectionSettingsUI() {
+    const settingsRoot = document.querySelector('.rpg-tracker-settings');
+    if (!settingsRoot) return;
+
+    for (const definition of CONNECTION_SETTINGS_UI) {
+        const control = settingsRoot.querySelector(definition.control);
+        const drawer = control?.closest('.inline-drawer');
+        const slot = settingsRoot.querySelector(definition.slot);
+        if (!(drawer instanceof HTMLElement) || !(slot instanceof HTMLElement) || drawer.parentElement === slot) continue;
+
+        const originalParent = drawer.parentElement;
+        if (originalParent && !settingsRoot.querySelector(`.rt-connection-shortcut[data-connection-key="${definition.key}"]`)) {
+            const shortcut = document.createElement('div');
+            shortcut.className = 'rt-connection-shortcut';
+            shortcut.dataset.connectionKey = definition.key;
+            shortcut.innerHTML = `<span><b>${definition.label} connection</b><small>Managed in Connections &amp; Models.</small></span><button type="button" class="menu_button interactable rt-connection-shortcut-button" data-connection-target="${definition.key}"><i class="fa-solid fa-plug"></i> Configure</button>`;
+            originalParent.insertBefore(shortcut, drawer);
+        }
+
+        normalizeCentralConnectionDrawer(drawer, definition.key, definition.label, definition.recommendation);
+        slot.appendChild(drawer);
+    }
+
+    normalizeCentralConnectionDrawer(
+        document.getElementById('rpg_character_creation_connection_drawer'),
+        'character_creation',
+        'Character Creation & Starting Modes',
+    );
+}
+
 /**
  * Initialization
  */
@@ -4557,6 +4801,8 @@ async function runPortraitMigrationIfNeeded() {
         rebuildNpcInstructionIfNeeded,
         applyPortraitData,
         bindQuickStartEvents,
+        bindCharacterCreationConnectionSettings,
+        openConnectionsModelsSettings,
         bindAdventureCompanion,
         openAdventureCompanion,
         blockToItems,
@@ -4572,6 +4818,7 @@ async function runPortraitMigrationIfNeeded() {
         generatePersonaBio,
         getPageSize,
         getSettings,
+        getCharacterCreationConnectionSettings,
         handleCategorySettings,
         handleCharacterCreatorGenerate,
         handleRecolor,
@@ -4592,6 +4839,7 @@ async function runPortraitMigrationIfNeeded() {
         scaleImageTo512Square,
         scheduleAutoApply,
         setInitialDateValue,
+        setInitialTimeValue,
         showCharacterRollPanel,
         showLorebookAgentDocumentation,
         showNarrativePacingExplanation,
@@ -4627,6 +4875,8 @@ async function runPortraitMigrationIfNeeded() {
             $('#extensions_settings').append(html);
         }
 
+        organizeConnectionSettingsUI();
+
         // Bind drawer toggles ONLY for our own content to avoid global conflicts
         $('.rpg-tracker-settings').on('click', '.inline-drawer-toggle', function (e) {
             e.preventDefault();
@@ -4637,8 +4887,14 @@ async function runPortraitMigrationIfNeeded() {
             jqueryToggleSlide(content, drawer.hasClass('open'));
             $(this).find('.inline-drawer-icon').toggleClass('down');
         });
+        $('.rpg-tracker-settings').on('click', '.rt-connection-shortcut-button', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            openConnectionsModelsSettings(String($(this).data('connectionTarget') || ''));
+        });
 
         const settings = getSettings();
+        bindCharacterCreationConnectionSettings(document.querySelector('.rpg-tracker-settings'));
         bindAdventureCompanionSettingsDrawer();
         await bindFeatureConnectionSettings({
             uiPrefix: 'rpg_adventure_companion',
@@ -4880,12 +5136,13 @@ async function runPortraitMigrationIfNeeded() {
                         const sTempTracker = getSettings();
                         sTempTracker.stockPrompts = JSON.parse(JSON.stringify(DEFAULT_STOCK_PROMPTS));
                         const $corePromptEl = $('#rpg_tracker_core_prompt');
-                        if ($corePromptEl.length) {
-                            $corePromptEl.val(sTempTracker.systemPromptTemplate);
-                        }
                         const $suffixPromptEl = $('#rpg_tracker_user_prompt_suffix');
-                        if ($suffixPromptEl.length) {
-                            $suffixPromptEl.val(sTempTracker.userPromptSuffix);
+                        if (sTempTracker.fullReviewStateMode) {
+                            if ($corePromptEl.length) $corePromptEl.val(FULL_REVIEW_STATE_SYSTEM_PROMPT);
+                            if ($suffixPromptEl.length) $suffixPromptEl.val(FULL_REVIEW_USER_PROMPT_SUFFIX);
+                        } else {
+                            if ($corePromptEl.length) $corePromptEl.val(sTempTracker.systemPromptTemplate);
+                            if ($suffixPromptEl.length) $suffixPromptEl.val(sTempTracker.userPromptSuffix);
                         }
                         $('#rpg_tracker_npc_major_words').val(sTempTracker.npcMajorWords ?? 25);
                         $('#rpg_tracker_npc_minor_words').val(sTempTracker.npcMinorWords ?? 15);
@@ -4899,7 +5156,12 @@ async function runPortraitMigrationIfNeeded() {
                         $('#rpg_tracker_ignore_npc_limits').prop('checked', !!sTempTracker.ignoreNpcImportLimits);
                         if (typeof refreshOrderList === 'function') refreshOrderList();
 
-                        // 3. Lorebook Agent
+                        // 3. NPC / PC Core Sections (Edit NPC Sections / Edit PC Sections)
+                        // Must run before Lorebook Agent rebuild so NPC instruction embeds the new schemas.
+                        fresh.npcCoreSections = JSON.parse(JSON.stringify(DEFAULT_NPC_SECTIONS));
+                        fresh.pcCoreSections = JSON.parse(JSON.stringify(DEFAULT_PC_SECTIONS));
+
+                        // 4. Lorebook Agent
                         if (extensionSettings[MODULE_NAME]) {
                             delete extensionSettings[MODULE_NAME].routerSystemPromptTemplate;
                             delete extensionSettings[MODULE_NAME].routerModularPromptTemplate;
@@ -4933,7 +5195,7 @@ async function runPortraitMigrationIfNeeded() {
                             }
                         }
 
-                        // 4. World Progression
+                        // 5. World Progression
                         if (extensionSettings[MODULE_NAME]) {
                             delete extensionSettings[MODULE_NAME].worldProgressionSystemPrompt;
                             delete extensionSettings[MODULE_NAME].worldProgressionSkeletonSystemPrompt;
@@ -4949,7 +5211,7 @@ async function runPortraitMigrationIfNeeded() {
 
                         acknowledgePromptDefaults(fresh);
                         toastr['info'](`Prompts auto-updated to latest defaults (v${currentVersion}).`, 'RPG Tracker');
-                        console.log(`[RPG Tracker] Automatically reset all prompts to defaults for version ${currentVersion}.`);
+                        console.log(`[RPG Tracker] Automatically reset all prompts/sections to defaults for version ${currentVersion}.`);
                     })();
                 } else {
                     const { Popup } = SillyTavern.getContext();
@@ -5008,6 +5270,10 @@ async function runPortraitMigrationIfNeeded() {
                                             <input type="checkbox" id="rt-reset-world" ${chk('world')} style="cursor:pointer;">
                                             <span>World Progression Prompts${changedCats.has('world') ? ' <span class="rt-prompt-cat-changed">changed</span>' : ''}</span>
                                         </label>
+                                        <label style="display:flex; align-items:center; gap:8px; cursor:pointer; user-select:none; margin: 0;">
+                                            <input type="checkbox" id="rt-reset-sections" ${chk('sections')} style="cursor:pointer;">
+                                            <span>NPC / PC Core Sections${changedCats.has('sections') ? ' <span class="rt-prompt-cat-changed">changed</span>' : ''}</span>
+                                        </label>
                                     </div>
                                     <hr style="border:0; border-top:1px solid rgba(255,255,255,0.1); margin: 2px 0;">
                                     <label style="display:flex; align-items:center; gap:8px; cursor:pointer; user-select:none; font-weight:bold; margin: 0;">
@@ -5027,6 +5293,7 @@ async function runPortraitMigrationIfNeeded() {
                             let trackerReset = changedCats.has('tracker');
                             let loreReset = changedCats.has('lorebook');
                             let worldReset = changedCats.has('world');
+                            let sectionsReset = changedCats.has('sections');
                             let alwaysAuto = false;
 
                             setTimeout(() => {
@@ -5035,13 +5302,15 @@ async function runPortraitMigrationIfNeeded() {
                                 const trackerCb = document.getElementById('rt-reset-tracker');
                                 const loreCb = document.getElementById('rt-reset-lorebook');
                                 const worldCb = document.getElementById('rt-reset-world');
+                                const sectionsCb = document.getElementById('rt-reset-sections');
                                 const alwaysCb = document.getElementById('rt-reset-always-auto');
-                                const cbs = [sysCb, trackerCb, loreCb, worldCb];
+                                const cbs = [sysCb, trackerCb, loreCb, worldCb, sectionsCb];
 
                                 if (sysCb) sysCb.addEventListener('change', () => { sysReset = sysCb.checked; });
                                 if (trackerCb) trackerCb.addEventListener('change', () => { trackerReset = trackerCb.checked; });
                                 if (loreCb) loreCb.addEventListener('change', () => { loreReset = loreCb.checked; });
                                 if (worldCb) worldCb.addEventListener('change', () => { worldReset = worldCb.checked; });
+                                if (sectionsCb) sectionsCb.addEventListener('change', () => { sectionsReset = sectionsCb.checked; });
                                 if (alwaysCb) alwaysCb.addEventListener('change', () => { alwaysAuto = alwaysCb.checked; });
 
                                 if (allCb) {
@@ -5052,6 +5321,7 @@ async function runPortraitMigrationIfNeeded() {
                                         trackerReset = val;
                                         loreReset = val;
                                         worldReset = val;
+                                        sectionsReset = val;
                                     });
                                 }
 
@@ -5097,6 +5367,7 @@ async function runPortraitMigrationIfNeeded() {
                                 trackerReset = changedCats.has('tracker');
                                 loreReset = changedCats.has('lorebook');
                                 worldReset = changedCats.has('world');
+                                sectionsReset = changedCats.has('sections');
                             }
 
                             // CUSTOM1 = snapshot current config as a named Game Cartridge, then update everything.
@@ -5116,6 +5387,7 @@ async function runPortraitMigrationIfNeeded() {
                                 trackerReset = true;
                                 loreReset = true;
                                 worldReset = true;
+                                sectionsReset = true;
                             }
 
                             // AFFIRMATIVE / CUSTOM1 / CUSTOM2 update prompts; Keep Custom is 0/false.
@@ -5135,9 +5407,8 @@ async function runPortraitMigrationIfNeeded() {
                                         const narratorConfigBlock = document.getElementById('rpg_narrator_config_block');
                                         if (narratorConfigBlock) narratorConfigBlock.style.display = '';
                                     }
-                                    // CYOA_mode is injected from cyoaConfig at apply-time; refresh shipped
-                                    // slots + clear sticky customPromptText so Main System Prompt updates
-                                    // actually replace the CYOA section.
+                                    // CYOA lives in cyoaConfig and is user-msg injected (not Main);
+                                    // refresh shipped slots + clear sticky customPromptText on sysprompt reset.
                                     if (!fresh.cyoaConfig) fresh.cyoaConfig = {};
                                     refreshCyoaConfigToShipped(fresh.cyoaConfig, { resetSlots: true });
                                     await autoApplySysprompt(true);
@@ -5153,12 +5424,13 @@ async function runPortraitMigrationIfNeeded() {
                                     const sTempTracker = getSettings();
                                     sTempTracker.stockPrompts = JSON.parse(JSON.stringify(DEFAULT_STOCK_PROMPTS));
                                     const $corePromptEl = $('#rpg_tracker_core_prompt');
-                                    if ($corePromptEl.length) {
-                                        $corePromptEl.val(sTempTracker.systemPromptTemplate);
-                                    }
                                     const $suffixPromptEl = $('#rpg_tracker_user_prompt_suffix');
-                                    if ($suffixPromptEl.length) {
-                                        $suffixPromptEl.val(sTempTracker.userPromptSuffix);
+                                    if (sTempTracker.fullReviewStateMode) {
+                                        if ($corePromptEl.length) $corePromptEl.val(FULL_REVIEW_STATE_SYSTEM_PROMPT);
+                                        if ($suffixPromptEl.length) $suffixPromptEl.val(FULL_REVIEW_USER_PROMPT_SUFFIX);
+                                    } else {
+                                        if ($corePromptEl.length) $corePromptEl.val(sTempTracker.systemPromptTemplate);
+                                        if ($suffixPromptEl.length) $suffixPromptEl.val(sTempTracker.userPromptSuffix);
                                     }
                                     $('#rpg_tracker_npc_major_words').val(sTempTracker.npcMajorWords ?? 25);
                                     $('#rpg_tracker_npc_minor_words').val(sTempTracker.npcMinorWords ?? 15);
@@ -5173,6 +5445,18 @@ async function runPortraitMigrationIfNeeded() {
                                     if (typeof refreshOrderList === 'function') refreshOrderList();
                                     resetCount++;
                                     console.log('[RPG Tracker] State tracker prompts reset to defaults.');
+                                }
+
+                                // Core sections before Lorebook so NPC instruction rebuild sees the new schemas.
+                                if (sectionsReset) {
+                                    fresh.npcCoreSections = JSON.parse(JSON.stringify(DEFAULT_NPC_SECTIONS));
+                                    fresh.pcCoreSections = JSON.parse(JSON.stringify(DEFAULT_PC_SECTIONS));
+                                    // Keep the live Lorebook NPC instruction in sync even if lorebook wasn't selected.
+                                    if (!loreReset && fresh.routerModules?.npc) {
+                                        fresh.routerModules.npc.instruction = buildNpcInstruction(fresh.npcMajorWords, fresh.npcMinorWords, false);
+                                    }
+                                    resetCount++;
+                                    console.log('[RPG Tracker] NPC/PC core sections reset to defaults.');
                                 }
 
                                 if (loreReset) {
@@ -5839,6 +6123,10 @@ async function runPortraitMigrationIfNeeded() {
         sanitizeRouterState(settings);
         const bootChatId = ctx.chatId || ctx.getCurrentChatId?.() || null;
         runtimeState.currentChatId = bootChatId;
+        const migratedPortraitScope = migrateLegacyPortraitMapsToChat(settings, bootChatId);
+        if (bootChatId && !settings.chatLinkEnabled) {
+            loadPortraitMapsForChat(settings, bootChatId);
+        }
         // Strip intentionally-deleted custom modules before loadChatState.
         // A browser-local configuration backup is never applied automatically: it may
         // be a genuine interrupted save or simply an older browser's cache.
@@ -5887,7 +6175,7 @@ async function runPortraitMigrationIfNeeded() {
         // Baseline WAL after boot so the next cancelled save still has a sync snapshot.
         writeModuleSchemaBackup(bootChatId);
         // If we healed from WAL/tombstones, push the repaired schema to disk so settings.js catches up.
-        if (strippedTombstones || healedFromBackup || strippedGlobalUi || isRealtimeVisualizationDisabled()) {
+        if (strippedTombstones || healedFromBackup || strippedGlobalUi || migratedPortraitScope || isRealtimeVisualizationDisabled()) {
             void saveSettings(true);
         }
 
@@ -5918,6 +6206,7 @@ async function runPortraitMigrationIfNeeded() {
                     _saveSettingsTimer = null;
                 }
                 const s = getSettings();
+                snapshotPortraitMapsForChat(s, runtimeState.currentChatId);
                 // Do this FIRST and unconditionally — localStorage.setItem is synchronous
                 // and cannot be cancelled by the unload that's about to happen, unlike the
                 // disk write below. This is the actual safety net; everything after is best-effort.
@@ -6295,9 +6584,9 @@ async function runPortraitMigrationIfNeeded() {
             }
             const enabled = !!$(this).prop('checked');
             s.portraitLocationIncludePresentNpcs = enabled;
-            // Always swap the Location Scene Prompt with the matching factory default —
-            // this toggle exists to change character-inclusion wording in that prompt.
-            syncPortraitLocationPromptForNpcToggle(s, enabled, { force: true });
+            // Swap only when the current text is still a shipped factory default —
+            // never overwrite a custom Location Scene Prompt.
+            syncPortraitLocationPromptForNpcToggle(s, enabled);
             saveSettings(true);
         });
         // Align any leftover legacy factory prompt with the current toggle on load.
@@ -6365,6 +6654,8 @@ async function runPortraitMigrationIfNeeded() {
             settings.savedPortraitPromptPresets[trimmedName] = {
                 npcSystemPrompt: settings.portraitNpcSystemPrompt,
                 characterSystemPrompt: settings.portraitCharacterSystemPrompt,
+                locationSystemPrompt: settings.portraitLocationSystemPrompt,
+                includePresentNpcs: !!settings.portraitLocationIncludePresentNpcs,
                 wordTarget: settings.portraitPromptWordTarget,
             };
             saveSettings();
@@ -6895,6 +7186,8 @@ async function runPortraitMigrationIfNeeded() {
         // Initial order list refresh
         refreshOrderList();
 
+        $('#rpg_tracker_manage_display_groups').on('click', () => openDisplayGroupsManager());
+
         $('#rpg_tracker_add_custom_field').on('click', function () {
             const settings = getSettings();
             if (!settings.customFields) settings.customFields = [];
@@ -7259,12 +7552,48 @@ RULES:
             await Popup.show.confirm('🎨 Rendering Tags Library', html, { okButton: 'Close', cancelButton: false });
         });
 
-        $('#rpg_tracker_core_prompt').val(settings.systemPromptTemplate).on('input', function () {
+        const fullReviewChk = $('#rpg_tracker_full_review_mode');
+        const fullReviewNote = $('#rpg_tracker_full_review_note');
+        const corePromptTextarea = $('#rpg_tracker_core_prompt');
+        const suffixPromptTextarea = $('#rpg_tracker_user_prompt_suffix');
+        const resetPromptBtn = $('#rpg_tracker_btn_reset_prompt');
+        const applyFullReviewUI = (enabled) => {
+            fullReviewNote.css('display', enabled ? 'block' : 'none');
+            corePromptTextarea.prop('disabled', enabled).css('opacity', enabled ? '0.4' : '1');
+            suffixPromptTextarea.prop('disabled', enabled).css('opacity', enabled ? '0.4' : '1');
+            resetPromptBtn.prop('disabled', enabled).css('opacity', enabled ? '0.4' : '1');
+            // Show the prompts that are actually sent while Full Review is on; the saved
+            // custom Core Prompt / suffix stay in settings and are restored on disable.
+            if (enabled) {
+                corePromptTextarea.val(FULL_REVIEW_STATE_SYSTEM_PROMPT);
+                suffixPromptTextarea.val(FULL_REVIEW_USER_PROMPT_SUFFIX);
+            } else {
+                corePromptTextarea.val(settings.systemPromptTemplate || '');
+                suffixPromptTextarea.val(settings.userPromptSuffix || '');
+            }
+        };
+        if (fullReviewChk.length) {
+            const fullReviewEnabled = !!settings.fullReviewStateMode;
+            fullReviewChk.prop('checked', fullReviewEnabled);
+            applyFullReviewUI(fullReviewEnabled);
+            fullReviewChk.on('change', function () {
+                settings.fullReviewStateMode = !!$(this).prop('checked');
+                applyFullReviewUI(settings.fullReviewStateMode);
+                saveSettings();
+            });
+        } else {
+            corePromptTextarea.val(settings.systemPromptTemplate || '');
+            suffixPromptTextarea.val(settings.userPromptSuffix || '');
+        }
+
+        corePromptTextarea.on('input', function () {
+            if (settings.fullReviewStateMode) return;
             settings.systemPromptTemplate = $(this).val();
             saveSettings();
         });
 
-        $('#rpg_tracker_user_prompt_suffix').val(settings.userPromptSuffix || '').on('input', function () {
+        suffixPromptTextarea.on('input', function () {
+            if (settings.fullReviewStateMode) return;
             settings.userPromptSuffix = $(this).val();
             saveSettings();
         });
@@ -7615,7 +7944,11 @@ RULES:
                     padding: 0 4px !important;
                     font-family: var(--rt-font-mono, ui-monospace, monospace) !important;
                     font-size: 0.92em !important;
-                    white-space: nowrap !important;
+                    white-space: normal !important;
+                    overflow-wrap: anywhere !important;
+                    word-break: break-word !important;
+                    box-decoration-break: clone !important;
+                    -webkit-box-decoration-break: clone !important;
                 }
                 .mes_text button[data-cyoa-bound] .rt-cyoa-dc {
                     color: ${st.dcColor} !important;
@@ -8323,7 +8656,7 @@ RULES:
                         <input type="checkbox" id="cyoa-use-buttons" ${checked(cfg.useButtonTags)} /> <span>Clickable Choices <span title="Click choices to automatically send them using &lt;button&gt; functions" class="fa-solid fa-circle-question" style="opacity:0.5;cursor:help;margin-left:4px;"></span></span>
                     </label>
                     <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:12px;">
-                        <input type="checkbox" id="cyoa-strip-old-prompt" ${checked(cfg.stripOldChoicesFromPrompt)} /> <span>Keep only T-1 choices in AI context <span title="Keeps the newest completed &lt;choices&gt; block as a fresh example for the AI, and removes only T-2 and older choice blocks from the outgoing prompt. Every choice remains visible and clickable in chat." class="fa-solid fa-circle-question" style="opacity:0.5;cursor:help;margin-left:4px;"></span></span>
+                        <input type="checkbox" id="cyoa-strip-old-prompt" ${checked(cfg.stripOldChoicesFromPrompt)} /> <span>Keep only T-1 through T-4 choices in AI context <span title="Keeps the four newest completed &lt;choices&gt; blocks as fresh examples for the AI, and removes only T-5 and older choice blocks from the outgoing prompt. Every choice remains visible and clickable in chat." class="fa-solid fa-circle-question" style="opacity:0.5;cursor:help;margin-left:4px;"></span></span>
                     </label>
                 </div>
 
@@ -9825,6 +10158,11 @@ RULES:
         const $wpSkeletonAtmosphere = $('#rpg_world_progression_skeleton_atmosphere');
         const $wpSkeletonAtmosphereLookback = $('#rpg_world_progression_skeleton_atmosphere_lookback');
         const $wpGenerateAtmosphere = $('#rpg_world_progression_btn_generate_atmosphere');
+        const $wpSkeletonUseLorebooks = $('#rpg_world_progression_skeleton_use_lorebooks');
+        const $wpSkeletonLorebookGroup = $('#rpg_world_progression_skeleton_lorebook_filter_group');
+        const $wpSkeletonLorebookList = $('#rpg_world_progression_skeleton_lorebook_list');
+        const $wpSkeletonLorebookOnly = $('#rpg_world_progression_skeleton_lorebook_only');
+        const $wpSkeletonLorebookOnlyRow = $('#rpg_world_progression_skeleton_lorebook_only_row');
         const $wpSkeletonUseExisting = $('#rpg_world_progression_skeleton_use_existing');
         const $wpSkeletonFactions = $('#rpg_world_progression_skeleton_factions');
         const $wpSkeletonLocations = $('#rpg_world_progression_skeleton_locations');
@@ -9835,6 +10173,71 @@ RULES:
         const $wpGenerateSkeleton = $('#rpg_world_progression_btn_generate_skeleton');
         const $wpAddSkeleton = $('#rpg_world_progression_btn_add_skeleton');
         const $wpSkeletonStatus = $('#rpg_world_progression_skeleton_status');
+
+        function syncSkeletonLorebookOnlyAvailability() {
+            const enabled = !!$wpSkeletonUseLorebooks.prop('checked');
+            const lorebookOnlyActive = enabled && !!$wpSkeletonLorebookOnly.prop('checked');
+            $wpSkeletonLorebookOnlyRow.css({ opacity: enabled ? '1' : '0.45', pointerEvents: enabled ? 'auto' : 'none' });
+            $wpSkeletonLorebookOnly.prop('disabled', !enabled);
+            $('#rpg_world_progression_skeleton_counts').css({
+                opacity: lorebookOnlyActive ? '0.4' : '1',
+                pointerEvents: lorebookOnlyActive ? 'none' : 'auto',
+            }).find('input').prop('disabled', lorebookOnlyActive);
+        }
+
+        async function refreshSkeletonLorebookList() {
+            $wpSkeletonLorebookList.empty();
+            const stCtx = SillyTavern.getContext();
+            let worldNames = [];
+            try {
+                worldNames = await Promise.resolve(stCtx.getWorldInfoNames?.() ?? []);
+                if (!worldNames.length && stCtx.updateWorldInfoList) {
+                    await stCtx.updateWorldInfoList();
+                    worldNames = await Promise.resolve(stCtx.getWorldInfoNames?.() ?? []);
+                }
+                if (!worldNames.length) {
+                    const response = await fetch('/api/settings/get', {
+                        method: 'POST',
+                        headers: stCtx.getRequestHeaders?.() || getRequestHeaders(),
+                        body: JSON.stringify({}),
+                    });
+                    if (response.ok) {
+                        const data = await response.json();
+                        worldNames = data.world_names ?? [];
+                    }
+                }
+            } catch (error) {
+                console.warn('[RPG Tracker] Failed to refresh World Skeleton source lorebooks:', error);
+            }
+
+            if (!Array.isArray(worldNames)) worldNames = [];
+            const sourceBooks = [...new Set(worldNames)]
+                .filter(name => name && !String(name).toLowerCase().endsWith('_skeleton'))
+                .sort((a, b) => String(a).localeCompare(String(b)));
+            if (!sourceBooks.length) {
+                $wpSkeletonLorebookList.append($('<i>').css('opacity', '0.6').text('No lorebooks found.'));
+                return;
+            }
+
+            const selected = Array.isArray(getSettings().worldProgressionSkeletonLorebookFilter)
+                ? getSettings().worldProgressionSkeletonLorebookFilter
+                : [];
+            for (const bookName of sourceBooks) {
+                const $input = $('<input type="checkbox">')
+                    .attr('data-book', bookName)
+                    .prop('checked', selected.includes(bookName));
+                const $item = $('<label class="checkbox_label">').css('font-size', '0.9em')
+                    .append($input, $('<span>').text(bookName));
+                $input.on('change', function () {
+                    const current = new Set(getSettings().worldProgressionSkeletonLorebookFilter || []);
+                    if ($(this).prop('checked')) current.add(bookName);
+                    else current.delete(bookName);
+                    getSettings().worldProgressionSkeletonLorebookFilter = [...current];
+                    saveSettings();
+                });
+                $wpSkeletonLorebookList.append($item);
+            }
+        }
 
         /** Refreshes the skeleton entry count label from the _Skeleton lorebook. */
         async function updateSkeletonStatus() {
@@ -9883,6 +10286,23 @@ RULES:
             saveSettings();
         });
 
+        $wpSkeletonUseLorebooks.prop('checked', !!settings.worldProgressionSkeletonUseLorebooks).on('change', async function () {
+            getSettings().worldProgressionSkeletonUseLorebooks = !!$(this).prop('checked');
+            $wpSkeletonLorebookGroup.toggle(getSettings().worldProgressionSkeletonUseLorebooks);
+            syncSkeletonLorebookOnlyAvailability();
+            if (getSettings().worldProgressionSkeletonUseLorebooks) await refreshSkeletonLorebookList();
+            saveSettings();
+        });
+        $wpSkeletonLorebookOnly.prop('checked', !!settings.worldProgressionSkeletonLorebookOnly).on('change', function () {
+            getSettings().worldProgressionSkeletonLorebookOnly = !!$(this).prop('checked');
+            syncSkeletonLorebookOnlyAvailability();
+            saveSettings();
+        });
+        $wpSkeletonLorebookGroup.toggle(!!settings.worldProgressionSkeletonUseLorebooks);
+        syncSkeletonLorebookOnlyAvailability();
+        $('#rpg_world_progression_skeleton_lorebook_refresh').on('click', refreshSkeletonLorebookList);
+        if (settings.worldProgressionSkeletonUseLorebooks) void refreshSkeletonLorebookList();
+
         $wpGenerateAtmosphere.on('click', async function () {
             const ctx = SillyTavern.getContext();
             if (!ctx.chat || ctx.chat.length === 0) {
@@ -9897,9 +10317,9 @@ RULES:
                 getSettings().worldProgressionSkeletonAtmosphereSummary = summary;
                 $wpSkeletonAtmosphere.val(summary);
                 saveSettings();
-                toastr['success']('Atmosphere Summary auto-generated successfully.', 'World Skeleton');
+                toastr['success']('Skeleton Source auto-generated successfully.', 'World Skeleton');
             } catch (e) {
-                toastr['error'](`Failed to generate Atmosphere Summary: ${e.message}`, 'World Skeleton');
+                toastr['error'](`Failed to generate Skeleton Source: ${e.message}`, 'World Skeleton');
             } finally {
                 $wpGenerateAtmosphere.prop('disabled', false).html('<i class="fa-solid fa-wand-magic-sparkles"></i> Auto-Generate');
             }
@@ -9945,8 +10365,9 @@ RULES:
 
         $wpGenerateSkeleton.on('click', async function () {
             const atmosphere = String($wpSkeletonAtmosphere.val() || '').trim();
-            if (!atmosphere) {
-                toastr['warning']('Please enter an atmosphere summary before generating.', 'World Skeleton');
+            const useLorebooks = !!$wpSkeletonUseLorebooks.prop('checked');
+            if (!atmosphere && !useLorebooks) {
+                toastr['warning']('Please enter a Skeleton Source or enable existing lorebook sources before generating.', 'World Skeleton');
                 return;
             }
             const ctx = SillyTavern.getContext();
@@ -9971,8 +10392,9 @@ RULES:
         $wpAddSkeleton.on('click', async function () {
             const atmosphere = String($wpSkeletonAtmosphere.val() || '').trim();
             const useExisting = !!$wpSkeletonUseExisting.prop('checked');
-            if (!useExisting && !atmosphere) {
-                toastr['warning']('Please enter an atmosphere summary to provide context if not using existing entries.', 'World Skeleton');
+            const useLorebooks = !!$wpSkeletonUseLorebooks.prop('checked');
+            if (!useExisting && !useLorebooks && !atmosphere) {
+                toastr['warning']('Please enter a Skeleton Source or enable an existing source before adding entries.', 'World Skeleton');
                 return;
             }
             const ctx = SillyTavern.getContext();
@@ -9998,6 +10420,7 @@ RULES:
         updateSkeletonStatus();
         // Expose globally so router.js auto-generation can trigger a UI refresh
         globalThis._rpgUpdateSkeletonStatus = updateSkeletonStatus;
+        globalThis._rpgRefreshSkeletonLorebookList = refreshSkeletonLorebookList;
         // ── End World Progression settings ─────────────────────────────────────
 
 
@@ -10272,8 +10695,18 @@ RULES:
             // Inventory/Core Prompt
             $('#rpg_tracker_inventory_worth_mode').val(s.inventoryWorthMode || 'hover');
             $('#rpg_tracker_show_total_value').prop('checked', s.showTotalInventoryValue !== false);
-            $('#rpg_tracker_core_prompt').val(s.systemPromptTemplate || '');
-            $('#rpg_tracker_user_prompt_suffix').val(s.userPromptSuffix || '');
+            $('#rpg_tracker_full_review_mode').prop('checked', !!s.fullReviewStateMode);
+            if (s.fullReviewStateMode) {
+                $('#rpg_tracker_full_review_note').css('display', 'block');
+                $('#rpg_tracker_core_prompt').val(FULL_REVIEW_STATE_SYSTEM_PROMPT).prop('disabled', true).css('opacity', '0.4');
+                $('#rpg_tracker_user_prompt_suffix').val(FULL_REVIEW_USER_PROMPT_SUFFIX).prop('disabled', true).css('opacity', '0.4');
+                $('#rpg_tracker_btn_reset_prompt').prop('disabled', true).css('opacity', '0.4');
+            } else {
+                $('#rpg_tracker_full_review_note').css('display', 'none');
+                $('#rpg_tracker_core_prompt').val(s.systemPromptTemplate || '').prop('disabled', false).css('opacity', '1');
+                $('#rpg_tracker_user_prompt_suffix').val(s.userPromptSuffix || '').prop('disabled', false).css('opacity', '1');
+                $('#rpg_tracker_btn_reset_prompt').prop('disabled', false).css('opacity', '1');
+            }
 
             // Router Agent
             $('#rpg_tracker_router_enabled').prop('checked', !!s.routerEnabled);
@@ -10314,6 +10747,11 @@ RULES:
             $('#rpg_world_progression_randomize_locations').prop('checked', !!s.worldProgressionRandomizeLocations);
             $('#rpg_world_progression_randomize_factions').prop('checked', !!s.worldProgressionRandomizeFactions);
             $('#rpg_world_progression_skeleton_use_existing').prop('checked', !!s.worldProgressionSkeletonUseExisting);
+            $('#rpg_world_progression_skeleton_use_lorebooks').prop('checked', !!s.worldProgressionSkeletonUseLorebooks);
+            $('#rpg_world_progression_skeleton_lorebook_filter_group').toggle(!!s.worldProgressionSkeletonUseLorebooks);
+            $('#rpg_world_progression_skeleton_lorebook_only').prop('checked', !!s.worldProgressionSkeletonLorebookOnly);
+            syncSkeletonLorebookOnlyAvailability();
+            if (s.worldProgressionSkeletonUseLorebooks) void refreshSkeletonLorebookList();
             $('#rpg_world_progression_consolidate_enabled').prop('checked', !!s.worldProgressionConsolidateEnabled);
 
             // Textareas (Agent prompt templates)

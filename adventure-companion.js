@@ -1366,7 +1366,8 @@ function ensureChatShell(panel) {
                 <button type="button" class="rt-chat-tutorial-info-btn" id="rt-chat-tutorial-info-btn" aria-label="Acerca del Modo Tutorial" aria-haspopup="dialog" aria-expanded="false">?</button>
                 <div class="rt-chat-tutorial-info" id="rt-chat-tutorial-info" role="dialog" aria-label="Acerca del Modo Tutorial" style="display:none;">
                     <strong>MODO TUTORIAL</strong>
-                    <span>Inyecta la documentación en Markdown de Multihog en cada solicitud del Acompañante de Aventura. Es excelente mientras aprendes el sistema, pero los veteranos pueden desactivarlo para ahorrar algunos miles de tokens. Ese costo adicional suele ser insignificante con un modelo de rastreador recomendado como Gemini Flash-Lite o Flash.</span>
+                    <span>Inyecta la documentación en Markdown de Multihog en cada solicitud del Acompañante de Aventura. Es excelente mientras aprendes el sistema, pero los veteranos pueden desactivarlo para ahorrar algunos miles de tokens. Ese costo adicional suele ser insignificante con un modelo recomendado como Gemini Flash-Lite, Flash o modelos locales en llama.cpp.</span>
+                </div>
                 </div>
             </div>
             <div class="rt-chat-gear-wrap">

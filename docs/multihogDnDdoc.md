@@ -30,6 +30,8 @@ After acting for the player, the Adventure Companion responds with a brief, live
 
 The D&D setup is the default plug-and-play cartridge. You can scrap the stock system prompt and modules and track whatever you want — fantasy, slice-of-life, modern, sci-fi, or pure homebrew.
 
+**Local / weaker State Tracker models:** If the player mentions running the State Tracker on a local or smaller model (e.g. Gemma, Mistral Small, Qwen, Llama, Phi, or similar), proactively recommend enabling **Full Review Mode** under **State Tracker & Modules** (directly below **Enable State Tracker**). Explain that the default tracker prompt asks for delta updates only (“changed sections”), which weaker models often mishandle by dropping persistent modules; Full Review Mode replaces that Core Prompt with a complete every-module dump each pass. Tradeoff: more tokens and latency per tracker run, much more reliable memo consistency. Do **not** pretend you can flip the checkbox yourself — tell them where it is.
+
 ## Designer Note from Multihog
 This system is neither a full version of 5e nor 3.5e. It's rather a hybrid system that streamlines in places. For example, attacks per round are reduced to decrease the GM's cognitive load, ensuring reliability is high. This kind of "cut the corners where it makes sense" design is employed all over the system. For example, combat uses BAB, which is based on 3.5e/Pathfinder, but the LLM may use 5e spells and such. A lot of the system rides on LLMs' vast inherent knowledge about D&D, which enables Multihog to keep the system lean and not define every rule. A big part of the system prompt focuses on constraints, what NOT to allow the player to do, which is a crucial part of keeping the simulation feeling authentic. This is stuff such as resting limits (only every 9 hours by default) and forbidding the player from using items they don't have, etc.
 
@@ -65,31 +67,47 @@ These are recommendations, not rules.
 
 | Role | Suggestion | Notes |
 |------|------------|--------|
-| Narrator / GM | MiMo 2.5 Pro or DeepSeek 4 Pro (e.g. via OpenRouter) | Needs **tool calling** if you use Hybrid RNG (tool-call mode). |
-| State Tracker + Lorebook Agent | Gemini 3.5 Flash-Lite (or 3.6 Flash, though Flash-Lite truly is enough) | Cheap and reliable for extraction / lore passes. |
-| Combat narrator (optional) | Gemini 3.6 Flash with thinking Medium | Use **Combat API Override** so combat uses a faster model while `[COMBAT]` is active. |
+| Narrator / GM | MiMo 2.5 Pro, Deepseek V4 Pro/latest Flash, or GPT-5.6 Luna | Needs **tool calling** if you use Hybrid RNG (tool-call mode). |
+| State Tracker + Lorebook Agent | Gemini Flash-Lite/Flash, Deepseek V4 Flash 0731, or GPT-5.6 Luna | All are seriously inexpensive and promising; there is no firm recommendation yet. |
+| State Tracker (local / smaller) | Gemma, Mistral Small, Qwen, Llama, Phi, and similar | Usable, but enable **Full Review Mode** (State Tracker → Core Prompt). See below. |
+| Adventure Companion | Claude Sonnet 5 / Opus 5, GPT-5.6 Sol, or another model of similar capability | The Companion benefits from a strong general-purpose model for nuanced discussion, framework help, and reliable action handling. |
+| Combat narrator (optional) | Any faster model | Use **Combat API Override** so combat uses a faster model while `[COMBAT]` is active. |
 
 ### More About Models
 
-MiMo 2.5 Pro or DeepSeek 4 Pro: both are great bang for the buck with high GM output quality. I use MiMo myself through OpenRouter — DeepSeek 4 Pro is another strong pick in the same tier. Try both and see which voice you prefer.
+For the narrator, I'd recommend trying at least the following:
 
-For the State Tracker and Lorebook Agent, I use Gemini 3.1 Flash-Lite. It's very inexpensive and handles the job amazingly well. Gemini 3.6 Flash (or whatever Flash is the most recent at the moment) are of course even better, but I don't think they're needed. Flash-Lite does the job. The tracker and Lorebook Agent do not need powerful models generally.
+- MiMo 2.5 Pro
+- Deepseek V4 Pro and latest Flash
+- GPT-5.6 Luna, for its great cost-efficiency. Seems to be a decent model overall.
 
-If your model thinks too long in combat, enable Combat API Override in State Tracker settings — it auto-switches when the [COMBAT] tag is active in the tracker and switches back when combat ends. Gemini 3.5 Flash is a great choice for this; set thinking to Medium so it still thinks a little.
+*For the State Tracker and Lorebook Agent, I've been recommending the Gemini Flash-Lite and Flash models. However, now I'm not sure at all anymore. Deepseek V4 Flash 0731 recently came out and is very promising, and the same goes for GPT-5.6 Luna. These are seriously inexpensive models and seem to be heavy-hitters in terms of performance.*
+
+*Local / smaller State Tracker models (Gemma 4 and friends, Mistral Small, Qwen, Llama, Phi, etc.): turn on* ***Full Review Mode*** *in State Tracker & Modules (just below Enable State Tracker). The stock tracker asks for delta updates only; weaker models often drop unchanged-but-still-true modules. Full Review Mode replaces the Core Prompt so every pass dumps the complete verified state for every enabled module. Costs more tokens per run; far more reliable for local setups.*
+
+*If your model thinks too long in combat, enable* ***Combat API Override*** *in State Tracker settings — it auto-switches when the* *[COMBAT]* *tag is active in the tracker and switches back when combat ends.* ***This way you can have a faster model, so combat is faster.***
 
 ---
 
 ## First-Time Setup
 
+### Initial Setup
+
+1. Create a character card for your "narrator" (e.g. Game Master). Leave the card fields empty, as the framework handles all logic via the system prompt.
+
+2. Use one of the character creation options above to roll a new character. You can either use the Character Creator option to clearly specify your character, use Other Ways to Begin for a more rough description, or just use Instant Action to have the extension randomize everything beyond your name and adventure genre.
+
+3. If you decide to use the hybrid RNG mode that combines tool calls with the pre-seeded RNG Queue used by the extension, ensure function calling is enabled. Otherwise the `RollTheDice` tool will not work.
+
+It's also recommended to go to Connections & Models and hook up the various components to suitable models. The respective drawers contain hints as to what kind of a model to pick. If there's no hint, then it doesn't matter much. Preferably choose a relatively strong model for the narrator/GM (ST main API connection), of course. DeepSeek V4 Pro/MiMo 2.5 Pro tier or better.
+
 ### Narrator character
 
 Create (or load) a SillyTavern character card that acts as the narrator — e.g. “Simulation Engine” or “Game Master.” The framework injects mechanical truth into prompts; the card supplies voice and framing.
 
+For the initial setup described above, leave the narrator card fields empty; the framework handles the narrator logic through its system prompt.
+
 The system rejects the traditional ST use of character cards, which are meant for 1-on-1 chats because RP of this kind necessarily introduces lots and lots of characters. Therefore it would make no sense to attribute the GM outputs to any one character. It functions more like a book in format, where there is a "narrator" under which everything happens.
-
-### Enable the framework
-
-Turn the extension on in settings. With **Custom Sysprompt Mode** off, the framework writes its assembled GM prompt into SillyTavern’s **Quick Prompt → Main**. It can back up your previous Main prompt and restore it when the tracker is disabled (if Main prompt backup is enabled).
 
 ### Instant Action (fastest path)
 
@@ -200,33 +218,62 @@ The prompt is modular XML-style sections, including among others:
 
 ## Hybrid RNG
 
-Combines two types of RNG, automatically switched based on context. If [COMBAT] is present in the State Tracker, the system automatically switches to RNG Queue in both the system prompt and context injection. The RollTheDice tool is only registered outside of combat, and the RNG Queue is only injected in combat.
+Combines two types of RNG, automatically switched based on context. If `[COMBAT]` is present in the State Tracker, the system switches to the RNG Queue in both the system prompt and context injection. `RollTheDice` is only registered outside combat; the RNG Queue is only injected in combat.
 
-Hybrid RNG is ideal outside of CYOA mode because without CYOA mode, the GM can see the numbers in the RNG queue beforehand, giving it the ability, in theory, to fit the DC to a roll it sees coming. The tool call closes the door to this because it requires a pre-commit.
+### RollTheDice
+
+`RollTheDice` is called on-demand. It can inject into the context in the middle of an output. Well, not really — LLMs can't receive inputs mid-output. What happens is this:
+
+1. The LLM starts outputting its normal narrative message.
+2. It realizes it needs a roll.
+3. It calls the tool and **stops** outputting.
+4. `RollTheDice` runs its code and produces a result, nudging the LLM to retry if it messed up the tool-call JSON.
+5. The LLM reads the result from the `RollTheDice` tool, sees a number and success or failure.
+6. The LLM continues narrating now with the roll result in its context.
+
+**Pros:** The LLM can't know the numbers beforehand. Completely sycophancy-proof in every circumstance.
+
+**Cons:** Breaks the output into chunks; costs more because every interrupt re-sends the whole context/story (input tokens); can cause latency.
+
+Non-legacy tool schema requires the narrator to declare **who**, **formula**, and **dc** *before* seeing the result:
+
+- **Skill / attack (default):** `compare: "gte"` — success if `total >= dc`.
+- **Percentage odds:** `formula: "1d100"`, `compare: "lte"` (auto-inferred for pure d100 formulas) — hit if `total <= dc` (dc is a percentage).
+- **Global d100 Mode** still registers `RollTheDiceD100` as a dedicated roll-under tool for percentage-based rulesets.
+
+Legacy dice logic omits DC (vanilla-style SillyTavern tool). The narrator model must support **tool calling** for Hybrid / tool modes, and function calling must be enabled in the Chat Completion preset. Legacy dice are not recommended but can help in edge cases.
+
+### RNG Queue
+
+1. Numbers are pre-rolled with JavaScript. The LLM always sees numbers in context, prepended to the last user input.
+2. The LLM only has to pick numbers from the queue in order and “slot them in.”
+
+**Pros:** Any number of rolls within a single output; no breaks in output necessary; costs less.
+
+**Cons:** The LLM can **see** what number is coming up, potentially lowballing a skill-check DC so that you can pass — though this is in theory; it might not actually do that. It's just possible.
+
+Queue details:
+
+- Built with cryptographically random values.
+- Typical d20 queue: multiple pre-rolled lines for common dice.
+- Optional d100 queue (percentage mode).
+- Injected into the user message when Pre-Seeded RNG applies (always in Pre-Seeded Only; in Hybrid, **only** when combat is active).
+
+### CYOA Mode and combat close the foresight door
+
+**CYOA Mode** fixes the queue's foresight problem. It forces the LLM to commit to the numbers at the end of the **previous** output, in the choice — e.g. `Lockpicking DC 18`. That DC is locked in. When it sees the roll on the next turn, the DC is already decided.
+
+Same goes for **combat**, which works on a deterministic initiative/turn grid. That also prevents sycophancy.
+
+**RNG Queue only fails** in freeform/narrative situations **without** CYOA Mode — which is why it isn't recommended for that specifically. Hybrid RNG (tool calls out of combat, queue in combat) is the right pairing without CYOA.
 
 ### Modes (Narrator Configuration → RNG)
 
 | Mode | Behavior |
 |------|----------|
-| **Pre-Seeded + Tool Calls** (Hybrid) | Out of combat: `RollTheDice` / `RollTheDiceD100` tools only. **In combat:** RNG Queue only; dice tools are unregistered for that context. |
-| **Pre-Seeded Only** | Queue injected every eligible turn; no dice tools. Default in code settings. Recommended with **CYOA**. |
+| **Pre-Seeded + Tool Calls** (Hybrid) | Out of combat: `RollTheDice` / `RollTheDiceD100` tools only. **In combat:** RNG Queue only; dice tools are unregistered for that context. Recommended **without** CYOA. |
+| **Pre-Seeded Only** | Queue injected every eligible turn; no dice tools. Default in code settings. Recommended **with CYOA**. |
 | **No RNG** | Neither queue nor tools. |
-
-### RNG Queue
-
-- Built with cryptographically random values.
-- Typical d20 queue: multiple pre-rolled lines for common dice.
-- Optional d100 queue (percentage mode).
-- Injected into the user message when Pre-Seeded RNG applies (always in Pre-Seeded Only; in Hybrid, ONLY when combat is active).
-
-### Tool-call dice (commitment logic)
-
-Non-legacy tool schema requires the narrator to declare **who**, **formula**, and **dc** *before* seeing the result:
-
-- **d20:** success if `total >= dc`.
-- **d100:** roll-under; success if `total <= dc` (dc is a percentage).
-
-Legacy dice logic omits DC (vanilla-style SillyTavern tool provided by the devs). The narrator model must support **tool calling** for Hybrid / tool modes, and function calling must be enabled in the Chat Completion preset. Legacy dice are NOT recommended but can provide some utility in edge-cases.
 
 ### Combat detection
 
@@ -365,6 +412,22 @@ Adventure Companion has a separate connection selector with the same Main API / 
 
 **Combat API Override** switches the **main narrator** connection profile (not the State Extractor) while combat is active, then restores the baseline when combat ends.
 
+### Full Review Mode
+
+**Where:** State Tracker & Modules → checkbox **Full Review Mode (recommended for weaker/local models)**, directly below **Enable State Tracker**.
+
+**What it does:** While enabled, the ordinary Core Prompt is **fully replaced** each State Tracker pass by a built-in Full Review prompt. That prompt forbids `NO_CHANGES_DETECTED` and forbids omitting modules — every enabled section must be re-output in full, verified against the narrative and prior memo. The user-prompt suffix is also switched to ask for the complete verified memo.
+
+**Why it exists:** The default Core Prompt is a **delta** contract (“only output changed sections”). Strong cloud models usually handle that well. Local and smaller models often lose track of BLOCK PERSISTENCE / omit-unchanged rules and silently drop inventory, party, abilities, etc. Full Review Mode trades tokens and latency for a simpler, harder-to-misread contract.
+
+**Who should use it:** Anyone running State Tracker on a local or smaller model — Gemma (including Gemma 4), Mistral Small, Qwen, Llama, Phi, and similar. Also useful if a mid-tier cloud model keeps dropping modules. Not usually needed for strong cloud trackers if delta mode is already stable.
+
+**Important caveats:**
+
+- Custom edits in the Core Prompt and User Prompt Suffix are **ignored while Full Review Mode is on** (the UI shows the built-in Full Review versions, grayed out). Your custom text stays saved and returns when you turn the toggle off.
+- Raise response length generously — a full memo dump is larger than a delta update, and truncated tracker output is useless.
+- This is the per-turn operating mode. **Full Audit** remains a separate manual tool that rebuilds the memo from large chat history in chunks.
+
 ### Slash command
 
 `/statetracker` (alias `/st`):
@@ -417,6 +480,21 @@ LA is aware of keyword activations inside one container (extension scanner and/o
 - Campaign books use a prefix, e.g. `{prefix}_NPCs`, `_Locations`, `_Factions`, `_Quests`, `_Events`, `_World`, `_Skeleton`.
 - Lorebook Agent CANNOT have any influence on Lorebooks that are not under the `ChatID_Bookname` structure. Therefore, if you want it to handle any book, it must be registered under "Modular Repertoire (Prompt Rules.) It is blind to any lorebooks that do not match this naming structure. This is by design so that it cannot affect your other lorebooks. It runs in its own "container" in this sense. If you want LA to manage an existing lorebook, you must add a custom section to the module repertoire and name the lorebook in question to match.
 
+### Species / Body / Equipment split, PC sync, and CORE field risk gating
+
+The old combined `Appearance/Species` CORE field is split into three separate sections (for both NPCs and the Player Character):
+
+- **Species** — static identity (species, race, subtype). Essentially frozen once a character is first recorded; never auto-updated.
+- **Body** — signature/default *physical* look (build, face, hair, scars, etc.). No worn gear here.
+- **Equipment** — currently worn/carried gear (weapons, armor, clothing, accessories). Updates whenever the narrative explicitly shows a change to what they have equipped.
+
+Splitting Body from Equipment means the Lorebook Agent can keep gear in sync with the narrative (which happens often) without ever touching or rewording your character's basic physical description (which should stay stable). If you never customized your NPC/PC sections, you get the split automatically — no action needed. If you previously customized sections, your existing entries keep the old combined `Appearance/Species` header until you add the new sections yourself (or an LA update on that entry lazily patches it in place); nothing is force-migrated.
+
+- **PC Body/Equipment sync:** LA can update the linked Player Character card's `Body` and `Equipment` fields the same way it updates NPCs — via `[[UPDATE_APPEARANCE: {{user}} | …]]` / `[[UPDATE_EQUIPMENT: {{user}} | …]]` (Basic) or `commit.appearance` / `commit.equipment` with id `{{user}}` / `player` / `pc` / the PC's name (Advanced). It never creates a PC lorebook entry and never edits the PC's Species/Personality/Background/Habits/Strengths/Flaws.
+- **Always-on tools:** Body and Equipment updates (NPC or PC) are available on every pass — these are the two fields expected to change often enough that a Direct Prompt shouldn't be required every time.
+- **Automatic vs Direct Prompt for other CORE fields:** On a normal automatic cadence pass, `UPDATE_CORE` / `commit.core` may only touch **Combat Profile** (objective stats from `## ACTIVE COMBAT STATE`). Species, Personality, Background, Habits, Strengths, and Flaws are blocked at both prompt and code level on automatic passes — the agent only sees ~two messages and can brick a character if it rewrites identity from thin context. To edit those fields, use the Lorebook Agent **Direct Prompt** (or `/lorebookagent …` / Companion instruction): manual passes unlock the full eligible CORE field set, including Species.
+- **Cold-start gear seed:** On the **first** Lorebook Agent pass of a chat, if a `[CHARACTER]…[/CHARACTER]` block exists in the State Memo, it is injected once as `## PLAYER CHARACTER SHEET (initial reference — one-time)` so Equipment updates can be grounded in what is actually equipped. Later passes do **not** re-inject CHARACTER/INVENTORY; infer subsequent look/gear changes from the narrative.
+
 
 ### Relationships
 
@@ -462,8 +540,8 @@ JavaScript checks `[TIME]` in the State Memo after State Tracker updates. The AI
 
 ### Quick Start Guide
 
-1. **Atmosphere Summary** — write manually or Auto-Generate from recent chat (tone/texture; avoid specific named plot dumps).
-2. **Generate Skeleton** — factions, locations, NPCs, conflicts as Day 0 baseline in `{prefix}_Skeleton`. Edit afterward in native lorebook UI for full customization.
+1. **Skeleton Source** — this replaces the former Atmosphere Summary and can be a short thematic seed or a detailed description of what you want the world and skeleton to be. Auto-Generate remains intentionally conservative: it derives a generalized backdrop from recent chat without copying named characters, party members, locations, factions, or plot events.
+2. **Generate Skeleton** — factions, locations, NPCs, conflicts as Day 0 baseline in `{prefix}_Skeleton`. **Source from Existing Lorebooks** now lets you choose lorebooks from a list, using the same selection pattern as State Tracker lorebook injection. Selected books are supplied as source material. With normal extrapolation enabled, specify how many NPCs, Locations, Factions, and Conflicts you want and the LLM may build compatible new entities from those books. Alternatively, enable **Only use entities explicitly mentioned in source lorebooks (no extrapolation)**; the count fields are disabled and the generator creates entities only for what actually appears in the injected lorebook(s). Edit the generated skeleton afterward in the native SillyTavern Lorebook UI for full customization.
 3. **Focus Randomization** (recommended) — lottery across skeleton vs organic pools so reports don’t fixate on the player bubble. Active `[PARTY]` is excluded; `[BENCHED PARTY]` members remain eligible.
 4. **Generate the First Report** — Generate Now (skeleton-only if early) or wait for the interval (later runs include organic lore).
 
@@ -507,7 +585,7 @@ Review both in the forge (edit, regenerate either/both, iterate with feedback, s
 Game Systems are deliberately atomic bundles. In **Manage Game Systems**, choose **CHAT-BOUND** or **GLOBAL** for the Game System itself; its linked tracker module and GM prompt snippet inherit that scope and enabled state together. They cannot be scoped independently. If you need only one piece to behave independently, recreate that module or snippet as a standalone item.
 
 ## Why is the Game Systems Wizard Good?
-It's good because you don't actually need to understand how the extension works. The Wizard has an excellent understanding of the system, so it can reliably make solid Game Systems even if you don't know anything about the extension. It's recommended to use a relatively strong model for this such as Claude Sonnet 5, or GPT-5.6 Terra or something of that caliber at least. Weaker models can also make good systems but not with such a high reliability and complexity.
+It's good because you don't actually need to understand how the extension works. The Wizard has an excellent understanding of the system, so it can reliably make solid Game Systems even if you don't know anything about the extension. It's recommended to use a relatively strong model for this such as Claude Sonnet 5 / Opus 5, GPT-5.6 Sol, or something of that caliber at least. Weaker models can also make good systems but not with such a high reliability and complexity.
 
 ### Game Cartridges
 
@@ -578,6 +656,7 @@ The framework’s backbone is still **time + memo + optional lore/world layers**
 | Lorebook Agent ran on a roll-announcement `/sendas` | Auto-runs require the latest assistant speaker to be `{{char}}`; announcements under another name should not fire. If it still fires, check the script isn’t also generating or calling `/la`. |
 | Wrong campaign data or setup in a new chat | Check that Chat-Linked Mode and **Lock Control Room & Modules to each chat** are enabled. GLOBAL items intentionally share activation; CHAT-BOUND items restore that chat's saved setup. Lock-off mode is a temporary carry-over bypass. |
 | Tracker formatting broken after paste | Use 💬 Direct Prompt: “Reformat this sheet to stock module layout.” |
+| Modules disappear / drift on a local or small tracker model | Enable **Full Review Mode** (State Tracker & Modules, below Enable State Tracker). Delta-only updates are hard for weaker models; Full Review dumps every enabled module each pass. Also raise response length. |
 
 ---
 

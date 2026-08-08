@@ -69,6 +69,7 @@ export function createChatStateLoader({
     s.routerLookback = saved.routerLookback || 4;
     s.routerLastRunChatLength = saved.routerLastRunChatLength ?? 0;
     s.routerLastRunAt = saved.routerLastRunAt ?? 0;
+    s.pcCharacterBlockSeeded = !!saved.pcCharacterBlockSeeded;
     s.routerDirectPrompt = saved.routerDirectPrompt || '';
     s.worldProgressionLookback = saved.worldProgressionLookback ?? 20;
     s.worldProgressionHistoryLookback = saved.worldProgressionHistoryLookback ?? 0;
@@ -93,6 +94,9 @@ export function createChatStateLoader({
     s.worldProgressionSkeletonAtmosphereSummary = saved.worldProgressionSkeletonAtmosphereSummary ?? '';
     s.worldProgressionSkeletonAtmosphereLookback = saved.worldProgressionSkeletonAtmosphereLookback ?? 30;
     s.worldProgressionSkeletonUseExisting = saved.worldProgressionSkeletonUseExisting ?? true;
+    s.worldProgressionSkeletonUseLorebooks = saved.worldProgressionSkeletonUseLorebooks ?? false;
+    s.worldProgressionSkeletonLorebookFilter = JSON.parse(JSON.stringify(saved.worldProgressionSkeletonLorebookFilter || []));
+    s.worldProgressionSkeletonLorebookOnly = saved.worldProgressionSkeletonLorebookOnly ?? false;
     s.worldProgressionExclusionList = saved.worldProgressionExclusionList ?? '';
     s.worldProgressionLastFiredAtMinutes = saved.worldProgressionLastFiredAtMinutes ?? -1;
     s.worldProgressionLastFiredPeriodLabel = saved.worldProgressionLastFiredPeriodLabel || '';
@@ -123,6 +127,22 @@ export function createChatStateLoader({
     $('#rpg_world_progression_skeleton_atmosphere').val(s.worldProgressionSkeletonAtmosphereSummary);
     $('#rpg_world_progression_skeleton_atmosphere_lookback').val(s.worldProgressionSkeletonAtmosphereLookback);
     $('#rpg_world_progression_skeleton_use_existing').prop('checked', !!s.worldProgressionSkeletonUseExisting);
+    $('#rpg_world_progression_skeleton_use_lorebooks').prop('checked', !!s.worldProgressionSkeletonUseLorebooks);
+    $('#rpg_world_progression_skeleton_lorebook_filter_group').toggle(!!s.worldProgressionSkeletonUseLorebooks);
+    $('#rpg_world_progression_skeleton_lorebook_only').prop('checked', !!s.worldProgressionSkeletonLorebookOnly);
+    $('#rpg_world_progression_skeleton_lorebook_only').prop('disabled', !s.worldProgressionSkeletonUseLorebooks);
+    $('#rpg_world_progression_skeleton_lorebook_only_row').css({
+        opacity: s.worldProgressionSkeletonUseLorebooks ? '1' : '0.45',
+        pointerEvents: s.worldProgressionSkeletonUseLorebooks ? 'auto' : 'none',
+    });
+    const lorebookOnlyActive = !!s.worldProgressionSkeletonUseLorebooks && !!s.worldProgressionSkeletonLorebookOnly;
+    $('#rpg_world_progression_skeleton_counts').css({
+        opacity: lorebookOnlyActive ? '0.4' : '1',
+        pointerEvents: lorebookOnlyActive ? 'none' : 'auto',
+    }).find('input').prop('disabled', lorebookOnlyActive);
+    if (s.worldProgressionSkeletonUseLorebooks && typeof globalThis._rpgRefreshSkeletonLorebookList === 'function') {
+        void globalThis._rpgRefreshSkeletonLorebookList();
+    }
     $('#rpg_world_progression_exclusion_list').val(s.worldProgressionExclusionList);
 
     // Sync portrait connection settings UI

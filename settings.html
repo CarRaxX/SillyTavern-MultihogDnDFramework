@@ -38,8 +38,8 @@
                         <button id="rpg_tracker_clear_chat_states" class="menu_button interactable" style="margin-top: 4px; margin-left: 4px; width: calc(100% - 4px); font-size: 0.9em;"><i class="fa-solid fa-trash-can"></i> Eliminar todas las vinculaciones de chat</button>
 
                         <small style="display: block; margin-top: 10px; margin-bottom: 2px; font-weight: bold; opacity: 0.65; text-transform: uppercase; font-size: 0.7em; letter-spacing: 0.4px;">Ayuda</small>
-                        <button id="rpg_tracker_tutorial_help" class="menu_button interactable" style="margin-top: 2px; margin-left: 4px; width: calc(100% - 4px); font-size: 0.9em;"><i class="fa-solid fa-comments"></i> ACOMPAÑANTE IA Y TUTORIAL</button>
-                        <div style="font-size: 0.75em; opacity: 0.6; line-height: 1.35; padding: 4px 4px 0 4px;">Abre el Acompañante de Aventura en el panel. El modo tutorial opcional inyecta la guía del framework. Su conexión de modelo y opciones de contexto se configuran en el cajón del Acompañante de Aventura más abajo.</div>
+                        <button id="rpg_tracker_tutorial_help" class="menu_button interactable" style="margin-top: 2px; margin-left: 4px; width: calc(100% - 4px); font-size: 0.9em;"><i class="fa-solid fa-comments"></i> CHAT CON ACOMPAÑANTE</button>
+                        <div style="font-size: 0.75em; opacity: 0.6; line-height: 1.35; padding: 4px 4px 0 4px;">Abre el Acompañante de Aventura en el panel. El modo tutorial opcional inyecta la guía del framework. Su conexión de modelo se configura en <strong>Conexiones y Modelos</strong> y sus opciones en el cajón del Acompañante de Aventura.</div>
 
                         <!-- MAIN PROMPT BACKUP -->
                         <small style="display: block; margin-top: 10px; margin-bottom: 2px; font-weight: bold; opacity: 0.65; text-transform: uppercase; font-size: 0.7em; letter-spacing: 0.4px;">Copia de Seguridad del Prompt Principal</small>
@@ -185,6 +185,11 @@
                                 <b style="font-size: 0.85em; opacity: 0.8;">Biblioteca</b>
                                 <div id="rpg_tracker_saved_themes_list" class="flex-container flexFlowColumn gap-1"></div>
                             </div>
+                            <label class="checkbox_label" style="margin-top: 10px;" title="Animate gains and losses on every custom ((BAR)) and ((BARREL)) marker. Individual bar animation settings still work when this is off.">
+                                <input id="rpg_tracker_animate_all_custom_bars" type="checkbox" />
+                                <span>Animate all custom bar changes in State Tracker</span>
+                                <i class="fa-solid fa-circle-question interactable" title="Shows a green positive value or red negative value and highlights the changed segment for all custom ((BAR)) and ((BARREL)) markers. Does not change XP or native relationship animations."></i>
+                            </label>
                         </div>
                             </div>
                         </div>
@@ -452,7 +457,7 @@
                                 <label class="checkbox_label">
                                     <input id="rpg_tracker_auto_reset_prompts" type="checkbox" />
                                     <span>Actualizar Prompts Automáticamente tras Actualización</span>
-                                    <i class="fa-solid fa-circle-question interactable" title="Actualiza automáticamente las plantillas del sistema por defecto cuando cambian."></i>
+                                    <i class="fa-solid fa-circle-question interactable" title="Cuando está activado, las plantillas predeterminadas se actualizan automáticamente al cargar cuando los valores shipped cambian."></i>
                                 </label>
                                 <button id="rpg_tracker_btn_force_checkpoint" class="menu_button interactable"
                                     style="width: 100%; margin-top: 6px; background: rgba(0, 180, 120, 0.18); border-color: #00b478;"
@@ -478,7 +483,73 @@
                 </div>
             </div>
 
-            <!-- SUB-DRAWER 2: GAME SYSTEMS & CUSTOMIZATION -->
+            <!-- SUB-DRAWER 2: CONNECTIONS & MODELS -->
+            <div class="inline-drawer" id="rpg_connections_models_drawer">
+                <div class="inline-drawer-toggle inline-drawer-header">
+                    <i class="fa-solid fa-plug-circle-bolt" style="margin-right: 8px; opacity: 0.7;"></i>
+                    <b>Connections &amp; Models</b>
+                    <div class="inline-drawer-icon fa-solid fa-circle-chevron-down down"></div>
+                </div>
+                <div class="inline-drawer-content">
+                    <div class="rt-connections-models-intro">
+                        Configure the model connection used by each Multihog feature. These are global settings. <b>Main API</b> uses your current SillyTavern connection.
+                    </div>
+
+                    <div id="rpg_connection_slot_state_tracker" class="rt-connection-drawer-slot"></div>
+                    <div id="rpg_connection_slot_combat_override" class="rt-connection-drawer-slot"></div>
+                    <div id="rpg_connection_slot_lorebook_agent" class="rt-connection-drawer-slot"></div>
+
+                    <div id="rpg_connection_slot_character_creation" class="rt-connection-drawer-slot">
+                        <div class="inline-drawer rt-character-creation-connection-controls" id="rpg_character_creation_connection_drawer">
+                            <div class="inline-drawer-toggle inline-drawer-header rt-centered-drawer-header" style="font-size: 0.88em;">
+                                <i class="fa-solid fa-user-pen" style="margin-right: 6px; opacity: 0.65;"></i>
+                                <b>Character Creation &amp; Starting Modes</b>
+                                <div class="inline-drawer-icon fa-solid fa-circle-chevron-down"></div>
+                            </div>
+                            <div class="inline-drawer-content">
+                                <div class="flex-container flexFlowColumn gap-1">
+                                    <div style="font-size: 0.75em; opacity: 0.6; line-height: 1.35; margin-bottom: 4px;">Shared by Character Creator, Instant Action, and Other Ways to Begin.</div>
+                                    <label style="font-size: 0.8em;">Connection Source</label>
+                                    <select id="rt-character-creation-connection-source" class="text_pole" style="font-size: 0.8em;">
+                                        <option value="default">Main API</option>
+                                        <option value="profile">Profile</option>
+                                        <option value="ollama">Ollama</option>
+                                        <option value="openai">OpenAI</option>
+                                    </select>
+                                    <div id="rt-character-creation-profile-group" style="display:none;">
+                                        <select id="rt-character-creation-connection-profile" class="text_pole" style="font-size: 0.8em;"></select>
+                                    </div>
+                                    <div id="rt-character-creation-ollama-group" style="display:none;flex-direction:column;gap:5px;">
+                                        <input id="rt-character-creation-ollama-url" type="text" class="text_pole" placeholder="Ollama URL" style="font-size: 0.8em;" />
+                                        <div class="flex-container gap-1">
+                                            <select id="rt-character-creation-ollama-model" class="text_pole" style="flex:1;font-size:0.8em;"></select>
+                                            <button id="rt-character-creation-ollama-refresh" type="button" class="menu_button interactable" title="Refresh Ollama models" style="width:auto;padding:2px 7px;"><i class="fa-solid fa-arrows-rotate"></i></button>
+                                        </div>
+                                    </div>
+                                    <div id="rt-character-creation-openai-group" style="display:none;flex-direction:column;gap:5px;">
+                                        <input id="rt-character-creation-openai-url" type="text" class="text_pole" placeholder="Endpoint URL" style="font-size: 0.8em;" />
+                                        <input id="rt-character-creation-openai-key" type="password" class="text_pole" placeholder="API Key" style="font-size: 0.8em;" />
+                                        <div class="flex-container gap-1">
+                                            <select id="rt-character-creation-openai-model" class="text_pole" style="flex:1;font-size:0.8em;"></select>
+                                            <button id="rt-character-creation-openai-refresh" type="button" class="menu_button interactable" title="Refresh OpenAI-compatible models" style="width:auto;padding:2px 7px;"><i class="fa-solid fa-arrows-rotate"></i></button>
+                                        </div>
+                                        <input id="rt-character-creation-openai-model-manual" type="text" class="text_pole" placeholder="Manual Model Name" style="font-size: 0.8em;" />
+                                    </div>
+                                    <label style="font-size: 0.8em; margin-top: 4px;">Preset</label>
+                                    <select id="rt-character-creation-completion-preset" class="text_pole" style="font-size: 0.8em;"></select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="rpg_connection_slot_adventure_companion" class="rt-connection-drawer-slot"></div>
+                    <div id="rpg_connection_slot_game_system_wizard" class="rt-connection-drawer-slot"></div>
+                    <div id="rpg_connection_slot_world_progression" class="rt-connection-drawer-slot"></div>
+                    <div id="rpg_connection_slot_portraits" class="rt-connection-drawer-slot"></div>
+                </div>
+            </div>
+
+            <!-- SUB-DRAWER 3: GAME SYSTEMS & CUSTOMIZATION -->
             <div class="inline-drawer">
                 <div class="inline-drawer-toggle inline-drawer-header">
                     <i class="fa-solid fa-hat-wizard" style="margin-right: 8px; opacity: 0.7;"></i>
@@ -536,13 +607,13 @@
                                         <span style="font-size: 0.72em; font-weight: bold; opacity: 0.65; text-transform: uppercase; letter-spacing: 0.5px;">Herramientas RNG Registradas</span>
                                     </div>
                                     <div class="flex-container flexFlowColumn gap-1" style="margin-bottom: 6px; padding-left: 5px;">
-                                        <label class="checkbox_label" title="Registra la función RollTheDice (versión d20) en el LLM.">
+                                        <label class="checkbox_label" title="Registra la función RollTheDice (unificada: pruebas d20 y tiradas porcentaje d100).">
                                             <input id="rpg_rng_tool_d20" type="checkbox" />
-                                            <span>RollTheDice (Herramienta d20)</span>
+                                            <span>RollTheDice (Herramienta unificada)</span>
                                         </label>
-                                        <label class="checkbox_label" title="Registra la función RollTheDiceD100 (versión d100) en el LLM.">
+                                        <label class="checkbox_label" title="Registra la función RollTheDiceD100 para el modo d100 global / reglas basadas en porcentaje.">
                                             <input id="rpg_rng_tool_d100" type="checkbox" />
-                                            <span>RollTheDiceD100 (Herramienta d100)</span>
+                                            <span>RollTheDiceD100 (Herramienta Modo d100)</span>
                                         </label>
                                         <label class="checkbox_label" title="Inyecta tiradas pre-generadas [RNG_QUEUE] durante combate.">
                                             <input id="rpg_rng_queue_d20" type="checkbox" />
@@ -582,7 +653,7 @@
                                 <label class="checkbox_label"><input type="checkbox" id="rpg_sysprompt_mod_resting" /><span>💤 Descanso</span></label>
                                 <label class="checkbox_label"><input type="checkbox" id="rpg_sysprompt_mod_party_bench" /><span>⛺ Grupo en Reserva</span></label>
                                 <div style="display:flex;align-items:center;gap:4px;">
-                                <label class="checkbox_label" style="flex:1;"><input type="checkbox" id="rpg_sysprompt_mod_cyoa_mode" /><span>🧭 Modo CYOA</span></label>
+                                <label class="checkbox_label" style="flex:1;" title="Inyecta las instrucciones de opciones CYOA (y etiquetas de ritmo activas) en el contexto de cada turno justo arriba de la cola RNG."><input type="checkbox" id="rpg_sysprompt_mod_cyoa_mode" /><span>🧭 Modo CYOA</span></label>
                                 <button id="rpg_cyoa_settings_btn" class="menu_button interactable" style="padding:1px 7px;font-size:11px;flex-shrink:0;" title="Ajustes del Modo CYOA"><i class="fa-solid fa-gear"></i></button>
                                 </div>
                                 <div style="display:flex;align-items:center;gap:4px;">
@@ -694,6 +765,16 @@
                             title="Cuando está activado (y el modo de prompt personalizado está desactivado), el prompt del sistema del framework se escribe en Quick Prompt Main. Tu prompt Main anterior se guarda automáticamente antes de la primera sobreescritura y se restaura al hacer clic en el botón ⏻ del panel."></i>
                     </label>
 
+                    <label class="checkbox_label" style="margin-bottom: 8px;" title="Fuerza al modelo de estado a emitir el estado COMPLETO y verificado para cada módulo en cada pase. Recomendado para modelos locales o más pequeños (Gemma 4 12B, Llama, Qwen) que puedan desincronizarse.">
+                        <input id="rpg_tracker_full_review_mode" type="checkbox" />
+                        <span>Modo de Revisión Completa</span>
+                        <span style="opacity:0.55; font-size:0.88em;">(Recomendado para modelos locales)</span>
+                        <i class="fa-solid fa-circle-question interactable" style="font-size: 0.85em; opacity: 0.7; margin-left: 4px;" title="Genera el estado completo en cada turno. Previene la desincronización en fichas largas."></i>
+                    </label>
+                    <div id="rpg_tracker_full_review_note" style="display:none; font-size:0.85em; opacity:0.85; padding:6px 8px; border:1px solid rgba(255,221,136,0.3); border-radius:6px; background:rgba(255,221,136,0.06); margin-bottom:8px;">
+                        El Modo de Revisión Completa está activo — el Prompt Central y el Sufijo del Usuario muestran las versiones integradas de Revisión Completa. Tus versiones personalizadas se restaurarán al desactivar este modo.
+                    </div>
+
                     <div class="inline-drawer" style="margin-bottom: 8px;">
                         <div class="inline-drawer-toggle inline-drawer-header" style="font-size: 0.88em;">
                             <i class="fa-solid fa-sack-dollar" style="margin-right: 6px; opacity: 0.6;"></i>
@@ -709,7 +790,7 @@
                                 </label>
                                 <div style="display: flex; align-items: center; gap: 8px; padding-left: 4px;">
                                     <label style="font-size: 0.82em; opacity: 0.75; white-space: nowrap;">Valor del Objeto
-                                        <i class="fa-solid fa-circle-question interactable" title="Controla cómo se muestran los valores de los objetos (ej. ~120 GP) en el inventario. Al pasar el cursor: se oculta y muestra al pasar el ratón. Mostrar: aparece como una insignia de moneda junto al objeto."></i>
+                                        <i class="fa-solid fa-circle-question interactable" title="Controla cómo se muestran los valores de los objetos en el inventario. Al pasar el cursor: descripción flotante. Mostrar: insignia integrada."></i>
                                     </label>
                                     <select id="rpg_tracker_inventory_worth_mode" class="text_pole" style="font-size: 0.82em; padding: 2px 4px; height: 24px; flex: 1;">
                                         <option value="hover">Al pasar el cursor (solo descripción flotante)</option>
@@ -760,8 +841,35 @@
                         </div>
                     </div>
 
+                    <div class="inline-drawer" style="margin-bottom: 8px; margin-top: 8px;">
+                        <div class="inline-drawer-toggle inline-drawer-header" style="font-size: 0.88em;">
+                            <i class="fa-solid fa-sack-dollar" style="margin-right: 6px; opacity: 0.6;"></i>
+                            <b>Inventory</b>
+                            <div class="inline-drawer-icon fa-solid fa-circle-chevron-down"></div>
+                        </div>
+                        <div class="inline-drawer-content">
+                            <div id="rpg_inventory_config_block" class="flex-container flexFlowColumn gap-1">
+                                <label class="checkbox_label">
+                                    <input id="rpg_tracker_show_total_value" type="checkbox" />
+                                    <span>Show Total Inventory Value</span>
+                                    <i class="fa-solid fa-circle-question interactable" title="When enabled, displays the calculated total value of all items in the inventory header bar."></i>
+                                </label>
+                                <div style="display: flex; align-items: center; gap: 8px; padding-left: 4px;">
+                                    <label style="font-size: 0.82em; opacity: 0.75; white-space: nowrap;">Item Worth
+                                        <i class="fa-solid fa-circle-question interactable" title="Controls how item worth values (e.g. ~120 GP) are shown in Inventory. Hover: stripped from display, shown as a tooltip on hover. Display: shown as an inline coin badge next to the item. Bare currency items (e.g. '45 GP') always render as a coin badge regardless of this setting."></i>
+                                    </label>
+                                    <select id="rpg_tracker_inventory_worth_mode" class="text_pole" style="font-size: 0.82em; padding: 2px 4px; height: 24px; flex: 1;">
+                                        <option value="hover">Hover (tooltip only)</option>
+                                        <option value="display">Display (inline badge)</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="inline-drawer" style="margin-top: 4px;">
-                        <div class="inline-drawer-toggle inline-drawer-header">
+                    <div class="inline-drawer" style="margin-top: 4px;">
+                        <div class="inline-drawer-toggle inline-drawer-header rt-centered-drawer-header">
                             <b>Sustitución de API en Combate</b>
                             <div class="inline-drawer-icon fa-solid fa-circle-chevron-down"></div>
                         </div>
@@ -801,17 +909,10 @@
                         <button id="rpg_tracker_add_custom_field" class="menu_button interactable" style="flex: 1;"><i class="fa-solid fa-plus"></i> Añadir Personalizado (Manual)</button>
                         <button id="rpg_tracker_add_custom_field_ai" class="menu_button interactable" style="flex: 1; background: rgba(180, 100, 255, 0.15); border-color: rgba(180, 100, 255, 0.4);"><i class="fa-solid fa-wand-magic-sparkles"></i> Añadir Personalizado (IA)</button>
                     </div>
-                    <div class="flex-container gap-1" style="margin-top: 6px;">
-                        <button id="rt_btn_tag_library" class="menu_button interactable rt-tag-library-button" aria-label="Abrir Biblioteca de Etiquetas de Renderizado">
-                            <span class="rt-tag-library-icon" aria-hidden="true"><i class="fa-solid fa-swatchbook"></i></span>
-                            <span class="rt-tag-library-copy"><span>Biblioteca de Etiquetas de Renderizado</span><small>Vistas previas en vivo · alquimia de color</small></span>
-                            <span class="rt-tag-library-sparkle" aria-hidden="true">✦</span>
-                        </button>
-                    </div>
-                    <label class="checkbox_label" style="margin-top: 5px;" title="Animate gains and losses on every custom ((BAR)) and ((BARREL)) marker. Individual bar animation settings still work when this is off.">
+                    <label class="checkbox_label" style="margin-top: 5px;" title="Anima ganancias y pérdidas en cada marcador de BARRA y BARRIL personalizado. Las configuraciones de animación individuales aún funcionan cuando esto está apagado.">
                         <input id="rpg_tracker_animate_all_custom_bars" type="checkbox" />
-                        <span>Animate all custom BAR and BARREL changes</span>
-                        <i class="fa-solid fa-circle-question interactable" title="Shows a green positive value or red negative value and highlights the changed segment for all custom ((BAR)) and ((BARREL)) markers. Does not change XP or native relationship animations."></i>
+                        <span>Animar todos los cambios de BARRAS y BARRILES personalizados</span>
+                        <i class="fa-solid fa-circle-question interactable" title="Muestra valor verde positivo o rojo negativo al cambiar barras personalizadas."></i>
                     </label>
                     <div class="flex-container gap-1" style="margin-top: 4px;">
                         <button id="rpg_tracker_export_all_modules" class="menu_button interactable" style="flex: 1; font-size: 11px;">Exportar</button>
@@ -819,6 +920,18 @@
                         <button id="rpg_tracker_delete_all_custom_modules" class="menu_button interactable" style="flex: 1; font-size: 11px; color: #ff5555;">Borrar Todo</button>
                     </div>
                     <button id="rpg_tracker_btn_reset_all_prompts" class="menu_button interactable" style="width: 100%; margin-top: 4px; font-size: 11px;"><i class="fa-solid fa-arrow-rotate-left"></i> Restablecer Módulos Predeterminados</button>
+                    <div class="flex-container gap-1" style="margin-top: 4px;">
+                        <button id="rt_btn_tag_library" class="menu_button interactable rt-tag-library-button" aria-label="Abrir Biblioteca de Etiquetas de Renderizado" style="flex: 1;">
+                            <span class="rt-tag-library-icon" aria-hidden="true"><i class="fa-solid fa-swatchbook"></i></span>
+                            <span class="rt-tag-library-copy"><span>Biblioteca de Etiquetas</span><small>Vistas previas en vivo</small></span>
+                            <span class="rt-tag-library-sparkle" aria-hidden="true">✦</span>
+                        </button>
+                        <button id="rpg_tracker_manage_display_groups" class="menu_button interactable rt-tag-library-button" aria-label="Abrir gestor de Grupos de Visualización" title="Configura grupos de módulos globales de solo visualización." style="flex: 1;">
+                            <span class="rt-tag-library-icon" aria-hidden="true"><i class="fa-solid fa-layer-group"></i></span>
+                            <span class="rt-tag-library-copy"><span>Grupos de Visualización <small style="color:#ffc45c;">BETA</small></span><small>Agrupación visual</small></span>
+                            <span class="rt-tag-library-sparkle" aria-hidden="true">✦</span>
+                        </button>
+                    </div>
 
                     <hr>
                     <b>Perfiles de Escenario</b>
@@ -832,7 +945,7 @@
 
                     <hr>
                     <div class="inline-drawer">
-                        <div class="inline-drawer-toggle inline-drawer-header">
+                        <div class="inline-drawer-toggle inline-drawer-header rt-centered-drawer-header">
                             <b>Prompt Principal del Sistema</b>
                             <div class="inline-drawer-icon fa-solid fa-circle-down down"></div>
                         </div>
@@ -846,11 +959,17 @@
                         </div>
                     </div>
 
-                    <hr>
-                    <b>Opciones Avanzadas</b>
-                    <div class="flex-container flexFlowColumn gap-1">
-                        <label>Revisión de Mensajes</label>
-                        <label class="checkbox_label" title="Cuando está activo, el Rastreador de Estado lee desde el último mensaje del usuario hasta la respuesta más reciente de la IA — capturando todas las llamadas a herramientas en un solo turno.">
+                    <div class="inline-drawer" style="margin-top: 8px;">
+                        <div class="inline-drawer-toggle inline-drawer-header">
+                            <i class="fa-solid fa-sliders" style="margin-right:6px;opacity:.7;"></i>
+                            <b>Opciones Avanzadas</b>
+                            <div class="inline-drawer-icon fa-solid fa-circle-chevron-down"></div>
+                        </div>
+                        <div class="inline-drawer-content">
+                            <div class="flex-container flexFlowColumn gap-1">
+                        <label>Message Lookback</label>
+                        <label class="checkbox_label" title="When enabled, the State Tracker always reads from the last user message through to the latest AI response — capturing all tool calls and multi-part replies in a single turn. This is the recommended setting.">
+>>>>>>> upstream/main
                             <input id="rpg_tracker_lookback_since_last_user" type="checkbox" checked />
                             Desde el último mensaje del usuario <span style="opacity:0.55; font-size:0.88em;">(recomendado)</span>
                         </label>
@@ -878,6 +997,8 @@
                             Restauración Automática de Memo al Deslizar (Swipe)
                             <i class="fa-solid fa-circle-question interactable" style="font-size: 0.85em; opacity: 0.7; margin-left: 4px;" title="Restaura la nota (memo) a su estado previo al deslizar a otra respuesta."></i>
                         </label>
+                            </div>
+                        </div>
                     </div>
 
 
@@ -1200,9 +1321,9 @@
                             <div class="inline-drawer-content" style="padding: 10px; font-size: 0.82em; line-height: 1.45; background: rgba(0, 0, 0, 0.15);">
                                 <p style="margin: 0 0 10px; opacity: 0.85;">Crear un Esqueleto del Mundo es opcional pero recomendable: proporciona contenido inicial para la simulación del mundo más allá del entorno del jugador.</p>
                                 <ol style="margin: 0; padding-left: 20px; display: flex; flex-direction: column; gap: 8px;">
-                                    <li><b>Crear el Resumen de Atmósfera</b>: Escríbelo manualmente o haz clic en <i>Generar Automáticamente</i> para obtenerlo de tu historia de chat reciente. Esto establece la temática del escenario.</li>
-                                    <li><b>Generar el Esqueleto</b>: Haz clic en <i>Generar Esqueleto</i>. Esto crea facciones, ubicaciones, PNJs y conflictos fuera de escena como línea base del Día 0. Se pueden editar en SillyTavern.</li>
-                                    <li><b>Configurar Aleatorización de Enfoque</b> (Opcional pero Recomendado): Habilítalo para forzar diversidad en los informes en lugar de centrarse solo en la zona del jugador.</li>
+                                    <li><b>Crear la Fuente del Esqueleto</b>: Escribe desde una semilla temática corta hasta una descripción detallada del mundo. <i>Generar Automáticamente</i> extrae un trasfondo generalizado del chat reciente. También puedes usar libros de lore existentes como fuente.</li>
+                                    <li><b>Generar el Esqueleto</b>: Haz clic en <i>Generar Esqueleto</i>. Esto crea facciones, ubicaciones, PNJs y conflictos fuera de escena para simular la actividad del mundo (línea base del Día 0). Se pueden editar en SillyTavern.</li>
+                                    <li><b>Configurar Aleatorización de Enfoque</b> (Opcional pero Recomendado): Habilítalo para forzar diversidad en la cobertura de informes en lugar de centrarse solo en la zona inmediata del jugador.</li>
                                     <li><b>Generar el Primer Informe</b>: Ejecuta un informe de inmediato usando <i>Generar Ahora</i> o permite que se ejecute automáticamente conforme avanza la campaña.</li>
                                 </ol>
                                 <div style="margin-top: 12px; padding-top: 10px; border-top: 1px dashed rgba(255,255,255,0.1);">
@@ -1315,21 +1436,35 @@
                                     </div>
                                     
                                     <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 4px; margin-bottom: 2px; flex-wrap: wrap; gap: 6px;">
-                                        <label style="font-size: 0.85em; font-weight: bold; opacity: 0.8; margin: 0; display: flex; align-items: center;">Resumen de Atmósfera
-                                            <i class="fa-solid fa-circle-question interactable" style="font-size: 0.85em; opacity: 0.7; margin-left: 4px;" title="Un párrafo corto que describe el ambiente, tensiones y temática del mundo sin nombrar eventos específicos. Sirve como base para generar el esqueleto."></i>
+                                        <label style="font-size: 0.85em; font-weight: bold; opacity: 0.8; margin: 0; display: flex; align-items: center;">Fuente del Esqueleto (Atmósfera / Lore)
+                                            <i class="fa-solid fa-circle-question interactable" style="font-size: 0.85em; opacity: 0.7; margin-left: 4px;" title="Describe el mundo a cualquier nivel de detalle: atmósfera, culturas, historia, facciones, ubicaciones, personajes, tecnología o magia. O bien usa Generar Automáticamente desde el chat reciente."></i>
                                         </label>
                                         <div style="display: flex; align-items: center; gap: 4px;">
                                             <span style="font-size: 0.75em; opacity: 0.7;">Revisión:</span>
                                             <input id="rpg_world_progression_skeleton_atmosphere_lookback" type="text" inputmode="numeric" pattern="[0-9]*" class="text_pole" value="30" style="width: 35px; text-align: center; font-size: 0.8em; padding: 2px; margin: 0;" />
                                             <span style="font-size: 0.75em; opacity: 0.7; margin-right: 2px;">msgs</span>
-                                            <button id="rpg_world_progression_btn_generate_atmosphere" class="menu_button interactable" style="font-size:0.75em; padding:2px 8px; margin: 0;" title="Generar resumen de atmósfera automáticamente basado en el historial del chat">
+                                            <button id="rpg_world_progression_btn_generate_atmosphere" class="menu_button interactable" style="font-size:0.75em; padding:2px 8px; margin: 0;" title="Generar una Fuente de Esqueleto generalizada desde el chat reciente sin copiar personajes con nombre">
                                                 <i class="fa-solid fa-wand-magic-sparkles"></i> Generar Automáticamente
                                             </button>
                                         </div>
                                     </div>
-                                    <textarea id="rpg_world_progression_skeleton_atmosphere" class="text_pole" rows="3" style="width:100%; font-size:0.8em; resize:vertical; background:rgba(0,0,0,0.3); color:var(--SmartThemeBodyColor); border:1px solid rgba(255,255,255,0.1); border-radius:4px; padding:6px; box-sizing:border-box; margin-bottom: 6px;" placeholder="ej. 'La pobreza y la desesperación definen la vida cotidiana. La nobleza mantiene el control mediante deudas.'"></textarea>
+                                    <textarea id="rpg_world_progression_skeleton_atmosphere" class="text_pole" rows="4" style="width:100%; font-size:0.8em; resize:vertical; background:rgba(0,0,0,0.3); color:var(--SmartThemeBodyColor); border:1px solid rgba(255,255,255,0.1); border-radius:4px; padding:6px; box-sizing:border-box; margin-bottom: 6px;" placeholder="Describe el mundo, desde una semilla temática corta hasta un lore detallado, o créalo automáticamente desde el chat."></textarea>
 
-                                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(80px, 1fr)); gap: 8px; margin-bottom: 6px;">
+                                    <div style="display:flex; align-items:center; justify-content:space-between; gap:8px; margin-bottom:4px;">
+                                        <label class="checkbox_label" style="margin:0;" title="Usa libros de lore existentes como material fuente al generar el Esqueleto del Mundo.">
+                                            <input id="rpg_world_progression_skeleton_use_lorebooks" type="checkbox" />
+                                            <span>Usar Libros de Lore Existentes como Fuente</span>
+                                        </label>
+                                        <button id="rpg_world_progression_skeleton_lorebook_refresh" class="menu_button interactable" style="font-size:0.72em; padding:2px 7px; margin:0;" title="Actualizar libros de lore disponibles">
+                                            <i class="fa-solid fa-rotate"></i> Actualizar
+                                        </button>
+                                    </div>
+                                    <div id="rpg_world_progression_skeleton_lorebook_filter_group" style="display:none; max-height:140px; overflow-y:auto; border:1px solid rgba(255,255,255,0.1); border-radius:4px; padding:5px; margin-bottom:7px;">
+                                        <div style="font-size:0.7em; opacity:0.55; margin-bottom:4px;">Selecciona libros fuente. Si no seleccionas ninguno, se incluirán todos.</div>
+                                        <div id="rpg_world_progression_skeleton_lorebook_list"></div>
+                                    </div>
+
+                                    <div id="rpg_world_progression_skeleton_counts" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(80px, 1fr)); gap: 8px; margin-bottom: 6px;">
                                         <div>
                                             <label style="font-size: 0.75em; font-weight: bold; opacity: 0.8; display: block; margin-bottom: 2px;">Facciones
                                                 <i class="fa-solid fa-circle-question interactable" style="font-size: 0.85em; opacity: 0.7;" title="Número de facciones iniciales en el esqueleto. Macro: {factionCount}"></i>
@@ -1355,6 +1490,11 @@
                                             <input id="rpg_world_progression_skeleton_conflicts" type="text" inputmode="numeric" pattern="[0-9]*" class="text_pole" value="3" style="width: 100%; text-align: center;" />
                                         </div>
                                     </div>
+
+                                    <label id="rpg_world_progression_skeleton_lorebook_only_row" class="checkbox_label" style="margin:0 0 7px 0; font-size:0.78em;" title="Solo crea entradas del esqueleto para entidades mencionadas explícitamente en los libros de lore seleccionados.">
+                                        <input id="rpg_world_progression_skeleton_lorebook_only" type="checkbox" />
+                                        <span>Solo usar entidades mencionadas explícitamente en libros fuente (sin extrapolación)</span>
+                                    </label>
 
                                     <div style="display:flex; align-items:center; gap:6px; margin-top: 4px; margin-bottom: 2px;">
                                         <label style="font-size: 0.85em; font-weight: bold; opacity: 0.8; flex:1; margin:0;">Prompt del Sistema para el Esqueleto
@@ -1624,6 +1764,7 @@
                 </div>
                 <div class="inline-drawer-content">
                     <div class="flex-container flexFlowColumn gap-1">
+                        <div style="font-size: 0.8em; opacity: 0.72; line-height: 1.4;">Open Adventure Companion with the <b>CHAT</b> button at the top of the State Tracker. It can help with your adventure when <b>TUTORIAL MODE</b> is enabled, getting you to grips with the extension. In this mode, it has access to robust documentation.<br><br>Otherwise, it's there if you just feel like chatting about your adventure or brainstorm, etc. You can also ask it to make changes in the State Tracker or Lorebook Agent, and it can take actions for you if you ask it to (by typing messages or making CYOA mode choices for you.)</div>
                         <label class="checkbox_label" title="Attach the Multihog guide to every Adventure Companion request.">
                             <input id="rpg_adventure_companion_tutorial_mode" type="checkbox" />
                             <span>TUTORIAL MODE</span>

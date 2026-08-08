@@ -12,13 +12,57 @@
  * circular import. This will be cleaned up when index.js is split.
  */
 
-import { getSettings, hydrateWorldProgressionFromChatState, persistWorldProgressionTimer, persistRouterLastRunWatermark, getNpcRelationshipMax, clampRelationshipValue, relationshipBarPct, getFriendshipTier, getAffectionTier, applyRelTierBadgeElement, showRelationshipFloatFeedback, saveChatState, getActiveChatId, getRelationshipUpdateMode, RELATIONSHIP_UPDATE_MODES, shouldProcessRegexRelationshipUpdates } from './state-manager.js';
+import { getSettings, hydrateWorldProgressionFromChatState, persistWorldProgressionTimer, persistRouterLastRunWatermark, getNpcRelationshipMax, clampRelationshipValue, relationshipBarPct, getFriendshipTier, getAffectionTier, applyRelTierBadgeElement, showRelationshipFloatFeedback, saveChatState, getActiveChatId, getRelationshipUpdateMode, RELATIONSHIP_UPDATE_MODES, shouldProcessRegexRelationshipUpdates, stripCoreMarkersForNarrator } from './state-manager.js';
 import { syncCombatProfile, isCombatActive } from './llm-client.js';
-import { parseQuestsFromMemo, extractCurrentTimeStr, cleanMessageContent, formatInWorldTime, memoForGmContext } from './memo-processor.js';
+import { parseQuestsFromMemo, extractCurrentTimeStr, cleanMessageContent, formatInWorldTime, memoForGmContext, stripPromptInjectionsFromUserText, stripCyoaAndPacingInjections } from './memo-processor.js';
 import { runRouterPass, saveSceneToLorebook, scanAssistantOutputForKeywords, parseInWorldMinutes, runWorldProgressionPass, updateLorebookEntry, getLorebookManifest, rollbackRouterPass, isRouterRunning } from './router.js';
 import { logTransaction } from './debug-viewer.js';
 import { recordSchedulerEvent } from './swipe-scheduler-debug.js';
 import { saveSettings } from './src/app/runtime-bridge.js';
+import { isPercentFormula, resolveDiceCompare } from './src/state/dice-compare.js';
+import { buildCyoaModeBlock, STATE_MEMO_INJECT_PREAMBLE } from './constants.js';
+import { isEffectiveSectionEnabled } from './src/state/section-enabled.js';
+import { buildNarrativeModeTags, hasInjectableNarrativePacing } from './src/state/narrative-pacing.js';
+export { isPercentFormula, resolveDiceCompare };
+
+/** Write plain text back onto a chat message (string or multimodal content). */
+function setChatMessageText(msg, text) {
+    if (!msg) return;
+    if (typeof msg.content === 'string') {
+        msg.content = text;
+    } else if (Array.isArray(msg.content)) {
+        const nonText = msg.content.filter(p => p && p.type !== 'text');
+        msg.content = [{ type: 'text', text }, ...nonText];
+    }
+    if (typeof msg.mes === 'string' || msg.mes == null) {
+        msg.mes = text;
+    }
+}
+
+/**
+ * Strip prior CYOA/pacing from older user turns; recover raw typed text on the
+ * current user turn so pacing + CYOA + RNG can be freshly re-injected.
+ * @param {object[]} chat
+ * @param {number} currentUserIdx
+ */
+function prepareUserMessagesForContextInject(chat, currentUserIdx) {
+    if (!Array.isArray(chat)) return;
+    for (let i = 0; i < chat.length; i++) {
+        const m = chat[i];
+        if (!m) continue;
+        const role = String(m.role || '').toLowerCase();
+        const isUser = m.is_user || role === 'user' || role === 'human' || role === 'player';
+        if (!isUser) continue;
+
+        const raw = extractTextContent(m);
+        if (i === currentUserIdx) {
+            setChatMessageText(m, stripPromptInjectionsFromUserText(raw));
+        } else {
+            const cleaned = stripCyoaAndPacingInjections(raw);
+            if (cleaned !== raw) setChatMessageText(m, cleaned);
+        }
+    }
+}
 
 /** Resolve ST macros (e.g. {{user}}) in lore text at injection time — storage keeps macros verbatim. */
 function substituteLoreMacros(content) {
@@ -379,6 +423,46 @@ export async function doDiceRoll(customDiceFormula, quiet = false) {
 
 // ── Tool & slash command registration ─────────────────────────────────────────
 
+/**
+ * Shared RollTheDice / RollTheDiceD100 action body.
+ * @param {object} args
+ * @param {{ defaultFormula?: string, forceLte?: boolean, isLegacy?: boolean }} [opts]
+ */
+async function executeDiceToolAction(args, opts = {}) {
+    const isLegacy = !!opts.isLegacy;
+    const requestedFormula = args?.formula || opts.defaultFormula || (isLegacy ? '1d6' : '1d20');
+    const roll = await doDiceRoll(requestedFormula, true);
+    const total = parseInt(roll.total) || 0;
+    const formula = roll.formula || requestedFormula;
+    const invalidNote = roll.invalidFormula
+        ? ` (requested formula "${roll.invalidFormula}" was invalid, defaulted to ${formula})`
+        : '';
+
+    if (isLegacy) {
+        return (args.who
+            ? `${args.who} rolls a ${formula}. The result is: ${total}. Individual rolls: ${roll.rolls.join(', ')}`
+            : `The result of a ${formula} roll is: ${total}. Individual rolls: ${roll.rolls.join(', ')}`) + invalidNote;
+    }
+
+    const dc = Number(args?.dc) || 0;
+    const compare = opts.forceLte ? 'lte' : resolveDiceCompare(args?.compare, formula);
+    const forStr = args.for ? ` (${args.for})` : ''
+    let result = (args.who
+        ? `${args.who}${forStr} rolls a ${formula} against DC ${dc}. The result is: ${total}. Individual rolls: ${roll.rolls.join(', ')}`
+        : `The result${forStr} of a ${formula} roll against DC ${dc} is: ${total}. Individual rolls: ${roll.rolls.join(', ')}`) + invalidNote;
+
+    if (dc > 0) {
+        if (compare === 'lte') {
+            const success = total <= dc;
+            result += ` (Result: ${total} ≤ ${dc}% → ${success ? 'HIT' : 'MISS'})`;
+        } else {
+            const success = total >= dc;
+            result += ` (Result: ${success ? 'SUCCESS' : 'FAILURE'})`;
+        }
+    }
+    return result;
+}
+
 export function registerDiceFunctionTool() {
     try {
         const ctx = SillyTavern.getContext();
@@ -393,10 +477,11 @@ export function registerDiceFunctionTool() {
         const settings = getSettings();
         const isLegacy = settings.legacyDiceNaming;
 
-        // Register d20 tool if enabled
+        // Unified roller: skill/attack DCs (gte) and percentage/existence checks (lte / 1d100).
+        // Global d100 Mode still uses RollTheDiceD100 below; it is not removed.
         if (settings.rngToolD20) {
             const baseFormula = '1d20';
-            const formulaDescription = `A SINGLE dice formula to roll per invocation, e.g. "${baseFormula}", "2d6+3", "${baseFormula}+5". Supports one or more die groups joined by + or - (e.g. "${baseFormula}+1d4+2"), and keep/drop modifiers (e.g. "2d20kh1" for advantage, "2d20kl1" for disadvantage). Provide EXACTLY ONE formula string per call — do NOT comma-separate multiple formulas in one invocation. When several independent rolls are needed, issue multiple parallel RollTheDice invocations in the same turn (e.g. initiative for each combatant, or random-event occurrence + type).`;
+            const formulaDescription = `A SINGLE dice formula to roll per invocation, e.g. "${baseFormula}", "1d100", "2d6+3", "${baseFormula}+5". Supports one or more die groups joined by + or - (e.g. "${baseFormula}+1d4+2"), and keep/drop modifiers (e.g. "2d20kh1" for advantage, "2d20kl1" for disadvantage). Provide EXACTLY ONE formula string per call — do NOT comma-separate multiple formulas in one invocation. When several independent rolls are needed, issue multiple parallel RollTheDice invocations in the same turn (e.g. initiative for each combatant, existence check then detection, or random-event occurrence + type). Use formula "1d100" with compare "lte" for percentage / existence checks.`;
 
             const rollDiceSchema = isLegacy ? {
                 type: 'object',
@@ -409,46 +494,29 @@ export function registerDiceFunctionTool() {
                 type: 'object',
                 properties: {
                     who: { type: 'string', description: 'The name of the persona rolling the dice' },
+                    for: { type: 'string', description: 'What is being rolled for, 1-3 words' },
                     formula: { type: 'string', description: formulaDescription },
-                    dc: { type: 'number', description: 'The Difficulty Class (DC) for this roll. Anchors the difficulty before the roll is made. A roll ≥ dc = SUCCESS.' },
+                    dc: { type: 'number', description: 'For skill/attack checks (compare=gte): Difficulty Class — roll ≥ dc = SUCCESS. For percentage / existence checks (compare=lte or formula 1d100): the trigger % chance — roll ≤ dc = HIT. Always pass the probability directly (e.g. 35 for Dangerous-tier existence). Anchors difficulty BEFORE the roll is made.' },
+                    compare: { type: 'string', description: 'Optional. "gte" (default for non-d100 formulas): roll ≥ dc = SUCCESS. "lte" (default for 1d100 / percentage formulas): roll ≤ dc% = HIT. Use lte for existence checks and other percentage odds.' },
                 },
-                required: ['who', 'formula', 'dc'],
+                required: ['who', 'for', 'formula', 'dc'],
             };
 
             registerFunctionTool({
                 name: 'RollTheDice',
                 displayName: isLegacy ? 'Dice Roll' : 'Dice Roll (with DC)',
-                description: 'Rolls the dice using the provided formula and returns the numeric result. Use when it is necessary to roll the dice to determine the outcome of an action or when the user requests it. Each invocation takes one formula (e.g. "1d20+3"). For multiple independent rolls, issue parallel invocations in the same turn — never comma-join formulas into one call.',
+                description: 'Rolls dice using the provided formula and returns the numeric result. Use for skill/attack checks (1d20+mod vs DC, compare gte) and percentage / existence checks (1d100 vs %, compare lte). Each invocation takes one formula. For multiple independent rolls, issue parallel invocations in the same turn — never comma-join formulas into one call.',
                 parameters: rollDiceSchema,
-                action: async (args) => {
-                    const requestedFormula = args?.formula || (isLegacy ? '1d6' : '1d20');
-                    const roll = await doDiceRoll(requestedFormula, true);
-                    const total = parseInt(roll.total) || 0;
-                    const formula = roll.formula || requestedFormula;
-                    const invalidNote = roll.invalidFormula ? ` (requested formula "${roll.invalidFormula}" was invalid, defaulted to ${formula})` : '';
-
-                    if (isLegacy) {
-                        return (args.who
-                            ? `${args.who} rolls a ${formula}. The result is: ${total}. Individual rolls: ${roll.rolls.join(', ')}`
-                            : `The result of a ${formula} roll is: ${total}. Individual rolls: ${roll.rolls.join(', ')}`) + invalidNote;
-                    }
-
-                    const dc = Number(args?.dc) || 0;
-                    let result = (args.who
-                        ? `${args.who} rolls a ${formula} against DC ${dc}. The result is: ${total}. Individual rolls: ${roll.rolls.join(', ')}`
-                        : `The result of a ${formula} roll against DC ${dc} is: ${total}. Individual rolls: ${roll.rolls.join(', ')}`) + invalidNote;
-
-                    if (dc > 0) {
-                        const success = (total >= dc);
-                        result += ` (Result: ${success ? 'SUCCESS' : 'FAILURE'})`;
-                    }
-                    return result;
-                },
+                action: async (args) => executeDiceToolAction(args, {
+                    defaultFormula: isLegacy ? '1d6' : '1d20',
+                    isLegacy,
+                }),
                 formatMessage: () => '',
             });
         }
 
-        // Register d100 tool if enabled
+        // Explicit global d100 Mode / dedicated d100 tool — kept for percentage-based rulesets.
+        // Thin alias of the unified roller with forced 1d100 + lte semantics.
         if (settings.rngToolD100) {
             const baseFormula = '1d100';
             const formulaDescription = `A SINGLE dice formula to roll per invocation, e.g. "${baseFormula}", "2d6+3", "${baseFormula}+5". Supports one or more die groups joined by + or - (e.g. "${baseFormula}+1d4+2"), and keep/drop modifiers. Provide EXACTLY ONE formula string per call — do NOT comma-separate multiple formulas in one invocation. When several independent rolls are needed, issue multiple parallel RollTheDiceD100 invocations in the same turn.`;
@@ -457,35 +525,22 @@ export function registerDiceFunctionTool() {
                 type: 'object',
                 properties: {
                     who: { type: 'string', description: 'The name of the persona rolling the dice' },
+                    for: { type: 'string', description: 'What is being rolled for, 1-3 words' },
                     formula: { type: 'string', description: formulaDescription },
                     dc: { type: 'number', description: 'The success/trigger percentage chance for this roll (roll-under system). Set this to the actual % probability of success or occurrence (e.g. 83 for an 83% chance to hit/succeed, or 25 for a 25% hazard failure chance). A roll ≤ dc = HIT/SUCCESS/TRIGGER, a roll > dc = MISS/FAILURE/NO-TRIGGER. Do NOT invert the percentage — always pass the probability directly.' },
                 },
-                required: ['who', 'formula', 'dc'],
+                required: ['who', 'for', 'formula', 'dc'],
             };
 
             registerFunctionTool({
                 name: 'RollTheDiceD100',
                 displayName: 'Dice Roll d100 (with DC)',
-                description: 'Rolls a d100 (1-100) using the provided formula and returns the numeric result. Use for percentage probability checks. Each invocation takes one formula (e.g. "1d100"). For multiple independent rolls, issue parallel invocations in the same turn. The dc parameter is the direct success/trigger percentage (roll ≤ dc = success).',
+                description: 'Rolls a d100 (1-100) using the provided formula and returns the numeric result. Use for percentage-based rulesets (global d100 Mode) and percentage probability checks. Each invocation takes one formula (e.g. "1d100"). For multiple independent rolls, issue parallel invocations in the same turn. The dc parameter is the direct success/trigger percentage (roll ≤ dc = success). In a normal d20 game, prefer RollTheDice with formula "1d100" and compare "lte" instead.',
                 parameters: rollDiceSchema,
-                action: async (args) => {
-                    const requestedFormula = args?.formula || '1d100';
-                    const roll = await doDiceRoll(requestedFormula, true);
-                    const total = parseInt(roll.total) || 0;
-                    const formula = roll.formula || requestedFormula;
-                    const invalidNote = roll.invalidFormula ? ` (requested formula "${roll.invalidFormula}" was invalid, defaulted to ${formula})` : '';
-
-                    const dc = Number(args?.dc) || 0;
-                    let result = (args.who
-                        ? `${args.who} rolls a ${formula} against DC ${dc}. The result is: ${total}. Individual rolls: ${roll.rolls.join(', ')}`
-                        : `The result of a ${formula} roll against DC ${dc} is: ${total}. Individual rolls: ${roll.rolls.join(', ')}`) + invalidNote;
-
-                    if (dc > 0) {
-                        const success = (total <= dc);
-                        result += ` (Result: ${total} ≤ ${dc}% → ${success ? 'HIT' : 'MISS'})`;
-                    }
-                    return result;
-                },
+                action: async (args) => executeDiceToolAction(args, {
+                    defaultFormula: '1d100',
+                    forceLte: true,
+                }),
                 formatMessage: () => '',
             });
         }
@@ -783,7 +838,7 @@ function extractTextContent(msg) {
  * Automatically prepends any active NPC relationship status values if relationship bars are enabled.
  */
 function buildInjectedEntryText(id, entry, settings) {
-    let content = substituteLoreMacros(entry.content || '');
+    let content = stripCoreMarkersForNarrator(substituteLoreMacros(entry.content || ''));
     const rel = settings.npcRelationshipValues?.[id];
     if (rel && settings.npcRelationshipBars) {
         const relMax = getNpcRelationshipMax(settings);
@@ -897,7 +952,9 @@ export function installInterceptor() {
         }
 
         const routerActive = !!settings.routerEnabled;
-        if (!settings.enabled && !routerActive) {
+        const cyoaActive = isEffectiveSectionEnabled('CYOA_mode', settings);
+        const pacingInject = hasInjectableNarrativePacing(settings.narrativePacing);
+        if (!settings.enabled && !routerActive && !cyoaActive && !pacingInject) {
             if (settings.debugMode) console.groupEnd();
             return;
         }
@@ -966,8 +1023,15 @@ export function installInterceptor() {
         }
 
         const msg = chat[idx];
+
+        // Strip prior CYOA/pacing from older turns; unwrap current turn to raw typed text
+        // so pacing + CYOA + RNG can be freshly injected every generation.
+        if (!skipInjection) {
+            prepareUserMessagesForContextInject(chat, idx);
+        }
+
         const content = extractTextContent(msg);
-        let injections = "";     // core: RNG Queue + State Memo + Quests (always → user msg)
+        let injections = "";     // core: pacing + CYOA + RNG + State Memo + Quests → user msg
         let loreInjections = ""; // lore: keyword/agent entries (configurable depth)
         let wpInjections = "";   // world progression reports (configurable depth)
         
@@ -978,74 +1042,87 @@ export function installInterceptor() {
             if (skipInjection) console.log("[RPG Tracker] Path 1 active: skipping user-message injection; keyword scan will still run.");
         }
 
-        // RNG, State Memo, and Quests are only injected into the user message in Path 2.
-        // In Path 1 (addPromptManagerInterceptor), these are built and injected by that interceptor
-        // into a dedicated system message at the configured depth, protecting the prefix cache.
-        if (!skipInjection && settings.enabled) {
-            // [PLAYER_CHARACTER] — always injected at the top of the core block
-            const curChatId = SillyTavern.getContext().chatId || globalThis._rpgCurrentChatId?.();
-            if (curChatId && settings.chatStates?.[curChatId]?.playerCharacter) {
-                const pc = settings.chatStates[curChatId].playerCharacter;
-                if (!content.includes("[PLAYER_CHARACTER]")) {
+        // Core user-message injection every turn: PC / relations / pacing / CYOA / RNG / memo / quests.
+        // CYOA / pacing tags can inject even when the State Tracker master toggle is off.
+        if (!skipInjection && (settings.enabled || cyoaActive || pacingInject)) {
+            if (settings.enabled) {
+                // [PLAYER_CHARACTER] — always injected at the top of the core block
+                const curChatId = SillyTavern.getContext().chatId || globalThis._rpgCurrentChatId?.();
+                if (curChatId && settings.chatStates?.[curChatId]?.playerCharacter) {
+                    const pc = settings.chatStates[curChatId].playerCharacter;
                     injections += `[PLAYER_CHARACTER]\nName: ${pc.name}\n${pc.bio}\n[/PLAYER_CHARACTER]\n\n`;
                     if (settings.debugMode) console.log("Player Character injected.");
                 }
+
+                // [NPC_RELATIONS] — before pacing/CYOA/RNG.
+                const relBlock = await buildNpcRelationsBlock(settings);
+                if (relBlock) injections += relBlock;
             }
 
-        // [NPC_RELATIONS] — injected first, before RNG queue, same mechanism as RNG.
-            const relBlock = await buildNpcRelationsBlock(settings);
-            if (relBlock) injections += relBlock;
-
-            // Hybrid mode uses live tool calls outside combat and the queue only
-            // while [COMBAT] is active. Queue-only mode continues to inject it for
-            // every response, preserving its existing behavior.
-            const injectRngQueue = settings.rngEnabled
-                && (!settings.diceFunctionTool || isCombatActive(settings.currentMemo));
-            if (injectRngQueue) {
-                if (settings.rngQueueD20 && !content.includes(RNG_QUEUE_TAG_D20)) {
-                    const queue = makeRngQueue(RNG_QUEUE_LEN, false);
-                    injections += buildRngBlock(queue, false);
-                    if (settings.debugMode) console.log("RNG Queue (d20) generated for injection.");
-                }
-                if (settings.rngQueueD100 && !content.includes(RNG_QUEUE_TAG_D100)) {
-                    const queue = makeRngQueue(30, true);
-                    injections += buildRngBlock(queue, true);
-                    if (settings.debugMode) console.log("RNG Queue (d100) generated for injection.");
+            // Every-turn bundle just above RNG: narrative length/pacing → CYOA → (RNG below).
+            const bundleParts = [];
+            const modeTags = buildNarrativeModeTags(settings.narrativePacing);
+            if (modeTags) bundleParts.push(modeTags);
+            if (cyoaActive) bundleParts.push(buildCyoaModeBlock(settings.cyoaConfig || {}));
+            if (bundleParts.length) {
+                injections += `${bundleParts.join('\n\n')}\n\n`;
+                if (settings.debugMode) {
+                    console.log('[RPG Tracker] CYOA/pacing bundle injected above RNG (every turn).');
                 }
             }
 
-            if (settings.currentMemo && !content.includes("### STATE MEMO (DO NOT REPEAT)")) {
-                const memoText = stripMemoHtml(memoForGmContext(settings.currentMemo)).trim();
-                injections += `### STATE MEMO (DO NOT REPEAT)\n${memoText}\n\n`;
-            }
-
-            // Quest deadline check — fires before state model pass, deterministically
-            if (settings.syspromptModules?.quests !== false) {
-                const memoQuests = parseQuestsFromMemo(settings.currentMemo);
-                if (memoQuests.length) {
-                    const { checkQuestDeadlines, renderQuestsAsPlainText } = await import('./quests.js');
-                    checkQuestDeadlines();
-
-                    // Inject active quests as plain text into narrative context
-                    const timeMatch = (settings.currentMemo || '').match(/\[TIME\]([\s\S]*?)\[\/TIME\]/i);
-                    const currentTime = timeMatch ? extractCurrentTimeStr(timeMatch[1]) : '';
-                    // Re-parse after checkQuestDeadlines may have mutated the memo
-                    const freshQuests = parseQuestsFromMemo(settings.currentMemo);
-                    const questText = renderQuestsAsPlainText(freshQuests, currentTime);
-                    if (questText) injections += questText;
+            if (settings.enabled) {
+                // Hybrid mode uses live tool calls outside combat and the queue only
+                // while [COMBAT] is active. Queue-only mode continues to inject it for
+                // every response, preserving its existing behavior.
+                const injectRngQueue = settings.rngEnabled
+                    && (!settings.diceFunctionTool || isCombatActive(settings.currentMemo));
+                if (injectRngQueue) {
+                    if (settings.rngQueueD20) {
+                        const queue = makeRngQueue(RNG_QUEUE_LEN, false);
+                        injections += buildRngBlock(queue, false);
+                        if (settings.debugMode) console.log("RNG Queue (d20) generated for injection.");
+                    }
+                    if (settings.rngQueueD100) {
+                        const queue = makeRngQueue(30, true);
+                        injections += buildRngBlock(queue, true);
+                        if (settings.debugMode) console.log("RNG Queue (d100) generated for injection.");
+                    }
                 }
-            }
 
-            // Once per chat: reinforce the status footer on the first user turn only
-            // (near the bottom of early context — system prompt alone is often ignored).
-            // Honors Control Room: disabled <end_of_output_footer> → no reminder.
-            if (shouldInjectEndOfOutputFooterReminder(chat, content)) {
-                const footerReminder = buildEndOfOutputFooterReminder(settings);
-                if (footerReminder) {
-                    injections += footerReminder;
-                    if (settings.debugMode) console.log('[RPG Tracker] End-of-output footer reminder injected (first user turn).');
-                } else if (settings.debugMode) {
-                    console.log('[RPG Tracker] End-of-output footer reminder skipped (disabled or empty format).');
+                if (settings.currentMemo) {
+                    const memoText = stripMemoHtml(memoForGmContext(settings.currentMemo)).trim();
+                    injections += `${STATE_MEMO_INJECT_PREAMBLE}\n\n## TRACKER STATE 0 (Current)\n${memoText}\n\n`;
+                }
+
+                // Quest deadline check — fires before state model pass, deterministically
+                if (settings.syspromptModules?.quests !== false) {
+                    const memoQuests = parseQuestsFromMemo(settings.currentMemo);
+                    if (memoQuests.length) {
+                        const { checkQuestDeadlines, renderQuestsAsPlainText } = await import('./quests.js');
+                        checkQuestDeadlines();
+
+                        // Inject active quests as plain text into narrative context
+                        const timeMatch = (settings.currentMemo || '').match(/\[TIME\]([\s\S]*?)\[\/TIME\]/i);
+                        const currentTime = timeMatch ? extractCurrentTimeStr(timeMatch[1]) : '';
+                        // Re-parse after checkQuestDeadlines may have mutated the memo
+                        const freshQuests = parseQuestsFromMemo(settings.currentMemo);
+                        const questText = renderQuestsAsPlainText(freshQuests, currentTime);
+                        if (questText) injections += questText;
+                    }
+                }
+
+                // Once per chat: reinforce the status footer on the first user turn only
+                // (near the bottom of early context — system prompt alone is often ignored).
+                // Honors Control Room: disabled <end_of_output_footer> → no reminder.
+                if (shouldInjectEndOfOutputFooterReminder(chat, content)) {
+                    const footerReminder = buildEndOfOutputFooterReminder(settings);
+                    if (footerReminder) {
+                        injections += footerReminder;
+                        if (settings.debugMode) console.log('[RPG Tracker] End-of-output footer reminder injected (first user turn).');
+                    } else if (settings.debugMode) {
+                        console.log('[RPG Tracker] End-of-output footer reminder skipped (disabled or empty format).');
+                    }
                 }
             }
         }

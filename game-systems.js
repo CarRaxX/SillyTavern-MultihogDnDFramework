@@ -15,6 +15,7 @@
 import { getSettings, getNpcRelationshipMax, buildRelationshipTrackingSysprompt, recordDeletedCustomTags, clearDeletedCustomTagTombstones, removeChatSetupCatalogEntries, getChatSetupItemScope, setChatSetupItemScope, setChatSetupItemEnabled } from './state-manager.js';
 import { sendStateRequest, restoreUserMacro } from './llm-client.js';
 import { escapeHtml, memoForGmContext } from './memo-processor.js';
+import { renderMemoAsCards } from './renderer.js';
 import { refreshOrderList } from './ui-editors.js';
 import { t } from './src/i18n/index.js';
 import { QUESTS_NARRATOR, DEFAULT_STOCK_PROMPTS, resolveTimePromptKey, buildCyoaPrompt } from './constants.js';
@@ -36,6 +37,10 @@ import {
     buildGameSystemWizardStoryContext,
     normalizeGameSystemWizardContextPrefs,
 } from './src/features/game-system-wizard-context.js';
+import {
+    buildGameSystemWizardPreviewMemo,
+    extractGameSystemWizardTemplate,
+} from './src/features/game-system-wizard-preview.js';
 
 export { isBaseSectionEnabled, isEffectiveSectionEnabled } from './src/state/section-enabled.js';
 
@@ -419,13 +424,8 @@ export function transformBaseSectionContent(tag, innerContent, settings) {
     }
 
     if (tag === 'CYOA_mode') {
-        const cfg = settings.cyoaConfig || {};
-        // Builder is source of truth unless the user explicitly opted into a custom CYOA prompt.
-        // (Older builds always wrote customPromptText on save, which blocked shipped CYOA refreshes.)
-        const promptText = (cfg.useCustomPrompt && cfg.customPromptText?.trim())
-            ? cfg.customPromptText.trim()
-            : buildCyoaPrompt(cfg);
-        return `<CYOA_mode>\n${promptText}\n</CYOA_mode>`;
+        // CYOA is injected by rpgTrackerInterceptor above the RNG queue (not Main).
+        return '';
     }
     if (tag === 'random_events' && !(settings.rngEnabled && settings.diceFunctionTool)) {
         innerContent = innerContent.replace(/\s*Batch both RollTheDice calls together;[^.]*\./g, '');
@@ -473,7 +473,7 @@ export function transformBaseSectionContent(tag, innerContent, settings) {
     if (tag === 'quests') {
         let instruction = QUESTS_NARRATOR;
         if (!mods.questsFrustration) {
-            instruction = instruction.replace(/ Quest MOOD \(in STATE MEMO, from time pressure \+ FRUSTRATION_COEFF\) should guide questgiver tone for NPC-given quests only\./g, '');
+            instruction = instruction.replace(/\n?- ?Quest MOOD \(in STATE MEMO, from time pressure \+ FRUSTRATION_COEFF\) should guide questgiver tone for NPC-given quests only\./g, '');
         }
         let result = `<quests>\n${instruction.trim()}\n</quests>`;
         if (!mods.questsDeadlines) {
@@ -1615,6 +1615,9 @@ async function showGameSystemPreview(parsed, { description = '', isEdit = false,
                     <input id="rt-gs-trklabel" type="text" class="text_pole" value="${escapeHtml(state.trackerLabel)}" style="flex:1;" placeholder="Etiqueta visible">
                 </div>
                 <textarea id="rt-gs-trkcontent" class="text_pole" rows="18" style="${GS_TEXTAREA_TALL_STYLE}">${escapeHtml(state.trackerContent)}</textarea>
+                <div style="margin-top:10px; font-size:11px; font-weight:bold;">UI Live Preview</div>
+                <div style="font-size:10px; opacity:0.58; line-height:1.35; margin:3px 0 6px;">Automatically renders the last complete [${escapeHtml(state.trackerTag)}] sample block found above. Edit that block to update this preview.</div>
+                <div id="rt-gs-ui-live-preview" class="rpg-tracker-render-view" style="min-height:58px; border:1px solid rgba(255,255,255,0.1); border-radius:6px; background:rgba(0,0,0,0.2); padding:4px; overflow:hidden;"></div>
             </div>
 
             <div style="padding:10px; border:1px solid rgba(255,255,255,0.1); border-radius:6px; background:rgba(0,0,0,0.2);">
@@ -1663,14 +1666,73 @@ async function showGameSystemPreview(parsed, { description = '', isEdit = false,
         previewLore?.addEventListener('change', syncPreviewContextPrefs);
         previewMemo?.addEventListener('change', syncPreviewContextPrefs);
         if (previewLookback) previewLookback.disabled = previewContextPrefs.lookbackAll;
+        const previewSectionPages = {};
+        let previewFullView = false;
+        let previousPreviewTag = '';
+        const renderUiLivePreview = () => {
+            const preview = $id('rt-gs-ui-live-preview');
+            if (!preview) return;
+            const trackerTag = sanitizeUpperTag($id('rt-gs-trktag')?.value || state.trackerTag);
+            if (trackerTag !== previousPreviewTag) {
+                previewFullView = false;
+                for (const key of Object.keys(previewSectionPages)) delete previewSectionPages[key];
+                previousPreviewTag = trackerTag;
+            }
+            const trackerContent = $id('rt-gs-trkcontent')?.value ?? state.trackerContent;
+            const previewMemo = buildGameSystemWizardPreviewMemo(trackerContent, trackerTag);
+            if (!previewMemo) {
+                preview.innerHTML = `<div class="rt-empty" style="min-height:42px; padding:10px; font-size:11px;">Add a complete [${escapeHtml(trackerTag || 'TRACKER_TAG')}] ... [/${escapeHtml(trackerTag || 'TRACKER_TAG')}] example block above to see its UI preview.</div>`;
+                return;
+            }
+
+            const savedCustomFields = settings.customFields || [];
+            const ghostField = {
+                tag: trackerTag,
+                label: $id('rt-gs-trklabel')?.value || state.trackerLabel || trackerTag,
+                icon: $id('rt-gs-trkicon')?.value || state.trackerIcon || '📄',
+                prompt: '',
+                template: extractGameSystemWizardTemplate(trackerContent, trackerTag),
+                enabled: true,
+            };
+            settings.customFields = [
+                ...savedCustomFields.filter(field => String(field?.tag || '').toUpperCase() !== trackerTag),
+                ghostField,
+            ];
+            try {
+                preview.innerHTML = renderMemoAsCards(previewMemo, trackerTag, previewSectionPages, {
+                    fullViewSections: previewFullView ? [trackerTag] : [],
+                    showCategorySettings: false,
+                });
+            } finally {
+                settings.customFields = savedCustomFields;
+            }
+
+            preview.querySelector('.rt-fullview-btn')?.addEventListener('click', event => {
+                event.preventDefault();
+                event.stopPropagation();
+                previewFullView = !previewFullView;
+                previewSectionPages[trackerTag] = 0;
+                renderUiLivePreview();
+            });
+            preview.querySelectorAll('.rt-page-btn').forEach(button => {
+                button.addEventListener('click', event => {
+                    event.preventDefault();
+                    event.stopPropagation();
+                    const direction = Number(button.dataset.dir) || 0;
+                    previewSectionPages[trackerTag] = Math.max(0, (previewSectionPages[trackerTag] || 0) + direction);
+                    renderUiLivePreview();
+                });
+            });
+        };
         $id('rt-gs-icon')?.addEventListener('input', e => { state.icon = e.target.value; });
         $id('rt-gs-name')?.addEventListener('input', e => { state.name = e.target.value; });
         $id('rt-gs-gmtag')?.addEventListener('input', e => { state.gmTag = e.target.value; const lbl = $id('rt-gs-gmtag-label'); if (lbl) lbl.textContent = e.target.value; });
         $id('rt-gs-gmcontent')?.addEventListener('input', e => { state.gmContent = e.target.value; });
-        $id('rt-gs-trktag')?.addEventListener('input', e => { state.trackerTag = e.target.value; const lbl = $id('rt-gs-trktag-label'); if (lbl) lbl.textContent = e.target.value; });
-        $id('rt-gs-trklabel')?.addEventListener('input', e => { state.trackerLabel = e.target.value; });
-        $id('rt-gs-trkicon')?.addEventListener('input', e => { state.trackerIcon = e.target.value; });
-        $id('rt-gs-trkcontent')?.addEventListener('input', e => { state.trackerContent = e.target.value; });
+        $id('rt-gs-trktag')?.addEventListener('input', e => { state.trackerTag = e.target.value; const lbl = $id('rt-gs-trktag-label'); if (lbl) lbl.textContent = e.target.value; renderUiLivePreview(); });
+        $id('rt-gs-trklabel')?.addEventListener('input', e => { state.trackerLabel = e.target.value; renderUiLivePreview(); });
+        $id('rt-gs-trkicon')?.addEventListener('input', e => { state.trackerIcon = e.target.value; renderUiLivePreview(); });
+        $id('rt-gs-trkcontent')?.addEventListener('input', e => { state.trackerContent = e.target.value; renderUiLivePreview(); });
+        renderUiLivePreview();
 
         $id('rt-gs-include-tracker')?.addEventListener('change', e => {
             state.includeTracker = !!e.target.checked;
@@ -1729,6 +1791,7 @@ async function showGameSystemPreview(parsed, { description = '', isEdit = false,
             if (lblEl && draft.trackerLabel) lblEl.value = draft.trackerLabel;
             const iconEl = $id('rt-gs-trkicon');
             if (iconEl && draft.trackerIcon) iconEl.value = draft.trackerIcon;
+            renderUiLivePreview();
         };
 
         if (regenGmBtn) {
@@ -1766,6 +1829,7 @@ async function showGameSystemPreview(parsed, { description = '', isEdit = false,
                     if (lblEl && block.attrs.label) lblEl.value = block.attrs.label;
                     const iconEl = $id('rt-gs-trkicon');
                     if (iconEl && block.attrs.icon) iconEl.value = block.attrs.icon;
+                    renderUiLivePreview();
                     toastr['success']('¡Módulo del rastreador regenerado!', 'Asistente de Sistemas de Juego');
                 } catch (err) {
                     toastr['error'](`Falló la regeneración: ${err.message}`, 'Asistente de Sistemas de Juego');
@@ -1938,6 +2002,7 @@ function saveGameSystemFromPreview(result, existingSystemId = null) {
             field.label = result.trackerLabel;
             field.icon = result.trackerIcon;
             field.prompt = result.trackerContent;
+            field.template = extractGameSystemWizardTemplate(result.trackerContent, result.trackerTag);
             field.enabled = enabled;
             field.origin = 'wizard';
             field._chatSetupMember = true;
@@ -1950,7 +2015,7 @@ function saveGameSystemFromPreview(result, existingSystemId = null) {
                 label: result.trackerLabel,
                 icon: result.trackerIcon,
                 prompt: result.trackerContent,
-                template: '',
+                template: extractGameSystemWizardTemplate(result.trackerContent, result.trackerTag),
                 enabled,
                 origin: 'wizard',
                 scope: bundleScope,

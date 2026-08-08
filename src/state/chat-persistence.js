@@ -331,6 +331,7 @@ export function saveChatState(chatId, opts = {}) {
         routerLookback: s.routerLookback || 4,
         routerLastRunChatLength: s.routerLastRunChatLength ?? 0,
         routerLastRunAt: s.routerLastRunAt ?? 0,
+        pcCharacterBlockSeeded: !!s.pcCharacterBlockSeeded,
         routerDirectPrompt: s.routerDirectPrompt || '',
         routerDirectLookback: s.routerDirectLookback || 10,
         routerDefaultPosition: s.routerDefaultPosition ?? 4,
@@ -366,6 +367,9 @@ export function saveChatState(chatId, opts = {}) {
         worldProgressionSkeletonAtmosphereSummary: s.worldProgressionSkeletonAtmosphereSummary || '',
         worldProgressionSkeletonAtmosphereLookback: s.worldProgressionSkeletonAtmosphereLookback ?? 30,
         worldProgressionSkeletonUseExisting: s.worldProgressionSkeletonUseExisting ?? true,
+        worldProgressionSkeletonUseLorebooks: s.worldProgressionSkeletonUseLorebooks ?? false,
+        worldProgressionSkeletonLorebookFilter: JSON.parse(JSON.stringify(s.worldProgressionSkeletonLorebookFilter || [])),
+        worldProgressionSkeletonLorebookOnly: s.worldProgressionSkeletonLorebookOnly ?? false,
         worldProgressionConsolidateEnabled: s.worldProgressionConsolidateEnabled ?? false,
         worldProgressionConsolidateInterval: s.worldProgressionConsolidateInterval ?? 7,
         worldProgressionExclusionList: s.worldProgressionExclusionList || '',
@@ -374,6 +378,7 @@ export function saveChatState(chatId, opts = {}) {
         use24hTime: !!s.use24hTime,
         useDdMmYyFormat: !!s.useDdMmYyFormat,
         initialDate: s.initialDate || 'Day 1',
+        initialTime: s.initialTime || '08:00 AM',
         npcRelationshipMax: getNpcRelationshipMax(s),
 
         // Optional full configuration lock. State-only Chat Link behavior remains
