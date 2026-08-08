@@ -4084,7 +4084,7 @@ Rules:
 
                 const chip0 = document.createElement('span');
                 chip0.style.cssText = chipSt;
-                chip0.title = 'Fixed — always the entry name';
+                chip0.title = 'Fijo — siempre el nombre de la entrada';
                 chip0.textContent = fixed0;
                 bar.appendChild(chip0);
 
@@ -4100,7 +4100,7 @@ Rules:
                     const inp = document.createElement('input');
                     inp.type = 'text';
                     inp.value = label;
-                    inp.title = 'Rename this slot — the AI fills this section based on its name';
+                    inp.title = 'Renombrar este hueco — la IA rellena esta sección según su nombre';
                     inp.style.cssText = inpSt;
                     inp.style.width = Math.max(28, label.length * 7) + 'px';
                     inp.addEventListener('input', () => { inp.style.width = Math.max(28, inp.value.length * 7) + 'px'; });
@@ -4115,7 +4115,7 @@ Rules:
 
                     const rmBtn = document.createElement('button');
                     rmBtn.style.cssText = rmSt;
-                    rmBtn.title = 'Remove this slot';
+                    rmBtn.title = 'Eliminar este hueco';
                     rmBtn.textContent = '×';
                     rmBtn.addEventListener('click', () => {
                         const s = parseSegs(bar.dataset.fmt);
@@ -4130,7 +4130,7 @@ Rules:
 
                 const addBtn = document.createElement('button');
                 addBtn.style.cssText = addSt;
-                addBtn.title = 'Add a slot';
+                addBtn.title = 'Añadir un hueco';
                 addBtn.textContent = '+';
                 addBtn.addEventListener('click', () => {
                     const s = parseSegs(bar.dataset.fmt);
@@ -4148,7 +4148,7 @@ Rules:
 
                 const chipLast = document.createElement('span');
                 chipLast.style.cssText = chipSt;
-                chipLast.title = 'Fixed — always comma-separated search keywords';
+                chipLast.title = 'Fijo — siempre palabras clave de búsqueda separadas por comas';
                 chipLast.textContent = fixedEnd;
                 bar.appendChild(chipLast);
 
@@ -4180,12 +4180,12 @@ Rules:
                 // its prompt tag (LOC) so the naming never appears to mismatch the user's own books.
                 const bookCategory = MODULE_BOOK_CATEGORY?.[id];
                 const moduleLabel = bookCategory
-                    ? `${bookCategory} <span style="opacity:0.6; font-weight:normal;" title="Prompt tag used in the Lorebook Agent's output — the actual lorebook is named ..._${bookCategory}">(${config.tag})</span>`
+                    ? `${bookCategory} <span style="opacity:0.6; font-weight:normal;" title="Etiqueta de prompt utilizada en la salida del Agente de Lorebook — el libro de lore real se llama ..._${bookCategory}">(${config.tag})</span>`
                     : config.tag;
                 header.innerHTML = `
                         <input type="checkbox" class="rt-agent-module-check" ${config.enabled ? 'checked' : ''} style="cursor:pointer; margin:0; flex-shrink:0;">
                         <span style="font-size:0.769em; font-weight:bold; opacity:0.7; flex:1;">${moduleLabel}</span>
-                        <button class="rt-agent-module-reset" style="background:transparent; border:none; color:var(--rt-accent); cursor:pointer; font-size:0.692em; padding:0 4px; opacity:0.5;" title="Reset slots and instruction to default"><i class="fa-solid fa-arrow-rotate-left"></i></button>
+                        <button class="rt-agent-module-reset" style="background:transparent; border:none; color:var(--rt-accent); cursor:pointer; font-size:0.692em; padding:0 4px; opacity:0.5;" title="Restablecer huecos e instrucción por defecto"><i class="fa-solid fa-arrow-rotate-left"></i></button>
                     `;
                 header.querySelector('.rt-agent-module-check').addEventListener('change', (e) => {
                     const st = getSettings();
@@ -4193,7 +4193,7 @@ Rules:
                     saveSettings();
                 });
                 header.querySelector('.rt-agent-module-reset').addEventListener('click', () => {
-                    if (confirm(`Reset ${id.toUpperCase()} module slots and instruction to default?`)) {
+                    if (confirm(`¿Restablecer los huecos e instrucción del módulo ${id.toUpperCase()} a los valores por defecto?`)) {
                         const st = getSettings();
                         if (DEFAULT_MODULES[id]) {
                             if (id === 'npc') {

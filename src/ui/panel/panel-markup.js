@@ -89,18 +89,18 @@ export function buildPanelMarkup({ settings, agentPanelCollapsedClass }) {
                         <div style="font-weight: bold; font-size: 0.846em; display: flex; align-items: center; gap: 6px; color: var(--rt-text-muted);">
                             <i class="fa-solid ${settings.agentSettingsOpen !== false ? 'fa-chevron-down' : 'fa-chevron-right'}" id="rt-agent-settings-toggle-icon"></i> ${t('agent.quickSettings', 'Quick Settings')}
                         </div>
-                        <button id="rt-agent-help-btn" style="background: var(--rt-accent-bg); border: 1px solid var(--rt-accent-dim); color: var(--rt-accent); border-radius: 12px; width: 18px; height: 18px; font-size: 0.769em; cursor: pointer; display: flex; align-items: center; justify-content: center; margin: 0; flex-shrink: 0;" title="What is the Lorebook Agent?">?</button>
+                        <button id="rt-agent-help-btn" style="background: var(--rt-accent-bg); border: 1px solid var(--rt-accent-dim); color: var(--rt-accent); border-radius: 12px; width: 18px; height: 18px; font-size: 0.769em; cursor: pointer; display: flex; align-items: center; justify-content: center; margin: 0; flex-shrink: 0;" title="¿Qué es el Agente de Lorebook?">?</button>
                     </div>
 
                     <!-- Quick Settings Drawer -->
                     <div id="rt-agent-settings-drawer" style="display: ${settings.agentSettingsOpen !== false ? 'block' : 'none'}; margin-bottom: 10px; flex-shrink: 0;">
-                        <label style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; cursor: pointer; opacity: 0.8; font-size: 0.846em;" title="Use simple text tags [[NPC: Name | Desc]] instead of complex tools. Better for small models.">
-                            ${t('agent.basicMode', 'Basic Mode (tag-based, no tool calls)')}
+                        <label style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; cursor: pointer; opacity: 0.8; font-size: 0.846em;" title="Usa etiquetas de texto simples [[NPC: Nombre | Desc]] en lugar de herramientas complejas. Mejor para modelos pequeños.">
+                            ${t('agent.basicMode', 'Modo Básico (basado en etiquetas)')}
                             <input type="checkbox" id="rt-agent-router-basic" ${settings.routerBasicMode ? 'checked' : ''}>
                         </label>
 
-                        <label style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; cursor: pointer; opacity: 0.8; font-size: 0.846em;" title="When enabled, the extension's keyword scanner is fully disabled. SillyTavern's native lorebook keyword system handles all keyword-based entry activation. The agent will not auto-activate or auto-expire entries based on keywords.">
-                            ${t('agent.nativeKeywordActivation', 'Native Keyword Activation')}
+                        <label style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; cursor: pointer; opacity: 0.8; font-size: 0.846em;" title="Cuando está activado, el escáner de palabras clave de la extensión se deshabilita por completo. El sistema nativo de palabras clave de SillyTavern gestiona toda la activación por palabras clave. El agente no activará ni desactivará automáticamente entradas según palabras clave.">
+                            ${t('agent.nativeKeywordActivation', 'Activación Nativa por Palabras Clave')}
                             <input type="checkbox" id="rt-agent-router-native-kw" ${settings.routerNativeKeywordActivation ? 'checked' : ''}>
                         </label>
 
@@ -109,20 +109,20 @@ export function buildPanelMarkup({ settings, agentPanelCollapsedClass }) {
                 : settings.routerLookbackSinceLastUser === true ? 'since_last_user' : 'fixed';
             return `
                         <div style="margin-bottom: 8px;">
-                            <div style="font-size: 0.769em; opacity: 0.7; margin-bottom: 4px;">${t('agent.lookbackMode', 'Lookback mode:')}</div>
-                            <label style="display: flex; align-items: center; gap: 5px; margin-bottom: 4px; cursor: pointer; font-size: 0.769em; opacity: 0.85;" title="Read every message since the last successful agent run — ideal when Run Every > 1.">
+                            <div style="font-size: 0.769em; opacity: 0.7; margin-bottom: 4px;">${t('agent.lookbackMode', 'Modo de revisión:')}</div>
+                            <label style="display: flex; align-items: center; gap: 5px; margin-bottom: 4px; cursor: pointer; font-size: 0.769em; opacity: 0.85;" title="Lee todos los mensajes desde la última ejecución exitosa del agente — ideal si Ejecutar cada > 1.">
                                 <input type="radio" name="rt-lookback-mode" id="rt-agent-lookback-mode-run" value="since_last_run" ${mode === 'since_last_run' ? 'checked' : ''}>
-                                <span>${t('agent.sinceLastRun', 'Since last run')}</span>
+                                <span>${t('agent.sinceLastRun', 'Desde la última ejecución')}</span>
                             </label>
-                            <label style="display: flex; align-items: center; gap: 5px; margin-bottom: 4px; cursor: pointer; font-size: 0.769em; opacity: 0.75;" title="Read from the most recent user message through to the latest AI response.">
+                            <label style="display: flex; align-items: center; gap: 5px; margin-bottom: 4px; cursor: pointer; font-size: 0.769em; opacity: 0.75;" title="Lee desde el mensaje más reciente del usuario hasta la respuesta más reciente de la IA.">
                                 <input type="radio" name="rt-lookback-mode" id="rt-agent-lookback-mode-user" value="since_last_user" ${mode === 'since_last_user' ? 'checked' : ''}>
-                                <span>${t('agent.sinceLastUserMsg', 'Since last user message')}</span>
+                                <span>${t('agent.sinceLastUserMsg', 'Desde el último mensaje del usuario')}</span>
                             </label>
-                            <label style="display: flex; align-items: center; gap: 5px; margin-bottom: 4px; cursor: pointer; font-size: 0.769em; opacity: 0.75;" title="Read a fixed number of recent user turns.">
+                            <label style="display: flex; align-items: center; gap: 5px; margin-bottom: 4px; cursor: pointer; font-size: 0.769em; opacity: 0.75;" title="Lee un número fijo de turnos recientes del usuario.">
                                 <input type="radio" name="rt-lookback-mode" id="rt-agent-lookback-mode-fixed" value="fixed" ${mode === 'fixed' ? 'checked' : ''}>
-                                <span>${t('agent.fixedTurnCount', 'Fixed turn count:')}</span>
+                                <span>${t('agent.fixedTurnCount', 'Número de turnos fijo:')}</span>
                             </label>
-                            <div id="rt-agent-router-lookback-container" style="display: inline-flex; align-items: center; gap: 6px; margin-left: 20px; transition: opacity 0.2s; ${mode !== 'fixed' ? 'opacity: 0.35; pointer-events: none;' : ''}" title="Read the last N user turns (includes all tool messages in each turn).">
+                            <div id="rt-agent-router-lookback-container" style="display: inline-flex; align-items: center; gap: 6px; margin-left: 20px; transition: opacity 0.2s; ${mode !== 'fixed' ? 'opacity: 0.35; pointer-events: none;' : ''}" title="Lee los últimos N turnos del usuario (incluye los mensajes de herramientas en cada turno).">
                                 <input type="text" inputmode="numeric" pattern="[0-9]*" id="rt-agent-router-lookback" value="${settings.routerLookback || 4}" min="1" max="100" style="width: 40px; background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.1); color: white; border-radius: 3px; text-align: center; font-size: 0.769em; padding: 1px;">
                                 <span style="font-size: 0.769em; opacity: 0.5;">msgs</span>
                             </div>
@@ -130,34 +130,34 @@ export function buildPanelMarkup({ settings, agentPanelCollapsedClass }) {
         })()}
 
                         <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 6px;">
-                            <div style="display: flex; align-items: center; gap: 6px; flex: 1;" title="Run every N messages: 1 = fires every turn (always current, but may create excessive entry granularity). 3+ = fires less often but sees more narrative context, producing more coherent updates. Keyword hits still fire immediately regardless.">
-                                <span style="font-size: 0.769em; opacity: 0.7;">${t('agent.runEvery', 'Run every:')}</span>
+                            <div style="display: flex; align-items: center; gap: 6px; flex: 1;" title="Ejecutar cada N mensajes: 1 = se ejecuta cada turno (siempre al día, pero puede generar demasiadas entradas). 3+ = se ejecuta con menos frecuencia pero ve más contexto narrativo, produciendo actualizaciones más coherentes. Las coincidencias por palabra clave se ejecutan de inmediato.">
+                                <span style="font-size: 0.769em; opacity: 0.7;">${t('agent.runEvery', 'Ejecutar cada:')}</span>
                                 <input type="text" inputmode="numeric" pattern="[0-9]*" id="rt-agent-router-run-every" value="${settings.routerRunEvery || 3}" min="1" max="50" style="width: 40px; background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.1); color: white; border-radius: 3px; text-align: center; font-size: 0.769em; padding: 1px;">
                                 <span style="font-size: 0.769em; opacity: 0.5;">msgs</span>
                             </div>
                         </div>
 
-                        <label style="display: flex; align-items: center; gap: 5px; margin-bottom: 10px; cursor: pointer; font-size: 0.769em; opacity: 0.75;" title="Include hidden messages (e.g. messages collapsed by a summarizer) in the agent's lookback window.">
+                        <label style="display: flex; align-items: center; gap: 5px; margin-bottom: 10px; cursor: pointer; font-size: 0.769em; opacity: 0.75;" title="Incluye mensajes ocultos (ej. mensajes colapsados por un resumidor) en la ventana de revisión del agente.">
                             <input type="checkbox" id="rt-agent-router-include-hidden" ${settings.routerIncludeHidden ? 'checked' : ''}>
-                            <span>${t('agent.includeHiddenMsgs', 'Include hidden msgs (summarizer)')}</span>
+                            <span>${t('agent.includeHiddenMsgs', 'Incluir msjs ocultos (resumen)')}</span>
                         </label>
 
-                        <label style="display: flex; align-items: center; gap: 5px; margin-bottom: 10px; cursor: pointer; font-size: 0.769em; opacity: 0.75;" title="When enabled, swiping away from a generation that triggered the agent undoes that lorebook pass. Swipes never advance the Run Every counter either way.">
+                        <label style="display: flex; align-items: center; gap: 5px; margin-bottom: 10px; cursor: pointer; font-size: 0.769em; opacity: 0.75;" title="Cuando está activado, deslizar (swipe) una respuesta que activó al agente deshace esa pasada de lorebook. Deslizar no avanza el contador de 'Ejecutar cada' en ningún caso.">
                             <input type="checkbox" id="rt-agent-router-swipe-rollback" ${settings.routerSwipeRollback !== false ? 'checked' : ''}>
-                            <span>${t('agent.autoRollbackSwipe', 'Auto-rollback on swipe')}</span>
+                            <span>${t('agent.autoRollbackSwipe', 'Restauración automática al deslizar')}</span>
                         </label>
 
                         <div style="display: flex; gap: 8px; margin-bottom: 10px; align-items: flex-end;">
-                            <div style="flex: 1;" title="Max Turns: How many Thought/Action loops the agent can perform before timing out (Advanced Mode only).">
-                                <div style="margin-bottom: 5px; opacity: 0.8; font-size: 0.846em; color: var(--rt-text-muted);">${t('agent.maxAgentTurns', 'Max Agent Turns:')}</div>
+                            <div style="flex: 1;" title="Turnos Máximos: Cuántos bucles de Pensamiento/Acción puede realizar el agente antes de agotar el tiempo (solo Modo Avanzado).">
+                                <div style="margin-bottom: 5px; opacity: 0.8; font-size: 0.846em; color: var(--rt-text-muted);">${t('agent.maxAgentTurns', 'Turnos Máximos del Agente:')}</div>
                                 <input type="text" inputmode="numeric" pattern="[0-9]*" id="rt-agent-router-max-turns" value="${settings.routerMaxTurns || 5}" style="width: 100%; background: var(--rt-card-bg); color: var(--rt-text); border: var(--rt-border); border-radius: 4px; padding: 4px; font-size: 0.846em; box-sizing: border-box;">
                             </div>
-                            <div style="flex: 1;" title="Max Active Keys: The maximum number of lore entries the agent can keep in Active Memory. Once reached, it must deactivate old entries to add new ones.">
-                                <div style="margin-bottom: 5px; opacity: 0.8; font-size: 0.846em; color: var(--rt-text-muted);">${t('agent.maxActiveKeys', 'Max Active Keys:')}</div>
+                            <div style="flex: 1;" title="Claves Activas Máximas: El número máximo de entradas de lore que el agente puede mantener en Memoria Activa. Una vez alcanzado, debe desactivar entradas antiguas para añadir nuevas.">
+                                <div style="margin-bottom: 5px; opacity: 0.8; font-size: 0.846em; color: var(--rt-text-muted);">${t('agent.maxActiveKeys', 'Claves Activas Máximas:')}</div>
                                 <input type="text" inputmode="numeric" pattern="[0-9]*" id="rt-agent-router-max-activations" value="${settings.routerMaxActivations || 8}" min="1" max="20" style="width: 100%; background: var(--rt-card-bg); color: var(--rt-text); border: var(--rt-border); border-radius: 4px; padding: 4px; font-size: 0.846em; box-sizing: border-box;">
                             </div>
-                            <div style="flex: 1;" title="Keyword Overflow Cap: max keyword-triggered entries allowed above Max Active Keys (0 = no cap). When exceeded, the oldest keyword entries are evicted first. Example: Max Active=8, Cap=4 → hard ceiling of 12 total.">
-                                <div style="margin-bottom: 5px; opacity: 0.8; font-size: 0.846em; color: var(--rt-text-muted); line-height: 1.2;">${t('agent.keywordOverflowCap', 'Keyword Overflow Cap')}<br><span style="font-size: 0.75em; opacity: 0.5; font-weight: normal;">${t('agent.noCap', '(0 = no cap)')}</span>:</div>
+                            <div style="flex: 1;" title="Límite de Desbordamiento de Claves: máximo de entradas por palabras clave permitidas por encima de las Claves Activas Máximas (0 = sin límite). Ejemplo: Máximo Activo=8, Límite=4 → techo máximo de 12 en total.">
+                                <div style="margin-bottom: 5px; opacity: 0.8; font-size: 0.846em; color: var(--rt-text-muted); line-height: 1.2;">${t('agent.keywordOverflowCap', 'Límite de Desbordamiento de Claves')}<br><span style="font-size: 0.75em; opacity: 0.5; font-weight: normal;">${t('agent.noCap', '(0 = sin límite)')}</span>:</div>
                                 <input type="text" inputmode="numeric" pattern="[0-9]*" id="rt-agent-router-kw-overflow-cap" value="${settings.routerMaxKeywordOverflow ?? 0}" min="0" max="50" style="width: 100%; background: var(--rt-card-bg); color: var(--rt-text); border: var(--rt-border); border-radius: 4px; padding: 4px; font-size: 0.846em; box-sizing: border-box;">
                             </div>
                         </div>
@@ -241,11 +241,11 @@ export function buildPanelMarkup({ settings, agentPanelCollapsedClass }) {
                         <button id="rt-agent-world-fire-extra" style="width:100%; background:rgba(0,180,216,0.15); border:1px solid rgba(0,180,216,0.3); color:#00b4d8; border-radius:4px; padding:5px; font-size:0.769em; font-weight:bold; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:5px; margin-top:5px;">
                             <i class="fa-solid fa-wand-magic-sparkles"></i> ${t('agent.fireExtra', 'Fire with Extra Instructions')}
                         </button>
-                        <button id="rt-agent-world-reset-timeline" title="Clears the last-fired timestamp so World Progression starts fresh from now" style="width:100%; background:rgba(234,67,53,0.1); border:1px solid rgba(234,67,53,0.25); color:rgba(234,67,53,0.75); border-radius:4px; padding:4px; font-size:0.692em; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:5px; margin-top:5px;">
-                            <i class="fa-solid fa-clock-rotate-left"></i> ${t('agent.resetTimeline', 'Reset Timeline')}
+                        <button id="rt-agent-world-reset-timeline" title="Limpia la fecha de última ejecución para que la Progresión del Mundo empiece de cero desde ahora" style="width:100%; background:rgba(234,67,53,0.1); border:1px solid rgba(234,67,53,0.25); color:rgba(234,67,53,0.75); border-radius:4px; padding:4px; font-size:0.692em; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:5px; margin-top:5px;">
+                            <i class="fa-solid fa-clock-rotate-left"></i> ${t('agent.resetTimeline', 'Restablecer Línea Temporal')}
                         </button>
-                        <button id="rt-agent-world-purge-history" title="Deletes all World Progression reports and skeleton data for this campaign prefix and resets timer state for this chat" style="width:100%; background:rgba(234,67,53,0.14); border:1px solid rgba(234,67,53,0.35); color:rgba(234,67,53,0.9); border-radius:4px; padding:4px; font-size:0.692em; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:5px; margin-top:5px;">
-                            <i class="fa-solid fa-trash-can"></i> ${t('agent.purgeHistory', 'Purge World History for this Chat')}
+                        <button id="rt-agent-world-purge-history" title="Elimina todos los informes de Progresión del Mundo y datos de esqueleto para este prefijo de campaña y reinicia el estado del temporizador para este chat" style="width:100%; background:rgba(234,67,53,0.14); border:1px solid rgba(234,67,53,0.35); color:rgba(234,67,53,0.9); border-radius:4px; padding:4px; font-size:0.692em; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:5px; margin-top:5px;">
+                            <i class="fa-solid fa-trash-can"></i> ${t('agent.purgeHistory', 'Purgar Historial del Mundo para este Chat')}
                         </button>
                     </div>
 

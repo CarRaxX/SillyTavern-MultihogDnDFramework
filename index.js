@@ -1988,7 +1988,7 @@ function updatePanelStatus() {
     // Keep in-panel power button in sync
     if (enableBtn) {
         enableBtn.style.opacity = settings.enabled ? '' : '0.35';
-        enableBtn.title = settings.enabled ? 'Disable State Tracker' : 'Enable State Tracker';
+        enableBtn.title = settings.enabled ? 'Desactivar Rastreador de Estado' : 'Activar Rastreador de Estado';
     }
     // Keep settings sidebar checkbox in sync
     const sidebarEnableCheck = /** @type {HTMLInputElement|null} */ (document.getElementById('rpg_tracker_enabled'));
@@ -2003,7 +2003,7 @@ function updatePanelStatus() {
         const header = panel.querySelector('.rpg-tracker-header');
         if (header) /** @type {HTMLElement} */ (header).style.pointerEvents = 'auto';
         pauseBtn.textContent = '▶';
-        pauseBtn.title = 'Resume Tracker';
+        pauseBtn.title = 'Reanudar Rastreador';
         if (pauseBanner) pauseBanner.textContent = '';
     } else if (settings.paused) {
         // Paused — visible panel, pause banner shown
@@ -2011,15 +2011,15 @@ function updatePanelStatus() {
         panel.classList.add('is-paused');
         indicator.classList.add('active');
         pauseBtn.textContent = '▶';
-        pauseBtn.title = 'Resume Tracker';
-        if (pauseBanner) pauseBanner.textContent = 'TRACKER UPDATES PAUSED';
+        pauseBtn.title = 'Reanudar Rastreador';
+        if (pauseBanner) pauseBanner.textContent = 'ACTUALIZACIONES DEL RASTREADOR PAUSADAS';
     } else {
         // Active
         panel.classList.remove('is-disabled');
         panel.classList.remove('is-paused');
         indicator.classList.add('active');
         pauseBtn.textContent = '⏸';
-        pauseBtn.title = 'Pause Tracker';
+        pauseBtn.title = 'Pausar Rastreador';
         if (pauseBanner) pauseBanner.textContent = '';
     }
 

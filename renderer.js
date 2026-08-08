@@ -2110,7 +2110,7 @@ function formatValueToCurrency(totalCp, detectedCurrency) {
                         <span class="rt-onboarding-crest-fencer rt-onboarding-crest-fencer-mirrored" aria-hidden="true">🤺</span>
                     </div>
                     <div style="font-size: 16px; font-weight: bold; color: var(--rt-text);">Multihog D&D Framework</div>
-                    <div style="margin: 8px auto 0; max-width: 520px; color: var(--rt-text-muted); font-size: 0.9em; line-height: 1.4;">Welcome to Multihog D&D Framework! To see the latest significant additions, check out the <a href="https://github.com/MultihogAurelius/SillyTavern-MultihogDnDFramework/releases" target="_blank" rel="noopener noreferrer" style="color: var(--rt-accent);">Releases section of the GitHub page</a>, which I treat as a kind of dev blog.</div>
+                    <div style="margin: 8px auto 0; max-width: 520px; color: var(--rt-text-muted); font-size: 0.9em; line-height: 1.4;">¡Bienvenido a Multihog D&D Framework! Para ver las novedades más recientes, consulta la <a href="https://github.com/MultihogAurelius/SillyTavern-MultihogDnDFramework/releases" target="_blank" rel="noopener noreferrer" style="color: var(--rt-accent);">sección de Publicaciones (Releases) en GitHub</a>, que utilizo a modo de blog de desarrollo.</div>
                 </div>
 
                 <div class="rt-onboarding-hero">
@@ -2442,7 +2442,7 @@ function formatValueToCurrency(totalCp, detectedCurrency) {
                 <div class="rt-onboarding-divider"><span>Cómo Funciona</span></div>
 
                 <div class="rt-onboarding-prompt-backup-note" role="note" style="font-size:12px;line-height:1.4;padding:8px 10px;border-left:3px solid var(--rt-accent);background:rgba(120,80,220,0.1);border-radius:4px;">
-                    <b>NOTE:</b> Multihog D&amp;D Framework auto-applies its own system prompt. If you want to restore your old prompt, go to the extension settings: General &amp; Visuals -> Core -> Restore backup to Main.
+                    <b>NOTA:</b> Multihog D&amp;D Framework aplica automáticamente su propio prompt del sistema. Si deseas restaurar tu prompt anterior, ve a los ajustes de la extensión: General y Visual -> Núcleo -> Restaurar copia de seguridad al Principal.
                 </div>
 
                 <div class="rt-onboarding-chat-tip" role="note">
@@ -2588,9 +2588,9 @@ function formatValueToCurrency(totalCp, detectedCurrency) {
                 </div>
                 <div class="rt-onboarding-connection-shortcut" style="width:100%;flex-shrink:0;">
                     <button type="button" class="menu_button interactable" id="rt-open-character-creation-connection-settings" style="width:100%;">
-                        <i class="fa-solid fa-plug-circle-bolt"></i> Character Creation Connection
+                        <i class="fa-solid fa-plug-circle-bolt"></i> Conexión para Creación de Personajes
                     </button>
-                    <small>Shared by Character Creator, Instant Action, and Other Ways to Begin. Configure it under <b>Connections &amp; Models</b> in extension settings.</small>
+                    <small>Compartido por el Creador de Personajes, Acción Instantánea y Otras Formas de Iniciar. Configúralo en <b>Conexiones y Modelos</b> en los ajustes de la extensión.</small>
                 </div>
             </div>`;
         }
