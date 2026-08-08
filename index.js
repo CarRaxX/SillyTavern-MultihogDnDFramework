@@ -4670,13 +4670,13 @@ async function runPortraitMigrationIfNeeded() {
 }
 
 const CONNECTION_SETTINGS_UI = [
-    { key: 'state_tracker', control: '#rpg_tracker_connection_source', slot: '#rpg_connection_slot_state_tracker', label: 'State Tracker', recommendation: 'I recommend a cheap mid-tier model such as GPT-5.6 Luna, Gemini Flash/Flash-Lite series, or Deepseek V4 Flash latest.' },
-    { key: 'combat_override', control: '#rpg_combat_api_override', slot: '#rpg_connection_slot_combat_override', label: 'Combat API Override' },
-    { key: 'lorebook_agent', control: '#rpg_tracker_router_source', slot: '#rpg_connection_slot_lorebook_agent', label: 'Lorebook Agent', recommendation: 'Same models work fine here as with the State Tracker.' },
-    { key: 'adventure_companion', control: '#rpg_adventure_companion_connection_source', slot: '#rpg_connection_slot_adventure_companion', label: 'Adventure Companion' },
-    { key: 'game_system_wizard', control: '#rpg_gs_wizard_connection_source', slot: '#rpg_connection_slot_game_system_wizard', label: 'Game System Wizard', recommendation: 'I recommend using a somewhat better model here such as Sonnet 5 or above for more robust and complex systems. Your mileage varies a lot here. Experiment.' },
-    { key: 'world_progression', control: '#rpg_world_connection_source', slot: '#rpg_connection_slot_world_progression', label: 'World Progression' },
-    { key: 'portraits', control: '#rpg_portrait_connection_source', slot: '#rpg_connection_slot_portraits', label: 'Portrait Generation', recommendation: 'A lightweight model should do fine.' },
+    { key: 'state_tracker', control: '#rpg_tracker_connection_source', slot: '#rpg_connection_slot_state_tracker', label: 'Rastreador de Estado', recommendation: 'Recomiendo un modelo de nivel medio/económico como Gemma 4 12B, serie Gemini Flash/Flash-Lite o DeepSeek V4 Flash.' },
+    { key: 'combat_override', control: '#rpg_combat_api_override', slot: '#rpg_connection_slot_combat_override', label: 'Sustitución de API en Combate' },
+    { key: 'lorebook_agent', control: '#rpg_tracker_router_source', slot: '#rpg_connection_slot_lorebook_agent', label: 'Agente de Lorebook', recommendation: 'Funcionan bien los mismos modelos que con el Rastreador de Estado.' },
+    { key: 'adventure_companion', control: '#rpg_adventure_companion_connection_source', slot: '#rpg_connection_slot_adventure_companion', label: 'Acompañante de Aventura' },
+    { key: 'game_system_wizard', control: '#rpg_gs_wizard_connection_source', slot: '#rpg_connection_slot_game_system_wizard', label: 'Asistente de Sistemas de Juego', recommendation: 'Recomiendo usar un modelo más potente como Sonnet o superior para sistemas complejos.' },
+    { key: 'world_progression', control: '#rpg_world_connection_source', slot: '#rpg_connection_slot_world_progression', label: 'Progresión del Mundo' },
+    { key: 'portraits', control: '#rpg_portrait_connection_source', slot: '#rpg_connection_slot_portraits', label: 'Generación de Retratos', recommendation: 'Un modelo ligero funciona perfectamente.' },
 ];
 
 function normalizeCentralConnectionDrawer(drawer, key, label, recommendation = '') {
@@ -4750,7 +4750,7 @@ function organizeConnectionSettingsUI() {
             const shortcut = document.createElement('div');
             shortcut.className = 'rt-connection-shortcut';
             shortcut.dataset.connectionKey = definition.key;
-            shortcut.innerHTML = `<span><b>${definition.label} connection</b><small>Managed in Connections &amp; Models.</small></span><button type="button" class="menu_button interactable rt-connection-shortcut-button" data-connection-target="${definition.key}"><i class="fa-solid fa-plug"></i> Configure</button>`;
+            shortcut.innerHTML = `<span><b>Conexión de ${definition.label}</b><small>Gestionado en Conexiones y Modelos.</small></span><button type="button" class="menu_button interactable rt-connection-shortcut-button" data-connection-target="${definition.key}"><i class="fa-solid fa-plug"></i> Configurar</button>`;
             originalParent.insertBefore(shortcut, drawer);
         }
 
@@ -4761,7 +4761,7 @@ function organizeConnectionSettingsUI() {
     normalizeCentralConnectionDrawer(
         document.getElementById('rpg_character_creation_connection_drawer'),
         'character_creation',
-        'Character Creation & Starting Modes',
+        'Creación de Personajes y Modos Iniciales',
     );
 }
 

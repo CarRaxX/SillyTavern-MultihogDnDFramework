@@ -2300,56 +2300,56 @@ function formatValueToCurrency(totalCp, detectedCurrency) {
                     <div class="rt-cr-row">
                         <div class="rt-cr-field">
                             <label class="rt-cr-label" style="display:flex; justify-content:space-between; align-items:center; width:100%;">
-                                <span>Name</span>
-                                <button id="rt-cr-random-name" class="interactable" style="background:none; border:none; color:var(--rt-accent); cursor:pointer; padding:0; margin:0; font-size:1.1em; line-height:1;" title="Roll a random name">🎲</button>
+                                <span>Nombre</span>
+                                <button id="rt-cr-random-name" class="interactable" style="background:none; border:none; color:var(--rt-accent); cursor:pointer; padding:0; margin:0; font-size:1.1em; line-height:1;" title="Generar nombre aleatorio">🎲</button>
                             </label>
                             <input id="rt-cr-name" class="text_pole rt-cr-input" type="text" />
                         </div>
                         <div class="rt-cr-field">
-                            <label class="rt-cr-label">Gender</label>
+                            <label class="rt-cr-label">Género</label>
                             <input id="rt-cr-gender" class="text_pole rt-cr-input" type="text" />
                         </div>
                         <div class="rt-cr-field">
-                            <label class="rt-cr-label">Age</label>
+                            <label class="rt-cr-label">Edad</label>
                             <input id="rt-cr-age" class="text_pole rt-cr-input" type="text" />
                         </div>
                         <div class="rt-cr-field" style="flex:1.35 1 0%;">
-                            <label class="rt-cr-label" style="display:inline-flex; align-items:center; gap:3px; white-space:nowrap;">Sexual Orientation <span class="rt-cr-help-icon" style="width:14px;height:14px;font-size:0.65em;" title="Needed for the relationship system and CYOA romantic options — without this, NPC affection/romance targeting is guesswork.">?</span></label>
+                            <label class="rt-cr-label" style="display:inline-flex; align-items:center; gap:3px; white-space:nowrap;">Orientación Sexual <span class="rt-cr-help-icon" style="width:14px;height:14px;font-size:0.65em;" title="Necesaria para el sistema de relaciones y opciones románticas de CYOA — sin esto, el objetivo de afecto/romance con PNJs es impreciso.">?</span></label>
                             <input id="rt-cr-orientation" class="text_pole rt-cr-input" type="text" />
                         </div>
                     </div>
                     <div class="rt-cr-row">
                         <div class="rt-cr-field">
-                            <label class="rt-cr-label">Species</label>
+                            <label class="rt-cr-label">Especie / Raza</label>
                             <input id="rt-cr-species" class="text_pole rt-cr-input" type="text" />
                         </div>
                         <div class="rt-cr-field">
-                            <label class="rt-cr-label">Ethnicity</label>
+                            <label class="rt-cr-label">Etnia / Origen</label>
                             <input id="rt-cr-ethnicity" class="text_pole rt-cr-input" type="text" />
                         </div>
                     </div>
                     <div class="rt-cr-row">
                         <div class="rt-cr-field">
-                            <label class="rt-cr-label">Genre <span class="rt-cr-help-icon" title="You must select a specific genre to see its related classes in the Class dropdown. Otherwise, only generic classes are shown.">?</span></label>
+                            <label class="rt-cr-label">Género / Ambientación <span class="rt-cr-help-icon" title="Debes seleccionar un género específico para ver sus clases relacionadas en el desplegable de Clase. De lo contrario, solo se muestran clases genéricas.">?</span></label>
                             <select id="rt-cr-genre" class="text_pole rt-cr-input">
-                                <option value="">✨ None — AI decides from context</option>
-                                <option value="fantasy">⚔️ Fantasy RPG</option>
-                                <option value="realistic">🏙️ Modern</option>
-                                <option value="scifi">🚀 Sci-Fi</option>
-                                <option value="horror">👻 Horror</option>
+                                <option value="">✨ Ninguno — La IA decide por el contexto</option>
+                                <option value="fantasy">⚔️ Fantasía / RPG</option>
+                                <option value="realistic">🏙️ Contemporáneo / Moderno</option>
+                                <option value="scifi">🚀 Ciencia Ficción</option>
+                                <option value="horror">👻 Terror / Horror</option>
                             </select>
                         </div>
                         <div class="rt-cr-field">
-                            <label class="rt-cr-label">Level <span class="rt-cr-help-icon" title="Pick 'N/A' if your system doesn't use numeric character levels — the AI will not invent a level, XP, or D&D-style level indicator.">?</span></label>
+                            <label class="rt-cr-label">Nivel <span class="rt-cr-help-icon" title="Elige 'N/A' si tu sistema no utiliza niveles numéricos; la IA no inventará nivel, XP ni indicador de nivel tipo D&D.">?</span></label>
                             <select id="rt-cr-level" class="text_pole rt-cr-input">
-                                <option value="none"${onboardingLevelIsNone ? ' selected' : ''}>N/A — No Levels (Custom System)</option>
-                                ${[...Array(20).keys()].map(i => { const l = i + 1; return `<option value="${l}"${!onboardingLevelIsNone && l === onboardingLevelNum ? ' selected' : ''}>Level ${l}</option>`; }).join('')}
+                                <option value="none"${onboardingLevelIsNone ? ' selected' : ''}>N/A — Sin Niveles (Sistema Personalizado)</option>
+                                ${[...Array(20).keys()].map(i => { const l = i + 1; return `<option value="${l}"${!onboardingLevelIsNone && l === onboardingLevelNum ? ' selected' : ''}>Nivel ${l}</option>`; }).join('')}
                             </select>
                         </div>
                     </div>
                     <div class="rt-cr-row">
                         <div class="rt-cr-field">
-                            <label class="rt-cr-label">Gear Tier <span class="rt-cr-help-icon" title="How well-equipped the character should be — from mundane starter kit to heroic named gear. Auto scales with level. Pick 'None' to skip all gear guidance.">?</span></label>
+                            <label class="rt-cr-label">Calidad del Equipo <span class="rt-cr-help-icon" title="Qué tan bien equipado debe estar el personaje — desde equipo inicial común hasta objetos heroicos con nombre. Se escala automáticamente con el nivel. Elige 'Ninguno' para omitir la guía de equipo.">?</span></label>
                             <select id="rt-cr-gear-tier" class="text_pole rt-cr-input">
                                 ${gearTierOptions}
                             </select>

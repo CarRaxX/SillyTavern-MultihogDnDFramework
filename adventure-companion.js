@@ -1692,13 +1692,13 @@ export function detachAdventureCompanion({ persist = true } = {}) {
                 <span>${COMPANION_HEADER_TITLE}</span>
             </div>
             <div class="rpg-tracker-header-right">
-                <button type="button" class="rpg-tracker-icon-btn" id="rt-chat-collapse-btn" title="Collapse Adventure Companion" aria-label="Collapse Adventure Companion" aria-expanded="true"><i class="fa-solid fa-chevron-up"></i></button>
-                <button type="button" class="rpg-tracker-icon-btn" id="rt-chat-reattach-btn" title="Re-attach Adventure Companion" aria-label="Re-attach Adventure Companion">↓</button>
+                <button type="button" class="rpg-tracker-icon-btn" id="rt-chat-collapse-btn" title="Plegar Acompañante de Aventura" aria-label="Plegar Acompañante de Aventura" aria-expanded="true"><i class="fa-solid fa-chevron-up"></i></button>
+                <button type="button" class="rpg-tracker-icon-btn" id="rt-chat-reattach-btn" title="Reacoplar Acompañante de Aventura" aria-label="Reacoplar Acompañante de Aventura">↓</button>
             </div>
         </div>
         <div class="rt-chat-detached-body"></div>
-        <div class="rt-resizer-br" title="Resize"></div>
-        <div class="rt-resizer-bl" title="Resize"></div>
+        <div class="rt-resizer-br" title="Redimensionar"></div>
+        <div class="rt-resizer-bl" title="Redimensionar"></div>
     `;
     const body = floating.querySelector('.rt-chat-detached-body');
     if (!(body instanceof HTMLElement)) return;
@@ -1911,15 +1911,15 @@ async function sendMessage() {
         mp.history.push({ role: 'assistant', content: reply });
     } catch (err) {
         if (err?.name === 'AbortError') {
-            mp.history.push({ role: 'assistant', content: '(Cancelled.)' });
+            mp.history.push({ role: 'assistant', content: '(Cancelado.)' });
         } else {
             console.error('[CHAT]', err);
             const msg = err?.message || String(err);
             mp.history.push({
                 role: 'assistant',
-                content: `I could not reach the model. Check Adventure Companion connection settings.\n\n${msg}`,
+                content: `No se pudo conectar con el modelo. Comprueba la configuración de conexión del Acompañante de Aventura.\n\n${msg}`,
             });
-            toastr['error']('CHAT request failed — see conversation.', 'CHAT');
+            toastr['error']('La solicitud de CHAT ha fallado — consulta la conversación.', 'CHAT');
         }
     } finally {
         _abort = null;

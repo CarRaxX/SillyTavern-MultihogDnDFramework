@@ -487,12 +487,12 @@
             <div class="inline-drawer" id="rpg_connections_models_drawer">
                 <div class="inline-drawer-toggle inline-drawer-header">
                     <i class="fa-solid fa-plug-circle-bolt" style="margin-right: 8px; opacity: 0.7;"></i>
-                    <b>Connections &amp; Models</b>
+                    <b>Conexiones y Modelos</b>
                     <div class="inline-drawer-icon fa-solid fa-circle-chevron-down down"></div>
                 </div>
                 <div class="inline-drawer-content">
                     <div class="rt-connections-models-intro">
-                        Configure the model connection used by each Multihog feature. These are global settings. <b>Main API</b> uses your current SillyTavern connection.
+                        Configura la conexión de modelo utilizada por cada función de Multihog. Estos ajustes son globales. <b>API Principal</b> utiliza tu conexión actual de SillyTavern.
                     </div>
 
                     <div id="rpg_connection_slot_state_tracker" class="rt-connection-drawer-slot"></div>
@@ -503,16 +503,16 @@
                         <div class="inline-drawer rt-character-creation-connection-controls" id="rpg_character_creation_connection_drawer">
                             <div class="inline-drawer-toggle inline-drawer-header rt-centered-drawer-header" style="font-size: 0.88em;">
                                 <i class="fa-solid fa-user-pen" style="margin-right: 6px; opacity: 0.65;"></i>
-                                <b>Character Creation &amp; Starting Modes</b>
+                                <b>Creación de Personajes y Modos Iniciales</b>
                                 <div class="inline-drawer-icon fa-solid fa-circle-chevron-down"></div>
                             </div>
                             <div class="inline-drawer-content">
                                 <div class="flex-container flexFlowColumn gap-1">
-                                    <div style="font-size: 0.75em; opacity: 0.6; line-height: 1.35; margin-bottom: 4px;">Shared by Character Creator, Instant Action, and Other Ways to Begin.</div>
-                                    <label style="font-size: 0.8em;">Connection Source</label>
+                                    <div style="font-size: 0.75em; opacity: 0.6; line-height: 1.35; margin-bottom: 4px;">Compartido por el Creador de Personajes, Acción Instantánea y Otras Formas de Comenzar.</div>
+                                    <label style="font-size: 0.8em;">Fuente de Conexión</label>
                                     <select id="rt-character-creation-connection-source" class="text_pole" style="font-size: 0.8em;">
-                                        <option value="default">Main API</option>
-                                        <option value="profile">Profile</option>
+                                        <option value="default">API Principal</option>
+                                        <option value="profile">Perfil</option>
                                         <option value="ollama">Ollama</option>
                                         <option value="openai">OpenAI</option>
                                     </select>
@@ -520,22 +520,22 @@
                                         <select id="rt-character-creation-connection-profile" class="text_pole" style="font-size: 0.8em;"></select>
                                     </div>
                                     <div id="rt-character-creation-ollama-group" style="display:none;flex-direction:column;gap:5px;">
-                                        <input id="rt-character-creation-ollama-url" type="text" class="text_pole" placeholder="Ollama URL" style="font-size: 0.8em;" />
+                                        <input id="rt-character-creation-ollama-url" type="text" class="text_pole" placeholder="URL de Ollama" style="font-size: 0.8em;" />
                                         <div class="flex-container gap-1">
                                             <select id="rt-character-creation-ollama-model" class="text_pole" style="flex:1;font-size:0.8em;"></select>
-                                            <button id="rt-character-creation-ollama-refresh" type="button" class="menu_button interactable" title="Refresh Ollama models" style="width:auto;padding:2px 7px;"><i class="fa-solid fa-arrows-rotate"></i></button>
+                                            <button id="rt-character-creation-ollama-refresh" type="button" class="menu_button interactable" title="Actualizar modelos de Ollama" style="width:auto;padding:2px 7px;"><i class="fa-solid fa-arrows-rotate"></i></button>
                                         </div>
                                     </div>
                                     <div id="rt-character-creation-openai-group" style="display:none;flex-direction:column;gap:5px;">
-                                        <input id="rt-character-creation-openai-url" type="text" class="text_pole" placeholder="Endpoint URL" style="font-size: 0.8em;" />
-                                        <input id="rt-character-creation-openai-key" type="password" class="text_pole" placeholder="API Key" style="font-size: 0.8em;" />
+                                        <input id="rt-character-creation-openai-url" type="text" class="text_pole" placeholder="URL del Endpoint" style="font-size: 0.8em;" />
+                                        <input id="rt-character-creation-openai-key" type="password" class="text_pole" placeholder="Clave API" style="font-size: 0.8em;" />
                                         <div class="flex-container gap-1">
                                             <select id="rt-character-creation-openai-model" class="text_pole" style="flex:1;font-size:0.8em;"></select>
-                                            <button id="rt-character-creation-openai-refresh" type="button" class="menu_button interactable" title="Refresh OpenAI-compatible models" style="width:auto;padding:2px 7px;"><i class="fa-solid fa-arrows-rotate"></i></button>
+                                            <button id="rt-character-creation-openai-refresh" type="button" class="menu_button interactable" title="Actualizar modelos compatibles con OpenAI" style="width:auto;padding:2px 7px;"><i class="fa-solid fa-arrows-rotate"></i></button>
                                         </div>
-                                        <input id="rt-character-creation-openai-model-manual" type="text" class="text_pole" placeholder="Manual Model Name" style="font-size: 0.8em;" />
+                                        <input id="rt-character-creation-openai-model-manual" type="text" class="text_pole" placeholder="Nombre Manual del Modelo" style="font-size: 0.8em;" />
                                     </div>
-                                    <label style="font-size: 0.8em; margin-top: 4px;">Preset</label>
+                                    <label style="font-size: 0.8em; margin-top: 4px;">Preajuste</label>
                                     <select id="rt-character-creation-completion-preset" class="text_pole" style="font-size: 0.8em;"></select>
                                 </div>
                             </div>
@@ -957,7 +957,7 @@
                             <label style="margin-bottom: 4px;">Formato del Personaje Jugable
                                 <i class="fa-solid fa-circle-question interactable" style="font-size: 0.85em; opacity: 0.7; margin-left: 4px;" title="Personaliza las secciones de la ficha para Personajes Jugables (ej. Apariencia, Personalidad, Fortalezas). Estos campos se usarán al generar nuevos personajes o importar fichas."></i>
                             </label>
-                            <button id="rpg_tracker_btn_edit_pc_sections" class="menu_button interactable" style="width: 100%; background: rgba(180, 100, 255, 0.15); border-color: rgba(180, 100, 255, 0.4);" title="Personaliza las secciones de la ficha para Personajes Jugables (ej. Apariencia, Personalidad, Fortalezas). Estos campos se usarán al generar nuevos personajes o importar fichas."><i class="fa-solid fa-user"></i> Editar Secciones del Personaje Jugable</button>
+                            <button id="rpg_tracker_btn_edit_pc_sections" class="menu_button interactable" style="width: 100%; background: rgba(180, 100, 255, 0.15); border-color: rgba(180, 100, 255, 0.4);" title="Personaliza las secciones de la ficha para Personajes Jugables (ej. Apariencia, Personalidad, Fortalezas). Estos campos se usarán al generar nuevos personajes o importar fichas."><i class="fa-solid fa-user"></i> 👤 Editar Secciones de PJ</button>
                         </div>
                         <label class="checkbox_label" title="Restaura la nota (memo) del Rastreador de Estado a su captura previa al deslizar a una respuesta alternativa de la IA. Previene desvíos de memoria.">
                             <input id="rpg_tracker_state_swipe_rollback" type="checkbox" checked />
@@ -1146,7 +1146,7 @@
                                         </div>
                                         <div style="font-size: 10px; opacity: 0.5; margin-top: 3px;">Controla qué sucede al hacer clic en "+ Añadir tal cual" en una ficha de personaje.</div>
                                     </div>
-                                    <button id="rpg_tracker_btn_edit_npc_sections" class="menu_button interactable" style="margin-top: 8px; width: 100%; background: rgba(180, 100, 255, 0.15); border-color: rgba(180, 100, 255, 0.4);"><i class="fa-solid fa-puzzle-piece"></i> Editar Secciones de PNJ</button>
+                                    <button id="rpg_tracker_btn_edit_npc_sections" class="menu_button interactable" style="margin-top: 8px; width: 100%; background: rgba(180, 100, 255, 0.15); border-color: rgba(180, 100, 255, 0.4);"><i class="fa-solid fa-puzzle-piece"></i> 🧩 Editar Secciones de PNJ</button>
 
 
                             </div>
@@ -1731,34 +1731,33 @@
                 </div>
                 <div class="inline-drawer-content">
                     <div class="flex-container flexFlowColumn gap-1">
-                        <div style="font-size: 0.8em; opacity: 0.72; line-height: 1.4;">Open Adventure Companion with the <b>CHAT</b> button at the top of the State Tracker. It can help with your adventure when <b>TUTORIAL MODE</b> is enabled, getting you to grips with the extension. In this mode, it has access to robust documentation.<br><br>Otherwise, it's there if you just feel like chatting about your adventure or brainstorm, etc. You can also ask it to make changes in the State Tracker or Lorebook Agent, and it can take actions for you if you ask it to (by typing messages or making CYOA mode choices for you.)</div>
-                        <label class="checkbox_label" title="Attach the Multihog guide to every Adventure Companion request.">
+                        <label class="checkbox_label" title="Adjunta la guía de documentación de Multihog a cada solicitud del Acompañante de Aventura.">
                             <input id="rpg_adventure_companion_tutorial_mode" type="checkbox" />
-                            <span>TUTORIAL MODE</span>
+                            <span>MODO TUTORIAL</span>
                             <i class="fa-solid fa-circle-question interactable"
-                                title="Injects the Multihog documentation Markdown file into every Adventure Companion request. This is useful while learning the framework, but adds a few thousand input tokens."></i>
+                                title="Inyecta el archivo Markdown de documentación de Multihog en cada solicitud del Acompañante de Aventura. Útil mientras aprendes el framework, aunque añade algunos miles de tokens de entrada."></i>
                         </label>
 
                         <div class="inline-drawer">
                             <div class="inline-drawer-toggle inline-drawer-header">
-                                <b>Context Settings</b>
+                                <b>Configuración de Contexto</b>
                                 <div class="inline-drawer-icon fa-solid fa-circle-down down"></div>
                             </div>
                             <div class="inline-drawer-content">
                                 <div class="flex-container flexFlowColumn gap-1">
-                                    <label>Story Lookback</label>
-                                    <input id="rpg_adventure_companion_lookback" type="text" inputmode="numeric" pattern="[0-9]*" min="0" max="100" class="text_pole" title="Number of recent SillyTavern chat messages to include as story context." />
-                                    <label class="checkbox_label" title="Include the entire SillyTavern chat history as story context.">
+                                    <label>Revisión de Historia</label>
+                                    <input id="rpg_adventure_companion_lookback" type="text" inputmode="numeric" pattern="[0-9]*" min="0" max="100" class="text_pole" title="Número de mensajes recientes del chat de SillyTavern a incluir como contexto de la historia." />
+                                    <label class="checkbox_label" title="Incluir todo el historial del chat de SillyTavern como contexto de la historia.">
                                         <input id="rpg_adventure_companion_lookback_all" type="checkbox" />
-                                        <span>All chat messages</span>
+                                        <span>Todos los mensajes del chat</span>
                                     </label>
                                     <label class="checkbox_label">
                                         <input id="rpg_adventure_companion_inject_lore" type="checkbox" />
-                                        <span>Inject Lorebook Agent lore</span>
+                                        <span>Inyectar lore del Agente de Lorebook</span>
                                     </label>
                                     <label class="checkbox_label">
                                         <input id="rpg_adventure_companion_inject_memo" type="checkbox" />
-                                        <span>Inject State Tracker</span>
+                                        <span>Inyectar Rastreador de Estado</span>
                                     </label>
                                 </div>
                             </div>
@@ -1766,15 +1765,15 @@
 
                         <div class="inline-drawer">
                             <div class="inline-drawer-toggle inline-drawer-header">
-                                <b>Connection Settings</b>
+                                <b>Configuración de Conexión</b>
                                 <div class="inline-drawer-icon fa-solid fa-circle-down down"></div>
                             </div>
                             <div class="inline-drawer-content">
                                 <div class="flex-container flexFlowColumn gap-1">
-                                    <label>Connection Source</label>
+                                    <label>Fuente de Conexión</label>
                                     <select id="rpg_adventure_companion_connection_source" class="text_pole">
-                                        <option value="default">Main API</option>
-                                        <option value="profile">Profile</option>
+                                        <option value="default">API Principal</option>
+                                        <option value="profile">Perfil</option>
                                         <option value="ollama">Ollama</option>
                                         <option value="openai">OpenAI</option>
                                     </select>
@@ -1785,19 +1784,19 @@
                                         <input id="rpg_adventure_companion_ollama_url" type="text" class="text_pole" placeholder="URL" />
                                         <div class="flex-container gap-1">
                                             <select id="rpg_adventure_companion_ollama_model" class="text_pole" style="flex: 1;"></select>
-                                            <button id="rpg_adventure_companion_ollama_refresh" class="menu_button interactable" title="Refresh Ollama models"><i class="fa-solid fa-arrows-rotate"></i></button>
+                                            <button id="rpg_adventure_companion_ollama_refresh" class="menu_button interactable" title="Actualizar modelos de Ollama"><i class="fa-solid fa-arrows-rotate"></i></button>
                                         </div>
                                     </div>
                                     <div id="rpg_adventure_companion_openai_group" style="display: none;">
                                         <input id="rpg_adventure_companion_openai_url" type="text" class="text_pole" placeholder="URL" />
-                                        <input id="rpg_adventure_companion_openai_key" type="password" class="text_pole" placeholder="Key" />
+                                        <input id="rpg_adventure_companion_openai_key" type="password" class="text_pole" placeholder="Clave API" />
                                         <div class="flex-container gap-1">
                                             <select id="rpg_adventure_companion_openai_model" class="text_pole" style="flex: 1;"></select>
-                                            <button id="rpg_adventure_companion_openai_refresh" class="menu_button interactable" title="Refresh OpenAI-compatible models"><i class="fa-solid fa-arrows-rotate"></i></button>
+                                            <button id="rpg_adventure_companion_openai_refresh" class="menu_button interactable" title="Actualizar modelos compatibles con OpenAI"><i class="fa-solid fa-arrows-rotate"></i></button>
                                         </div>
-                                        <input id="rpg_adventure_companion_openai_model_manual" type="text" class="text_pole" placeholder="Manual Model Name" />
+                                        <input id="rpg_adventure_companion_openai_model_manual" type="text" class="text_pole" placeholder="Nombre Manual del Modelo" />
                                     </div>
-                                    <label>Preset</label>
+                                    <label>Preajuste</label>
                                     <select id="rpg_adventure_companion_completion_preset" class="text_pole"></select>
                                 </div>
                             </div>
