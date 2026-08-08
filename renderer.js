@@ -2246,9 +2246,6 @@ function formatValueToCurrency(totalCp, detectedCurrency) {
                     <button class="rt-random-char-btn" data-archetype="custom" data-name-required="true" disabled>⚙️ Personalizado</button>
                     <button class="rt-random-char-btn rt-pc-import-trigger" data-archetype="pc_import">📥 Importar Ficha</button>
                 </div>
-                </div>
-                </div>
-                </div>
 
                 <!-- PC Import Inline Panel (hidden until 📥 is clicked) -->
                 <div id="rt-pc-import-panel" style="display:none; flex-direction:column; gap:7px; width:100%; flex-shrink:0;">
@@ -2405,7 +2402,6 @@ function formatValueToCurrency(totalCp, detectedCurrency) {
                             <label class="rt-cr-label">Apariencia <span class="rt-cr-help-icon" title="Una breve pista es suficiente (ej. 'alto, cabello oscuro, ojos verdes'). Deja en blanco y la IA creará la descripción completa.">?</span></label>
                             <input id="rt-cr-appearance" class="text_pole rt-cr-input" type="text" placeholder="ej. alto, cabello oscuro, ojos verdes…" />
                         </div>
-                        </div>
                     </div>
                     <div class="rt-cr-field" style="width:100%;">
                         <label class="rt-cr-label">Información Adicional</label>
@@ -2414,7 +2410,7 @@ function formatValueToCurrency(totalCp, detectedCurrency) {
                     <div style="display:flex; flex-direction:column; gap:5px; flex-shrink:0; padding:4px 0;">
                         <div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap;">
                             <label style="display:flex; align-items:center; gap:5px; cursor:pointer; font-size:0.88em;">
-                                <input type="checkbox" id="rt-cr-player-card-cb" />
+                                <input type="checkbox" id="rt-cr-player-card-cb" checked />
                                 <span>Crear Ficha de Jugador en el Agente de Lorebook (Recomendado)</span>
                             </label>
                             <span class="rt-cr-help-icon" title="Cuando está marcado, la IA escribe una apariencia detallada, personalidad, hábitos y trasfondo para una Ficha de Jugador en el Agente de Lorebook. Aparecerá una vista previa para que puedas editarla, regenerarla o copiarla.">?</span>

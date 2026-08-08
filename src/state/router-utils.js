@@ -104,25 +104,26 @@ export function isPcCoreTarget(id, pcName = '') {
  */
 export function isAppearanceField(field) {
     const n = (field || '').trim().toLowerCase();
-    return n.includes('body') || n.includes('appearance');
+    return n.includes('body') || n.includes('appearance') || n.includes('cuerpo') || n.includes('apariencia');
 }
 
 /** True for the always-on "Equipment" (worn gear) field. @param {string} field */
 export function isEquipmentField(field) {
     const n = (field || '').trim().toLowerCase();
-    return n.includes('equipment') || n.includes('gear') || n.includes('worn');
+    return n.includes('equipment') || n.includes('gear') || n.includes('worn') || n.includes('equipamiento') || n.includes('equipo');
 }
 
 /** True for the static "Species" identity field (manual-only, like Personality). @param {string} field */
 export function isSpeciesField(field) {
     const n = (field || '').trim().toLowerCase();
-    return n === 'species' || n.startsWith('species ') || n.startsWith('species/') || n.startsWith('species:');
+    return n === 'species' || n.startsWith('species ') || n.startsWith('species/') || n.startsWith('species:') ||
+        n === 'especie' || n.startsWith('especie ') || n.startsWith('especie/') || n.startsWith('especie:');
 }
 
 /** @param {string} field */
 export function isCombatProfileField(field) {
     const n = (field || '').trim().toLowerCase();
-    return n.includes('combat');
+    return n.includes('combat') || n.includes('combate');
 }
 
 /**
