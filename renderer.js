@@ -615,7 +615,11 @@ export function renderDayNightBadge(str) {
         if (hm && hm[2] && hm[3]) {
             const cur = parseInt(hm[2].replace(/,/g, ''), 10);
             const max = parseInt(hm[3].replace(/,/g, ''), 10);
-            pipsHtml = `<span class="rt-hd-label">[ ${escapeHtmlWithColor(hm[1].trim())} ]</span> <span class="rt-hd-pips">${Array.from({ length: max }, (_, i) => `<span class="rt-hd-pip${i < cur ? ' rt-hd-available' : ''}"></span>`).join('')}</span>`;
+            if (max > 30) {
+                pipsHtml = `<span class="rt-hd-label">[ ${escapeHtmlWithColor(hm[1].trim())} ]</span> <span class="rt-hd-text-val">(${cur}/${max})</span>`;
+            } else {
+                pipsHtml = `<span class="rt-hd-label">[ ${escapeHtmlWithColor(hm[1].trim())} ]</span> <span class="rt-hd-pips">${Array.from({ length: max }, (_, i) => `<span class="rt-hd-pip${i < cur ? ' rt-hd-available' : ''}"></span>`).join('')}</span>`;
+            }
         }
         return `<div class="rt-entity-sub-line"><span class="rt-entity-sub-label" title="Dados de Golpe / Hit Dice (usados para recuperar vida durante Descansos Cortos)">HD:</span> <span>${pipsHtml}</span></div>`;
     }
@@ -688,8 +692,12 @@ export function renderDayNightBadge(str) {
             let pipsHtml = '';
             if (!isCantrip && availStr !== undefined && maxStr !== undefined) {
                 const avail = parseInt(availStr, 10), maxSlots = parseInt(maxStr, 10);
-                pipsHtml = `<span class="rt-slot-pips">${Array.from({ length: maxSlots }, (_, i) =>
-                    `<span class="rt-slot-pip${i < avail ? ' rt-slot-available' : ' rt-slot-used'}"></span>`).join('')}</span>`;
+                if (maxSlots > 30) {
+                    pipsHtml = `<span class="rt-slot-text">(${avail}/${maxSlots})</span>`;
+                } else {
+                    pipsHtml = `<span class="rt-slot-pips">${Array.from({ length: maxSlots }, (_, i) =>
+                        `<span class="rt-slot-pip${i < avail ? ' rt-slot-available' : ' rt-slot-used'}"></span>`).join('')}</span>`;
+                }
             }
             let spellsHtml = '';
             if (spellList) {

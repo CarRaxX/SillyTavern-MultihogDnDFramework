@@ -2563,9 +2563,11 @@
 .rt-hd-pips {
     display: inline-flex;
     align-items: center;
+    flex-wrap: wrap;
     gap: 3px;
     margin-left: 4px;
     vertical-align: middle;
+    max-width: 100%;
 }
 
 .rt-hd-pip {
